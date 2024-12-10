@@ -1,0 +1,57 @@
+name: DSPRE Canary Build
+
+on:
+  push:
+    branches:
+      - main  # Trigger only on pushes to the main branch
+
+permissions:
+  contents: write
+
+env:
+  SOLUTION_FILE_PATH: DS_Map.sln
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Build DSPRE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+    
+    - name: Zip Release Files
+      run: Compress-Archive -Path ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release -DestinationPath DSPRE-canary.zip
+
+    - name: Fetch tags
+      run: git fetch --prune --unshallow --tags
+
+    - name: Delete previous release
+      run: |
+        gh release delete --yes canary
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        
+    - name: Create new release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: canary
+        name: DSPRE Canary Build ${{ steps.date.outputs.date }}
+        files: DSPRE-canary.zip
+        token: ${{ secrets.GITHUB_TOKEN }}
+        prerelease: true
+        generate_release_notes: true
