@@ -1681,11 +1681,11 @@ namespace DSPRE.Resources {
             [0x0336] = new byte[] { 2 },
 
             //International release exclusive
-            [0x0337] = new byte[1] { 0 },
+            [0x0337] = new byte[] { 2, 2 },
             [0x0338] = new byte[1] { 0 },
             [0x0339] = new byte[1] { 0 },
             [0x033A] = new byte[] { 1 },
-            [0x033B] = new byte[1] { 0 },
+            [0x033B] = new byte[] { 1 },
             [0x033C] = new byte[] { 1, 2 },
             [0x033D] = new byte[] { 1, 2 },
             [0x033E] = new byte[] { 1, 2 },
