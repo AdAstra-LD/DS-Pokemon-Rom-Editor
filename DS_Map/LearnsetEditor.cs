@@ -28,8 +28,8 @@ namespace DSPRE {
         private int currentLoadedId = 0;
         private LearnsetData currentLoadedFile = null;
 
-        private static bool dirty = false;
-        private static readonly string formName = "Learnset Editor";
+        private bool dirty = false;
+        private readonly string formName = "Learnset Editor";
 
         public LearnsetEditor(string[] moveNames, Control parent, PokemonEditor pokeEditor) {
             this.moveNames = moveNames;
