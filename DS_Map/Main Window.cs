@@ -27,9 +27,12 @@ using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
+using System.Windows.Media.Media3D;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using static DSPRE.ROMFiles.HeadbuttTree;
 
 namespace DSPRE {
-
 
     public partial class MainProgram : Form {
 
@@ -4529,19 +4532,38 @@ namespace DSPRE {
             DrawCollisionGrid();
             RestorePainter();
         }
-        private void exportMovButton_Click(object sender, EventArgs e) {
-            SaveFileDialog em = new SaveFileDialog {
+        private void exportMovButton_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog em = new SaveFileDialog
+            {
                 Filter = MapFile.MovepermsFilter,
                 FileName = selectMapComboBox.SelectedItem.ToString()
             };
-            if (em.ShowDialog(this) != DialogResult.OK) {
+            if (em.ShowDialog(this) != DialogResult.OK)
+            {
                 return;
             }
 
-            File.WriteAllBytes(em.FileName, currentMapFile.CollisionsToByteArray());
+            string fileExtension = Path.GetExtension(em.FileName).ToLower();
+            string contentToSave;
+
+            if (fileExtension == ".json")
+            {
+                File.WriteAllText(em.FileName, currentMapFile.CollisionsToJson());
+            }
+            else if (fileExtension == ".per")
+            {
+                File.WriteAllBytes(em.FileName, currentMapFile.CollisionsToByteArray());
+            }
+            else
+            {
+                MessageBox.Show("Unsupported file format!", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             MessageBox.Show("Permissions exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         private void importMovButton_Click(object sender, EventArgs e) {
             OpenFileDialog ip = new OpenFileDialog {
                 Filter = MapFile.MovepermsFilter
@@ -9926,5 +9948,89 @@ namespace DSPRE {
             Helpers.statusLabelMessage();
             Update();
         }
+
+        private void exportAllToJson_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog em = new SaveFileDialog
+            {
+                FileName = selectMapComboBox.SelectedItem.ToString(),
+                Filter = "JSON File (*.json)|*.json"
+            };
+            if (em.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            string fileExtension = Path.GetExtension(em.FileName).ToLower();
+            if (fileExtension == ".json")
+            {
+  
+                var jMap = new JObject();
+                var jMapId = new JProperty("mapId", int.Parse(selectMapComboBox.SelectedItem.ToString().Substring(0, 3)));
+                var jMapName = new JProperty("mapName", currentMapFile.mapModel.models[0].Name);
+                jMap.Add(jMapId);
+                jMap.Add(jMapName);
+                var jBuildings = new JArray();
+                foreach (var building in currentMapFile.buildings)
+                {
+                    var jBuilding = new JObject();
+                    var x = building.XCoordinate;
+                    var y = building.YCoordinate;
+                    var z = building.ZCoordinate;
+                    var id = building.modelID;
+                    var name = building.NSBMDFile.models[0].Name;
+                    jBuilding.Add("x", x);
+                    jBuilding.Add("y", y);
+                    jBuilding.Add("z", z);
+                    jBuilding.Add("id", id);
+                    jBuilding.Add("name", name);
+                    jBuildings.Add(jBuilding);
+                }
+
+
+                JObject jPermissions = new JObject();
+
+                JArray jCollisions = new JArray();
+                for (int y = 0; y < currentMapFile.collisions.GetLength(0); y++)
+                {
+                    JArray row = new JArray();
+                    for (int x = 0; x < currentMapFile.collisions.GetLength(1); x++)
+                    {
+                        row.Add(currentMapFile.collisions[y, x]);
+                    }
+                    jCollisions.Add(row);
+                }
+
+                JArray jTypes = new JArray();
+                for (int y = 0; y < currentMapFile.types.GetLength(0); y++)
+                {
+                    JArray row = new JArray();
+                    for (int x = 0; x < currentMapFile.types.GetLength(1); x++)
+                    {
+                        row.Add(currentMapFile.types[y, x]);
+                    }
+                    jTypes.Add(row);
+                }
+
+                jPermissions.Add("collisions", jCollisions);
+                jPermissions.Add("types", jTypes);
+
+
+                jMap.Add("buildings", jBuildings);
+                jMap.Add("permissions", jPermissions);
+
+                string json = JsonConvert.SerializeObject(jMap, Formatting.Indented);
+                File.WriteAllText(em.FileName, json);
+            }
+            else
+            {
+                MessageBox.Show("Unsupported file format!", "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show("Permissions exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      
+        }
     }
+
 }
