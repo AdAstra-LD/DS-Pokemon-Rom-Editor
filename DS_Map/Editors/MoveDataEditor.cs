@@ -274,7 +274,7 @@ namespace DSPRE {
                 return;
             }
 
-            currentLoadedFile.accuracy = (byte)powerNumericUpDown.Value;
+            currentLoadedFile.accuracy = (byte)accuracyNumericUpDown.Value;
             setDirty(true);
         }
 
