@@ -38,7 +38,7 @@ namespace DSPRE {
             EditorPanels.Initialize(this);
             Helpers.Initialize(this);
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
-            Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
+            Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Luna/GXTHMXM Mixone)";
         }
 
         #region Program Window
@@ -518,14 +518,7 @@ namespace DSPRE {
             Update();
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version " + GetDSPREVersion() + Environment.NewLine
-                + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4."
-                + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused." +
-                "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
-                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, Mixone, JackHack96, Pleonex and BagBoy."
-                + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
-
-            MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
         }
         private void loadRom_Click(object sender, EventArgs e) {
             OpenFileDialog openRom = new OpenFileDialog {
@@ -2249,58 +2242,158 @@ namespace DSPRE {
             }
             return (Color.White, Color.Black);
         }
-        private void GenerateMatrixTables() {
+        private void GenerateMatrixTables()
+        {
             /* Generate table columns */
-            if (currentMatrix is null) {
+            if (currentMatrix is null)
+            {
                 return;
             }
 
-            for (int i = 0; i < currentMatrix.width; i++) {
-                headersGridView.Columns.Add("Column" + i, i.ToString("D"));
-                headersGridView.Columns[i].Width = 32; // Set column size
-                headersGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                headersGridView.Columns[i].Frozen = false;
-
-                heightsGridView.Columns.Add("Column" + i, i.ToString("D"));
-                heightsGridView.Columns[i].Width = 21; // Set column size
-                heightsGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                heightsGridView.Columns[i].Frozen = false;
-
-                mapFilesGridView.Columns.Add("Column" + i, i.ToString("D"));
-                mapFilesGridView.Columns[i].Width = 32; // Set column size
-                mapFilesGridView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                mapFilesGridView.Columns[i].Frozen = false;
-            }
+            // Create and set up DataGridViews
+            SetupDataGridView(headersGridView, currentMatrix.width, 32);
+            SetupDataGridView(heightsGridView, currentMatrix.width, 21);
+            SetupDataGridView(mapFilesGridView, currentMatrix.width, 32);
 
             /* Generate table rows */
-            for (int i = 0; i < currentMatrix.height; i++) {
-                mapFilesGridView.Rows.Add();
-                mapFilesGridView.Rows[i].HeaderCell.Value = i.ToString();
-
-                headersGridView.Rows.Add();
-                headersGridView.Rows[i].HeaderCell.Value = i.ToString();
-
-                heightsGridView.Rows.Add();
-                heightsGridView.Rows[i].HeaderCell.Value = i.ToString();
+            for (int i = 0; i < currentMatrix.height; i++)
+            {
+                AddRow(headersGridView, i);
+                AddRow(heightsGridView, i);
+                AddRow(mapFilesGridView, i);
             }
 
             /* Fill tables */
-            for (int i = 0; i < currentMatrix.height; i++) {
-                for (int j = 0; j < currentMatrix.width; j++) {
-                    headersGridView.Rows[i].Cells[j].Value = currentMatrix.headers[i, j];
-                    heightsGridView.Rows[i].Cells[j].Value = currentMatrix.altitudes[i, j];
-                    mapFilesGridView.Rows[i].Cells[j].Value = currentMatrix.maps[i, j];
+            for (int i = 0; i < currentMatrix.height; i++)
+            {
+                for (int j = 0; j < currentMatrix.width; j++)
+                {
+                    headersGridView.Rows[i].Cells[j].Value = currentMatrix.headers[i, j] != null ? currentMatrix.headers[i, j].ToString() : "-";
+                    heightsGridView.Rows[i].Cells[j].Value = currentMatrix.altitudes[i, j] != null ? currentMatrix.altitudes[i, j].ToString() : "-";
+                    mapFilesGridView.Rows[i].Cells[j].Value = currentMatrix.maps[i, j] != null ? currentMatrix.maps[i, j].ToString() : "-";
                 }
             }
 
-            if (currentMatrix.hasHeadersSection) {
+            if (currentMatrix.hasHeadersSection)
+            {
                 matrixTabControl.TabPages.Add(headersTabPage);
             }
 
-            if (currentMatrix.hasHeightsSection) {
+            if (currentMatrix.hasHeightsSection)
+            {
                 matrixTabControl.TabPages.Add(heightsTabPage);
             }
         }
+
+        private void SetupDataGridView(DataGridView dgv, int columnCount, int columnWidth)
+        {
+            for (int i = 0; i < columnCount; i++)
+            {
+                dgv.Columns.Add("Column" + i, i.ToString("D"));
+                dgv.Columns[i].Width = columnWidth;
+                dgv.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                dgv.Columns[i].Frozen = false;
+            }
+            dgv.KeyDown += DataGridView_KeyDown;
+            dgv.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
+            dgv.MultiSelect = true;
+            dgv.AllowUserToAddRows = false;
+            dgv.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+        }
+
+        private void AddRow(DataGridView dgv, int rowIndex)
+        {
+            dgv.Rows.Add();
+            dgv.Rows[rowIndex].HeaderCell.Value = rowIndex.ToString();
+        }
+
+        private void DataGridView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender is DataGridView dgv)
+            {
+                if (e.Control && e.KeyCode == Keys.C)
+                {
+                    CopyToClipboard(dgv);
+                }
+                else if (e.Control && e.KeyCode == Keys.V)
+                {
+                    PasteFromClipboard(dgv);
+                }
+                else if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
+                {
+                    ClearSelectedCells(dgv);
+                }
+            }
+        }
+
+        private void CopyToClipboard(DataGridView dgv)
+        {
+            DataObject dataObj = dgv.GetClipboardContent();
+            if (dataObj != null)
+            {
+                Clipboard.SetDataObject(dataObj);
+            }
+        }
+
+        private void PasteFromClipboard(DataGridView dgv)
+        {
+            if (Clipboard.ContainsText())
+            {
+                string clipboardText = Clipboard.GetText();
+                if (dgv.SelectedCells.Count > 1)
+                {
+                    foreach (DataGridViewCell cell in dgv.SelectedCells)
+                    {
+                        cell.Value = clipboardText.Trim();
+                    }
+                }
+                else
+                {
+                    string[] lines = clipboardText.Split('\n');
+                    int startRow = dgv.CurrentCell.RowIndex;
+                    int startCol = dgv.CurrentCell.ColumnIndex;
+
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        if (startRow + i >= dgv.Rows.Count)
+                        {
+                            break;
+                        }
+
+                        string[] cells = lines[i].Split('\t');
+                        for (int j = 0; j < cells.Length; j++)
+                        {
+                            if (startCol + j >= dgv.Columns.Count)
+                            {
+                                break;
+                            }
+
+                            dgv.Rows[startRow + i].Cells[startCol + j].Value = cells[j].Trim();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ClearSelectedCells(DataGridView dgv)
+        {
+            foreach (DataGridViewCell cell in dgv.SelectedCells)
+            {
+                if (matrixTabControl.SelectedTab == headersTabPage)
+                {
+                    cell.Value = "0";
+                }
+                else if (matrixTabControl.SelectedTab == heightsTabPage)
+                {
+                    cell.Value = "00";
+                }
+                else
+                {
+                    cell.Value = "-";
+                }
+            }
+        }
+
         #endregion
         private void SetupMatrixEditor() {
             Helpers.statusLabelMessage("Setting up Matrix Editor...");
@@ -9926,5 +10019,1967 @@ namespace DSPRE {
             Helpers.statusLabelMessage();
             Update();
         }
+
+        private void headersGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void MainProgram_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void headerEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void worldmapCoordsGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label36_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox18_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox10_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void areaDataLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void matrixLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox9_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void searchLocationTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void areaIconPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void areaImageLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void internalNameLenLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void areaSettingsLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label14_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void weatherLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cameraLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void musicNightLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void musicDayLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void levelScriptLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scriptLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void headerListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void flagsGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void johtoRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void followModeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void battleBackgroundLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cameraPicLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cameraPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void weatherPicLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void weatherPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void matrixEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelMatrices_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void matrixNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void matrixTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void headersTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void heightsTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void heightsGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void mapFilesTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mapFilesGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void widthLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mapEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void mapRenderPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void mapOpenGlControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label26_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mapFileLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mapTextureLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buildingsTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox33_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void yLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lockXZgroupbox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void zLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void xLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bldRoundGroupbox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void groupBox20_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void exteriorbldRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox19_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buildPositionGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void permissionsTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void typeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void collisionLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void typeGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void typePainterPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void collisionGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void collisionPainterPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void selectCollisionPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void selectTypePanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void modelTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void embedTexturesInMapModelCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void modelSizeLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nsbmdSizeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void unsupported3DModelEditLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void terrainTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void terrainSizeLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void terrainDataLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void unsupportedBDHCEditLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bgsTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BGSSizeLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bgsDataLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void unsupportedBGSEditLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radio3D_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nsbtxEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox7_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel37_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void groupBox35_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel38_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void scalingLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void areaDataGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void areaTypeGroupbox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void outdoorAreaRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label35_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label34_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label33_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label32_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void palettesLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void texturesLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox21_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventMapTextureLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RightClickLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void WheelClickLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LeftClickLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventMatrixYLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventMatrixXLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void matrixNavigatorLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventMatrixPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void backgroundMapLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signsTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox5_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signMatrixYLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signMatrixXLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signZLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signMapXLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signMapYLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signOrientationLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void signScriptNumberLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void overworldsTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox22_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void spriteIDlabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox17_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owMovementGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox23_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label39_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void positionGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label13_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owXPositionLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owSpecialGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owItemLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owSightRangeLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owTrainerLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owScriptLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owFlagLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owSpriteLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owIDLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void owSpritePictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void warpsTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox11_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventEditorHeaderLocationNameLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void warpAnchorLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox14_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox12_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label24_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label25_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggersTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggerLogicGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label28_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label27_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox16_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggerLengthLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggerWidthLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox15_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggerZLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggerMapXLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggerYMapLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox6_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggerYMatrixLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void triggerXMatrixLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void eventOpenGlControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rightClickPicture_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void wheelClickPicture_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LeftClickPicture_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPageScriptEditor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPageLevelScriptEditor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LineNumbersFormatgroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void decimalRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox13_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label67_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void searchAllArchivesCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void caseSensitiveTextReplaceCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textSearchResultsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void replaceTextLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void replaceMessageTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textSearchProgressBar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void caseSensitiveTextSearchCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void searchMessageTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textEditorDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void cameraEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void groupBox28_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label74_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void party6GroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyForm6ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyAbility6ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyGender6ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemonItemPictureBox6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label60_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label61_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label62_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void poke6MovesGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyIV6UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyLevel6UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyBall6UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemon6PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void party5GroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyForm5ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyAbility5ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyGender5ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemonItemPictureBox5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label57_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label58_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label59_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void poke5MovesGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyIV5UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyLevel5UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyBall5UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemon5PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void party4GroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyForm4ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyAbility4ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyGender4ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemonItemPictureBox4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label54_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label55_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label56_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void poke4MovesGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyIV4UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyLevel4UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyBall4UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemon4PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void party3GroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyForm3ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyAbility3ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyGender3ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemonItemPictureBox3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label51_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label52_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label53_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void poke3MovesGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyIV3UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyLevel3UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyBall3UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemon3PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void party2GroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyForm2ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyAbility2ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyGender2ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemonItemPictureBox2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label48_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label49_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label50_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void poke2MovesGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyIV2UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyLevel2UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyBall2UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemon2PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void party1GroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyForm1ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyAbility1ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyGender1ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemonItemPictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label47_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label46_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label45_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void poke1MovesGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyIV1UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyLevel1UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyBall1UpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void partyPokemon1PictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox27_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eyeContactMusicAltLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void encounterSSEQAltUpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eyeContactMusicLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void encounterSSEQMainUpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerClassFrameMaxLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label40_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerClassNameTextbox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label17_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerClassPicBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void deleteTrainerButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox25_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel5_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void TrainerAIGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI1CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI2CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI3CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI4CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI5CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI6CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI7CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI8CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI9CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI10CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerAI11CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerItemsGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerDoubleCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label44_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label63_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label43_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label42_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableEditorTabPage_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label73_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbEffectsGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox31_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbEffectsBattleSSEQUpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label21_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbEffectsVSAnimationUpDown_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label22_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbEffectsTrainerGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label75_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbEditortrainerClassFrameMaxLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbEditorTrClassPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label68_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbEffectsTrainerChooseMainCombobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label70_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbEffectsMonGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tbEditorPokeminiPictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label69_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbEffectsPokemonChooseMainCombobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label71_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void conditionalMusicGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label66_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label65_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label64_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label41_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void locationNameConditionalMusicLBL_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPageEncountersEditor_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gameIcon_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void languageLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nameGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scriptCommandsDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NarcUtilityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBasedBatchRenameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBuilderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nSBMDUtilityToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void essentialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void simpleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void advancedStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void fullViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void otherEditorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void statusLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripProgressBar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mainToolStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void separator_AfterOpenSave_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void separator_afterFolderUnpackers_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void separator_afterNarcUtils_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void separator_afterRenameUtils_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void separator_afterListUtils_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void separator_afterNsbmdUtils_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void separator_afterMiscButtons_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void versionLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolTip1_Popup(object sender, PopupEventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version " + GetDSPREVersion() + Environment.NewLine
+                + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4."
+                + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused." +
+                "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
+                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, Mixone, JackHack96, Pleonex and BagBoy."
+                + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
+
+            MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void texturePictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void scriptEditor_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void levelScriptEditor_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerItem1ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerItem2ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerItem3ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trainerItem4ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void encountersEditor_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void discordServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Would you like to join our Discord server?", "Join Discord", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start("https://discord.com/invite/m4XcSTB4ga");
+            }
+        }
+
+        private void dSPokémonHackingGiodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Would you like to visit the DSPokémon Hacking Guide website?", "Visit Website", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start("https://ds-pokemon-hacking.github.io/");
+            }
+        }
+
     }
 }
