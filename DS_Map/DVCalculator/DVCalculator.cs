@@ -19,39 +19,32 @@ namespace DSPRE
 
     internal static class DVCalculator
     {
-        private static long seed;
-
-        public static void setSeed(long seed)
+        private static uint state;
+        public static void setSeed(uint seed)
         {
-            DVCalculator.seed = seed;
+
+            DVCalculator.state = seed;
+
         }
 
-        public static long getSeed()
-        {
-            return DVCalculator.seed;
-        }
-
-
-        // This function is lifted from turtleisaac's Pokeditor (with permission)
+        // this code is partially lifted from turtleisaac's Pokeditor
         // See https://github.com/turtleisaac/PokEditor-v2/blob/72ca6ab641f616b8be9a87624b81896baa45f947/src/com/turtleisaac/pokeditor/utilities/TrainerPersonalityCalculator.java
-        public static long getNextRandom()
+        // and the pokeplatinum / pokeheartgold projects See: https://github.com/pret
+        public static uint getNextRandom()
         {
-            long random = 0x41c64e6d * seed + 0x6073;
+            state = 1103515245 * state + 24691;
 
-            //last 32 bits is new seed
-            seed = random & 0xFFFFFFFFL;
-
-            return random;
+            // Upper 16 bit are random value
+            return state >> 16;
         }
 
-        public static int findHighestDV(int trainerIdx, int trainerClassIdx, bool trainerClassMale, int pokeIdx, int pokeLevel, uint nature)
+        public static int findHighestDV(uint trainerIdx, uint trainerClassIdx, bool trainerClassMale, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride, uint nature)
         {
-            int DV;
+            byte DV;
 
-            // Iterate over all possible PIDs and return highest DV that yields the desired nature
-            for (DV = 255; DV >= 0; DV--)
+            for (DV = 255; DV > 0; DV--)
             {
-                if (getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, trainerClassMale, pokeIdx, pokeLevel, DV)) == nature)
+                if (getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, trainerClassMale, pokeIdx, pokeLevel, baseGenderRatio, genderOverride, abilityOverride, DV)) == nature)
                 { return DV; }
             }
 
@@ -59,15 +52,13 @@ namespace DSPRE
 
         }
 
-        // this function is lifted from turtleisaac's Pokeditor (with permission)
-        // See https://github.com/turtleisaac/PokEditor-v2/blob/72ca6ab641f616b8be9a87624b81896baa45f947/src/com/turtleisaac/pokeditor/utilities/TrainerPersonalityCalculator.java
-        public static uint generatePID(int trainerIdx, int trainerClassIdx, bool trainerClassMale, int pokeIdx, int pokeLevel, int difficultyValue)
+        public static uint generatePID(uint trainerIdx, uint trainerClassIdx, bool trainerClassMale, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride, byte difficultyValue)
         {
-            long newSeed = trainerIdx + pokeIdx + pokeLevel + difficultyValue;
-
-            long random = 0;
+            uint newSeed = (uint)(trainerIdx + pokeIdx + pokeLevel + difficultyValue);
 
             setSeed(newSeed);
+
+            uint random = 0;
 
             while (trainerClassIdx > 0)
             {
@@ -75,12 +66,38 @@ namespace DSPRE
                 random = getNextRandom();
             }
 
-            // Don't really get this part? Why are we shifting to the right then left again?
-            long PID = (random >> 16) & 0xffff;
-            PID = PID * 256;
+            uint genderMod = 0;
 
-            // This seems super arbitrary (wtf GameFreak?)
-            PID += trainerClassMale ? 136 : 120;
+            // this is always the case in platinum
+            if (genderOverride == 0)
+            {
+                genderMod = trainerClassMale ? 136u : 120u;
+            }
+
+            // Code from here in is HGSS exclusive
+            if (genderOverride == 1)
+            {
+                genderMod = baseGenderRatio + 2u;
+            }
+
+            else if (genderOverride == 2)
+            {
+                genderMod = baseGenderRatio - 2u;
+            }
+
+            // Force Ability 1 --> Force lowest bit to 0
+            if (abilityOverride == 1)
+            {
+                genderMod = (uint)(genderMod & ~1);
+            }
+
+            // Force Ability 2 --> Force lowest bit to 1
+            else if (abilityOverride == 2)
+            {
+                genderMod = (uint)(genderMod | 1);
+            }
+
+            uint PID = (random << 8) + genderMod;
 
             return (uint)PID;
         }
@@ -90,53 +107,52 @@ namespace DSPRE
             return (PID % 100) % 25;
         }
 
-        public static List<DVIVNatureTriplet> getAllNatures(int trainerIdx, int trainerClassIdx, bool trainerClassMale, int pokeIdx, int pokeLevel)
+        public static List<DVIVNatureTriplet> getAllNatures(uint trainerIdx, uint trainerClassIdx, bool trainerClassMale, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride)
         {
-            List<DVIVNatureTriplet> natureList = new List<DVIVNatureTriplet>();
+            List<DVIVNatureTriplet> natureDict = new List<DVIVNatureTriplet>();
 
-            int DV;
+            byte DV;
             uint natureIdx;
 
-            // Iterate over all possible PIDs and store the DV IV and Nature String in the custom data type
-            for (DV = 255; DV >= 0; DV--)
+            for (DV = 255; DV > 0; DV--)
             {
-                natureIdx = getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, trainerClassMale, pokeIdx, pokeLevel, DV));
+                natureIdx = getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, trainerClassMale, pokeIdx, pokeLevel, baseGenderRatio, genderOverride, abilityOverride, DV));
 
-                natureList.Add(new DVIVNatureTriplet(DV, DV*31/255 , Natures[(int)natureIdx]));
+                natureDict.Add(new DVIVNatureTriplet(DV, DV * 31 / 255, Natures[(int)natureIdx]));
 
             }
 
-            return natureList;
+            return natureDict;
         }
 
-        public static readonly List<string> Natures = new List<string>
-        {
-        "Hardy: Neutral",
-        "Lonely: +Atk, -Def",
-        "Brave: +Atk, -Spe",
-        "Adamant: +Atk, -SpA",
-        "Naughty: +Atk, -SpD",
-        "Bold: +Def, -Atk",
-        "Docile: Neutral",
-        "Relaxed: +Def, -Spe",
-        "Impish: +Def, -SpA",
-        "Lax: +Def, -SpD",
-        "Timid: +Spe, -Atk",
-        "Hasty: +Spe, -Def",
-        "Serious: Neutral",
-        "Jolly: +Spe, -SpA",
-        "Naive: +Spe, -SpD",
-        "Modest: +SpA, -Atk",
-        "Mild: +SpA, -Def",
-        "Quiet: +SpA, -Spe",
-        "Bashful: Neutral",
-        "Rash: +SpA, -SpD",
-        "Calm: +SpD, -Atk",
-        "Gentle: +SpD, -Def",
-        "Sassy: +SpD, -Spe",
-        "Careful: +SpD, -SpA",
-        "Quirky: Neutral"
-        };
+        public static List<string> Natures = new List<string>
+    {
+    "Hardy: Neutral",
+    "Lonely: +Atk, -Def",
+    "Brave: +Atk, -Spe",
+    "Adamant: +Atk, -SpA",
+    "Naughty: +Atk, -SpD",
+    "Bold: +Def, -Atk",
+    "Docile: Neutral",
+    "Relaxed: +Def, -Spe",
+    "Impish: +Def, -SpA",
+    "Lax: +Def, -SpD",
+    "Timid: +Spe, -Atk",
+    "Hasty: +Spe, -Def",
+    "Serious: Neutral",
+    "Jolly: +Spe, -SpA",
+    "Naive: +Spe, -SpD",
+    "Modest: +SpA, -Atk",
+    "Mild: +SpA, -Def",
+    "Quiet: +SpA, -Spe",
+    "Bashful: Neutral",
+    "Rash: +SpA, -SpD",
+    "Calm: +SpD, -Atk",
+    "Gentle: +SpD, -Def",
+    "Sassy: +SpD, -Spe",
+    "Careful: +SpD, -SpA",
+    "Quirky: Neutral"
+    };
 
 
     }

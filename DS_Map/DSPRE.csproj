@@ -404,7 +404,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\writeText.Designer.cs" />
-    <EmbeddedResource Include="DVCalculator\DVCalc.resx" />
     <EmbeddedResource Include="DVCalculator\DVCalcNatureViewerForm.resx" />
     <EmbeddedResource Include="Editors\EncountersEditor.resx">
       <DependentUpon>EncountersEditor.cs</DependentUpon>
