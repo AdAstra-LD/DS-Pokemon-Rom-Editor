@@ -720,7 +720,7 @@ namespace DSPRE.ROMFiles {
 
                             functionOffsets.Add(new ContainerReference() {
                                 ID = currentFunction.manualUserID,
-                                offsetInFile = scriptOffsets[currentFunction.usedScriptID - 1].offsetInFile
+                                offsetInFile = scriptOffsets.Find(x => x.ID == currentFunction.usedScriptID).offsetInFile
                             });
                         }
                     }
