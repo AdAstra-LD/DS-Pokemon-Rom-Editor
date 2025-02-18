@@ -1,4 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DSPRE
 {
@@ -58,6 +63,7 @@ namespace DSPRE
         private GroupBox groupBoxHGSS;
         private RadioButton radioButtonIngoreGender;
         private RadioButton radioButtonIgnoreAbility;
-
+        private Button buttonHelp;
+        private Button buttonHGSS;
     }
 }
