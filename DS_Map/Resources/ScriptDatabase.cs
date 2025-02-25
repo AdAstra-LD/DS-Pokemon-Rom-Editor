@@ -491,7 +491,7 @@ namespace DSPRE.Resources {
             [0x0182] = "SetBerryMulch",
             [0x0183] = "SetBerrySpecies",
             [0x0184] = "WateringAnimation",
-            [0x0185] = "TakeBerries",
+            [0x0185] = "HarvestBerries",
             [0x0186] = "SetOWDefaultPosition",
             [0x0187] = "SetOWPosition",
             [0x0188] = "SetOWDefaultMovement",
@@ -2104,6 +2104,10 @@ namespace DSPRE.Resources {
             [0x026A] = "CheckAlbumPhoto",
 
             [0x026E] = "GetOWDirection",
+            [0x026F] = "HarvestApricorn",
+            [0x0270] = "GetApricornColor",
+            [0x0271] = "GiveApricorn",
+            [0x0272] = "TextApricorn",
 
             [0x0289] = "ScratchOffScreen",
             [0x028A] = "ReleaseScriptApp",
