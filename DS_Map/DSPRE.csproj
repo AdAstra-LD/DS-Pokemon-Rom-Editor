@@ -258,7 +258,9 @@
     <Compile Include="ROMFiles\SafariZoneObjectRequirement.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
     <Compile Include="ROMFiles\ScriptActionContainer.cs" />
-    <Compile Include="ROMFiles\ScriptCommandContainer.cs" />
+    <Compile Include="ROMFiles\ScriptCommandPosition.cs" />
+    <Compile Include="ROMFiles\ScriptLabeledSection.cs" />
+    <Compile Include="ROMFiles\ScriptParameter.cs" />
     <Compile Include="ROMFiles\ScriptReference.cs" />
     <Compile Include="ROMFiles\SpeciesFile.cs" />
     <Compile Include="ROMFiles\TrainerFile.cs" />
