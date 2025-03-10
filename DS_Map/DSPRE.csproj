@@ -256,12 +256,11 @@
     <Compile Include="ROMFiles\SafariZoneEncounterFile.cs" />
     <Compile Include="ROMFiles\SafariZoneEncounterGroup.cs" />
     <Compile Include="ROMFiles\SafariZoneObjectRequirement.cs" />
-    <Compile Include="ROMFiles\ScriptAction.cs" />
-    <Compile Include="ROMFiles\ScriptActionContainer.cs" />
-    <Compile Include="ROMFiles\ScriptCommandPosition.cs" />
-    <Compile Include="ROMFiles\ScriptLabeledSection.cs" />
-    <Compile Include="ROMFiles\ScriptParameter.cs" />
-    <Compile Include="ROMFiles\ScriptReference.cs" />
+    <Compile Include="Script\ScriptAction.cs" />
+    <Compile Include="Script\ScriptCommandPosition.cs" />
+    <Compile Include="Script\ScriptLabeledSection.cs" />
+    <Compile Include="Script\ScriptParameter.cs" />
+    <Compile Include="Script\ScriptReference.cs" />
     <Compile Include="ROMFiles\SpeciesFile.cs" />
     <Compile Include="ROMFiles\TrainerFile.cs" />
     <Compile Include="ROMFiles\VariableValueTrigger.cs" />
@@ -278,7 +277,7 @@
       <DependentUpon>BuildingEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="RomInfo.cs" />
-    <Compile Include="ROMFiles\ScriptCommand.cs" />
+    <Compile Include="Script\ScriptCommand.cs" />
     <Compile Include="ScintillaUtils\HotKeyManager.cs" />
     <Compile Include="ScintillaUtils\ScriptTooltip.cs">
       <SubType>Form</SubType>
