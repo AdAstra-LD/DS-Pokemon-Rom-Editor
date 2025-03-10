@@ -199,27 +199,33 @@ namespace DSPRE.Editors {
             textArea.Styles[Style.Default].ForeColor = Color.FromArgb(0xFFFFFF);
             textArea.StyleClearAll();
 
-            // Configure the lexer styles
-            textArea.Styles[Style.Python.Identifier].ForeColor = Color.FromArgb(0xD0DAE2);
-            textArea.Styles[Style.Python.CommentLine].ForeColor = Color.FromArgb(0x40BF57);
-            textArea.Styles[Style.Python.Number].ForeColor = Color.FromArgb(0xFFFF00);
-            textArea.Styles[Style.Python.String].ForeColor = Color.FromArgb(0xFF00FF);
-            textArea.Styles[Style.Python.Character].ForeColor = Color.FromArgb(0xE95454);
-            textArea.Styles[Style.Python.Operator].ForeColor = Color.FromArgb(0xFFFF00);
-            textArea.Styles[Style.Python.Word].ForeColor = Color.FromArgb(0x48A8EE);
-            textArea.Styles[Style.Python.Word2].ForeColor = Color.FromArgb(0xF98906);
+            // Configure Assembly lexer styles
+            textArea.Styles[Style.Asm.Identifier].ForeColor = Color.FromArgb(0xD0DAE2);
+            textArea.Styles[Style.Asm.Number].ForeColor = Color.FromArgb(0xFFFF00);
+            textArea.Styles[Style.Asm.String].ForeColor = Color.FromArgb(0xFF00FF);
+            textArea.Styles[Style.Asm.Character].ForeColor = Color.FromArgb(0xE95454);
+            textArea.Styles[Style.Asm.Operator].ForeColor = Color.FromArgb(0xFFFF00);
+            textArea.Styles[Style.Asm.Comment].ForeColor = Color.FromArgb(0x40BF57);
 
-            // Set the lexer and keywords
-            textArea.Lexer = Lexer.Python;
-            textArea.SetKeywords(0, cmdKeyWords);
-            textArea.SetKeywords(1, secondaryKeyWords);
+            // For command keywords - use CpuInstruction style
+            textArea.Styles[Style.Asm.CpuInstruction].ForeColor = Color.FromArgb(0x48A8EE);
+
+            // For secondary keywords - use Directive style
+            textArea.Styles[Style.Asm.Directive].ForeColor = Color.FromArgb(0xF98906);
 
             // Configure indicators for prefix highlighting
             textArea.Indicators[0].Style = IndicatorStyle.TextFore;
             textArea.Indicators[0].ForeColor = Color.FromArgb(0x8A2BE2); // Purple for label_*
+            textArea.Indicators[0].Under = false;  // Draw over the lexer's styling
 
             textArea.Indicators[1].Style = IndicatorStyle.TextFore;
             textArea.Indicators[1].ForeColor = Color.FromArgb(0x00CED1); // Cyan for script_*
+            textArea.Indicators[1].Under = false;  // Draw over the lexer's styling
+
+            // Set the lexer and keywords
+            textArea.Lexer = Lexer.Asm;
+            textArea.SetKeywords(0, cmdKeyWords);     // CPU Instructions index
+            textArea.SetKeywords(3, secondaryKeyWords); // Directives index
 
             // Apply the highlighting
             textArea.TextChanged += (sender, e) => HighlightPrefixedWords(textArea);
@@ -235,35 +241,31 @@ namespace DSPRE.Editors {
             textArea.IndicatorCurrent = 1;
             textArea.IndicatorClearRange(0, textArea.TextLength);
 
-            // Use Scintilla-specific regex syntax
-            // Enable regex mode
-            textArea.SearchFlags = SearchFlags.Regex;
+            // Process each line individually
+            for (int i = 0; i < textArea.Lines.Count; i++) {
+                string lineText = textArea.Lines[i].Text;
+                int linePos = textArea.Lines[i].Position;
 
-            // Search for label_* words
-            textArea.IndicatorCurrent = 0;
-            textArea.TargetStart = 0;
-            textArea.TargetEnd = textArea.TextLength;
+                // Trim for detection but use original text for positions
+                string trimmedLine = lineText.Trim();
 
-            // Using \< and \> for word boundaries in Scintilla
-            string labelPattern = "\\<label_[a-zA-Z0-9_]+\\>";
+                // Handle script_ lines
+                if (trimmedLine.Contains("script_") && trimmedLine.EndsWith(":")) {
+                    int startPos = linePos + lineText.IndexOf("script_");
+                    int endPos = linePos + lineText.IndexOf(":", lineText.IndexOf("script_")) + 1;
 
-            while (textArea.SearchInTarget(labelPattern) != -1) {
-                textArea.IndicatorFillRange(textArea.TargetStart, textArea.TargetEnd - textArea.TargetStart);
-                textArea.TargetStart = textArea.TargetEnd;
-                textArea.TargetEnd = textArea.TextLength;
-            }
+                    textArea.IndicatorCurrent = 1;
+                    textArea.IndicatorFillRange(startPos, endPos - startPos);
+                }
 
-            // Search for script_* words
-            textArea.IndicatorCurrent = 1;
-            textArea.TargetStart = 0;
-            textArea.TargetEnd = textArea.TextLength;
+                // Handle label_ lines
+                if (trimmedLine.Contains("label_") && trimmedLine.EndsWith(":")) {
+                    int startPos = linePos + lineText.IndexOf("label_");
+                    int endPos = linePos + lineText.IndexOf(":", lineText.IndexOf("label_")) + 1;
 
-            string scriptPattern = "\\<script_[a-zA-Z0-9_]+\\>";
-
-            while (textArea.SearchInTarget(scriptPattern) != -1) {
-                textArea.IndicatorFillRange(textArea.TargetStart, textArea.TargetEnd - textArea.TargetStart);
-                textArea.TargetStart = textArea.TargetEnd;
-                textArea.TargetEnd = textArea.TextLength;
+                    textArea.IndicatorCurrent = 0;
+                    textArea.IndicatorFillRange(startPos, endPos - startPos);
+                }
             }
         }
 
