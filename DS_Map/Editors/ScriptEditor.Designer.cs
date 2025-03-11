@@ -1,33 +1,34 @@
 ﻿
 namespace DSPRE.Editors
 {
-  partial class ScriptEditor
-  {
-    /// <summary> 
-    /// Required designer variable.
-    /// </summary>
-    private System.ComponentModel.IContainer components = null;
-
-    /// <summary> 
-    /// Clean up any resources being used.
-    /// </summary>
-    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-    protected override void Dispose(bool disposing)
+    partial class ScriptEditor
     {
-      if (disposing && (components != null))
-      {
-        components.Dispose();
-      }
-      base.Dispose(disposing);
-    }
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-    #region Component Designer generated code
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-    /// <summary>
-    /// Required method for Designer support - do not modify
-    /// the contents of this method with the code editor.
-    /// </summary>
-    private void InitializeComponent() {
+        #region Component Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.selectScriptFileComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.PanelSearchScripts = new System.Windows.Forms.Panel();
@@ -616,53 +617,53 @@ namespace DSPRE.Editors
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private System.Windows.Forms.CheckBox scrollToBlockStartcheckBox;
+
+        #endregion
+
+        public System.Windows.Forms.ComboBox selectScriptFileComboBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel PanelSearchScripts;
+        private System.Windows.Forms.Button BtnNextFindScript;
+        private System.Windows.Forms.Button BtnPrevFindScript;
+        private System.Windows.Forms.Button BtnCloseFindScript;
+        private System.Windows.Forms.TextBox panelFindScriptTextBox;
+        private System.Windows.Forms.Panel scintillaScriptsPanel;
+        private System.Windows.Forms.Button addScriptFileButton;
+        private System.Windows.Forms.Button removeScriptFileButton;
+        private System.Windows.Forms.Button saveScriptFileButton;
+        private System.Windows.Forms.Button exportScriptFileButton;
+        private System.Windows.Forms.Button importScriptFileButton;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.CheckBox searchOnlyCurrentScriptCheckBox;
+        private System.Windows.Forms.CheckBox scriptSearchCaseSensitiveCheckBox;
+        private System.Windows.Forms.TextBox searchInScriptsTextBox;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ProgressBar searchProgressBar;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Button searchInScriptsButton;
+        private System.Windows.Forms.ListBox searchInScriptsResultListBox;
+        private System.Windows.Forms.GroupBox groupBox24;
+        private System.Windows.Forms.TabControl ScriptNavigatorTabControl;
+        private System.Windows.Forms.TabPage ScriptsNavTab;
+        private System.Windows.Forms.ListBox scriptsNavListbox;
+        private System.Windows.Forms.TabPage FunctionsNavTab;
+        private System.Windows.Forms.ListBox functionsNavListbox;
+        private System.Windows.Forms.TabPage ActionsNavTab;
+        private System.Windows.Forms.ListBox actionsNavListbox;
+        private System.Windows.Forms.Button openFindScriptEditorButton;
+        private System.Windows.Forms.Button expandScriptTextButton;
+        private System.Windows.Forms.Button compressScriptTextButton;
+        private System.Windows.Forms.CheckBox scriptEditorWordWrapCheckbox;
+        private System.Windows.Forms.CheckBox scriptEditorWhitespacesCheckbox;
+        private System.Windows.Forms.GroupBox groupBox26;
+        private System.Windows.Forms.RadioButton scriptEditorNumberFormatNoPreference;
+        private System.Windows.Forms.RadioButton scriptEditorNumberFormatDecimal;
+        private System.Windows.Forms.RadioButton scriptEditorNumberFormatHex;
+        private System.Windows.Forms.Button viewLevelScriptButton;
+        private System.Windows.Forms.Button locateCurrentScriptFile;
     }
-
-    private System.Windows.Forms.CheckBox scrollToBlockStartcheckBox;
-
-    #endregion
-
-    public System.Windows.Forms.ComboBox selectScriptFileComboBox;
-    private System.Windows.Forms.Label label5;
-    private System.Windows.Forms.Panel PanelSearchScripts;
-    private System.Windows.Forms.Button BtnNextFindScript;
-    private System.Windows.Forms.Button BtnPrevFindScript;
-    private System.Windows.Forms.Button BtnCloseFindScript;
-    private System.Windows.Forms.TextBox panelFindScriptTextBox;
-    private System.Windows.Forms.Panel scintillaScriptsPanel;
-    private System.Windows.Forms.Button addScriptFileButton;
-    private System.Windows.Forms.Button removeScriptFileButton;
-    private System.Windows.Forms.Button saveScriptFileButton;
-    private System.Windows.Forms.Button exportScriptFileButton;
-    private System.Windows.Forms.Button importScriptFileButton;
-    private System.Windows.Forms.GroupBox groupBox8;
-    private System.Windows.Forms.CheckBox searchOnlyCurrentScriptCheckBox;
-    private System.Windows.Forms.CheckBox scriptSearchCaseSensitiveCheckBox;
-    private System.Windows.Forms.TextBox searchInScriptsTextBox;
-    private System.Windows.Forms.Label label31;
-    private System.Windows.Forms.ProgressBar searchProgressBar;
-    private System.Windows.Forms.Label label30;
-    private System.Windows.Forms.Label label29;
-    private System.Windows.Forms.Button searchInScriptsButton;
-    private System.Windows.Forms.ListBox searchInScriptsResultListBox;
-    private System.Windows.Forms.GroupBox groupBox24;
-    private System.Windows.Forms.TabControl ScriptNavigatorTabControl;
-    private System.Windows.Forms.TabPage ScriptsNavTab;
-    private System.Windows.Forms.ListBox scriptsNavListbox;
-    private System.Windows.Forms.TabPage FunctionsNavTab;
-    private System.Windows.Forms.ListBox functionsNavListbox;
-    private System.Windows.Forms.TabPage ActionsNavTab;
-    private System.Windows.Forms.ListBox actionsNavListbox;
-    private System.Windows.Forms.Button openFindScriptEditorButton;
-    private System.Windows.Forms.Button expandScriptTextButton;
-    private System.Windows.Forms.Button compressScriptTextButton;
-    private System.Windows.Forms.CheckBox scriptEditorWordWrapCheckbox;
-    private System.Windows.Forms.CheckBox scriptEditorWhitespacesCheckbox;
-    private System.Windows.Forms.GroupBox groupBox26;
-    private System.Windows.Forms.RadioButton scriptEditorNumberFormatNoPreference;
-    private System.Windows.Forms.RadioButton scriptEditorNumberFormatDecimal;
-    private System.Windows.Forms.RadioButton scriptEditorNumberFormatHex;
-    private System.Windows.Forms.Button viewLevelScriptButton;
-    private System.Windows.Forms.Button locateCurrentScriptFile;
-  }
 }

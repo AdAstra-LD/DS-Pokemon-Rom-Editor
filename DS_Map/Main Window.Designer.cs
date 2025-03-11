@@ -10266,8 +10266,7 @@
             this.NarcUtilityToolStripMenuItem,
             this.listBasedBatchRenameToolStripMenuItem,
             this.listBuilderToolStripMenuItem,
-            this.nSBMDUtilityToolStripMenuItem,
-            this.exportScriptDatabaseJSONToolStripMenuItem});
+            this.nSBMDUtilityToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.aboutToolStripMenuItem.Text = "Tools";
@@ -12060,7 +12059,6 @@
         private System.Windows.Forms.ToolStripButton weatherMapEditor;
         private System.Windows.Forms.TrackBar transparencyBar;
         private System.Windows.Forms.ToolStripMenuItem addressHelperToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportScriptDatabaseJSONToolStripMenuItem;
     }
 }
 
