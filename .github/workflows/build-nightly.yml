@@ -1,7 +1,10 @@
-name: DSPRE Beta Canary Build 
- 
-on: [push]
- 
+name: DSPRE Beta Canary Build
+
+on:
+  push:
+    branches:
+      - main  # Trigger only on pushes to the main branch
+
 permissions:
   contents: write
 
@@ -25,18 +28,29 @@ jobs:
 
     - name: Build DSPRE
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} 
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
     
     - name: Zip Release Files
-      run: Compress-Archive ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release DSPRE-beta-canary.zip
+      run: Compress-Archive -Path ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release -DestinationPath DSPRE-beta-canary.zip
 
-    - name: Release with Notes
+    - name: Fetch tags
+      run: git fetch --prune --unshallow --tags
+
+    - name: Delete previous release
+      run: |
+        gh release delete --yes beta_canary
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+        
+    - name: Create new release
       uses: softprops/action-gh-release@v2
       with:
         tag_name: beta_canary
-        name: DSPRE Beta Canary Build
+        name: DSPRE Beta Canary Build ${{ steps.date.outputs.date }}
         files: DSPRE-beta-canary.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: true
