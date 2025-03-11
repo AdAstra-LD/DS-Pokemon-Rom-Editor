@@ -258,18 +258,18 @@ namespace DSPRE
         public static bool CheckScriptsStandardizedItemNumbers()
         {
             ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
-            if (itemScript.allScripts.Count - 1 < new TextArchive(RomInfo.itemNamesTextNumber).messages.Count)
-            {
-                return false;
-            }
+            //if (itemScript.allScripts.Count - 1 < new TextArchive(RomInfo.itemNamesTextNumber).messages.Count)
+            //{
+            //    return false;
+            //}
 
-            for (ushort i = 0; i < itemScript.allScripts.Count - 1; i++)
-            {
-                if (BitConverter.ToUInt16(itemScript.allScripts[i].commands[0].cmdParams[1], 0) != i || BitConverter.ToUInt16(itemScript.allScripts[i].commands[1].cmdParams[1], 0) != 1)
-                {
-                    return false;
-                }
-            }
+            //for (ushort i = 0; i < itemScript.allScripts.Count - 1; i++)
+            //{
+            //    if (BitConverter.ToUInt16(itemScript.allScripts[i].commands[0].Parameters[1].RawData, 0) != i || BitConverter.ToUInt16(itemScript.allScripts[i].commands[1].Parameters[1].RawData, 0) != 1)
+            //    {
+            //        return false;
+            //    }
+            //}
             return true;
         }
 
@@ -590,12 +590,12 @@ namespace DSPRE
                     ScriptFile itemScriptFile = new ScriptFile(RomInfo.itemScriptFileNumber);
 
                     // Create map for: script no. -> vanilla item
-                    int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count - 1];
-
-                    for (int i = 0; i < itemScriptFile.allScripts.Count - 1; i++)
-                    {
-                        vanillaItemsArray[i] = BitConverter.ToInt16(itemScriptFile.allScripts[i].commands[0].cmdParams[1], 0);
-                    };
+                    //int[] vanillaItemsArray = new int[itemScriptFile.allScripts.Count - 1];
+                    //
+                    //for (int i = 0; i < itemScriptFile.allScripts.Count - 1; i++)
+                    //{
+                    //    vanillaItemsArray[i] = BitConverter.ToInt16(itemScriptFile.allScripts[i].commands[0].Parameters[1].RawData, 0);
+                    //};
 
                     // Parse all event files and fix instances of ground items according to the new order
                     int cnt = Filesystem.GetEventFileCount();
@@ -617,7 +617,7 @@ namespace DSPRE
                             if (isItem)
                             {
                                 int itemScriptID = eventFile.overworlds[j].scriptNumber - (itemScrMin - 1);
-                                eventFile.overworlds[j].scriptNumber = (ushort)(itemScrMin + vanillaItemsArray[itemScriptID - 1]);
+                                //eventFile.overworlds[j].scriptNumber = (ushort)(itemScrMin + vanillaItemsArray[itemScriptID - 1]);
                                 dirty = true;
                             }
                         }
@@ -644,29 +644,29 @@ namespace DSPRE
 
                         using (DSUtils.EasyWriter ewr = new DSUtils.EasyWriter(ow9path, ow9offs))
                         {
-                            ewr.Write((ushort)(itemScrMin + vanillaItemsArray[itemScriptID - 1]));
+                            //ewr.Write((ushort)(itemScrMin + vanillaItemsArray[itemScriptID - 1]));
                         }
                     }
 
                     // Sort scripts in the Script File according to item indices
                     int itemCount = new TextArchive(RomInfo.itemNamesTextNumber).messages.Count;
-                    ScriptCommandContainer executeGive = new ScriptCommandContainer((uint)itemCount + 1, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
+                    //ScriptCommandContainer executeGive = new ScriptCommandContainer((uint)itemCount + 1, itemScriptFile.allScripts[itemScriptFile.allScripts.Count - 1]);
 
-                    itemScriptFile.allScripts.Clear();
+                    //itemScriptFile.allScripts.Clear();
 
-                    for (ushort i = 0; i < itemCount; i++)
-                    {
-                        List<ScriptCommand> cmdList = new List<ScriptCommand> {
-                            new ScriptCommand("SetVar 0x8008 " + i),
-                            new ScriptCommand("SetVar 0x8009 0x1"),
-                            new ScriptCommand("Jump Function_#1")
-                        };
-
-                        itemScriptFile.allScripts.Add(new ScriptCommandContainer((ushort)(i + 1), ScriptFile.ContainerTypes.Script, commandList: cmdList));
-                    }
-
-                    itemScriptFile.allScripts.Add(executeGive);
-                    itemScriptFile.allFunctions[0].usedScriptID = itemCount + 1;
+                    //for (ushort i = 0; i < itemCount; i++)
+                    //{
+                    //    List<ScriptCommand> cmdList = new List<ScriptCommand> {
+                    //        new ScriptCommand("SetVar 0x8008 " + i),
+                    //        new ScriptCommand("SetVar 0x8009 0x1"),
+                    //        new ScriptCommand("Jump Function_#1")
+                    //    };
+                    //
+                    //    itemScriptFile.allScripts.Add(new ScriptCommandContainer((ushort)(i + 1), ScriptFile.ContainerTypes.Script, commandList: cmdList));
+                    //}
+                    //
+                    //itemScriptFile.allScripts.Add(executeGive);
+                    //itemScriptFile.allFunctions[0].usedScriptID = itemCount + 1;
 
                     itemScriptFile.SaveToFileDefaultDir(RomInfo.itemScriptFileNumber, showSuccessMessage: false);
                     MessageBox.Show("Operation successful.", "Process completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);

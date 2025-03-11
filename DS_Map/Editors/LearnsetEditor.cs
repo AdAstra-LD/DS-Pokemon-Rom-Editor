@@ -2,11 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Windows;
+using System.Drawing;
+using System.Text;
 using System.Windows.Forms;
-using static ScintillaNET.Style;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DSPRE {
@@ -30,8 +28,8 @@ namespace DSPRE {
         private int currentLoadedId = 0;
         private LearnsetData currentLoadedFile = null;
 
-        private static bool dirty = false;
-        private static readonly string formName = "Learnset Editor";
+        private bool dirty = false;
+        private readonly string formName = "Learnset Editor";
 
         public LearnsetEditor(string[] moveNames, Control parent, PokemonEditor pokeEditor) {
             this.moveNames = moveNames;
@@ -117,6 +115,8 @@ namespace DSPRE {
             foreach (var elem in currentLoadedFile.list) {
                 movesListBox.Items.Add(ElemToString(elem));
             }
+
+            UpdateEntryCountLabel();
             movesListBox.EndUpdate();
         }
 
@@ -231,6 +231,8 @@ namespace DSPRE {
                 if (count > 0) {
                     movesListBox.SelectedIndex = Math.Max(0, sel - 1);
                 }
+
+                UpdateEntryCountLabel();
             }
 
             UpdateByEditMode();
@@ -259,6 +261,7 @@ namespace DSPRE {
                     newSelection = currentLoadedFile.list.FindIndex(x => x == newEntry);
                 }
                 
+                UpdateEntryCountLabel();
                 movesListBox.SelectedIndex = newSelection;
                 editMode = false;
                 movesListBox.Enabled = true;
@@ -273,6 +276,7 @@ namespace DSPRE {
                 moveInputComboBox.SelectedIndex = move;
                 levelNumericUpDown.Value = level;
             }
+
             UpdateByEditMode();
             addMoveButton.Enabled = (editMode == false && CheckValidEntry());
             setDirty(true);
@@ -302,6 +306,22 @@ namespace DSPRE {
 
             editMoveButton.Enabled = true;
             deleteMoveButton.Enabled = true;
+        }
+
+        private void UpdateEntryCountLabel(){
+            StringBuilder labelText = new StringBuilder("Entry Count: ");
+            labelText.Append(movesListBox.Items.Count);
+
+            if (movesListBox.Items.Count > LearnsetData.VanillaLimit) {
+                labelText.Append("!");
+                entryCountLabel.ForeColor = Color.FromArgb(210, 120, 0);
+                entryCountLabel.Font = new Font(entryCountLabel.Font, FontStyle.Bold);
+            } else {
+                entryCountLabel.ForeColor = Color.Black;
+                entryCountLabel.Font = new Font(entryCountLabel.Font, FontStyle.Regular);
+            }
+
+            entryCountLabel.Text = labelText.ToString();
         }
     }
 }

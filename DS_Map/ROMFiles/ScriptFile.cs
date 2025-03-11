@@ -1,8 +1,8 @@
-using DSPRE.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
 
@@ -11,11 +11,12 @@ namespace DSPRE.ROMFiles {
     /// Class to store script file data in Pokémon NDS games
     /// </summary>
     public class ScriptFile : RomFile {
-        //this enum doesn't really make much sense now but it will, once scripts can be called and jumped to
+        public List<ScriptCommandPosition> CommandSequence { get; set; } = new List<ScriptCommandPosition>();
+        public Dictionary<int, string> OffsetToLabelMap { get; set; } = new Dictionary<int, string>();
         public enum ContainerTypes {
-            Function,
             Action,
-            Script
+            Script,
+            Label
         };
 
         public struct ContainerReference {
@@ -23,31 +24,32 @@ namespace DSPRE.ROMFiles {
             public uint offsetInFile;
         }
 
-        public List<ScriptCommandContainer> allScripts = new List<ScriptCommandContainer>();
-        public List<ScriptCommandContainer> allFunctions = new List<ScriptCommandContainer>();
-        public List<ScriptActionContainer> allActions = new List<ScriptActionContainer>();
         public int fileID = -1;
         public bool isLevelScript = new bool();
 
-        public bool hasNoScripts { get { return fileID == int.MaxValue; } }
+        public bool HasNoScripts { get { return fileID == int.MaxValue; } }
 
         public static readonly char[] specialChars = { 'x', 'X', '#', '.', '_' };
 
-        public ScriptFile(Stream fs, bool readFunctions = true, bool readActions = true) {
-            List<int> scriptOffsets = new List<int>();
-            List<int> functionOffsets = new List<int>();
-            List<int> movementOffsets = new List<int>();
+        public ScriptFile(Stream fs) {
+            // Initialize collections
+            CommandSequence = new List<ScriptCommandPosition>();
+            OffsetToLabelMap = new Dictionary<int, string>();
 
             using (BinaryReader br = new BinaryReader(fs)) {
-                /* Read script offsets from the header */
-                isLevelScript = true; // Is Level Script as long as magic number FD13 doesn't exist
+                // Read header to find entry points
+                List<int> entryPointOffsets = new List<int>();
+                isLevelScript = true; // Is Level Script until proved otherwise
+
                 try {
+                    int entryPointIndex = 0;
                     while (true) {
+                        long headerPos = br.BaseStream.Position;
                         uint checker = br.ReadUInt16();
                         br.BaseStream.Position -= 0x2;
                         uint value = br.ReadUInt32();
 
-                        if (value == 0 && scriptOffsets.Count == 0) {
+                        if (value == 0 && entryPointOffsets.Count == 0) {
                             isLevelScript = true;
                             break;
                         }
@@ -58,12 +60,17 @@ namespace DSPRE.ROMFiles {
                             break;
                         }
 
-                        int offsetFromStart = (int)(value + br.BaseStream.Position); // Don't change order of addition
-                        scriptOffsets.Add(offsetFromStart);
+                        int offsetFromStart = (int)(value + headerPos + 4);
+                        entryPointOffsets.Add(offsetFromStart);
+
+                        // Create entry point label
+                        string entryLabel = $"script_{entryPointIndex}";
+                        OffsetToLabelMap[offsetFromStart] = entryLabel;
+                        entryPointIndex++;
                     }
                 } catch (EndOfStreamException) {
                     if (!isLevelScript) {
-                        MessageBox.Show("Script File couldn't be read correctly.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error); // Now this may appear in a few level scripts that don't have a 4-byte aligned "00 00 00 00"
+                        MessageBox.Show("Script File couldn't be read correctly.", "Unexpected EOF", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 
@@ -71,90 +78,56 @@ namespace DSPRE.ROMFiles {
                     return;
                 }
 
-                /* Read scripts */
-                for (uint current = 0; current < scriptOffsets.Count; current++) {
-                    int index = scriptOffsets.FindIndex(x => x == scriptOffsets[(int)current]); // Check for UseScript
+                // Skip the 0xFD13 marker
+                br.ReadUInt16();
 
-                    if (index == current) {
-                        br.BaseStream.Position = scriptOffsets[(int)current];
+                // Process commands until end of file
+                while (br.BaseStream.Position < br.BaseStream.Length) {
+                    int currentOffset = (int)br.BaseStream.Position;
 
-                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                        bool endScript = new bool();
-                        while (!endScript) {
-                            ScriptCommand cmd = ReadCommand(br, ref functionOffsets, ref movementOffsets);
-                            if (cmd.cmdParams is null) {
-                                return;
-                            }
+                    // Sometimes we might hit padding bytes - try to detect and skip
+                    if (br.BaseStream.Position + 2 <= br.BaseStream.Length) {
+                        byte[] peekBytes = br.ReadBytes(2);
+                        br.BaseStream.Position -= 2;
 
-                            cmdList.Add(cmd);
-
-                            if (ScriptDatabase.endCodes.Contains((ushort)cmd.id)) {
-                                endScript = true;
-                            }
-                        }
-
-                        allScripts.Add(new ScriptCommandContainer(current + 1, ContainerTypes.Script, commandList: cmdList));
-                    } else {
-                        allScripts.Add(new ScriptCommandContainer(current + 1, ContainerTypes.Script, usedScriptID: index + 1));
-                    }
-                }
-
-                /* Read functions */
-                if (readFunctions) {
-                    for (uint current = 0; current < functionOffsets.Count; current++) {
-                        br.BaseStream.Position = functionOffsets[(int)current];
-                        int posInList = scriptOffsets.IndexOf(functionOffsets[(int)current]); // Check for UseScript
-
-                        if (posInList == -1) {
-                            List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                            bool endFunction = new bool();
-                            while (!endFunction) {
-                                ScriptCommand command = ReadCommand(br, ref functionOffsets, ref movementOffsets);
-                                if (command.cmdParams is null) {
-                                    return;
-                                }
-
-                                cmdList.Add(command);
-                                if (ScriptDatabase.endCodes.Contains((ushort)command.id)) {
-                                    endFunction = true;
-                                }
-                            }
-
-                            allFunctions.Add(new ScriptCommandContainer(current + 1, ContainerTypes.Function, commandList: cmdList));
-                        } else {
-                            allFunctions.Add(new ScriptCommandContainer(current + 1, ContainerTypes.Function, usedScriptID: posInList + 1));
+                        // Check if these look like padding
+                        if (peekBytes[0] == 0 && peekBytes[1] == 0) {
+                            // Skip padding byte
+                            br.ReadByte();
+                            continue;
                         }
                     }
-                }
 
-                if (readActions) {
-                    /* Read movements */
-                    for (uint current = 0; current < movementOffsets.Count; current++) {
-                        br.BaseStream.Position = movementOffsets[(int)current];
-
-                        List<ScriptAction> cmdList = new List<ScriptAction>();
-                        bool endMovement = new bool();
-                        while (!endMovement) {
-                            ushort id = br.ReadUInt16();
-                            if (id == 0xFE) {
-                                endMovement = true;
-                                cmdList.Add(new ScriptAction(id, 0));
-                            } else {
-                                cmdList.Add(new ScriptAction(id, br.ReadUInt16()));
-                            }
-                        }
-
-                        allActions.Add(new ScriptActionContainer(current + 1, commands: cmdList));
+                    ScriptCommand cmd = ReadCommand(br);
+                    if (cmd == null || cmd.id == null) {
+                        break; // End of file or error
                     }
+
+                    // Check if this is an entry point or jump target
+                    bool isEntryPoint = false;
+                    int entryPointIndex = -1;
+                    string label = null;
+
+                    if (OffsetToLabelMap.TryGetValue(currentOffset, out string existingLabel)) {
+                        label = existingLabel;
+                        isEntryPoint = existingLabel.StartsWith("script_");
+                        if (isEntryPoint) {
+                            entryPointIndex = int.Parse(existingLabel.Substring("script_".Length));
+                        }
+                    }
+
+                    // Add to command sequence
+                    CommandSequence.Add(new ScriptCommandPosition(
+                        cmd, currentOffset, label, isEntryPoint, entryPointIndex));
                 }
             }
         }
 
-        public ScriptFile(int fileID, bool readFunctions = true, bool readActions = true) : this(getFileStream(fileID), readFunctions, readActions) {
+        public ScriptFile(int fileID) : this(getFileStream(fileID)) {
             this.fileID = fileID;
         }
 
-        static FileStream getFileStream(int fileID) {
+        public static FileStream getFileStream(int fileID) {
             string path = Filesystem.GetScriptPath(fileID);
             return new FileStream(path, FileMode.OpenOrCreate);
         }
@@ -164,730 +137,439 @@ namespace DSPRE.ROMFiles {
             return $"{prefix}Script File " + this.fileID;
         }
 
-        public ScriptFile(List<ScriptCommandContainer> scripts, List<ScriptCommandContainer> functions, List<ScriptActionContainer> movements, int fileID = -1) {
-            allScripts = scripts;
-            allFunctions = functions;
-            allActions = movements;
-            isLevelScript = false;
-        }
-
-        public ScriptFile(IEnumerable<string> scriptLines, IEnumerable<string> functionLines, IEnumerable<string> actionLines, int fileID = -1) {
-            //TODO: give user the possibility to jump to/call a script
-            //once it's done, this Predicate below will be the only one needed, since there will be no distinction between
-            //a script and a function
-            bool functionEndCondition(List<(int linenum, string text)> source, int x, ushort? id) {
-                return source[x].text.TrimEnd().IgnoreCaseEquals(RomInfo.ScriptCommandNamesDict[0x0002]) //End
-                       || source[x].text.IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + ' ' + ContainerTypes.Function.ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0 //Jump Function_#
-                       || source[x].text.TrimEnd().IgnoreCaseEquals(RomInfo.ScriptCommandNamesDict[0x001B])
-                       || ScriptDatabase.endCodes.Contains(id);
-            } //Return
-
-            bool scriptEndCondition(List<(int linenum, string text)> source, int x, ushort? id) {
-                return source[x].text.TrimEnd().IgnoreCaseEquals(RomInfo.ScriptCommandNamesDict[0x0002]) //End
-                       || source[x].text.IndexOf(RomInfo.ScriptCommandNamesDict[0x0016] + ' ' + ContainerTypes.Function.ToString()) >= 0 //Jump Function_#
-                       || ScriptDatabase.endCodes.Contains(id);
-            }
-
-            allScripts = ReadCommandsFromLines(scriptLines.ToList(), ContainerTypes.Script, scriptEndCondition); //Jump + whitespace
-            if (allScripts is null) {
-                return;
-            }
-
-            if (allScripts.Count <= 0) {
-                this.fileID = int.MaxValue;
-                return;
-            }
-
-            if (functionLines != null) {
-                allFunctions = ReadCommandsFromLines(functionLines.ToList(), ContainerTypes.Function, functionEndCondition); //Jump + whitespace
-                if (allFunctions is null) {
-                    return;
-                }
-            }
-
-            if (actionLines != null) {
-                allActions = ReadActionsFromLines(actionLines.ToList());
-                if (allActions is null) {
-                    return;
-                }
-            }
-
+        public ScriptFile(IEnumerable<string> lines, int fileID = -1) {
+            CommandSequence = new List<ScriptCommandPosition>();
+            OffsetToLabelMap = new Dictionary<int, string>();
             this.fileID = fileID;
+
+            int currentOffset = 0;
+            string currentLabel = null;
+            int entryPointIndex = 0;
+            bool isCurrentLabelEntryPoint = false;  // Track this instead
+
+            // Parse each line
+            foreach (var line in lines) {
+                string trimmedLine = line.Trim();
+
+                // Skip empty lines
+                if (string.IsNullOrWhiteSpace(trimmedLine)) {
+                    continue;
+                }
+
+                // Check if this is a label
+                if (trimmedLine.EndsWith(":")) {
+                    currentLabel = trimmedLine.Substring(0, trimmedLine.Length - 1);
+
+                    // Track if it's an entry point
+                    isCurrentLabelEntryPoint = currentLabel.StartsWith("script_");
+                    if (isCurrentLabelEntryPoint) {
+                        if (int.TryParse(currentLabel.Substring("script_".Length), out int index)) {
+                            entryPointIndex = index;
+                        }
+                    }
+
+                    continue;
+                }
+
+                // Parse the command
+                ScriptCommand cmd = new ScriptCommand(trimmedLine);
+                if (cmd.id == null) {
+                    continue; // Skip invalid commands
+                }
+
+                // Calculate the size of this command for offset tracking
+                int cmdSize = 2; // Command ID (2 bytes)
+                foreach (var param in cmd.Parameters) {
+                    cmdSize += param.RawData.Length;
+                }
+
+                // Use the tracked entry point flag
+                int epIndex = isCurrentLabelEntryPoint ? entryPointIndex : -1;
+
+                CommandSequence.Add(new ScriptCommandPosition(
+                    cmd, currentOffset, currentLabel, isCurrentLabelEntryPoint, epIndex));
+
+                // Map the offset to the label for jump targets
+                if (currentLabel != null) {
+                    OffsetToLabelMap[currentOffset] = currentLabel;
+                    currentLabel = null; // Reset label
+                    isCurrentLabelEntryPoint = false; // Reset entry point flag
+                }
+
+                // Update offset for next command
+                currentOffset += cmdSize;
+            }
         }
 
-        private ScriptCommand ReadCommand(BinaryReader dataReader, ref List<int> functionOffsets, ref List<int> actionOffsets) {
-            ushort id = dataReader.ReadUInt16();
-            List<byte[]> parameterList = new List<byte[]>();
+        private ScriptCommand ReadCommand(BinaryReader br) {
+            // Check if we've reached the end of the file
+            if (br.BaseStream.Position >= br.BaseStream.Length) {
+                return null;
+            }
 
-            /* How to read parameters for different commands for DPPt*/
-            switch (RomInfo.gameFamily) {
-                case GameFamilies.DP:
-                case GameFamilies.Plat:
-                    switch (id) {
-                        case 0x16: //Jump
-                        case 0x1A: //Call 
-                            ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
-                            break;
-                        case 0x17: //JumpIfObjID
-                        case 0x18: //JumpIfBgID
-                        case 0x19: //JumpIfPlayerDir
-                        case 0x1C: //JumpIf
-                        case 0x1D: //CallIf
-                                   //in the case of JumpIf and CallIf, the first param is a comparisonOperator
-                                   //for JumpIfPlayerDir it's a directionID
-                                   //for JumpIfObjID, it's an EventID
-                            parameterList.Add(new byte[] { dataReader.ReadByte() });
-                            ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
-                            break;
-                        case 0x5E: // Movement
-                            parameterList.Add(BitConverter.GetBytes(dataReader.ReadUInt16()));
-                            ProcessRelativeJump(dataReader, ref parameterList, ref actionOffsets);
-                            break;
-                        case 0x1CF:
-                        case 0x1D0:
-                        case 0x1D1: {
-                                byte parameter1 = dataReader.ReadByte();
-                                parameterList.Add(new byte[] { parameter1 });
-                                if (parameter1 == 0x2) {
-                                    parameterList.Add(dataReader.ReadBytes(2)); //Read additional u16 if first param read is 2
-                                }
-                            }
-                            break;
-                        case 0x21D: {
-                                ushort parameter1 = dataReader.ReadUInt16();
-                                parameterList.Add(BitConverter.GetBytes(parameter1));
+            try {
+                ushort id = br.ReadUInt16();
+                List<ScriptParameter> parameters = new List<ScriptParameter>();
 
-                                switch (parameter1) {
-                                    case 0:
-                                    case 1:
-                                    case 2:
-                                    case 3:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 4:
-                                    case 5:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 6:
-                                        break;
-                                }
-                            }
-                            break;
-                        case 0x235: {
-                                short parameter1 = dataReader.ReadInt16();
-                                parameterList.Add(BitConverter.GetBytes(parameter1));
+                // Track the original position for jump calculations
+                long commandStartPos = br.BaseStream.Position - 2;
 
-                                switch (parameter1) {
-                                    case 0x1:
-                                    case 0x3:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 0x4:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 0x0:
-                                    case 0x6:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            break;
-                        case 0x23E: {
-                                short parameter1 = dataReader.ReadInt16();
-                                parameterList.Add(BitConverter.GetBytes(parameter1));
+                switch (gameFamily) {
+                    case GameFamilies.Plat:
+                        switch (id) {
+                            case 0x16: // Jump
+                            case 0x1A: // Call
+                                ProcessRelativeJumpLinear(br, parameters);
+                                break;
 
-                                switch (parameter1) {
-                                    case 0x1:
-                                    case 0x3:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 0x5:
-                                    case 0x6:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    default:
-                                        break;
+                            case 0x17: // JumpIfObjID
+                            case 0x18: // JumpIfEventID
+                            case 0x19: // JumpIfPlayerDir
+                            case 0x1C: // JumpIf
+                            case 0x1D: // CallIf
+                                       // First parameter (condition)
+                                parameters.Add(new ScriptParameter(new byte[] { br.ReadByte() }));
+                                // Then jump target
+                                ProcessRelativeJumpLinear(br, parameters);
+                                break;
+
+                            case 0x5E: // Movement
+                                parameters.Add(new ScriptParameter(BitConverter.GetBytes(br.ReadUInt16())));
+                                ProcessRelativeJumpLinear(br, parameters);
+                                break;
+
+                            case 0x1CF:
+                            case 0x1D0:
+                            case 0x1D1: {
+                                    byte parameter1 = br.ReadByte();
+                                    parameters.Add(new ScriptParameter(new byte[] { parameter1 }));
+                                    if (parameter1 == 0x2) {
+                                        parameters.Add(new ScriptParameter(br.ReadBytes(2))); //Read additional u16 if first param read is 2
+                                    }
                                 }
-                            }
-                            break;
-                        case 0x2C4: {
-                                byte parameter1 = dataReader.ReadByte();
-                                parameterList.Add(new byte[] { parameter1 });
-                                if (parameter1 == 0 || parameter1 == 1) {
-                                    parameterList.Add(dataReader.ReadBytes(2));
+                                break;
+                            case 0x21D: {
+                                    ushort parameter1 = br.ReadUInt16();
+                                    parameters.Add(new ScriptParameter(BitConverter.GetBytes(parameter1)));
+
+                                    switch (parameter1) {
+                                        case 0:
+                                        case 1:
+                                        case 2:
+                                        case 3:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 4:
+                                        case 5:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 6:
+                                            break;
+                                    }
                                 }
-                            }
-                            break;
-                        case 0x2C5: {
+                                break;
+                            case 0x235: {
+                                    short parameter1 = br.ReadInt16();
+                                    parameters.Add(new ScriptParameter(BitConverter.GetBytes(parameter1)));
+
+                                    switch (parameter1) {
+                                        case 0x1:
+                                        case 0x3:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 0x4:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 0x0:
+                                        case 0x6:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                break;
+                            case 0x23E: {
+                                    short parameter1 = br.ReadInt16();
+                                    parameters.Add(new ScriptParameter(BitConverter.GetBytes(parameter1)));
+
+                                    switch (parameter1) {
+                                        case 0x1:
+                                        case 0x3:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 0x5:
+                                        case 0x6:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                break;
+                            case 0x2C4: {
+                                    byte parameter1 = br.ReadByte();
+                                    parameters.Add(new ScriptParameter(new byte[] { parameter1 }));
+                                    if (parameter1 == 0 || parameter1 == 1) {
+                                        parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                    }
+                                }
+                                break;
+                            case 0x2C5: {
+                                    if (RomInfo.gameVersion == GameVersions.Platinum) {
+                                        parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                        parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                    } else {
+                                        goto default;
+                                    }
+                                }
+                                break;
+                            case 0x2C6:
+                            case 0x2C9:
+                            case 0x2CA:
+                            case 0x2CD:
                                 if (RomInfo.gameVersion == GameVersions.Platinum) {
-                                    parameterList.Add(dataReader.ReadBytes(2));
-                                    parameterList.Add(dataReader.ReadBytes(2));
+                                    break;
                                 } else {
                                     goto default;
                                 }
-                            }
-                            break;
-                        case 0x2C6:
-                        case 0x2C9:
-                        case 0x2CA:
-                        case 0x2CD:
-                            if (RomInfo.gameVersion == GameVersions.Platinum) {
+                            case 0x2CF:
+                                if (RomInfo.gameVersion == GameVersions.Platinum) {
+                                    parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                    parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                } else {
+                                    goto default;
+                                }
+
                                 break;
-                            } else {
-                                goto default;
-                            }
-                        case 0x2CF:
-                            if (RomInfo.gameVersion == GameVersions.Platinum) {
-                                parameterList.Add(dataReader.ReadBytes(2));
-                                parameterList.Add(dataReader.ReadBytes(2));
-                            } else {
-                                goto default;
-                            }
+                            default:
+                                // Standard command handling
+                                if (RomInfo.ScriptCommandParametersDict.TryGetValue(id, out byte[] paramSizes)) {
+                                    foreach (int size in paramSizes) {
+                                        parameters.Add(new ScriptParameter(br.ReadBytes(size)));
+                                    }
+                                }
+                                break;
+                        }
+                    break;
 
+                    case GameFamilies.HGSS:
+                        switch (id) {
+                            case 0x16: //Jump
+                            case 0x1A: //Call 
+                                ProcessRelativeJumpLinear(br, parameters);
+                                break;
+
+                            case 0x17: //JumpIfObjID
+                            case 0x18: //JumpIfBgID
+                            case 0x19: //JumpIfPlayerDir
+                            case 0x1C: //JumpIf
+                            case 0x1D: //CallIf
+                                parameters.Add(new ScriptParameter(new byte[] { br.ReadByte() })); //in the case of JumpIf and CallIf, the first param is a comparisonOperator
+                                ProcessRelativeJumpLinear(br, parameters);
+                                break;
+
+                            case 0x5E: // Movement
+                                parameters.Add(new ScriptParameter(BitConverter.GetBytes(br.ReadUInt16()))); //in the case of Movement, the first param is an overworld ID
+                                ProcessRelativeJumpLinear(br, parameters);
+                                break;
+
+                            case 0x190:
+                            case 0x191:
+                            case 0x192: {
+                                    byte parameter1 = br.ReadByte();
+                                    parameters.Add(new ScriptParameter(new byte[] { parameter1 }));
+                                    if (parameter1 == 0x2) {
+                                        parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                    }
+                                }
+                                break;
+
+                            case 0x1D1: // Number of parameters differ depending on the first parameter value
+                            {
+                                    short parameter1 = br.ReadInt16();
+                                    parameters.Add(new ScriptParameter(BitConverter.GetBytes(parameter1)));
+                                    switch (parameter1) {
+                                        case 0x0:
+                                        case 0x1:
+                                        case 0x2:
+                                        case 0x3:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 0x4:
+                                        case 0x5:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 0x6:
+                                            break;
+                                        case 0x7:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                break;
+
+                            case 0x1E9: // Number of parameters differ depending on the first parameter value
+                                {
+                                    short parameter1 = br.ReadInt16();
+                                    parameters.Add(new ScriptParameter(BitConverter.GetBytes(parameter1)));
+                                    switch (parameter1) {
+                                        case 0x0:
+                                            break;
+                                        case 0x1:
+                                        case 0x2:
+                                        case 0x3:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 0x4:
+                                            break;
+                                        case 0x5:
+                                        case 0x6:
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            parameters.Add(new ScriptParameter(br.ReadBytes(2)));
+                                            break;
+                                        case 0x7:
+                                        case 0x8:
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
                             break;
-                        default:
-                            addParametersToList(ref parameterList, id, dataReader);
-                            break;
-                    }
+
+                            default:
+                                // For standard commands, read parameters based on definition
+                                if (RomInfo.ScriptCommandParametersDict.TryGetValue(id, out byte[] paramSizes)) {
+                                    foreach (int size in paramSizes) {
+                                        parameters.Add(new ScriptParameter(br.ReadBytes(size)));
+                                    }
+                                }
+                                break;
+                        }
 
                     break;
-                case GameFamilies.HGSS:
-                    switch (id) {
-                        case 0x16: //Jump
-                        case 0x1A: //Call 
-                            ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
-                            break;
-                        case 0x17: //JumpIfObjID
-                        case 0x18: //JumpIfBgID
-                        case 0x19: //JumpIfPlayerDir
-                        case 0x1C: //JumpIf
-                        case 0x1D: //CallIf
-                            parameterList.Add(new byte[] { dataReader.ReadByte() }); //in the case of JumpIf and CallIf, the first param is a comparisonOperator
-                            ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
-                            break;
-                        case 0x5E: // Movement
-                            parameterList.Add(BitConverter.GetBytes(dataReader.ReadUInt16())); //in the case of Movement, the first param is an overworld ID
-                            ProcessRelativeJump(dataReader, ref parameterList, ref actionOffsets);
-                            break;
-                        case 0x190:
-                        case 0x191:
-                        case 0x192: {
-                                byte parameter1 = dataReader.ReadByte();
-                                parameterList.Add(new byte[] { parameter1 });
-                                if (parameter1 == 0x2) {
-                                    parameterList.Add(dataReader.ReadBytes(2));
-                                }
-                            }
-                            break;
-                        case 0x1D1: // Number of parameters differ depending on the first parameter value
-                        {
-                                short parameter1 = dataReader.ReadInt16();
-                                parameterList.Add(BitConverter.GetBytes(parameter1));
-                                switch (parameter1) {
-                                    case 0x0:
-                                    case 0x1:
-                                    case 0x2:
-                                    case 0x3:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 0x4:
-                                    case 0x5:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 0x6:
-                                        break;
-                                    case 0x7:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            break;
-                        case 0x1E9: // Number of parameters differ depending on the first parameter value
-                        {
-                                short parameter1 = dataReader.ReadInt16();
-                                parameterList.Add(BitConverter.GetBytes(parameter1));
-                                switch (parameter1) {
-                                    case 0x0:
-                                        break;
-                                    case 0x1:
-                                    case 0x2:
-                                    case 0x3:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 0x4:
-                                        break;
-                                    case 0x5:
-                                    case 0x6:
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        parameterList.Add(dataReader.ReadBytes(2));
-                                        break;
-                                    case 0x7:
-                                    case 0x8:
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            break;
-                        default:
-                            addParametersToList(ref parameterList, id, dataReader);
-                            break;
-                    }
-
-                    break;
-            }
-
-            return new ScriptCommand(id, parameterList);
-        }
-
-        private void ProcessRelativeJump(BinaryReader dataReader, ref List<byte[]> parameterList, ref List<int> offsetsList) {
-            int relativeOffset = dataReader.ReadInt32();
-            int offsetFromScriptFileStart = (int)(relativeOffset + dataReader.BaseStream.Position);
-
-            if (!offsetsList.Contains(offsetFromScriptFileStart)) {
-                offsetsList.Add(offsetFromScriptFileStart);
-            }
-
-            int functionNumber = offsetsList.IndexOf(offsetFromScriptFileStart);
-            if (functionNumber < 0) {
-                throw new InvalidOperationException();
-            }
-
-            parameterList.Add(BitConverter.GetBytes(functionNumber + 1));
-        }
-
-        private void addParametersToList(ref List<byte[]> parameterList, ushort id, BinaryReader dataReader) {
-            Console.WriteLine("Loaded command id: " + id.ToString("X4"));
-            try {
-                foreach (int bytesToRead in RomInfo.ScriptCommandParametersDict[id]) {
-                    parameterList.Add(dataReader.ReadBytes(bytesToRead));
                 }
-            } catch (NullReferenceException) {
-                MessageBox.Show("Script command " + id + "can't be handled for now." +
-                                Environment.NewLine + "Reference offset 0x" + dataReader.BaseStream.Position.ToString("X"), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                parameterList = null;
-                return;
-            } catch {
-                MessageBox.Show("Error: ID Read - " + id +
-                                Environment.NewLine + "Reference offset 0x" + dataReader.BaseStream.Position.ToString("X"), "Unrecognized script command", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                parameterList = null;
-                return;
-            }
-        }
 
-        private void AddReference(ref List<ScriptReference> references, ushort commandID, List<byte[]> parameterList, int pos, ScriptCommandContainer cont) {
-            if (ScriptDatabase.commandsWithRelativeJump.TryGetValue(commandID, out int parameterWithRelativeJump)) {
-                uint invokedID = BitConverter.ToUInt32(parameterList[parameterWithRelativeJump], 0); // Jump, Call
-
-                if (commandID == 0x005E)
-                    references.Add(new ScriptReference(cont.containerType, cont.manualUserID, ContainerTypes.Action, invokedID, pos - 4));
-                else {
-                    references.Add(new ScriptReference(cont.containerType, cont.manualUserID, ContainerTypes.Function, invokedID, pos - 4));
-                }
-            }
-        }
-
-        private List<ScriptCommandContainer> ReadCommandsFromLines(List<string> linelist, ContainerTypes containerType, Func<List<(int linenum, string text)>, int, ushort?, bool> endConditions) {
-            List<(int linenum, string text)> lineSource = new List<(int linenum, string text)>();
-
-            for (int l = 0; l < linelist.Count; l++) {
-                string cur = linelist[l];
-                if (!string.IsNullOrWhiteSpace(cur)) {
-                    lineSource.Add((l, cur));
-                }
-            }
-
-            List<ScriptCommandContainer> ls = new List<ScriptCommandContainer>();
-            int i = 0;
-
-            try {
-                uint scriptNumber = 0;
-
-                while (i < lineSource.Count) {
-                    if (scriptNumber == 0) {
-                        int positionOfScriptNumber;
-                        int positionOfScriptKeyword = lineSource[i].text.IndexOf(containerType.ToString(), StringComparison.InvariantCultureIgnoreCase);
-
-                        if (positionOfScriptKeyword > 0) {
-                            MessageBox.Show("Unrecognized container keyword: \"" + lineSource[i] + '"', "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return null;
-                        } else if (positionOfScriptKeyword < 0) {
-                            i++;
-                            continue;
-                        } else {
-                            if ((positionOfScriptNumber = lineSource[i].text.IndexOfFirstNumber()) < positionOfScriptKeyword) {
-                                MessageBox.Show("Unspecified Script/Function label.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return null;
-                            }
-                        }
-
-                        scriptNumber = uint.Parse(lineSource[i++].text.Substring(positionOfScriptNumber).Split()[0].Replace(":", ""));
-                    }
-
-                    if (lineSource[i].text.IndexOf("UseScript", StringComparison.InvariantCultureIgnoreCase) >= 0) {
-                        int useScriptNumber = short.Parse(lineSource[i].text.Substring(1 + lineSource[i].text.IndexOf('#')));
-                        ls.Add(new ScriptCommandContainer(scriptNumber, containerType, useScriptNumber));
-                        i++;
-                    } else {
-                        /* Read script commands */
-                        List<ScriptCommand> cmdList = new List<ScriptCommand>();
-                        ScriptCommand lastRead;
-
-                        do {
-                            lastRead = new ScriptCommand(lineSource[i].text, lineSource[i].linenum + 1);
-                            if (lastRead.id is null) {
-                                return null;
-                            }
-
-                            cmdList.Add(lastRead);
-                        }
-                        while (!endConditions(lineSource, i++, lastRead.id));
-
-                        ls.Add(new ScriptCommandContainer(scriptNumber, containerType, commandList: cmdList));
-                    }
-
-                    scriptNumber = 0;
-                }
-            } catch (ArgumentOutOfRangeException) {
-                MessageBox.Show($"Unexpectedly reached end of lines.\n\n" +
-                                $"Last line index: {lineSource[i].linenum}.\n" +
-                                $"Managed to parse {ls.Count} Command Containers.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new ScriptCommand(id, parameters);
+            } catch (Exception ex) {
+                Console.WriteLine($"Error reading command at offset {br.BaseStream.Position}: {ex.Message}");
                 return null;
             }
-
-            return ls;
         }
 
-        private List<ScriptActionContainer> ReadActionsFromLines(List<string> linelist) {
-            List<(int linenum, string text)> lineSource = new List<(int linenum, string text)>();
+        private void ProcessRelativeJumpLinear(BinaryReader br, List<ScriptParameter> parameters) {
+            // Read the relative offset
+            int relativeOffset = br.ReadInt32();
 
-            for (int l = 0; l < linelist.Count; l++) {
-                string cur = linelist[l];
-                if (!string.IsNullOrWhiteSpace(cur)) {
-                    lineSource.Add((l, cur));
-                }
+            // Calculate absolute target
+            int targetOffset = (int)(relativeOffset + br.BaseStream.Position);
+
+            // Add to label map if not already there
+            if (!OffsetToLabelMap.ContainsKey(targetOffset)) {
+                string labelName = $"label_0x{targetOffset:X}";
+                OffsetToLabelMap[targetOffset] = labelName;
             }
 
-            List<ScriptActionContainer> ls = new List<ScriptActionContainer>();
-            int i = 0;
+            // Create jump parameter
+            string targetLabel = OffsetToLabelMap[targetOffset];
+            ScriptParameter jumpParam = new ScriptParameter(relativeOffset, targetLabel) {
+                Type = ScriptParameter.ParameterType.RelativeJump
+            };
+            parameters.Add(jumpParam);
+        }
 
-            try {
-                uint actionNumber = 0;
+        // Convert to text - outputs commands in the order they appear in the binary
+        public string ToText() {
+            StringBuilder sb = new StringBuilder();
 
-                while (i < lineSource.Count) {
-                    if (actionNumber == 0) {
-                        int positionOfActionNumber;
-                        int positionOfActionKeyword = lineSource[i].text.IndexOf(ContainerTypes.Action.ToString(), StringComparison.InvariantCultureIgnoreCase);
-
-                        if (positionOfActionKeyword > 0) {
-                            MessageBox.Show("Unrecognized container keyword: \"" + lineSource[i] + '"', "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return null;
-                        } else if (positionOfActionKeyword < 0) {
-                            i++;
-                            continue;
-                        } else {
-                            if ((positionOfActionNumber = lineSource[i].text.IndexOfFirstNumber()) < positionOfActionKeyword) {
-                                MessageBox.Show("Unspecified Action label.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return null;
-                            }
-                        }
-
-                        actionNumber = uint.Parse(lineSource[i].text.Substring(positionOfActionNumber).Split()[0].Replace(":", ""));
-                        i++;
-                    }
-
-                    List<ScriptAction> cmdList = new List<ScriptAction>();
-                    /* Read script actions */
-                    do {
-                        ScriptAction toAdd = new ScriptAction(lineSource[i].text, lineSource[i].linenum + 1);
-                        if (toAdd.id is null) {
-                            return null;
-                        }
-
-                        cmdList.Add(toAdd);
-                    }
-                    while (!lineSource[i++].text.IgnoreCaseEquals(RomInfo.ScriptActionNamesDict[0x00FE]));
-
-                    ls.Add(new ScriptActionContainer(actionNumber, commands: cmdList));
-                    actionNumber = 0;
+            foreach (var cmdPos in CommandSequence) {
+                // If this command needs a label, output it
+                if (!string.IsNullOrEmpty(cmdPos.Label)) {
+                    sb.AppendLine($"\n{cmdPos.Label}:");
                 }
-            } catch (ArgumentOutOfRangeException) {
-                MessageBox.Show($"Unexpectedly reached end of lines.\n\n" +
-                                $"Last line index: {i}.\n" +
-                                $"Managed to parse {ls.Count} Command Containers.", "Fatal Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
+
+                // Output the command (indented if not an entry point)
+                string indent = "\t";
+                sb.AppendLine($"{indent}{cmdPos.Command.name}");
             }
 
-            return ls;
+            return sb.ToString();
         }
 
         public override byte[] ToByteArray() {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
-                List<ContainerReference> scriptOffsets = new List<ContainerReference>(); //uint OFFSET, int Function/Script/Action ID
-                List<ContainerReference> functionOffsets = new List<ContainerReference>();
-                List<ContainerReference> actionOffsets = new List<ContainerReference>();
+                // First, find all entry points and their positions in the command sequence
+                var entryPoints = CommandSequence
+                    .Where(c => c.IsEntryPoint)
+                    .OrderBy(c => c.EntryPointIndex)
+                    .ToList();
 
-                List<ScriptReference> refList = new List<ScriptReference>();
+                // Allocate space for header
+                long headerStart = writer.BaseStream.Position;
+                writer.BaseStream.Position += entryPoints.Count * 4;
+                writer.Write((ushort)0xFD13); // End of header marker
 
-                /* Allocate enough space for script pointers, which we do not know yet */
-                try {
-                    writer.BaseStream.Position += allScripts.Count * 0x4;
-                    writer.Write((ushort)0xFD13); // Signal the end of header section
-                    List<ScriptCommandContainer> useScriptCallers = new List<ScriptCommandContainer>();
+                // Keep track of command offsets in the new file
+                Dictionary<int, long> oldOffsetToNewOffset = new Dictionary<int, long>();
 
-                    /* Write scripts */
-                    foreach (ScriptCommandContainer currentScript in allScripts) {
-                        if (currentScript.usedScriptID == -1) {
-                            scriptOffsets.Add(new ContainerReference() {
-                                ID = currentScript.manualUserID,
-                                offsetInFile = (uint)writer.BaseStream.Position
-                            }
-                            );
+                // Write all commands sequentially
+                foreach (var cmdPos in CommandSequence) {
+                    // Record the position of this command
+                    oldOffsetToNewOffset[cmdPos.Offset] = writer.BaseStream.Position;
 
-                            foreach (ScriptCommand currentCmd in currentScript.commands) {
-                                writer.Write((ushort)currentCmd.id);
-                                //System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
+                    // Write the command
+                    writer.Write((ushort)cmdPos.Command.id);
 
-                                List<byte[]> parameterList = currentCmd.cmdParams;
-                                foreach (byte[] b in parameterList) {
-                                    writer.Write(b);
-                                    //System.Diagnostics.Debug.WriteLine(BitConverter.ToString(parameterList[k]) + " ");
+                    // Write parameters, handling jumps specially
+                    foreach (var param in cmdPos.Command.Parameters) {
+                        if (param.Type == ScriptParameter.ParameterType.RelativeJump) {
+                            // For jump targets, we need to recalculate the relative offset
+                            // based on the new positions of commands
+
+                            // Find the target offset in the original file
+                            int targetOffset = -1;
+                            foreach (var kvp in OffsetToLabelMap) {
+                                if (kvp.Value == param.TargetLabel) {
+                                    targetOffset = kvp.Key;
+                                    break;
                                 }
-
-                                /* If command calls a function/movement, store reference position */
-                                AddReference(ref refList, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentScript);
-                            }
-                        } else {
-                            useScriptCallers.Add(currentScript);
-                        }
-                    }
-
-                    int scriptsCount = scriptOffsets.Count;
-                    foreach (ScriptCommandContainer caller in useScriptCallers) {
-                        for (int i = 0; i < scriptsCount; i++) {
-                            ContainerReference scriptReference = scriptOffsets[i];
-
-                            if (scriptReference.ID == caller.usedScriptID) {
-                                scriptOffsets.Add(new ContainerReference() {
-                                    ID = caller.manualUserID,
-                                    offsetInFile = scriptReference.offsetInFile
-                                }); // If script has UseScript, copy offset
-                            }
-                        }
-                    }
-
-                    /* Write functions */
-                    foreach (ScriptCommandContainer currentFunction in allFunctions) {
-                        if (currentFunction.usedScriptID == -1) {
-                            functionOffsets.Add(new ContainerReference() {
-                                ID = currentFunction.manualUserID,
-                                offsetInFile = (uint)writer.BaseStream.Position
-                            }
-                            );
-
-                            foreach (ScriptCommand currentCmd in currentFunction.commands) {
-                                writer.Write((ushort)currentCmd.id);
-                                //System.Diagnostics.Debug.Write(BitConverter.ToString(BitConverter.GetBytes(commandID)) + " ");
-
-                                List<byte[]> parameterList = currentCmd.cmdParams;
-                                foreach (byte[] b in parameterList) {
-                                    writer.Write(b);
-                                    //System.Diagnostics.Debug.Write(BitConverter.ToString(parameterList[k]) + " ");
-                                }
-
-                                /* If command calls a function/movement, store reference position */
-
-                                AddReference(ref refList, (ushort)currentCmd.id, parameterList, (int)writer.BaseStream.Position, currentFunction);
-                            }
-                        } else {
-                            int functionUsescript = currentFunction.usedScriptID - 1;
-                            if (functionUsescript >= scriptOffsets.Count) {
-                                MessageBox.Show($"Function #{currentFunction.manualUserID} refers to Script {currentFunction.usedScriptID}, which does not exist.\n" +
-                                                $"This Script File can't be saved.", "Can't resolve UseScript reference", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return null;
                             }
 
-                            functionOffsets.Add(new ContainerReference() {
-                                ID = currentFunction.manualUserID,
-                                offsetInFile = scriptOffsets[currentFunction.usedScriptID - 1].offsetInFile
-                            });
-                        }
-                    }
-
-                    // Movements must be halfword-aligned
-                    if (writer.BaseStream.Position % 2 == 1) { //Check if the writer's head is on an odd byte
-                        writer.Write((byte)0x00); //Add padding
-                    }
-
-                    /* Write movements */
-                    foreach (ScriptActionContainer currentAction in allActions) {
-                        actionOffsets.Add(new ContainerReference() {
-                            ID = currentAction.manualUserID,
-                            offsetInFile = (uint)writer.BaseStream.Position
-                        });
-
-                        foreach (ScriptAction currentCmd in currentAction.commands) {
-                            writer.Write((ushort)currentCmd.id);
-                            writer.Write((ushort)currentCmd.repetitionCount);
-                        }
-                    }
-
-                    /* Write script offsets to header */
-                    writer.BaseStream.Position = 0x0;
-
-                    scriptOffsets = scriptOffsets.OrderBy(x => x.ID).ToList(); //Write script offsets to header in the correct order
-                    for (int i = 0; i < scriptOffsets.Count; i++) {
-                        writer.Write(scriptOffsets[i].offsetInFile - (uint)writer.BaseStream.Position - 0x4);
-                    }
-
-                    SortedSet<uint> undeclaredFuncs = new SortedSet<uint>();
-                    SortedSet<uint> undeclaredActions = new SortedSet<uint>();
-
-                    SortedSet<uint> uninvokedFuncs = new SortedSet<uint>(allFunctions.Select(x => x.manualUserID).ToArray());
-                    SortedSet<uint> unreferencedActions = new SortedSet<uint>(allActions.Select(x => x.manualUserID).ToArray());
-
-                    //refList = refList.OrderBy(x => x.invokedID).ToList(); //Sorting is not necessary, after all...
-
-                    for (int i = 0; i < refList.Count; i++) {
-                        writer.BaseStream.Position = refList[i].invokedAt; //place seek head on parameter that is supposed to store the jump address
-                        ContainerReference result;
-
-                        if (refList[i].typeOfInvoked is ContainerTypes.Action) { //isApplyMovement 
-                            result = actionOffsets.Find(entry => entry.ID == refList[i].invokedID);
-
-                            if (result.Equals(default(ContainerReference))) {
-                                undeclaredActions.Add(refList[i].invokedID);
-                            } else {
-                                int relativeOffset = (int)(result.offsetInFile - refList[i].invokedAt - 4);
+                            if (targetOffset != -1 && oldOffsetToNewOffset.TryGetValue(targetOffset, out long newTargetOffset)) {
+                                // Calculate new relative offset
+                                int relativeOffset = (int)(newTargetOffset - (writer.BaseStream.Position + 4));
                                 writer.Write(relativeOffset);
-                                unreferencedActions.Remove(refList[i].invokedID);
+                            } else {
+                                // Fallback - write original offset
+                                writer.Write(param.TargetOffset);
                             }
                         } else {
-                            result = functionOffsets.Find(entry => entry.ID == refList[i].invokedID);
-
-                            if (result.Equals(default(ContainerReference))) {
-                                undeclaredFuncs.Add(refList[i].invokedID);
-                            } else {
-                                int relativeOffset = (int)(result.offsetInFile - refList[i].invokedAt - 4);
-                                writer.Write(relativeOffset);
-
-                                if (FunctionIsInvoked(refList, uninvokedFuncs, refList[i].invokedID, 0)) {
-                                    uninvokedFuncs.Remove(refList[i].invokedID);
-                                }
-
-                                //if (refList[i].callerType != containerTypes.Function || 
-                                //    (refList[i].callerType == refList[i].invokedType && refList[i].callerID == refList[i].invokedID) ||
-                                //    !uninvokedFuncs.Contains(refList[i].callerID)) { //remove reference if caller is a script, or if caller calls itself, or if caller is a function that's been invoked already
-                                //    uninvokedFuncs.Remove(refList[i].invokedID);
-                                //}
-                            }
+                            // Regular parameter
+                            writer.Write(param.RawData);
                         }
                     }
+                }
 
-                    //Error check
-                    string errorMsg = "";
-                    if (undeclaredFuncs.Count > 0) {
-                        string[] errorFunctionsUndeclared = undeclaredFuncs.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "These Functions have been invoked but not declared: " + Environment.NewLine + string.Join(separator: ",", errorFunctionsUndeclared);
-                        errorMsg += Environment.NewLine;
+                // Update header with entry point offsets
+                writer.BaseStream.Position = headerStart;
+                foreach (var entryPoint in entryPoints) {
+                    if (oldOffsetToNewOffset.TryGetValue(entryPoint.Offset, out long newOffset)) {
+                        uint relativeOffset = (uint)(newOffset - (headerStart + 4));
+                        writer.Write(relativeOffset);
                     }
-
-                    if (undeclaredActions.Count > 0) {
-                        string[] errorActionsUndeclared = undeclaredActions.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "These Actions have been referenced but not declared: " + Environment.NewLine + string.Join(separator: ",", errorActionsUndeclared);
-                        errorMsg += Environment.NewLine;
-                    }
-
-                    if (!string.IsNullOrEmpty(errorMsg)) {
-                        MessageBox.Show(errorMsg + Environment.NewLine + "This Script File has not been overwritten since it can not be saved.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        errorMsg = "";
-                        return null;
-                    }
-
-                    if (uninvokedFuncs.Count > 0) {
-                        string[] orphanedFunctions = uninvokedFuncs.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "Unused Function IDs detected: " + Environment.NewLine + string.Join(", ", orphanedFunctions);
-                        errorMsg += Environment.NewLine;
-                        errorMsg += "\nIn order for a Function to be saved, it must be invoked by a Script or by another used Function.";
-                        errorMsg += Environment.NewLine;
-                        errorMsg += Environment.NewLine;
-                    }
-
-                    if (unreferencedActions.Count > 0) {
-                        string[] orphanedActions = unreferencedActions.ToArray().Select(x => x.ToString()).ToArray();
-                        errorMsg += "Unused Action IDs detected: " + Environment.NewLine + string.Join(", ", orphanedActions);
-                        errorMsg += Environment.NewLine;
-                        errorMsg += "\nIn order for an Action to be saved, it must be called by a Script or by a used Function.";
-                        errorMsg += Environment.NewLine;
-                        errorMsg += Environment.NewLine;
-                    }
-
-                    if (!string.IsNullOrEmpty(errorMsg)) {
-                        MessageBox.Show(errorMsg + Environment.NewLine + "Remember that every unused Function or Action is always lost upon reloading the Script File.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        errorMsg = "";
-                    }
-                } catch (NullReferenceException nre) {
-                    Console.WriteLine(nre);
-                    return null;
                 }
             }
 
             return newData.ToArray();
-        }
-
-        private bool FunctionIsInvoked(List<ScriptReference> refList, SortedSet<uint> uninvokedFuncsSet, uint funcID, int callCount = 0, uint? excludedCaller = null) {
-            if (callCount >= 30) {
-                MessageBox.Show("Something went very wrong saving this Script File!" +
-                                "\nIt is recommended that you backup its code somewhere, to avoid losing progress.",
-                  "Fatal error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-            Console.WriteLine("Checking calls of function " + funcID + (excludedCaller == null ? "" : " excluding Function " + excludedCaller + " as the caller."));
-
-            if (!uninvokedFuncsSet.Contains(funcID)) {
-                Console.WriteLine("Function " + funcID + " has already been invoked before. Nothing to check.");
-                return true; //Abort 
-            }
-
-            if (refList is null || refList.Count <= 0) {
-                return false;
-            }
-
-            //Find the first instance of funcID being called, excluding calls coming from an excludedCaller
-            //if excludedCaller is null, there's nothing to exclude: a normal search is performed.
-            ScriptReference sr = refList.Find(x => x.invokedID == funcID && (excludedCaller == null || x.callerID != excludedCaller));
-
-            if (sr is null) {
-                Console.WriteLine("No reference found!!!");
-                return false;
-            }
-
-            if (sr.typeOfCaller is ContainerTypes.Script) {
-                Console.WriteLine("Function " + funcID + " is directly called by Script " + sr.callerID);
-                return true;
-            }
-
-            if (sr.typeOfCaller is ContainerTypes.Function) {
-                if (FunctionIsInvoked(refList, uninvokedFuncsSet, sr.callerID, ++callCount, excludedCaller: sr.invokedID)) { //check if caller function is invoked as well
-                    Console.WriteLine("Function " + funcID + " is called by Function " + sr.callerID);
-                    return true;
-                }
-            }
-
-            Console.WriteLine("Function " + funcID + " is unused");
-            return false;
         }
 
         public bool SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true) {
