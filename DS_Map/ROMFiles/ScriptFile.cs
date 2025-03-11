@@ -521,12 +521,6 @@ namespace DSPRE.ROMFiles {
                 // Keep track of command offsets in the new file
                 Dictionary<int, long> oldOffsetToNewOffset = new Dictionary<int, long>();
 
-                            functionOffsets.Add(new ContainerReference() {
-                                ID = currentFunction.manualUserID,
-                                offsetInFile = scriptOffsets.Find(x => x.ID == currentFunction.usedScriptID).offsetInFile
-                            });
-                        }
-                    }
                 // Write all commands sequentially
                 foreach (var cmdPos in CommandSequence) {
                     // Record the position of this command
