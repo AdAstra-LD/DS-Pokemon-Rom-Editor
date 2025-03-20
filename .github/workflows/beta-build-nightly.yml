@@ -14,7 +14,7 @@ env:
 
 jobs:
   build:
-    if: github.repository == 'AdAstra-LD/DS-Pokemon-Rom-Editor'
+    if: github.repository == 'Mixone-FInallyHere/DS-Pokemon-Rom-Editor'
     runs-on: windows-latest
 
     steps:
