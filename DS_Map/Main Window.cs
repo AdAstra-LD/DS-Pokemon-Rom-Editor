@@ -10031,5 +10031,16 @@ namespace DSPRE {
         {
             MessageBox.Show("Not implemented yet");
         }
+
+        private void generateCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Helpers.statusLabelMessage("Exporting to CSV...");
+            Update();
+            DocTool.ExportAll();
+
+            Helpers.statusLabelMessage();
+            Update();
+        }
+
     }
 }

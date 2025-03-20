@@ -133,6 +133,7 @@ namespace DSPRE {
             }
             this._parent.TrySyncIndices((ComboBox)sender);
             Helpers.DisableHandlers();
+            UpdateAddEditStatus();
             if (CheckDiscardChanges()) {
                 int newNumber = pokemonNameInputComboBox.SelectedIndex;
                 monNumberNumericUpDown.Value = newNumber;
@@ -148,6 +149,7 @@ namespace DSPRE {
             }
             this._parent.TrySyncIndices((NumericUpDown)sender);
             Helpers.DisableHandlers();
+            UpdateAddEditStatus();
             if (CheckDiscardChanges()) {
                 int newNumber = (int)monNumberNumericUpDown.Value;
                 pokemonNameInputComboBox.SelectedIndex = newNumber;
@@ -177,6 +179,12 @@ namespace DSPRE {
 
         private void UpdateAddEditStatus() {
             (byte level, ushort move) newEntry = ((byte)levelNumericUpDown.Value, (ushort)moveInputComboBox.SelectedIndex);
+
+            if (currentLoadedFile == null)
+            {
+                return;
+            }
+
             bool duplicate = currentLoadedFile.list.Contains(newEntry);
 
             if (duplicate) {
@@ -234,6 +242,7 @@ namespace DSPRE {
             }
 
             UpdateByEditMode();
+            UpdateAddEditStatus();
             setDirty(true);
         }
 

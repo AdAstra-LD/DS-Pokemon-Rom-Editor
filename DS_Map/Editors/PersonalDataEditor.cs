@@ -394,10 +394,10 @@ namespace DSPRE {
         }
         private void saveDataButton_Click(object sender, EventArgs e) {
             currentLoadedFile.SaveToFileDefaultDir(currentLoadedId, true);
-            if (modifiedAbilities) {
-                EditorPanels.MainProgram.RefreshAbilities(currentLoadedId);
-                modifiedAbilities = false;
-            }
+            //if (modifiedAbilities) {
+            //    EditorPanels.MainProgram.RefreshAbilities(currentLoadedId);
+            //    modifiedAbilities = false;
+            //}
             setDirty(false);
         }
         //-------------------------------
