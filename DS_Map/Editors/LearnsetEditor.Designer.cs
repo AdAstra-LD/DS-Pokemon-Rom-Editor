@@ -42,6 +42,7 @@
             this.moveInputComboBox = new DSPRE.InputComboBox();
             this.statusLabel = new System.Windows.Forms.Label();
             this.pokemonNameInputComboBox = new DSPRE.InputComboBox();
+            this.entryCountLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pokemonPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.monNumberNumericUpDown)).BeginInit();
@@ -172,6 +173,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel3.Controls.Add(this.entryCountLabel, 0, 5);
             this.tableLayoutPanel3.Controls.Add(this.descriptorLabel, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.addMoveButton, 0, 4);
             this.tableLayoutPanel3.Controls.Add(this.deleteMoveButton, 2, 4);
@@ -188,11 +190,11 @@
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.50088F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.49912F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 203F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(300, 438);
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 144F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(226, 357);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // descriptorLabel
@@ -213,10 +215,10 @@
             this.addMoveButton.Enabled = false;
             this.addMoveButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addMoveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addMoveButton.Location = new System.Drawing.Point(6, 376);
-            this.addMoveButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.addMoveButton.Location = new System.Drawing.Point(4, 286);
+            this.addMoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.addMoveButton.Name = "addMoveButton";
-            this.addMoveButton.Size = new System.Drawing.Size(91, 43);
+            this.addMoveButton.Size = new System.Drawing.Size(70, 40);
             this.addMoveButton.TabIndex = 1;
             this.addMoveButton.Text = "Add";
             this.addMoveButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -229,10 +231,10 @@
             this.deleteMoveButton.Enabled = false;
             this.deleteMoveButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.deleteMoveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.deleteMoveButton.Location = new System.Drawing.Point(200, 376);
-            this.deleteMoveButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.deleteMoveButton.Location = new System.Drawing.Point(152, 286);
+            this.deleteMoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.deleteMoveButton.Name = "deleteMoveButton";
-            this.deleteMoveButton.Size = new System.Drawing.Size(94, 43);
+            this.deleteMoveButton.Size = new System.Drawing.Size(70, 40);
             this.deleteMoveButton.TabIndex = 2;
             this.deleteMoveButton.Text = "Delete";
             this.deleteMoveButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -245,10 +247,10 @@
             this.editMoveButton.Enabled = false;
             this.editMoveButton.Image = global::DSPRE.Properties.Resources.RenameIcon;
             this.editMoveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.editMoveButton.Location = new System.Drawing.Point(103, 376);
-            this.editMoveButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.editMoveButton.Location = new System.Drawing.Point(78, 286);
+            this.editMoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.editMoveButton.Name = "editMoveButton";
-            this.editMoveButton.Size = new System.Drawing.Size(91, 43);
+            this.editMoveButton.Size = new System.Drawing.Size(70, 40);
             this.editMoveButton.TabIndex = 3;
             this.editMoveButton.Text = "Edit";
             this.editMoveButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -295,8 +297,7 @@
             this.statusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.statusLabel.AutoSize = true;
             this.tableLayoutPanel3.SetColumnSpan(this.statusLabel, 3);
-            this.statusLabel.Location = new System.Drawing.Point(7, 346);
-            this.statusLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.statusLabel.Location = new System.Drawing.Point(5, 261);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Padding = new System.Windows.Forms.Padding(1, 6, 1, 6);
             this.statusLabel.Size = new System.Drawing.Size(46, 28);
@@ -315,6 +316,19 @@
             this.pokemonNameInputComboBox.Size = new System.Drawing.Size(386, 24);
             this.pokemonNameInputComboBox.TabIndex = 31;
             this.pokemonNameInputComboBox.SelectedIndexChanged += new System.EventHandler(this.pokemonNameInputComboBox_SelectedIndexChanged);
+            // 
+            // entryCountLabel
+            // 
+            this.entryCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.entryCountLabel.AutoSize = true;
+            this.tableLayoutPanel3.SetColumnSpan(this.entryCountLabel, 3);
+            this.entryCountLabel.Location = new System.Drawing.Point(5, 332);
+            this.entryCountLabel.Name = "entryCountLabel";
+            this.entryCountLabel.Padding = new System.Windows.Forms.Padding(1, 5, 1, 5);
+            this.entryCountLabel.Size = new System.Drawing.Size(70, 23);
+            this.entryCountLabel.TabIndex = 9;
+            this.entryCountLabel.Text = "Entry Count: ";
+            this.entryCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // LearnsetEditor
             // 
@@ -362,5 +376,6 @@
         private System.Windows.Forms.Label statusLabel;
         public InputComboBox pokemonNameInputComboBox;
         public System.Windows.Forms.NumericUpDown monNumberNumericUpDown;
+        private System.Windows.Forms.Label entryCountLabel;
     }
 }

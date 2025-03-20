@@ -2724,8 +2724,7 @@
             // 
             this.resetColorTableButton.Image = global::DSPRE.Properties.Resources.resetColorTable;
             this.resetColorTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.resetColorTableButton.Location = new System.Drawing.Point(15, 549);
-            this.resetColorTableButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.resetColorTableButton.Location = new System.Drawing.Point(11, 451);
             this.resetColorTableButton.Name = "resetColorTableButton";
             this.resetColorTableButton.Size = new System.Drawing.Size(156, 39);
             this.resetColorTableButton.TabIndex = 31;
@@ -2738,8 +2737,7 @@
             // 
             this.importColorTableButton.Image = global::DSPRE.Properties.Resources.loadColorTable;
             this.importColorTableButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importColorTableButton.Location = new System.Drawing.Point(15, 590);
-            this.importColorTableButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.importColorTableButton.Location = new System.Drawing.Point(11, 484);
             this.importColorTableButton.Name = "importColorTableButton";
             this.importColorTableButton.Size = new System.Drawing.Size(156, 39);
             this.importColorTableButton.TabIndex = 30;
@@ -2808,8 +2806,7 @@
             // 
             this.removeHeightsButton.Image = ((System.Drawing.Image)(resources.GetObject("removeHeightsButton.Image")));
             this.removeHeightsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeHeightsButton.Location = new System.Drawing.Point(15, 495);
-            this.removeHeightsButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.removeHeightsButton.Location = new System.Drawing.Point(11, 403);
             this.removeHeightsButton.Name = "removeHeightsButton";
             this.removeHeightsButton.Size = new System.Drawing.Size(156, 43);
             this.removeHeightsButton.TabIndex = 26;
@@ -2836,8 +2833,7 @@
             // 
             this.addHeightsButton.Image = ((System.Drawing.Image)(resources.GetObject("addHeightsButton.Image")));
             this.addHeightsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addHeightsButton.Location = new System.Drawing.Point(15, 450);
-            this.addHeightsButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.addHeightsButton.Location = new System.Drawing.Point(11, 367);
             this.addHeightsButton.Name = "addHeightsButton";
             this.addHeightsButton.Size = new System.Drawing.Size(156, 43);
             this.addHeightsButton.TabIndex = 24;
@@ -7941,7 +7937,7 @@
             this.textEditorDataGridView.RowHeadersWidth = 68;
             dataGridViewCellStyle31.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle31;
-            this.textEditorDataGridView.Size = new System.Drawing.Size(1164, 615);
+            this.textEditorDataGridView.Size = new System.Drawing.Size(873, 500);
             this.textEditorDataGridView.TabIndex = 24;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
             this.textEditorDataGridView.CurrentCellChanged += new System.EventHandler(this.textEditorDataGridView_CurrentCellChanged);
@@ -8230,8 +8226,7 @@
             this.exportTrainerButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.exportTrainerButton.Image = global::DSPRE.Properties.Resources.exportArrow;
             this.exportTrainerButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportTrainerButton.Location = new System.Drawing.Point(4, 4);
-            this.exportTrainerButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.exportTrainerButton.Location = new System.Drawing.Point(3, 3);
             this.exportTrainerButton.Name = "exportTrainerButton";
             this.exportTrainerButton.Size = new System.Drawing.Size(136, 30);
             this.exportTrainerButton.TabIndex = 42;
@@ -11225,7 +11220,7 @@
             this.texturizeNSBMDToolStripMenuItem.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
             this.texturizeNSBMDToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.texturizeNSBMDToolStripMenuItem.Name = "texturizeNSBMDToolStripMenuItem";
-            this.texturizeNSBMDToolStripMenuItem.Size = new System.Drawing.Size(306, 38);
+            this.texturizeNSBMDToolStripMenuItem.Size = new System.Drawing.Size(250, 38);
             this.texturizeNSBMDToolStripMenuItem.Text = "Add/Replace NSBMD textures";
             this.texturizeNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdAddTexButton_Click);
             // 
@@ -11234,7 +11229,7 @@
             this.untexturizeToolStripMenuItem.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
             this.untexturizeToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.untexturizeToolStripMenuItem.Name = "untexturizeToolStripMenuItem";
-            this.untexturizeToolStripMenuItem.Size = new System.Drawing.Size(306, 38);
+            this.untexturizeToolStripMenuItem.Size = new System.Drawing.Size(250, 38);
             this.untexturizeToolStripMenuItem.Text = "Remove textures from NSBMD";
             this.untexturizeToolStripMenuItem.Click += new System.EventHandler(this.nsbmdRemoveTexButton_Click);
             // 
@@ -11243,7 +11238,7 @@
             this.extractNSBTXFromNSBMDToolStripMenuItem.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
             this.extractNSBTXFromNSBMDToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.extractNSBTXFromNSBMDToolStripMenuItem.Name = "extractNSBTXFromNSBMDToolStripMenuItem";
-            this.extractNSBTXFromNSBMDToolStripMenuItem.Size = new System.Drawing.Size(306, 38);
+            this.extractNSBTXFromNSBMDToolStripMenuItem.Size = new System.Drawing.Size(250, 38);
             this.extractNSBTXFromNSBMDToolStripMenuItem.Text = "Save textures from NSBMD";
             this.extractNSBTXFromNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
             // 

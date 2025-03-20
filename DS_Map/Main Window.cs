@@ -1028,19 +1028,6 @@ namespace DSPRE {
                 return;
             }
 
-            // Creating a dictionary linking events to headers to fetch header data for Event Editor
-            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
-                for (ushort i = 0; i < internalNames.Count; i++) {
-                    MapHeader h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
-                    eventToHeader[h.eventFileID] = i;
-                }
-            } else {
-                for (ushort i = 0; i < internalNames.Count; i++) {
-                    MapHeader h = MapHeader.LoadFromARM9(i);
-                    eventToHeader[h.eventFileID] = i;
-                }
-            }
-
 
             /*Add list of options to each control */
             currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
@@ -5507,12 +5494,12 @@ namespace DSPRE {
             } else {
                 ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
                 owItemComboBox.Items.Clear();
-                foreach (ScriptCommandContainer cont in itemScript.allScripts) {
-                    if (cont.commands.Count > 4) {
-                        continue;
-                    }
-                    owItemComboBox.Items.Add(BitConverter.ToUInt16(cont.commands[1].cmdParams[1], 0) + "x " + itemNames[BitConverter.ToUInt16(cont.commands[0].cmdParams[1], 0)]);
-                }
+                //foreach (ScriptCommandContainer cont in itemScript.allScripts) {
+                //    if (cont.commands.Count > 4) {
+                //        continue;
+                //    }
+                //    owItemComboBox.Items.Add(BitConverter.ToUInt16(cont.commands[1].Parameters[1].RawData, 0) + "x " + itemNames[BitConverter.ToUInt16(cont.commands[0].Parameters[1].RawData, 0)]);
+                //}
             }
 
             /* Add ow movement list to box */
@@ -5541,6 +5528,19 @@ namespace DSPRE {
 
             eventMatrixUpDown.Maximum = romInfo.GetMatrixCount() - 1;
             eventAreaDataUpDown.Maximum = romInfo.GetAreaDataCount() - 1;
+
+            // Creating a dictionary linking events to headers to fetch header data for Event Editor
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
+                for (ushort i = 0; i < internalNames.Count; i++) {
+                    MapHeader h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
+                    eventToHeader[h.eventFileID] = i;
+                }
+            } else {
+                for (ushort i = 0; i < internalNames.Count; i++) {
+                    MapHeader h = MapHeader.LoadFromARM9(i);
+                    eventToHeader[h.eventFileID] = i;
+                }
+            }
 
             Helpers.EnableHandlers();
 
@@ -5752,10 +5752,15 @@ namespace DSPRE {
             if (Helpers.HandlersDisabled) {
                 return;
             }
-            Helpers.DisableHandlers();
 
+            ChangeLoadedEventFile(selectEventComboBox.SelectedIndex, 0);
+        }
+
+        private void ChangeLoadedEventFile(int evfile, ushort mapHeader) {
+            Helpers.DisableHandlers();
+           
             /* Load events data into EventFile class instance */
-            currentEvFile = new EventFile(selectEventComboBox.SelectedIndex);
+            currentEvFile = new EventFile(evfile);
 
             /* Update ListBoxes */
             FillSpawnablesBox();
@@ -5763,7 +5768,7 @@ namespace DSPRE {
             FillTriggersBox();
             FillWarpsBox();
 
-            if (eventToHeader.TryGetValue((ushort)selectEventComboBox.SelectedIndex, out ushort mapHeader)) {
+            if (mapHeader > 0 || eventToHeader.TryGetValue((ushort)selectEventComboBox.SelectedIndex, out mapHeader)) {
                 MapHeader h;
                 if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied()) {
                     h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + mapHeader.ToString("D4"), mapHeader, 0);
@@ -5788,6 +5793,7 @@ namespace DSPRE {
 
             CenterEventViewOnEntities();
         }
+
         private void showEventsCheckBoxes_CheckedChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) {
                 return;
@@ -6655,20 +6661,26 @@ namespace DSPRE {
             if (new EventFile(destHeader.eventFileID).warps.Count < destAnchor + 1) {
                 DialogResult d = MessageBox.Show("The selected warp's destination anchor doesn't exist.\n" +
                     "Do you want to open the destination map anyway?", "Warp is not connected", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (d == DialogResult.No)
-                    return;
-                else {
+                if (d == DialogResult.Yes) {
                     eventMatrixUpDown.Value = destHeader.matrixID;
                     eventAreaDataUpDown.Value = destHeader.areaDataID;
+
+                    Helpers.DisableHandlers();
                     selectEventComboBox.SelectedIndex = destHeader.eventFileID;
+                    ChangeLoadedEventFile(destHeader.eventFileID, destHeaderID);
+                    
                     CenterEventViewOnEntities();
-                    return;
                 }
+                return;
             }
 
             eventMatrixUpDown.Value = destHeader.matrixID;
             eventAreaDataUpDown.Value = destHeader.areaDataID;
+
+            Helpers.DisableHandlers();
             selectEventComboBox.SelectedIndex = destHeader.eventFileID;
+            ChangeLoadedEventFile(destHeader.eventFileID, destHeaderID);
+
 
             warpsListBox.SelectedIndex = destAnchor;
             centerEventViewOnSelectedEvent_Click(sender, e);
@@ -9948,17 +9960,17 @@ namespace DSPRE {
             string[] abilityNames = RomInfo.GetAbilityNames();
             string[] moveNames = RomInfo.GetAttackNames();
 
-            Helpers.statusLabelMessage("Setting up Pokemon Data Editor...");
+            Helpers.statusLabelMessage("Setting up Pokémon Data Editor...");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.monIcons });
             RomInfo.SetMonIconsPalTableAddress();
 
             PokemonEditor pde = new PokemonEditor(itemNames, abilityNames, moveNames);
-            pde.ShowDialog();
-
             Helpers.statusLabelMessage();
             Update();
+            
+            pde.ShowDialog();
         }
 
         private void overlayEditorToolStripMenuItem_Click(object sender, EventArgs e) {

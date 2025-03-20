@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PokemonEditor));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.personalPage = new System.Windows.Forms.TabPage();
             this.learnsetPage = new System.Windows.Forms.TabPage();
@@ -65,7 +66,7 @@
             this.learnsetPage.Location = new System.Drawing.Point(4, 22);
             this.learnsetPage.Name = "learnsetPage";
             this.learnsetPage.Padding = new System.Windows.Forms.Padding(3);
-            this.learnsetPage.Size = new System.Drawing.Size(1024, 534);
+            this.learnsetPage.Size = new System.Drawing.Size(1024, 526);
             this.learnsetPage.TabIndex = 1;
             this.learnsetPage.Text = "Learnset Editor";
             this.learnsetPage.UseVisualStyleBackColor = true;
@@ -75,7 +76,7 @@
             this.evoPage.Location = new System.Drawing.Point(4, 22);
             this.evoPage.Name = "evoPage";
             this.evoPage.Padding = new System.Windows.Forms.Padding(3);
-            this.evoPage.Size = new System.Drawing.Size(1024, 534);
+            this.evoPage.Size = new System.Drawing.Size(1024, 526);
             this.evoPage.TabIndex = 2;
             this.evoPage.Text = "Evolution Editor";
             this.evoPage.UseVisualStyleBackColor = true;
@@ -86,24 +87,24 @@
             this.syncChangesCheckbox.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.syncChangesCheckbox.Location = new System.Drawing.Point(3, 3);
             this.syncChangesCheckbox.Name = "syncChangesCheckbox";
-            this.syncChangesCheckbox.Size = new System.Drawing.Size(171, 17);
+            this.syncChangesCheckbox.Size = new System.Drawing.Size(177, 17);
             this.syncChangesCheckbox.TabIndex = 1;
-            this.syncChangesCheckbox.Text = "Synchronize Chosen Pokemon";
+            this.syncChangesCheckbox.Text = "Synchronize Pokémon selection";
             this.syncChangesCheckbox.UseVisualStyleBackColor = true;
             // 
             // syncChangesLabel
             // 
             this.syncChangesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.syncChangesLabel.AutoSize = true;
-            this.syncChangesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.syncChangesLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.syncChangesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.syncChangesLabel.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.syncChangesLabel.Location = new System.Drawing.Point(177, 5);
-            this.syncChangesLabel.Margin = new System.Windows.Forms.Padding(0);
+            this.syncChangesLabel.Location = new System.Drawing.Point(186, 10);
             this.syncChangesLabel.Name = "syncChangesLabel";
-            this.syncChangesLabel.Size = new System.Drawing.Size(472, 13);
+            this.syncChangesLabel.Size = new System.Drawing.Size(433, 13);
             this.syncChangesLabel.TabIndex = 2;
-            this.syncChangesLabel.Text = "When this CheckBox is marked, all changes in any tab will be synchronized accross" +
-    " the other tabs.";
+            this.syncChangesLabel.Text = "When this CheckBox is marked, mon selection will be synchronized accross all tabs" +
+    " below.";
             // 
             // flowLayoutPanel1
             // 
@@ -135,8 +136,9 @@
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.tabControl);
             this.DoubleBuffered = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PokemonEditor";
-            this.Text = "PokemonEditor";
+            this.Text = "Pokémon Editor";
             this.tabControl.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
