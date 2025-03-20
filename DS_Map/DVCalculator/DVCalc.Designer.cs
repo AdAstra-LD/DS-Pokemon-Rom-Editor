@@ -1,4 +1,9 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DSPRE
 {
@@ -47,6 +52,18 @@ namespace DSPRE
         private Label IV_label;
         private ComboBox pokemonSelector;
         private Button showAllButton;
-        private Button helpButton;
+        private RadioButton radioButtonMale;
+        private RadioButton radioButtonFemale;
+        private RadioButton radioButtonAbility1;
+        private RadioButton radioButtonAbility2;
+        private NumericUpDown numericUpDownGender;
+        private GroupBox groupBoxGender;
+        private GroupBox groupBoxAbility;
+        private Label labelGenderRatio;
+        private GroupBox groupBoxHGSS;
+        private RadioButton radioButtonIngoreGender;
+        private RadioButton radioButtonIgnoreAbility;
+        private Button buttonHelp;
+        private Button buttonHGSS;
     }
 }

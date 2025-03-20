@@ -66,21 +66,23 @@
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.pokemonNameInputComboBox, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(5, 5);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(7, 6);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.58022F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.41978F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(491, 449);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(654, 553);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // saveDataButton
             // 
             this.saveDataButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveDataButton.Image = ((System.Drawing.Image)(resources.GetObject("saveDataButton.Image")));
-            this.saveDataButton.Location = new System.Drawing.Point(441, 3);
+            this.saveDataButton.Location = new System.Drawing.Point(588, 4);
+            this.saveDataButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.saveDataButton.Name = "saveDataButton";
-            this.saveDataButton.Size = new System.Drawing.Size(47, 45);
+            this.saveDataButton.Size = new System.Drawing.Size(62, 56);
             this.saveDataButton.TabIndex = 30;
             this.saveDataButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveDataButton.UseVisualStyleBackColor = true;
@@ -89,9 +91,10 @@
             // pokemonPictureBox
             // 
             this.pokemonPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pokemonPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.pokemonPictureBox.Location = new System.Drawing.Point(4, 4);
+            this.pokemonPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pokemonPictureBox.Name = "pokemonPictureBox";
-            this.pokemonPictureBox.Size = new System.Drawing.Size(44, 45);
+            this.pokemonPictureBox.Size = new System.Drawing.Size(59, 56);
             this.pokemonPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pokemonPictureBox.TabIndex = 12;
             this.pokemonPictureBox.TabStop = false;
@@ -99,9 +102,10 @@
             // monNumberNumericUpDown
             // 
             this.monNumberNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.monNumberNumericUpDown.Location = new System.Drawing.Point(349, 15);
+            this.monNumberNumericUpDown.Location = new System.Drawing.Point(465, 21);
+            this.monNumberNumericUpDown.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.monNumberNumericUpDown.Name = "monNumberNumericUpDown";
-            this.monNumberNumericUpDown.Size = new System.Drawing.Size(86, 20);
+            this.monNumberNumericUpDown.Size = new System.Drawing.Size(115, 22);
             this.monNumberNumericUpDown.TabIndex = 16;
             this.monNumberNumericUpDown.ValueChanged += new System.EventHandler(this.monNumberNumericUpDown_ValueChanged);
             // 
@@ -111,26 +115,29 @@
             this.tableLayoutPanel1.SetColumnSpan(this.tableLayoutPanel2, 4);
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.303955F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.303955F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel2.Controls.Add(this.groupBox2, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.groupBox3, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 54);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(4, 68);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(5);
+            this.tableLayoutPanel2.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 382F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(485, 392);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 470F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(646, 481);
             this.tableLayoutPanel2.TabIndex = 17;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.movesListBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(8, 8);
+            this.groupBox2.Location = new System.Drawing.Point(11, 10);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(231, 376);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(308, 461);
             this.groupBox2.TabIndex = 34;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "View";
@@ -139,10 +146,11 @@
             // 
             this.movesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.movesListBox.FormattingEnabled = true;
-            this.movesListBox.Location = new System.Drawing.Point(3, 16);
-            this.movesListBox.Margin = new System.Windows.Forms.Padding(2);
+            this.movesListBox.ItemHeight = 16;
+            this.movesListBox.Location = new System.Drawing.Point(4, 19);
+            this.movesListBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.movesListBox.Name = "movesListBox";
-            this.movesListBox.Size = new System.Drawing.Size(225, 357);
+            this.movesListBox.Size = new System.Drawing.Size(300, 438);
             this.movesListBox.TabIndex = 0;
             this.movesListBox.SelectedIndexChanged += new System.EventHandler(this.movesListBox_SelectedIndexChanged);
             // 
@@ -150,9 +158,11 @@
             // 
             this.groupBox3.Controls.Add(this.tableLayoutPanel3);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(245, 8);
+            this.groupBox3.Location = new System.Drawing.Point(327, 10);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(232, 376);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Size = new System.Drawing.Size(308, 461);
             this.groupBox3.TabIndex = 35;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Edit";
@@ -173,10 +183,10 @@
             this.tableLayoutPanel3.Controls.Add(this.moveInputComboBox, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.statusLabel, 0, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 16);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(4, 19);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.Padding = new System.Windows.Forms.Padding(2);
+            this.tableLayoutPanel3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel3.RowCount = 6;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.50088F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.49912F));
@@ -191,10 +201,11 @@
             // 
             this.descriptorLabel.AutoSize = true;
             this.tableLayoutPanel3.SetColumnSpan(this.descriptorLabel, 3);
-            this.descriptorLabel.Location = new System.Drawing.Point(5, 43);
+            this.descriptorLabel.Location = new System.Drawing.Point(7, 52);
+            this.descriptorLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.descriptorLabel.Name = "descriptorLabel";
-            this.descriptorLabel.Padding = new System.Windows.Forms.Padding(1, 5, 1, 5);
-            this.descriptorLabel.Size = new System.Drawing.Size(57, 23);
+            this.descriptorLabel.Padding = new System.Windows.Forms.Padding(1, 6, 1, 6);
+            this.descriptorLabel.Size = new System.Drawing.Size(71, 28);
             this.descriptorLabel.TabIndex = 8;
             this.descriptorLabel.Text = "Descriptor";
             // 
@@ -250,10 +261,10 @@
             // 
             this.tableLayoutPanel3.SetColumnSpan(this.levelNumericUpDown, 2);
             this.levelNumericUpDown.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.levelNumericUpDown.Location = new System.Drawing.Point(78, 122);
-            this.levelNumericUpDown.Margin = new System.Windows.Forms.Padding(2);
+            this.levelNumericUpDown.Location = new System.Drawing.Point(103, 148);
+            this.levelNumericUpDown.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.levelNumericUpDown.Name = "levelNumericUpDown";
-            this.levelNumericUpDown.Size = new System.Drawing.Size(144, 20);
+            this.levelNumericUpDown.Size = new System.Drawing.Size(191, 22);
             this.levelNumericUpDown.TabIndex = 4;
             this.levelNumericUpDown.ValueChanged += new System.EventHandler(this.levelNumericUpDown_ValueChanged);
             // 
@@ -261,10 +272,9 @@
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 123);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Location = new System.Drawing.Point(6, 150);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.Size = new System.Drawing.Size(91, 16);
             this.label1.TabIndex = 5;
             this.label1.Text = "Level:";
             // 
@@ -275,10 +285,10 @@
             this.moveInputComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.tableLayoutPanel3.SetColumnSpan(this.moveInputComboBox, 3);
             this.moveInputComboBox.FormattingEnabled = true;
-            this.moveInputComboBox.Location = new System.Drawing.Point(4, 12);
-            this.moveInputComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.moveInputComboBox.Location = new System.Drawing.Point(6, 15);
+            this.moveInputComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.moveInputComboBox.Name = "moveInputComboBox";
-            this.moveInputComboBox.Size = new System.Drawing.Size(218, 21);
+            this.moveInputComboBox.Size = new System.Drawing.Size(288, 24);
             this.moveInputComboBox.TabIndex = 6;
             this.moveInputComboBox.SelectedIndexChanged += new System.EventHandler(this.moveInputComboBox_SelectedIndexChanged);
             // 
@@ -289,8 +299,8 @@
             this.tableLayoutPanel3.SetColumnSpan(this.statusLabel, 3);
             this.statusLabel.Location = new System.Drawing.Point(5, 261);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Padding = new System.Windows.Forms.Padding(1, 5, 1, 5);
-            this.statusLabel.Size = new System.Drawing.Size(39, 23);
+            this.statusLabel.Padding = new System.Windows.Forms.Padding(1, 6, 1, 6);
+            this.statusLabel.Size = new System.Drawing.Size(46, 28);
             this.statusLabel.TabIndex = 7;
             this.statusLabel.Text = "Status";
             // 
@@ -300,9 +310,10 @@
             this.pokemonNameInputComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.pokemonNameInputComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.pokemonNameInputComboBox.FormattingEnabled = true;
-            this.pokemonNameInputComboBox.Location = new System.Drawing.Point(53, 15);
+            this.pokemonNameInputComboBox.Location = new System.Drawing.Point(71, 20);
+            this.pokemonNameInputComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pokemonNameInputComboBox.Name = "pokemonNameInputComboBox";
-            this.pokemonNameInputComboBox.Size = new System.Drawing.Size(290, 21);
+            this.pokemonNameInputComboBox.Size = new System.Drawing.Size(386, 24);
             this.pokemonNameInputComboBox.TabIndex = 31;
             this.pokemonNameInputComboBox.SelectedIndexChanged += new System.EventHandler(this.pokemonNameInputComboBox_SelectedIndexChanged);
             // 
@@ -321,15 +332,16 @@
             // 
             // LearnsetEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(501, 459);
+            this.ClientSize = new System.Drawing.Size(668, 565);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LearnsetEditor";
-            this.Padding = new System.Windows.Forms.Padding(5);
+            this.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.Text = "Learnset Editor";
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pokemonPictureBox)).EndInit();

@@ -8275,7 +8275,10 @@ namespace DSPRE {
         }
 
         private void DVExplainButton_Click(object sender, EventArgs e) {
-            DVCalc DVcalcForm = new DVCalc(trainerComboBox.SelectedIndex, trainerClassListBox.SelectedIndex);
+            uint trainerIdx = (uint)trainerComboBox.SelectedIndex;
+            uint trainerClassIdx = (uint)trainerClassListBox.SelectedIndex;
+
+            DVCalc DVcalcForm = new DVCalc(trainerIdx, trainerClassIdx);
             DVcalcForm.ShowDialog();
         }
 
@@ -10040,5 +10043,16 @@ namespace DSPRE {
         {
             MessageBox.Show("Not implemented yet");
         }
+
+        private void generateCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Helpers.statusLabelMessage("Exporting to CSV...");
+            Update();
+            DocTool.ExportAll();
+
+            Helpers.statusLabelMessage();
+            Update();
+        }
+
     }
 }
