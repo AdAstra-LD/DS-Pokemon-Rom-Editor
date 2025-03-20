@@ -14,6 +14,7 @@ env:
 
 jobs:
   build:
+    if: github.repository == 'YakosWG/DS-Pokemon-Rom-Editor'
     runs-on: windows-latest
 
     steps:
@@ -39,6 +40,7 @@ jobs:
     - name: Delete previous release
       run: |
         gh release delete --yes yako_canary
+      continue-on-error: true
 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
