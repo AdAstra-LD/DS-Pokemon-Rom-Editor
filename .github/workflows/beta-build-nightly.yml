@@ -14,6 +14,7 @@ env:
 
 jobs:
   build:
+    if: github.repository == 'Mixone-FInallyHere/DS-Pokemon-Rom-Editor'
     runs-on: windows-latest
 
     steps:
