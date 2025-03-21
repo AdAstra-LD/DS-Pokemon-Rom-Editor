@@ -55,5 +55,22 @@ jobs:
         name: DSPRE Yako Canary Build ${{ steps.date.outputs.date }}
         files: DSPRE-yako-canary.zip
         token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+          ##  🔱 Fork Notice 🔱
+          This is a fork of DSPRE by me (Yako). The changes and features in here are potentially broken or buggy. 
+          If you are looking for stable releases, check out the repository this was forked from instead.
+          
+          ##  ⚠️ Canary Build Notice ⚠️
+          This is a Canary Build of DSPRE Beta, meaning it is automatically generated from the latest pushed code. It includes the most recent changes, improvements, and experimental features, but may be unstable or contain bugs.
+          
+          ## 🚧 What does this mean?
+          This build reflects ongoing development and is not a stable release.
+          Features may be incomplete, subject to change, or cause unexpected issues.
+          Use at your own risk—expect potential crashes, broken functionality, or unpolished features.
+          
+          ## 💡 Who is this for?
+          Developers and testers who want to stay up-to-date with the latest progress.
+          Users willing to report issues and provide feedback on new changes.
+          If you’re looking for a more reliable version, consider using the latest Stable Release instead.
         prerelease: true
         generate_release_notes: true
