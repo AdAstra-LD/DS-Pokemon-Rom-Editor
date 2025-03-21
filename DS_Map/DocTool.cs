@@ -238,7 +238,7 @@ namespace DSPRE
                 string[] abilities = new string[partyPokemon.Length];
                 string[] natures = new string[partyPokemon.Length];
 
-                // This function sets the monGenders and abilities arrays
+                // This function sets the monGenders, abilities and natures arrays
                 // We hide this away in a function because it's a bit complex
                 // and we don't want to clutter the main function more than it already is
                 SetMonGendersAndAbilitiesAndNature(i, curTrainerProperties.trainerClass, partyPokemon, monFlags, ref abilityNames, ref monGenders, ref abilities, ref natures);
