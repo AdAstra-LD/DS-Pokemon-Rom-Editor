@@ -36,6 +36,15 @@ namespace DSPRE
         {
             trainerIdx.Value = TrainerIndex;
             trainerClassIdx.Value = TrainerClassIndex;
+
+            if (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS && TrainerClassIndex < DVCalculator.TrainerClassGender.IsMaleHGSS.Length)
+            {
+                maleCheck.Checked = DVCalculator.TrainerClassGender.IsMaleHGSS[TrainerClassIndex];
+            }
+            else if (RomInfo.gameFamily == RomInfo.GameFamilies.Plat && TrainerClassIndex < DVCalculator.TrainerClassGender.IsMalePlatinum.Length)
+            {
+                maleCheck.Checked = DVCalculator.TrainerClassGender.IsMalePlatinum[TrainerClassIndex];
+            }
         }
 
         private void InitializeComponent()
