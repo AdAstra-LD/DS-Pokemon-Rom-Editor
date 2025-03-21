@@ -8034,7 +8034,7 @@ namespace DSPRE {
                 pokemonSpecies[i] = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
             }
 
-            if (gameFamily == GameFamilies.HGSS) {
+            if (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled) {
                 foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList) {
                     partyGenderComboBox.Visible = true;
                     partyGenderComboBox.Items.Add("Default Gender");
@@ -8373,7 +8373,7 @@ namespace DSPRE {
 
                 currentTrainerFile.party[i].difficulty = (byte)partyIVUpdownList[i].Value;
 
-                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && gameFamily == GameFamilies.HGSS) {
+                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled)) {
                     switch (partyGenderComboBoxList[i].SelectedIndex) {
                         case TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX:
                             currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
@@ -8697,7 +8697,7 @@ namespace DSPRE {
             partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
             
             //if the name " -" is returned for ability 2 then there is no ability 2
-            if (ability2.Equals(" -") || gameFamily != GameFamilies.HGSS) {
+            if (ability2.Equals(" -") || (gameFamily != GameFamilies.HGSS && !RomInfo.AIBackportEnabled)) {
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
             } else {
                 string stringAbi2 = ability2;
@@ -8716,7 +8716,7 @@ namespace DSPRE {
             int currentPokemonGenderRatio = pokemonSpecies[partyPokemonComboboxList[partyPokemonPosition].SelectedIndex].GenderRatioMaleToFemale;
             PartyPokemon.GenderAndAbilityFlags currentPokemonGenderAndAbilityFlags = currentTrainerFile.party[partyPokemonPosition].genderAndAbilityFlags;
 
-            if (gameFamily == GameFamilies.HGSS) {
+            if (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled) {
                 switch (currentPokemonGenderRatio) {
                     case GENDER_RATIO_MALE:
                         partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;

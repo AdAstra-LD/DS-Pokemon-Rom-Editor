@@ -101,6 +101,7 @@ namespace DSPRE
 
         public static Dictionary<ushort, string> ScriptComparisonOperatorsDict { get; private set; }
         public static Dictionary<string, ushort> ScriptComparisonOperatorsReverseDict { get; private set; }
+        public static bool AIBackportEnabled { get; private set; }
 
         public enum GameVersions : byte
         {
@@ -228,6 +229,8 @@ namespace DSPRE
             SetTrainerFunnyScriptNumber();
             SetTrainerNameLenOffset();
             SetMoveTextNumbers();
+
+            SetAIBackportEnabled();
 
             /* System */
             ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
@@ -1246,6 +1249,22 @@ namespace DSPRE
                 maxLength += ((maxLength - 4) / 2);
             }
             return maxLength;
+        }
+
+        public static void SetAIBackportEnabled()
+        {
+            if (gameFamily != GameFamilies.Plat)
+            {
+                AIBackportEnabled = false;
+                return;
+            }
+
+            byte[] bytesAtOffset = ARM9.ReadBytes(0x0793B8, 4);
+            // Vanilla Plat USA is F8 B5 9A B0
+            // Backport by is F0 B5 93 B0
+            // The tutorial is only for the USA version, but it might be better to differentiate the different languages here
+            AIBackportEnabled = bytesAtOffset.SequenceEqual(new byte[] { 0xF0, 0xB5, 0x93, 0xB0 });
+
         }
 
         public string GetBuildingModelsDirPath(bool interior) => interior ? gameDirs[DirNames.interiorBuildingModels].unpackedDir : gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
