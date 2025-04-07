@@ -53,11 +53,6 @@ namespace DSPRE.Editors
             this.BtnCloseFindActions = new System.Windows.Forms.Button();
             this.panelFindActionTextBox = new System.Windows.Forms.TextBox();
             this.scintillaActionsPanel = new System.Windows.Forms.Panel();
-            this.addScriptFileButton = new System.Windows.Forms.Button();
-            this.removeScriptFileButton = new System.Windows.Forms.Button();
-            this.saveScriptFileButton = new System.Windows.Forms.Button();
-            this.exportScriptFileButton = new System.Windows.Forms.Button();
-            this.importScriptFileButton = new System.Windows.Forms.Button();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.searchInScriptsButton = new System.Windows.Forms.Button();
             this.searchOnlyCurrentScriptCheckBox = new System.Windows.Forms.CheckBox();
@@ -77,9 +72,6 @@ namespace DSPRE.Editors
             this.functionsNavListbox = new System.Windows.Forms.ListBox();
             this.ActionsNavTab = new System.Windows.Forms.TabPage();
             this.actionsNavListbox = new System.Windows.Forms.ListBox();
-            this.openFindScriptEditorButton = new System.Windows.Forms.Button();
-            this.expandScriptTextButton = new System.Windows.Forms.Button();
-            this.compressScriptTextButton = new System.Windows.Forms.Button();
             this.scriptEditorWordWrapCheckbox = new System.Windows.Forms.CheckBox();
             this.scriptEditorWhitespacesCheckbox = new System.Windows.Forms.CheckBox();
             this.groupBox26 = new System.Windows.Forms.GroupBox();
@@ -87,8 +79,17 @@ namespace DSPRE.Editors
             this.scriptEditorNumberFormatDecimal = new System.Windows.Forms.RadioButton();
             this.scriptEditorNumberFormatHex = new System.Windows.Forms.RadioButton();
             this.viewLevelScriptButton = new System.Windows.Forms.Button();
-            this.locateCurrentScriptFile = new System.Windows.Forms.Button();
             this.exportallcustom_button = new System.Windows.Forms.Button();
+            this.openInVSC = new System.Windows.Forms.Button();
+            this.locateCurrentScriptFile = new System.Windows.Forms.Button();
+            this.addScriptFileButton = new System.Windows.Forms.Button();
+            this.compressScriptTextButton = new System.Windows.Forms.Button();
+            this.removeScriptFileButton = new System.Windows.Forms.Button();
+            this.expandScriptTextButton = new System.Windows.Forms.Button();
+            this.saveScriptFileButton = new System.Windows.Forms.Button();
+            this.openFindScriptEditorButton = new System.Windows.Forms.Button();
+            this.exportScriptFileButton = new System.Windows.Forms.Button();
+            this.importScriptFileButton = new System.Windows.Forms.Button();
             this.scriptEditorTabControl.SuspendLayout();
             this.scriptsTabPage.SuspendLayout();
             this.PanelSearchScripts.SuspendLayout();
@@ -406,70 +407,6 @@ namespace DSPRE.Editors
             this.scintillaActionsPanel.Size = new System.Drawing.Size(678, 559);
             this.scintillaActionsPanel.TabIndex = 21;
             // 
-            // addScriptFileButton
-            // 
-            this.addScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("addScriptFileButton.Image")));
-            this.addScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addScriptFileButton.Location = new System.Drawing.Point(369, 667);
-            this.addScriptFileButton.Name = "addScriptFileButton";
-            this.addScriptFileButton.Size = new System.Drawing.Size(106, 25);
-            this.addScriptFileButton.TabIndex = 4;
-            this.addScriptFileButton.Text = "Add Script File";
-            this.addScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addScriptFileButton.UseVisualStyleBackColor = true;
-            this.addScriptFileButton.Click += new System.EventHandler(this.addScriptFileButton_Click);
-            // 
-            // removeScriptFileButton
-            // 
-            this.removeScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeScriptFileButton.Image")));
-            this.removeScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeScriptFileButton.Location = new System.Drawing.Point(369, 694);
-            this.removeScriptFileButton.Name = "removeScriptFileButton";
-            this.removeScriptFileButton.Size = new System.Drawing.Size(106, 25);
-            this.removeScriptFileButton.TabIndex = 5;
-            this.removeScriptFileButton.Text = "Remove Last";
-            this.removeScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeScriptFileButton.UseVisualStyleBackColor = true;
-            this.removeScriptFileButton.Click += new System.EventHandler(this.removeScriptFileButton_Click);
-            // 
-            // saveScriptFileButton
-            // 
-            this.saveScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("saveScriptFileButton.Image")));
-            this.saveScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveScriptFileButton.Location = new System.Drawing.Point(6, 50);
-            this.saveScriptFileButton.Name = "saveScriptFileButton";
-            this.saveScriptFileButton.Size = new System.Drawing.Size(154, 23);
-            this.saveScriptFileButton.TabIndex = 1;
-            this.saveScriptFileButton.Text = "&Save Current File";
-            this.saveScriptFileButton.UseVisualStyleBackColor = true;
-            this.saveScriptFileButton.Click += new System.EventHandler(this.saveScriptFileButton_Click);
-            // 
-            // exportScriptFileButton
-            // 
-            this.exportScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportScriptFileButton.Image")));
-            this.exportScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.exportScriptFileButton.Location = new System.Drawing.Point(294, 667);
-            this.exportScriptFileButton.Name = "exportScriptFileButton";
-            this.exportScriptFileButton.Size = new System.Drawing.Size(70, 52);
-            this.exportScriptFileButton.TabIndex = 3;
-            this.exportScriptFileButton.Text = "&Export \r\nFile";
-            this.exportScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.exportScriptFileButton.UseVisualStyleBackColor = true;
-            this.exportScriptFileButton.Click += new System.EventHandler(this.exportScriptFileButton_Click);
-            // 
-            // importScriptFileButton
-            // 
-            this.importScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importScriptFileButton.Image")));
-            this.importScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.importScriptFileButton.Location = new System.Drawing.Point(219, 667);
-            this.importScriptFileButton.Name = "importScriptFileButton";
-            this.importScriptFileButton.Size = new System.Drawing.Size(70, 52);
-            this.importScriptFileButton.TabIndex = 2;
-            this.importScriptFileButton.Text = "&Import\r\nFile";
-            this.importScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.importScriptFileButton.UseVisualStyleBackColor = true;
-            this.importScriptFileButton.Click += new System.EventHandler(this.importScriptFileButton_Click);
-            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.searchInScriptsButton);
@@ -671,42 +608,6 @@ namespace DSPRE.Editors
             this.actionsNavListbox.TabIndex = 11;
             this.actionsNavListbox.SelectedIndexChanged += new System.EventHandler(this.actionsNavListbox_SelectedIndexChanged);
             // 
-            // openFindScriptEditorButton
-            // 
-            this.openFindScriptEditorButton.Image = ((System.Drawing.Image)(resources.GetObject("openFindScriptEditorButton.Image")));
-            this.openFindScriptEditorButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.openFindScriptEditorButton.Location = new System.Drawing.Point(1079, 11);
-            this.openFindScriptEditorButton.Name = "openFindScriptEditorButton";
-            this.openFindScriptEditorButton.Size = new System.Drawing.Size(24, 24);
-            this.openFindScriptEditorButton.TabIndex = 27;
-            this.openFindScriptEditorButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.openFindScriptEditorButton.UseVisualStyleBackColor = true;
-            this.openFindScriptEditorButton.Click += new System.EventHandler(this.openFindScriptEditorButton_Click);
-            // 
-            // expandScriptTextButton
-            // 
-            this.expandScriptTextButton.Image = ((System.Drawing.Image)(resources.GetObject("expandScriptTextButton.Image")));
-            this.expandScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.expandScriptTextButton.Location = new System.Drawing.Point(1107, 11);
-            this.expandScriptTextButton.Name = "expandScriptTextButton";
-            this.expandScriptTextButton.Size = new System.Drawing.Size(24, 24);
-            this.expandScriptTextButton.TabIndex = 28;
-            this.expandScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.expandScriptTextButton.UseVisualStyleBackColor = true;
-            this.expandScriptTextButton.Click += new System.EventHandler(this.ScriptEditorExpandButton_Click);
-            // 
-            // compressScriptTextButton
-            // 
-            this.compressScriptTextButton.Image = ((System.Drawing.Image)(resources.GetObject("compressScriptTextButton.Image")));
-            this.compressScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.compressScriptTextButton.Location = new System.Drawing.Point(1135, 11);
-            this.compressScriptTextButton.Name = "compressScriptTextButton";
-            this.compressScriptTextButton.Size = new System.Drawing.Size(24, 24);
-            this.compressScriptTextButton.TabIndex = 29;
-            this.compressScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.compressScriptTextButton.UseVisualStyleBackColor = true;
-            this.compressScriptTextButton.Click += new System.EventHandler(this.ScriptEditorCollapseButton_Click);
-            // 
             // scriptEditorWordWrapCheckbox
             // 
             this.scriptEditorWordWrapCheckbox.Appearance = System.Windows.Forms.Appearance.Button;
@@ -794,17 +695,6 @@ namespace DSPRE.Editors
             this.viewLevelScriptButton.UseVisualStyleBackColor = true;
             this.viewLevelScriptButton.Click += new System.EventHandler(this.viewLevelScriptButton_Click);
             // 
-            // locateCurrentScriptFile
-            // 
-            this.locateCurrentScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("locateCurrentScriptFile.Image")));
-            this.locateCurrentScriptFile.Location = new System.Drawing.Point(423, 29);
-            this.locateCurrentScriptFile.Name = "locateCurrentScriptFile";
-            this.locateCurrentScriptFile.Size = new System.Drawing.Size(42, 40);
-            this.locateCurrentScriptFile.TabIndex = 7;
-            this.locateCurrentScriptFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.locateCurrentScriptFile.UseVisualStyleBackColor = true;
-            this.locateCurrentScriptFile.Click += new System.EventHandler(this.locateCurrentScriptFile_Click);
-            // 
             // exportallcustom_button
             // 
             this.exportallcustom_button.Enabled = false;
@@ -816,10 +706,133 @@ namespace DSPRE.Editors
             this.exportallcustom_button.UseVisualStyleBackColor = true;
             this.exportallcustom_button.Click += new System.EventHandler(this.exportallcustom_button_Click);
             // 
+            // openInVSC
+            // 
+            this.openInVSC.Image = global::DSPRE.Properties.Resources.code_70x701;
+            this.openInVSC.Location = new System.Drawing.Point(652, 1);
+            this.openInVSC.Name = "openInVSC";
+            this.openInVSC.Size = new System.Drawing.Size(42, 40);
+            this.openInVSC.TabIndex = 52;
+            this.openInVSC.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.openInVSC.UseVisualStyleBackColor = true;
+            this.openInVSC.Click += new System.EventHandler(this.openInVSC_Click);
+            // 
+            // locateCurrentScriptFile
+            // 
+            this.locateCurrentScriptFile.Image = ((System.Drawing.Image)(resources.GetObject("locateCurrentScriptFile.Image")));
+            this.locateCurrentScriptFile.Location = new System.Drawing.Point(432, 33);
+            this.locateCurrentScriptFile.Name = "locateCurrentScriptFile";
+            this.locateCurrentScriptFile.Size = new System.Drawing.Size(42, 40);
+            this.locateCurrentScriptFile.TabIndex = 7;
+            this.locateCurrentScriptFile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.locateCurrentScriptFile.UseVisualStyleBackColor = true;
+            this.locateCurrentScriptFile.Click += new System.EventHandler(this.locateCurrentScriptFile_Click);
+            // 
+            // addScriptFileButton
+            // 
+            this.addScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("addScriptFileButton.Image")));
+            this.addScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.addScriptFileButton.Location = new System.Drawing.Point(369, 667);
+            this.addScriptFileButton.Name = "addScriptFileButton";
+            this.addScriptFileButton.Size = new System.Drawing.Size(106, 25);
+            this.addScriptFileButton.TabIndex = 4;
+            this.addScriptFileButton.Text = "Add Script File";
+            this.addScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.addScriptFileButton.UseVisualStyleBackColor = true;
+            this.addScriptFileButton.Click += new System.EventHandler(this.addScriptFileButton_Click);
+            // 
+            // compressScriptTextButton
+            // 
+            this.compressScriptTextButton.Image = ((System.Drawing.Image)(resources.GetObject("compressScriptTextButton.Image")));
+            this.compressScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.compressScriptTextButton.Location = new System.Drawing.Point(1135, 11);
+            this.compressScriptTextButton.Name = "compressScriptTextButton";
+            this.compressScriptTextButton.Size = new System.Drawing.Size(24, 24);
+            this.compressScriptTextButton.TabIndex = 29;
+            this.compressScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.compressScriptTextButton.UseVisualStyleBackColor = true;
+            this.compressScriptTextButton.Click += new System.EventHandler(this.ScriptEditorCollapseButton_Click);
+            // 
+            // removeScriptFileButton
+            // 
+            this.removeScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("removeScriptFileButton.Image")));
+            this.removeScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.removeScriptFileButton.Location = new System.Drawing.Point(369, 694);
+            this.removeScriptFileButton.Name = "removeScriptFileButton";
+            this.removeScriptFileButton.Size = new System.Drawing.Size(106, 25);
+            this.removeScriptFileButton.TabIndex = 5;
+            this.removeScriptFileButton.Text = "Remove Last";
+            this.removeScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.removeScriptFileButton.UseVisualStyleBackColor = true;
+            this.removeScriptFileButton.Click += new System.EventHandler(this.removeScriptFileButton_Click);
+            // 
+            // expandScriptTextButton
+            // 
+            this.expandScriptTextButton.Image = ((System.Drawing.Image)(resources.GetObject("expandScriptTextButton.Image")));
+            this.expandScriptTextButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.expandScriptTextButton.Location = new System.Drawing.Point(1107, 11);
+            this.expandScriptTextButton.Name = "expandScriptTextButton";
+            this.expandScriptTextButton.Size = new System.Drawing.Size(24, 24);
+            this.expandScriptTextButton.TabIndex = 28;
+            this.expandScriptTextButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.expandScriptTextButton.UseVisualStyleBackColor = true;
+            this.expandScriptTextButton.Click += new System.EventHandler(this.ScriptEditorExpandButton_Click);
+            // 
+            // saveScriptFileButton
+            // 
+            this.saveScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("saveScriptFileButton.Image")));
+            this.saveScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.saveScriptFileButton.Location = new System.Drawing.Point(6, 50);
+            this.saveScriptFileButton.Name = "saveScriptFileButton";
+            this.saveScriptFileButton.Size = new System.Drawing.Size(154, 23);
+            this.saveScriptFileButton.TabIndex = 1;
+            this.saveScriptFileButton.Text = "&Save Current File";
+            this.saveScriptFileButton.UseVisualStyleBackColor = true;
+            this.saveScriptFileButton.Click += new System.EventHandler(this.saveScriptFileButton_Click);
+            // 
+            // openFindScriptEditorButton
+            // 
+            this.openFindScriptEditorButton.Image = ((System.Drawing.Image)(resources.GetObject("openFindScriptEditorButton.Image")));
+            this.openFindScriptEditorButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.openFindScriptEditorButton.Location = new System.Drawing.Point(1079, 11);
+            this.openFindScriptEditorButton.Name = "openFindScriptEditorButton";
+            this.openFindScriptEditorButton.Size = new System.Drawing.Size(24, 24);
+            this.openFindScriptEditorButton.TabIndex = 27;
+            this.openFindScriptEditorButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.openFindScriptEditorButton.UseVisualStyleBackColor = true;
+            this.openFindScriptEditorButton.Click += new System.EventHandler(this.openFindScriptEditorButton_Click);
+            // 
+            // exportScriptFileButton
+            // 
+            this.exportScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("exportScriptFileButton.Image")));
+            this.exportScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportScriptFileButton.Location = new System.Drawing.Point(294, 667);
+            this.exportScriptFileButton.Name = "exportScriptFileButton";
+            this.exportScriptFileButton.Size = new System.Drawing.Size(70, 52);
+            this.exportScriptFileButton.TabIndex = 3;
+            this.exportScriptFileButton.Text = "&Export \r\nFile";
+            this.exportScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.exportScriptFileButton.UseVisualStyleBackColor = true;
+            this.exportScriptFileButton.Click += new System.EventHandler(this.exportScriptFileButton_Click);
+            // 
+            // importScriptFileButton
+            // 
+            this.importScriptFileButton.Image = ((System.Drawing.Image)(resources.GetObject("importScriptFileButton.Image")));
+            this.importScriptFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.importScriptFileButton.Location = new System.Drawing.Point(219, 667);
+            this.importScriptFileButton.Name = "importScriptFileButton";
+            this.importScriptFileButton.Size = new System.Drawing.Size(70, 52);
+            this.importScriptFileButton.TabIndex = 2;
+            this.importScriptFileButton.Text = "&Import\r\nFile";
+            this.importScriptFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.importScriptFileButton.UseVisualStyleBackColor = true;
+            this.importScriptFileButton.Click += new System.EventHandler(this.importScriptFileButton_Click);
+            // 
             // ScriptEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.openInVSC);
             this.Controls.Add(this.exportallcustom_button);
             this.Controls.Add(this.locateCurrentScriptFile);
             this.Controls.Add(this.groupBox24);
@@ -928,5 +941,6 @@ namespace DSPRE.Editors
     private System.Windows.Forms.Button viewLevelScriptButton;
     private System.Windows.Forms.Button locateCurrentScriptFile;
         private System.Windows.Forms.Button exportallcustom_button;
+        private System.Windows.Forms.Button openInVSC;
     }
 }

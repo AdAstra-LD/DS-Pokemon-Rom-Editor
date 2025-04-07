@@ -37,6 +37,7 @@ namespace DSPRE
 
         private String oldExportPath;
         private String oldMapImportPath;
+        private String oldVscPath;
 
         private void SettingsWindow_Load(object sender, EventArgs e)
         {
@@ -44,6 +45,8 @@ namespace DSPRE
             oldExportPath = Properties.Settings.Default.exportPath;
             mapImportPathTextBox.Text = Properties.Settings.Default.mapImportStarterPoint;
             oldMapImportPath = Properties.Settings.Default.mapImportStarterPoint;
+            VSCPathTextBox.Text = Properties.Settings.Default.vscPath;
+            oldVscPath = Properties.Settings.Default.vscPath;
         }
 
         private void changePathButton1_Click(object sender, EventArgs e)
@@ -60,12 +63,20 @@ namespace DSPRE
             mapImportPathTextBox.Text = getFolderPath();
         }
 
+        private void changePathButton3_Click(object sender, EventArgs e)
+        {
+            VSCPathTextBox.Text = getFolderPath();
+        }
+
+
         private void saveButton_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.exportPath = romExportPathTextBox.Text;
             Properties.Settings.Default.mapImportStarterPoint = mapImportPathTextBox.Text;
+            Properties.Settings.Default.vscPath = VSCPathTextBox.Text;
             oldExportPath = Properties.Settings.Default.exportPath;
             oldMapImportPath = Properties.Settings.Default.mapImportStarterPoint;
+            oldVscPath = Properties.Settings.Default.vscPath;
 
         }
 
@@ -99,6 +110,11 @@ namespace DSPRE
         private void mapImportBasePathLabel_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void clearVSCPath_Click(object sender, EventArgs e)
+        {
+            VSCPathTextBox.Text = "";
         }
     }
 }

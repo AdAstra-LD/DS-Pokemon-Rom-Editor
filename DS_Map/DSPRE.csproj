@@ -603,6 +603,8 @@
     <None Include="Resources\Graphics\Program Icons\exploreKit.png" />
     <None Include="Resources\Graphics\Program Icons\buildingEditorButton.png" />
     <None Include="Resources\alphabgCheckerboard.png" />
+    <None Include="Resources\code_70x70.png" />
+    <None Include="Resources\code_70x701.png" />
     <Content Include="Resources\Graphics\Area Icons\hgsslake.png" />
     <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera0.png" />
     <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera1.png" />

@@ -32,5 +32,8 @@
     <Setting Name="mapImportStarterPoint" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="vscPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">code</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

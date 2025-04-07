@@ -9,6 +9,8 @@ using DSPRE.ROMFiles;
 using ScintillaNET;
 using ScintillaNET.Utils;
 using System.Globalization;
+using static OpenTK.Graphics.OpenGL.GL;
+using System.Diagnostics;
 
 namespace DSPRE.Editors {
     public partial class ScriptEditor : UserControl {
@@ -95,6 +97,10 @@ namespace DSPRE.Editors {
             addScriptFileButton.Enabled = false;
             removeScriptFileButton.Enabled = false;
             viewLevelScriptButton.Enabled = false;
+            if(Properties.Settings.Default.vscPath == "")
+            {
+                openInVSC.Enabled = false;
+            }
         }
 
         public void SetupScriptEditor(MainProgram parent, bool force = false) {
@@ -1149,9 +1155,45 @@ namespace DSPRE.Editors {
             }
         }
 
-    }
+        private void openInVSC_Click(object sender, EventArgs e)
+        {
+            {
+                string filePath = Filesystem.GetExportedScriptPath(selectScriptFileComboBox.SelectedIndex);
+                string scriptsPath = RomInfo.exportedScriptsPath;
 
-    public class ScriptEditorSearchResult {
+                string fullFilePath = Path.GetFullPath(filePath);
+                string fullFolderPath = Path.GetFullPath(scriptsPath);
+
+                string arguments = $"\"{fullFolderPath}\" \"{fullFilePath}\"";
+
+                StartProcess(Properties.Settings.Default.vscPath, arguments);
+            }
+        }
+
+            static void StartProcess(string exePath, string arguments)
+            {
+                try
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo
+                    {
+                        FileName = exePath,
+                        Arguments = arguments,
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
+                    Console.WriteLine($"Opened: {arguments}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error opening: {arguments}\n{ex.Message}");
+                }
+            }
+
+        }
+
+
+
+        public class ScriptEditorSearchResult {
         public readonly ScriptFile scriptFile;
         public readonly ScriptFile.ContainerTypes containerType;
         public readonly int commandNumber;

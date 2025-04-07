@@ -37,6 +37,10 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.clearButtonExport = new System.Windows.Forms.Button();
             this.clearButtonMap = new System.Windows.Forms.Button();
+            this.clearVSCPath = new System.Windows.Forms.Button();
+            this.changePathButton3 = new System.Windows.Forms.Button();
+            this.VSCPathTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // romExportPathLabel
@@ -97,7 +101,7 @@
             // saveButton
             // 
             this.saveButton.Image = global::DSPRE.Properties.Resources.saveButton;
-            this.saveButton.Location = new System.Drawing.Point(617, 170);
+            this.saveButton.Location = new System.Drawing.Point(617, 256);
             this.saveButton.Name = "saveButton";
             this.saveButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.saveButton.Size = new System.Drawing.Size(64, 30);
@@ -131,11 +135,52 @@
             this.clearButtonMap.UseVisualStyleBackColor = true;
             this.clearButtonMap.Click += new System.EventHandler(this.clearButtonMap_Click);
             // 
+            // clearVSCPath
+            // 
+            this.clearVSCPath.Location = new System.Drawing.Point(452, 213);
+            this.clearVSCPath.Name = "clearVSCPath";
+            this.clearVSCPath.Size = new System.Drawing.Size(75, 23);
+            this.clearVSCPath.TabIndex = 12;
+            this.clearVSCPath.Text = "Clear";
+            this.clearVSCPath.UseVisualStyleBackColor = true;
+            this.clearVSCPath.Click += new System.EventHandler(this.clearVSCPath_Click);
+            // 
+            // changePathButton3
+            // 
+            this.changePathButton3.Location = new System.Drawing.Point(533, 213);
+            this.changePathButton3.Name = "changePathButton3";
+            this.changePathButton3.Size = new System.Drawing.Size(107, 23);
+            this.changePathButton3.TabIndex = 11;
+            this.changePathButton3.Text = "Change Path";
+            this.changePathButton3.UseVisualStyleBackColor = true;
+            this.changePathButton3.Click += new System.EventHandler(this.changePathButton3_Click);
+            // 
+            // VSCPathTextBox
+            // 
+            this.VSCPathTextBox.Location = new System.Drawing.Point(18, 187);
+            this.VSCPathTextBox.Name = "VSCPathTextBox";
+            this.VSCPathTextBox.ReadOnly = true;
+            this.VSCPathTextBox.Size = new System.Drawing.Size(622, 20);
+            this.VSCPathTextBox.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 170);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Visual Studio Code Path";
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 212);
+            this.ClientSize = new System.Drawing.Size(693, 298);
+            this.Controls.Add(this.clearVSCPath);
+            this.Controls.Add(this.changePathButton3);
+            this.Controls.Add(this.VSCPathTextBox);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.clearButtonMap);
             this.Controls.Add(this.clearButtonExport);
             this.Controls.Add(this.saveButton);
@@ -166,5 +211,9 @@
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button clearButtonExport;
         private System.Windows.Forms.Button clearButtonMap;
+        private System.Windows.Forms.Button clearVSCPath;
+        private System.Windows.Forms.Button changePathButton3;
+        private System.Windows.Forms.TextBox VSCPathTextBox;
+        private System.Windows.Forms.Label label1;
     }
 }

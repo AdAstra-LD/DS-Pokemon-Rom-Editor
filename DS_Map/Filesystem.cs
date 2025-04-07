@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace DSPRE {
     public static class Filesystem {
@@ -140,6 +141,13 @@ namespace DSPRE {
 
         public static string GetScriptPath(int id) {
             return GetPath(Filesystem.scripts, id);
+        }
+
+        public static string GetExportedScriptPath(int id)
+        {
+            String fileName = String.Format("{0}{1}", id.ToString("D4"), "_script.script");
+           
+            return Path.Combine(RomInfo.exportedScriptsPath, fileName);
         }
 
         public static int GetScriptCount() {
