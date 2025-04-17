@@ -8355,6 +8355,9 @@ namespace DSPRE {
                 currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
             }
 
+            // Need to account for the case where ability 2 was set on a previous mon. If so then ability one flag needs to be set on other mons with ability 1
+            bool wasAbility2Set = false;
+
             for (int i = 0; i < partyCountUpDown.Value; i++) {
                 currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
                 currentTrainerFile.party[i].formID = (ushort)partyFormComboBoxList[i].SelectedIndex;
@@ -8392,6 +8395,11 @@ namespace DSPRE {
 
                 if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX) {
                     currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2;
+                    wasAbility2Set = true;
+                }
+                // If ability 2 was set previously force ability 1 must be set here other wise the pokemon will have ability 2
+                else if (wasAbility2Set && partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX) {
+                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
                 }
                 //ability slot 1 flag must be set if the pokemon's gender is forced to male or female, otherwise the pokemon will have ability2 even if the ability2 flag is not set
                 //the ability 1 flag should not be set if neither of the gender flags are set, otherwise this will cause a problem with using alternate forms
