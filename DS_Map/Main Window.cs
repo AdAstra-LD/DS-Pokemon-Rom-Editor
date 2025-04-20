@@ -27,6 +27,7 @@ using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
+using static OpenTK.Graphics.OpenGL.GL;
 
 namespace DSPRE {
 
@@ -5237,6 +5238,7 @@ namespace DSPRE {
                 overworldsListBox.Items.Add(i.ToString("D" + Math.Max(0, count - 1).ToString().Length) + ": " + currentEvFile.overworlds[i].ToString());
             }
         }
+
         private void FillWarpsBox() {
             warpsListBox.Items.Clear();
             int count = currentEvFile.warps.Count;
@@ -5522,6 +5524,13 @@ namespace DSPRE {
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
 
+            morningCheckbox.Checked = false;
+            dayCheckbox.Checked = false;
+            twilightCheckbox.Checked = false;
+            nightCheckbox.Checked = false;
+            lateNightCheckbox.Checked = false;
+
+
             Helpers.statusLabelMessage();
         }
         private void addEventFileButton_Click(object sender, EventArgs e) {
@@ -5733,6 +5742,12 @@ namespace DSPRE {
             FillOverworldsBox();
             FillTriggersBox();
             FillWarpsBox();
+
+            morningCheckbox.Checked = false;
+            dayCheckbox.Checked = false;
+            twilightCheckbox.Checked = false;
+            nightCheckbox.Checked = false;
+            lateNightCheckbox.Checked = false;
 
             if (eventToHeader.TryGetValue((ushort)selectEventComboBox.SelectedIndex, out ushort mapHeader)) {
                 MapHeader h;
@@ -6153,6 +6168,49 @@ namespace DSPRE {
 
             owScriptNumericUpDown.Value = currentEvFile.overworlds[overworldsListBox.SelectedIndex].scriptNumber = (ushort)(7000 + owItemComboBox.SelectedIndex);
         }
+
+        private void updateTimeForOverworld(Overworld selectedOw)
+        {
+            TimeEnum timeMask = TimeEnum.NONE;
+
+            if (morningCheckbox.Checked)
+            {
+                timeMask |= TimeEnum.MORNING;
+            }
+
+            if (dayCheckbox.Checked)
+            {
+                timeMask |= TimeEnum.DAY;
+            }
+
+            if (twilightCheckbox.Checked)
+            {
+                timeMask |= TimeEnum.TWILIGHT;
+            }
+
+            if (nightCheckbox.Checked)
+            {
+                timeMask |= TimeEnum.NIGHT;
+            }
+
+            if (lateNightCheckbox.Checked)
+            {
+                timeMask |= TimeEnum.LATE_NIGHT;
+            }
+
+            selectedOw.unknown2 = (ushort)timeMask;
+        }
+
+        private enum TimeEnum : ushort
+        {
+            NONE = 0,
+            MORNING = 1 << 0,  // 1
+            DAY = 1 << 1,  // 2
+            TWILIGHT = 1 << 2,  // 4
+            NIGHT = 1 << 3,  // 8
+            LATE_NIGHT = 1 << 4   // 16            
+        }
+
         private void overworldsListBox_SelectedIndexChanged(object sender, EventArgs e) {
             int index = overworldsListBox.SelectedIndex;
 
@@ -6210,6 +6268,49 @@ namespace DSPRE {
                 owSightRangeUpDown.Value = selectedOw.sightRange;
                 owXRangeUpDown.Value = selectedOw.xRange;
                 owYRangeUpDown.Value = selectedOw.yRange;
+
+
+                var selectedOwNpcTime = selectedOw.unknown2;
+                if(((TimeEnum)selectedOwNpcTime).HasFlag(TimeEnum.MORNING))
+                {
+                    morningCheckbox.Checked = true;
+                } else
+                {
+                    morningCheckbox.Checked = false;
+                }
+
+                if (((TimeEnum)selectedOwNpcTime).HasFlag(TimeEnum.DAY))
+                {
+                    dayCheckbox.Checked = true;
+                } else
+                {
+                    dayCheckbox.Checked = false;
+                }
+
+                if (((TimeEnum)selectedOwNpcTime).HasFlag(TimeEnum.TWILIGHT))
+                {
+                    twilightCheckbox.Checked = true;
+                } else
+                {
+                    twilightCheckbox.Checked = false;
+                }
+
+                if (((TimeEnum)selectedOwNpcTime).HasFlag(TimeEnum.NIGHT))
+                {
+                    nightCheckbox.Checked = true;
+                } else
+                {
+                    nightCheckbox.Checked = false;
+                }
+
+                if (((TimeEnum)selectedOwNpcTime).HasFlag(TimeEnum.LATE_NIGHT))
+                {
+                    lateNightCheckbox.Checked = true;
+                } else
+                {
+                    lateNightCheckbox.Checked = false;
+                }
+
 
                 try {
                     uint spriteID = RomInfo.OverworldTable[currentEvFile.overworlds[overworldsListBox.SelectedIndex].overlayTableEntry].spriteID;
@@ -9994,6 +10095,56 @@ namespace DSPRE {
         {
             AddressHelper form = new AddressHelper();
             form.Show();
+        }
+
+        private void dayCheckbox_CheckStateChanged(object sender, EventArgs e)
+        {
+            Overworld selectedOw = (Overworld)selectedEvent;
+
+            if (selectedOw != null)
+            {
+                updateTimeForOverworld(selectedOw);
+            }
+        }
+
+        private void twilightCheckbox_CheckStateChanged(object sender, EventArgs e)
+        {
+            Overworld selectedOw = (Overworld)selectedEvent;
+
+            if (selectedOw != null)
+            {
+                updateTimeForOverworld(selectedOw);
+            }
+        }
+
+        private void nightCheckbox_CheckStateChanged(object sender, EventArgs e)
+        {
+            Overworld selectedOw = (Overworld)selectedEvent;
+
+            if (selectedOw != null)
+            {
+                updateTimeForOverworld(selectedOw);
+            }
+        }
+
+        private void lateNightCheckbox_CheckStateChanged(object sender, EventArgs e)
+        {
+            Overworld selectedOw = (Overworld)selectedEvent;
+
+            if (selectedOw != null)
+            {
+                updateTimeForOverworld(selectedOw);
+            }
+        }
+
+        private void morningCheckbox_CheckStateChanged(object sender, EventArgs e)
+        {
+            Overworld selectedOw = (Overworld)selectedEvent;
+
+            if (selectedOw != null)
+            {
+                updateTimeForOverworld(selectedOw);
+            }
         }
     }
 }

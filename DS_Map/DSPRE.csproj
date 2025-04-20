@@ -725,6 +725,16 @@
     <None Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <None Include="Resources\RenameIcon.png" />
     <None Include="Resources\weather_editor.bmp" />
+    <None Include="Resources\time_0.png" />
+    <None Include="Resources\time_1.png" />
+    <None Include="Resources\time_2.png" />
+    <None Include="Resources\time_3.png" />
+    <None Include="Resources\time_4.png" />
+    <None Include="Resources\time_01.png" />
+    <None Include="Resources\time_11.png" />
+    <None Include="Resources\time_21.png" />
+    <None Include="Resources\time_31.png" />
+    <None Include="Resources\time_41.png" />
     <Content Include="Tools\apicula.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
