@@ -28,6 +28,8 @@ namespace DSPRE
             string trainerDataPath = Path.Combine(docsFolderPath, "TrainerData.txt");
             string moveDataPath = Path.Combine(docsFolderPath, "MoveData.csv");
 
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.trainerParty, DirNames.moveData});
+
             string[] pokeNames = RomInfo.GetPokemonNames();
             string[] itemNames = RomInfo.GetItemNames();
             string[] abilityNames = RomInfo.GetAbilityNames();
@@ -89,6 +91,7 @@ namespace DSPRE
         {
             // Write the Learnset Data to the CSV file
             LearnsetData curLearnsetData = null;
+            PokemonPersonalData curPersonalData = null;
             StreamWriter sw = new StreamWriter(learnsetDataPath);
 
             sw.WriteLine("ID,Name,[Level|Move]");
@@ -102,6 +105,37 @@ namespace DSPRE
                 foreach (var entry in curLearnsetData.list)
                 {
                     sw.Write($",[{entry.level}|{moveNames[entry.move]}]");
+                }
+
+                // Add TM/HM moves to the Learnset CSV file
+                if (i < RomInfo.GetPersonalFilesCount()) 
+                {
+                    curPersonalData = new PokemonPersonalData(i);
+                    StringBuilder sb = new StringBuilder();
+
+                    // Slight code duplication to PokemonDataEditor here
+                    int dataIndex = 0;
+                    byte tot = (byte)(PokemonPersonalData.tmsCount + PokemonPersonalData.hmsCount);
+                    for (byte b = 0; b < tot; b++)
+                    {
+                        string currentItem = MachineNameFromIndex(b);
+                        if (dataIndex < curPersonalData.machines.Count && curPersonalData.machines.Contains(b))
+                        {
+                            if (dataIndex != 0) sb.Append(",");
+                            sb.Append(currentItem);
+                            dataIndex++;
+                        }
+                    }
+
+                    if (sb.Length > 0)
+                    {
+                        sw.Write($"[TM|{sb.ToString()}]");
+                    }
+                    else
+                    {
+                        sw.Write("[TM|None]");
+                    }
+
                 }
 
                 sw.WriteLine();
@@ -335,6 +369,27 @@ namespace DSPRE
 
             return sb.ToString();
 
+        }
+
+        // Slight code duplication to PersonalDataEditor here
+        private static string MachineNameFromIndex(int n)
+        {
+            //0-91 --> TMs
+            //>=92 --> HM
+            n += 1;
+            int diff = n - PokemonPersonalData.tmsCount;
+            string item = diff > 0 ? "HM" + diff : "TM" + n;
+            return item;
+        }
+
+        private static bool[] BitFieldToBoolArray(uint bitField)
+        {
+            bool[] bools = new bool[32];
+            for (int i = 0; i < 32; i++)
+            {
+                bools[i] = (bitField & (1u << i)) != 0;
+            }
+            return bools;
         }
 
         private static void SetMonGendersAndAbilitiesAndNature(int trainerID, int trainerClassID, PartyPokemon[] partyPokemon,
