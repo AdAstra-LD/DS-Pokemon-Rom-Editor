@@ -382,15 +382,6 @@ namespace DSPRE
             return item;
         }
 
-        private static bool[] BitFieldToBoolArray(uint bitField)
-        {
-            bool[] bools = new bool[32];
-            for (int i = 0; i < 32; i++)
-            {
-                bools[i] = (bitField & (1u << i)) != 0;
-            }
-            return bools;
-        }
 
         private static void SetMonGendersAndAbilitiesAndNature(int trainerID, int trainerClassID, PartyPokemon[] partyPokemon,
             PartyPokemon.GenderAndAbilityFlags[] monFlags, ref string[] abilityNames,
