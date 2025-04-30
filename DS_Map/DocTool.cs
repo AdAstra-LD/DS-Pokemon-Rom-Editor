@@ -129,11 +129,11 @@ namespace DSPRE
 
                     if (sb.Length > 0)
                     {
-                        sw.Write($"[TM|{sb.ToString()}]");
+                        sw.Write($",[TM|{sb.ToString()}]");
                     }
                     else
                     {
-                        sw.Write("[TM|None]");
+                        sw.Write(",[TM|None]");
                     }
 
                 }
