@@ -121,7 +121,7 @@ namespace DSPRE
                         string currentItem = MachineNameFromIndex(b);
                         if (dataIndex < curPersonalData.machines.Count && curPersonalData.machines.Contains(b))
                         {
-                            if (dataIndex != 0) sb.Append(",");
+                            sb.Append("|");
                             sb.Append(currentItem);
                             dataIndex++;
                         }
@@ -129,7 +129,7 @@ namespace DSPRE
 
                     if (sb.Length > 0)
                     {
-                        sw.Write($",[TM|{sb.ToString()}]");
+                        sw.Write($",[TMs{sb.ToString()}]");
                     }
                     else
                     {
