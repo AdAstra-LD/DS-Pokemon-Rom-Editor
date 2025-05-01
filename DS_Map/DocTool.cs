@@ -378,7 +378,8 @@ namespace DSPRE
             //>=92 --> HM
             n += 1;
             int diff = n - PokemonPersonalData.tmsCount;
-            string item = diff > 0 ? "HM" + diff : "TM" + n;
+            string type = diff > 0 ? "HM" : "TM";
+            string item = $"{type}{(diff > 0 ? diff : n):D2}";
             return item;
         }
 
