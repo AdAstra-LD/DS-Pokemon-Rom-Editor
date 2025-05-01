@@ -298,7 +298,19 @@ namespace DSPRE
             PokemonPersonalData curPersonalData = null;
             StreamWriter sw = new StreamWriter(THHMDataPath);
 
-            sw.WriteLine("ID,Name,TMs");
+            sw.Write("ID,Name");
+
+            int totalTMs = PokemonPersonalData.tmsCount + PokemonPersonalData.hmsCount;
+
+            // Write Header (List of all TMs/HMs)
+            for (int count = 0; count < totalTMs; count++)
+            {
+                string currentItem = MachineNameFromIndex(count);
+                sw.Write($",{currentItem}");
+
+            }
+
+            sw.WriteLine();
 
             for (int i = 0; i < RomInfo.GetPersonalFilesCount(); i++)
             {
@@ -306,17 +318,10 @@ namespace DSPRE
                 sw.Write($"{i},{pokeNames[i]},[");
 
                 // Slight code duplication to PersonalDataEditor here
-                int dataIndex = 0;
-                byte tot = (byte)(PokemonPersonalData.tmsCount + PokemonPersonalData.hmsCount);
-                for (byte b = 0; b < tot; b++)
+                for (byte b = 0; b < totalTMs; b++)
                 {
-                    string currentItem = MachineNameFromIndex(b);
-                    if (dataIndex < curPersonalData.machines.Count && curPersonalData.machines.Contains(b))
-                    {
-                        if (dataIndex != 0) sw.Write(",");
-                        sw.Write(currentItem);
-                        dataIndex++;
-                    }
+                    sw.Write(b == 0 ? "" : ",");
+                    sw.Write(curPersonalData.machines.Contains(b) ? "true" : "false");
                 }
 
                 sw.WriteLine("]");
