@@ -27,6 +27,7 @@ namespace DSPRE
             string evolutionDataPath = Path.Combine(docsFolderPath, "EvolutionData.csv");
             string trainerDataPath = Path.Combine(docsFolderPath, "TrainerData.txt");
             string moveDataPath = Path.Combine(docsFolderPath, "MoveData.csv");
+            string TMHMDataPath = Path.Combine(docsFolderPath, "TMHMData.csv");
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.trainerParty, DirNames.trainerProperties ,DirNames.moveData});
 
@@ -60,6 +61,7 @@ namespace DSPRE
             ExportEvolutionDataToCSV(evolutionDataPath, pokeNames, itemNames, moveNames);
             ExportTrainersToText(trainerDataPath, trainerNames, trainerClassNames, pokeNames, itemNames, moveNames, abilityNames);
             ExportMoveDataToCSV(moveDataPath, moveNames);
+            ExportTMHMDataToCSV(TMHMDataPath, pokeNames);
 
 
             MessageBox.Show($"CSV files exported successfully to path: {docsFolderPath}");
@@ -91,10 +93,9 @@ namespace DSPRE
         {
             // Write the Learnset Data to the CSV file
             LearnsetData curLearnsetData = null;
-            PokemonPersonalData curPersonalData = null;
             StreamWriter sw = new StreamWriter(learnsetDataPath);
 
-            sw.WriteLine("ID,Name,[Level|Move]");
+            sw.WriteLine("ID,Name,[Level,Move]");
 
             for (int i = 0; i < RomInfo.GetLearnsetFilesCount(); i++)
             {
@@ -104,38 +105,7 @@ namespace DSPRE
 
                 foreach (var entry in curLearnsetData.list)
                 {
-                    sw.Write($",[{entry.level}|{moveNames[entry.move]}]");
-                }
-
-                // Add TM/HM moves to the Learnset CSV file
-                if (i < RomInfo.GetPersonalFilesCount()) 
-                {
-                    curPersonalData = new PokemonPersonalData(i);
-                    StringBuilder sb = new StringBuilder();
-
-                    // Slight code duplication to PokemonDataEditor here
-                    int dataIndex = 0;
-                    byte tot = (byte)(PokemonPersonalData.tmsCount + PokemonPersonalData.hmsCount);
-                    for (byte b = 0; b < tot; b++)
-                    {
-                        string currentItem = MachineNameFromIndex(b);
-                        if (dataIndex < curPersonalData.machines.Count && curPersonalData.machines.Contains(b))
-                        {
-                            sb.Append("|");
-                            sb.Append(currentItem);
-                            dataIndex++;
-                        }
-                    }
-
-                    if (sb.Length > 0)
-                    {
-                        sw.Write($",[TMs{sb.ToString()}]");
-                    }
-                    else
-                    {
-                        sw.Write(",[TM|None]");
-                    }
-
+                    sw.Write($",[{entry.level},{moveNames[entry.move]}]");
                 }
 
                 sw.WriteLine();
@@ -319,6 +289,39 @@ namespace DSPRE
                              $"[{attackRangeString}],[{moveFlagsString}],{battleSeqDescString}");
             }
             
+            sw.Close();
+        }
+
+        private static void ExportTMHMDataToCSV(string THHMDataPath, string[] pokeNames)
+        {
+            // Write the TM/HM Data to the CSV file
+            PokemonPersonalData curPersonalData = null;
+            StreamWriter sw = new StreamWriter(THHMDataPath);
+
+            sw.WriteLine("ID,Name,TMs");
+
+            for (int i = 0; i < RomInfo.GetPersonalFilesCount(); i++)
+            {
+                curPersonalData = new PokemonPersonalData(i);
+                sw.Write($"{i},{pokeNames[i]},[");
+
+                // Slight code duplication to PersonalDataEditor here
+                int dataIndex = 0;
+                byte tot = (byte)(PokemonPersonalData.tmsCount + PokemonPersonalData.hmsCount);
+                for (byte b = 0; b < tot; b++)
+                {
+                    string currentItem = MachineNameFromIndex(b);
+                    if (dataIndex < curPersonalData.machines.Count && curPersonalData.machines.Contains(b))
+                    {
+                        if (dataIndex != 0) sw.Write(",");
+                        sw.Write(currentItem);
+                        dataIndex++;
+                    }
+                }
+
+                sw.WriteLine("]");
+
+            }
             sw.Close();
         }
 
