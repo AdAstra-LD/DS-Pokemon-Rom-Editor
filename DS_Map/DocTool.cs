@@ -399,15 +399,7 @@ namespace DSPRE
             bool wasFlagSet = false;
             bool trainerMale = false;
 
-            // It would be better to read the Trainerclass gender from the ROM instead of using the hardcoded values, but I don't know how
-            if (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS)
-            {
-                trainerMale = DVCalculator.TrainerClassGender.IsMaleHGSS[trainerClassID];
-            }
-            else if (RomInfo.gameFamily == RomInfo.GameFamilies.Plat)
-            {
-                trainerMale = DVCalculator.TrainerClassGender.IsMalePlatinum[trainerClassID];
-            }
+            trainerMale = DVCalculator.TrainerClassGender.GetTrainerClassGender(trainerClassID);
 
             // Get Pokemon Genders and Abilities from flags
             for (int j = 0; j < partyPokemon.Length; j++)

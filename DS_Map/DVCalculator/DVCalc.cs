@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPRE.ROMFiles;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -37,14 +38,7 @@ namespace DSPRE
             trainerIdx.Value = TrainerIndex;
             trainerClassIdx.Value = TrainerClassIndex;
 
-            if (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS && TrainerClassIndex < DVCalculator.TrainerClassGender.IsMaleHGSS.Length)
-            {
-                maleCheck.Checked = DVCalculator.TrainerClassGender.IsMaleHGSS[TrainerClassIndex];
-            }
-            else if (RomInfo.gameFamily == RomInfo.GameFamilies.Plat && TrainerClassIndex < DVCalculator.TrainerClassGender.IsMalePlatinum.Length)
-            {
-                maleCheck.Checked = DVCalculator.TrainerClassGender.IsMalePlatinum[TrainerClassIndex];
-            }
+            maleCheck.Checked = DVCalculator.TrainerClassGender.GetTrainerClassGender((int)TrainerClassIndex);
         }
 
         private void InitializeComponent()
