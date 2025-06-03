@@ -36,7 +36,7 @@ namespace DSPRE {
             item1InputComboBox.DataSource = new BindingSource(listItemNames, string.Empty);
             item2InputComboBox.DataSource = new BindingSource(listItemNames, string.Empty);
 
-            BindingList<string> listTypeNames = new BindingList<string>(Enum.GetNames(typeof(PokemonType)));
+            BindingList<string> listTypeNames = new BindingList<string>(RomInfo.GetTypeNames());
             type1InputComboBox.DataSource = new BindingSource(listTypeNames, string.Empty);
             type2InputComboBox.DataSource = new BindingSource(listTypeNames, string.Empty);
 

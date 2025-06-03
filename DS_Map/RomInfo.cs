@@ -80,6 +80,8 @@ namespace DSPRE
         public static int trainerNameMaxLen => SetTrainerNameMaxLen();
         public static int trainerFunnyScriptNumber { get; private set; }
 
+        public static int typesTextNumber { get; private set; }
+
         public static string internalNamesLocation { get; private set; }
         public static readonly byte internalNameLength = 16;
         public static string internalNamesPath { get; private set; }
@@ -229,6 +231,7 @@ namespace DSPRE
             SetTrainerFunnyScriptNumber();
             SetTrainerNameLenOffset();
             SetMoveTextNumbers();
+            SetTypesTextNumber();
 
             SetAIBackportEnabled();
 
@@ -1151,7 +1154,23 @@ namespace DSPRE
                     trainerFunnyScriptNumber = 740;
                     break;
             }
-        }        
+        }
+        
+        private static void SetTypesTextNumber()
+        {
+            switch (gameFamily)
+            {
+                case GameFamilies.DP:
+                    typesTextNumber = 565;
+                    break;
+                case GameFamilies.Plat:
+                    typesTextNumber = 624;
+                    break;
+                case GameFamilies.HGSS:
+                    typesTextNumber = 735;
+                    break;
+            }
+        }
 
         private static void SetTrainerNameLenOffset()
         {
@@ -1292,6 +1311,8 @@ namespace DSPRE
         public static string[] GetAbilityNames() => new TextArchive(abilityNamesTextNumber).messages.ToArray();
 
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
+
+        public static string[] GetTypeNames() => new TextArchive(typesTextNumber).messages.ToArray();
 
         public static int GetLearnsetFilesCount() => Directory.GetFiles(gameDirs[DirNames.learnsets].unpackedDir).Length;
 
