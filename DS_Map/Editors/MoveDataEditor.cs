@@ -64,7 +64,7 @@ namespace DSPRE {
 
             contestConditionComboBox.Items.AddRange(Enum.GetNames(typeof(MoveData.ContestCondition)));
 
-            moveTypeComboBox.Items.AddRange(Enum.GetNames(typeof(PokemonType)));
+            moveTypeComboBox.Items.AddRange(RomInfo.GetTypeNames());
 
             disableHandlers = false;
 

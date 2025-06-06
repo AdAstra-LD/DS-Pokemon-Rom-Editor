@@ -27,6 +27,9 @@ namespace DSPRE
             string evolutionDataPath = Path.Combine(docsFolderPath, "EvolutionData.csv");
             string trainerDataPath = Path.Combine(docsFolderPath, "TrainerData.txt");
             string moveDataPath = Path.Combine(docsFolderPath, "MoveData.csv");
+            string TMHMDataPath = Path.Combine(docsFolderPath, "TMHMData.csv");
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.trainerParty, DirNames.trainerProperties ,DirNames.moveData});
 
             string[] pokeNames = RomInfo.GetPokemonNames();
             string[] itemNames = RomInfo.GetItemNames();
@@ -58,6 +61,7 @@ namespace DSPRE
             ExportEvolutionDataToCSV(evolutionDataPath, pokeNames, itemNames, moveNames);
             ExportTrainersToText(trainerDataPath, trainerNames, trainerClassNames, pokeNames, itemNames, moveNames, abilityNames);
             ExportMoveDataToCSV(moveDataPath, moveNames);
+            ExportTMHMDataToCSV(TMHMDataPath, pokeNames);
 
 
             MessageBox.Show($"CSV files exported successfully to path: {docsFolderPath}");
@@ -91,7 +95,7 @@ namespace DSPRE
             LearnsetData curLearnsetData = null;
             StreamWriter sw = new StreamWriter(learnsetDataPath);
 
-            sw.WriteLine("ID,Name,[Level|Move]");
+            sw.WriteLine("ID,Name,[Level,Move]");
 
             for (int i = 0; i < RomInfo.GetLearnsetFilesCount(); i++)
             {
@@ -101,7 +105,7 @@ namespace DSPRE
 
                 foreach (var entry in curLearnsetData.list)
                 {
-                    sw.Write($",[{entry.level}|{moveNames[entry.move]}]");
+                    sw.Write($",[{entry.level},{moveNames[entry.move]}]");
                 }
 
                 sw.WriteLine();
@@ -236,13 +240,15 @@ namespace DSPRE
 
                 string[] monGenders = new string[partyPokemon.Length];
                 string[] abilities = new string[partyPokemon.Length];
+                string[] natures = new string[partyPokemon.Length];
 
-                // This function sets the monGenders and abilities arrays
+                // This function sets the monGenders, abilities and natures arrays
                 // We hide this away in a function because it's a bit complex
                 // and we don't want to clutter the main function more than it already is
-                SetMonGendersAndAbilities(partyPokemon, monFlags, ref abilityNames, ref monGenders, ref abilities);
+                SetMonGendersAndAbilitiesAndNature(i, curTrainerProperties.trainerClass, partyPokemon, monFlags, ref abilityNames, ref monGenders, ref abilities, ref natures);
 
-                sw.Write(TrainerToDocFormat(i, trainerName, trainerClass, monNames, monGenders, items, abilities, levels, ivs, moves));
+
+                sw.Write(TrainerToDocFormat(i, trainerName, trainerClass, monNames, monGenders, items, abilities, levels, natures, ivs, moves));
             }
 
             sw.Close();
@@ -286,8 +292,46 @@ namespace DSPRE
             sw.Close();
         }
 
+        private static void ExportTMHMDataToCSV(string THHMDataPath, string[] pokeNames)
+        {
+            // Write the TM/HM Data to the CSV file
+            PokemonPersonalData curPersonalData = null;
+            StreamWriter sw = new StreamWriter(THHMDataPath);
+
+            sw.Write("ID,Name");
+
+            int totalTMs = PokemonPersonalData.tmsCount + PokemonPersonalData.hmsCount;
+
+            // Write Header (List of all TMs/HMs)
+            for (int count = 0; count < totalTMs; count++)
+            {
+                string currentItem = MachineNameFromIndex(count);
+                sw.Write($",{currentItem}");
+
+            }
+
+            sw.WriteLine();
+
+            for (int i = 0; i < RomInfo.GetPersonalFilesCount(); i++)
+            {
+                curPersonalData = new PokemonPersonalData(i);
+                sw.Write($"{i},{pokeNames[i]},[");
+
+                // Slight code duplication to PersonalDataEditor here
+                for (byte b = 0; b < totalTMs; b++)
+                {
+                    sw.Write(b == 0 ? "" : ",");
+                    sw.Write(curPersonalData.machines.Contains(b) ? "true" : "false");
+                }
+
+                sw.WriteLine("]");
+
+            }
+            sw.Close();
+        }
+
         private static string TrainerToDocFormat(int index, string trainerName, string trainerClass, string[] monNames, string[] monGenders, string[] items, string[] abilities,
-                       int[] levels, int[] ivs, string[][] moves)
+                       int[] levels, string[] natures, int[] ivs, string[][] moves)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -295,7 +339,7 @@ namespace DSPRE
 
             for (int i = 0; i < monNames.Length; i++)
             {
-                sb.Append(MonToShowdownFormat(monNames[i], monGenders[i], items[i], abilities[i], levels[i], ivs[i], moves[i]));
+                sb.Append(MonToShowdownFormat(monNames[i], monGenders[i], items[i], abilities[i], levels[i], natures[i], ivs[i], moves[i]));
                 sb.Append("\n\n");
             }
 
@@ -305,7 +349,7 @@ namespace DSPRE
         }
 
         private static string MonToShowdownFormat(string monName, string gender, string itemName, string ability,
-            int level, int ivs, string[] moves)
+            int level, string nature, int ivs, string[] moves)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -323,6 +367,7 @@ namespace DSPRE
 
             sb.Append("\nAbility: " + ability);
             sb.Append("\nLevel: " + level);
+            sb.Append("\n"+ nature + " Nature");
 
             sb.Append("\nIVs: " + string.Join(" / ", Enumerable.Repeat(ivs.ToString(), 6)));
 
@@ -334,52 +379,84 @@ namespace DSPRE
 
         }
 
-        private static void SetMonGendersAndAbilities(PartyPokemon[] partyPokemon,
-            PartyPokemon.GenderAndAbilityFlags[] monFlags, ref string[] abilityNames,
-            ref string[] monGenders, ref string[] abilities)
-                {
-                    bool wasFlagSet = false;
+        // Slight code duplication to PersonalDataEditor here
+        private static string MachineNameFromIndex(int n)
+        {
+            //0-91 --> TMs
+            //>=92 --> HM
+            n += 1;
+            int diff = n - PokemonPersonalData.tmsCount;
+            string type = diff > 0 ? "HM" : "TM";
+            string item = $"{type}{(diff > 0 ? diff : n):D2}";
+            return item;
+        }
 
-                    for (int j = 0; j < partyPokemon.Length; j++)
-                    {
-                        int genderFlag = (int)monFlags[j] & 0x0F; // Get the lower 4 bits
-                        switch (genderFlag)
-                        {
-                            case 0: // Random
-                                monGenders[j] = "random";
-                                abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
-                                break;
-                            case 1: // Male
-                                monGenders[j] = "M";
-                                abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
-                                break;
-                            case 2: // Female
-                                monGenders[j] = "F";
-                                abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
-                                break;
-                        }
-                        int abilityFlag = (int)monFlags[j] & 0xF0; // Get the upper 4 bits
-                        switch (abilityFlag)
-                        {
-                            case 0: // Unset
-                                    // If a gender or ability flag was previously set, we need to use the second ability
-                                if (wasFlagSet)
-                                {
-                                    abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
-                                }
-                                else
-                                {
-                                    abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
-                                }
-                                break;
-                            case 1: // Ability 1
-                                abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
-                                break;
-                            case 2: // Ability 2
-                                abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
-                                break;
-                        }
-                    }
+
+        private static void SetMonGendersAndAbilitiesAndNature(int trainerID, int trainerClassID, PartyPokemon[] partyPokemon,
+            PartyPokemon.GenderAndAbilityFlags[] monFlags, ref string[] abilityNames,
+            ref string[] monGenders, ref string[] abilities, ref string[] natures)
+        { 
+            bool wasFlagSet = false;
+            bool trainerMale = false;
+
+            trainerMale = DVCalculator.TrainerClassGender.GetTrainerClassGender(trainerClassID);
+
+            // Get Pokemon Genders and Abilities from flags
+            for (int j = 0; j < partyPokemon.Length; j++)
+            {
+
+                byte baseGenderRatio = new PokemonPersonalData((int)partyPokemon[j].pokeID).genderVec;
+                byte genderOverride = 0;
+                byte abilityOverride = 0;
+
+                int genderFlag = (int)monFlags[j] & 0x0F; // Get the lower 4 bits
+                switch (genderFlag)
+                {
+                    case 0: // Random
+                        monGenders[j] = "random";
+                        abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
+                        genderOverride = 0;
+                        break;
+                    case 1: // Male
+                        monGenders[j] = "M";
+                        abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
+                        genderOverride = 1;
+                        break;
+                    case 2: // Female
+                        monGenders[j] = "F";
+                        abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
+                        genderOverride = 2;
+                        break;
                 }
+                int abilityFlag = (int)monFlags[j] & 0xF0; // Get the upper 4 bits
+                switch (abilityFlag)
+                {
+                    case 0: // Unset
+                            // If a gender or ability flag was previously set, we need to use the second ability
+                        if (wasFlagSet)
+                        {
+                            abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
+                            abilityOverride = 0;
+                        }
+                        else
+                        {
+                            abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
+                            abilityOverride = 0;
+                        }
+                        break;
+                    case 1: // Ability 1
+                        abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
+                        abilityOverride = 1;
+                        break;
+                    case 2: // Ability 2
+                        abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
+                        abilityOverride = 2;
+                        break;
+                }
+
+                uint PID = DVCalculator.generatePID((uint)trainerID, (uint)trainerClassID, trainerMale, (uint)partyPokemon[j].pokeID, (byte)partyPokemon[j].level, baseGenderRatio, genderOverride, abilityOverride, partyPokemon[j].difficulty);
+                natures[j] = DVCalculator.Natures[(int)DVCalculator.getNatureFromPID(PID)].Split(':')[0];
+            }
+        }
     }
 }

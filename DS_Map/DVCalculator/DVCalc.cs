@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPRE.ROMFiles;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -36,6 +37,8 @@ namespace DSPRE
         {
             trainerIdx.Value = TrainerIndex;
             trainerClassIdx.Value = TrainerClassIndex;
+
+            maleCheck.Checked = DVCalculator.TrainerClassGender.GetTrainerClassGender((int)TrainerClassIndex);
         }
 
         private void InitializeComponent()

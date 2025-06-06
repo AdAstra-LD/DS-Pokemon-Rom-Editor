@@ -80,6 +80,8 @@ namespace DSPRE
         public static int trainerNameMaxLen => SetTrainerNameMaxLen();
         public static int trainerFunnyScriptNumber { get; private set; }
 
+        public static int typesTextNumber { get; private set; }
+
         public static string internalNamesLocation { get; private set; }
         public static readonly byte internalNameLength = 16;
         public static string internalNamesPath { get; private set; }
@@ -101,6 +103,7 @@ namespace DSPRE
 
         public static Dictionary<ushort, string> ScriptComparisonOperatorsDict { get; private set; }
         public static Dictionary<string, ushort> ScriptComparisonOperatorsReverseDict { get; private set; }
+        public static bool AIBackportEnabled { get; private set; }
 
         public enum GameVersions : byte
         {
@@ -228,6 +231,9 @@ namespace DSPRE
             SetTrainerFunnyScriptNumber();
             SetTrainerNameLenOffset();
             SetMoveTextNumbers();
+            SetTypesTextNumber();
+
+            SetAIBackportEnabled();
 
             /* System */
             ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
@@ -1148,7 +1154,23 @@ namespace DSPRE
                     trainerFunnyScriptNumber = 740;
                     break;
             }
-        }        
+        }
+        
+        private static void SetTypesTextNumber()
+        {
+            switch (gameFamily)
+            {
+                case GameFamilies.DP:
+                    typesTextNumber = 565;
+                    break;
+                case GameFamilies.Plat:
+                    typesTextNumber = 624;
+                    break;
+                case GameFamilies.HGSS:
+                    typesTextNumber = 735;
+                    break;
+            }
+        }
 
         private static void SetTrainerNameLenOffset()
         {
@@ -1248,6 +1270,22 @@ namespace DSPRE
             return maxLength;
         }
 
+        public static void SetAIBackportEnabled()
+        {
+            if (gameFamily != GameFamilies.Plat)
+            {
+                AIBackportEnabled = false;
+                return;
+            }
+
+            byte[] bytesAtOffset = ARM9.ReadBytes(0x0793B8, 4);
+            // Vanilla Plat USA is F8 B5 9A B0
+            // Backport by is F0 B5 93 B0
+            // The tutorial is only for the USA version, but it might be better to differentiate the different languages here
+            AIBackportEnabled = bytesAtOffset.SequenceEqual(new byte[] { 0xF0, 0xB5, 0x93, 0xB0 });
+
+        }
+
         public string GetBuildingModelsDirPath(bool interior) => interior ? gameDirs[DirNames.interiorBuildingModels].unpackedDir : gameDirs[DirNames.exteriorBuildingModels].unpackedDir;
 
         public string GetRomNameFromWorkdir() => workDir.Substring(0, workDir.Length - folderSuffix.Length - 1);
@@ -1273,6 +1311,8 @@ namespace DSPRE
         public static string[] GetAbilityNames() => new TextArchive(abilityNamesTextNumber).messages.ToArray();
 
         public static string[] GetAttackNames() => new TextArchive(attackNamesTextNumber).messages.ToArray();
+
+        public static string[] GetTypeNames() => new TextArchive(typesTextNumber).messages.ToArray();
 
         public static int GetLearnsetFilesCount() => Directory.GetFiles(gameDirs[DirNames.learnsets].unpackedDir).Length;
 

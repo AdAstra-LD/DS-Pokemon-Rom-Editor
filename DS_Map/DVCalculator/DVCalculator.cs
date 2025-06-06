@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
 
 namespace DSPRE
 {
@@ -125,35 +127,145 @@ namespace DSPRE
             return natureDict;
         }
 
-        public static List<string> Natures = new List<string>
-    {
-    "Hardy: Neutral",
-    "Lonely: +Atk, -Def",
-    "Brave: +Atk, -Spe",
-    "Adamant: +Atk, -SpA",
-    "Naughty: +Atk, -SpD",
-    "Bold: +Def, -Atk",
-    "Docile: Neutral",
-    "Relaxed: +Def, -Spe",
-    "Impish: +Def, -SpA",
-    "Lax: +Def, -SpD",
-    "Timid: +Spe, -Atk",
-    "Hasty: +Spe, -Def",
-    "Serious: Neutral",
-    "Jolly: +Spe, -SpA",
-    "Naive: +Spe, -SpD",
-    "Modest: +SpA, -Atk",
-    "Mild: +SpA, -Def",
-    "Quiet: +SpA, -Spe",
-    "Bashful: Neutral",
-    "Rash: +SpA, -SpD",
-    "Calm: +SpD, -Atk",
-    "Gentle: +SpD, -Def",
-    "Sassy: +SpD, -Spe",
-    "Careful: +SpD, -SpA",
-    "Quirky: Neutral"
-    };
+        public static readonly List<string> Natures = new List<string>
+            {
+            "Hardy: Neutral",
+            "Lonely: +Atk, -Def",
+            "Brave: +Atk, -Spe",
+            "Adamant: +Atk, -SpA",
+            "Naughty: +Atk, -SpD",
+            "Bold: +Def, -Atk",
+            "Docile: Neutral",
+            "Relaxed: +Def, -Spe",
+            "Impish: +Def, -SpA",
+            "Lax: +Def, -SpD",
+            "Timid: +Spe, -Atk",
+            "Hasty: +Spe, -Def",
+            "Serious: Neutral",
+            "Jolly: +Spe, -SpA",
+            "Naive: +Spe, -SpD",
+            "Modest: +SpA, -Atk",
+            "Mild: +SpA, -Def",
+            "Quiet: +SpA, -Spe",
+            "Bashful: Neutral",
+            "Rash: +SpA, -SpD",
+            "Calm: +SpD, -Atk",
+            "Gentle: +SpD, -Def",
+            "Sassy: +SpD, -Spe",
+            "Careful: +SpD, -SpA",
+            "Quirky: Neutral"
+            };
 
+        public static class TrainerClassGender
+        {
+
+            // true represents male, false represents female
+            private static List<bool> trainerClassGenders = new List<bool>();
+
+            private static bool tableLoaded = false;
+
+            public static bool GetTrainerClassGender(int trainerClassID)
+            {
+                if (!tableLoaded)
+                {
+                    ReadTrainerClassGenderTable();
+                }
+                return trainerClassGenders[trainerClassID];
+            }
+                
+            public static void ReadTrainerClassGenderTable()
+            {
+                uint offset = GetTableOffset();
+                uint length = GetTableLength();
+                if (offset == 0 || length == 0)
+                {
+                    MessageBox.Show("Couldn't load trainer class gender table from arm9." +
+                        "\nTrainers will default to male when calculating natures.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tableLoaded = true;
+                    return;
+                }
+
+                byte[] table = ARM9.ReadBytes(offset, length);
+
+                for (int i = 0; i < table.Length; i++)
+                {
+                    trainerClassGenders.Add(table[i] == 1 ? false : true);
+                }
+                tableLoaded = true;
+
+            }
+
+            private static uint GetTableLength()
+            {
+                switch (RomInfo.gameFamily)
+                {
+                    case RomInfo.GameFamilies.Plat:
+                        return 105; // Platinum has 105 trainer classes
+                    case RomInfo.GameFamilies.HGSS:
+                        return 128;
+                    case RomInfo.GameFamilies.DP:
+                        return 0;
+                    default:
+                        // Unknown game family
+                        return 0;
+                }
+                    
+            }
+
+            private static uint GetTableOffset()
+            {
+                switch (RomInfo.gameFamily)
+                {
+                    case RomInfo.GameFamilies.Plat:
+                        switch(RomInfo.gameLanguage)
+                        {
+                            case RomInfo.GameLanguages.English:
+                                return 0xF0714;
+                            case RomInfo.GameLanguages.Japanese:
+                                return 0xEFDA4;
+                            case RomInfo.GameLanguages.Spanish:
+                                return 0xF078A;
+                            case RomInfo.GameLanguages.German:
+                                return 0xF076C;
+                            case RomInfo.GameLanguages.French:
+                                return 0xF079C;
+                            case RomInfo.GameLanguages.Italian:
+                                return 0xF0730;
+                            default:
+                                // Unknown game language
+                                return 0;
+                        }
+                    case RomInfo.GameFamilies.HGSS:
+                        switch (RomInfo.gameLanguage)
+                        {
+                            case RomInfo.GameLanguages.English:
+                                return 0xFFB90;
+                            case RomInfo.GameLanguages.Japanese:
+                                return 0xFF310;
+                            case RomInfo.GameLanguages.Spanish:
+                                return 0xFFB90;
+                            case RomInfo.GameLanguages.German:
+                                return 0xFFB44;
+                            case RomInfo.GameLanguages.French:
+                                return 0xFFB74;
+                            case RomInfo.GameLanguages.Italian:
+                                return 0xFFB08;
+                            default:
+                                // Unknown game language
+                                return 0;
+                        }
+                    case RomInfo.GameFamilies.DP:
+                        // Dummy offset for DP
+                        return 0;
+                    default:
+                        // Unknown game family
+                        return 0;
+                }
+            }
+
+        }
+
+            
 
     }
 }

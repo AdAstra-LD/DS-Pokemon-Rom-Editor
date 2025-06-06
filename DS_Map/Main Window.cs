@@ -8034,7 +8034,7 @@ namespace DSPRE {
                 pokemonSpecies[i] = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
             }
 
-            if (gameFamily == GameFamilies.HGSS) {
+            if (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled) {
                 foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList) {
                     partyGenderComboBox.Visible = true;
                     partyGenderComboBox.Items.Add("Default Gender");
@@ -8355,6 +8355,9 @@ namespace DSPRE {
                 currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
             }
 
+            // Need to account for the case where ability 2 was set on a previous mon. If so then ability one flag needs to be set on other mons with ability 1
+            bool wasAbility2Set = false;
+
             for (int i = 0; i < partyCountUpDown.Value; i++) {
                 currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
                 currentTrainerFile.party[i].formID = (ushort)partyFormComboBoxList[i].SelectedIndex;
@@ -8373,7 +8376,7 @@ namespace DSPRE {
 
                 currentTrainerFile.party[i].difficulty = (byte)partyIVUpdownList[i].Value;
 
-                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && gameFamily == GameFamilies.HGSS) {
+                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled)) {
                     switch (partyGenderComboBoxList[i].SelectedIndex) {
                         case TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX:
                             currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
@@ -8392,6 +8395,11 @@ namespace DSPRE {
 
                 if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX) {
                     currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2;
+                    wasAbility2Set = true;
+                }
+                // If ability 2 was set previously force ability 1 must be set here other wise the pokemon will have ability 2
+                else if (wasAbility2Set && partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX) {
+                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
                 }
                 //ability slot 1 flag must be set if the pokemon's gender is forced to male or female, otherwise the pokemon will have ability2 even if the ability2 flag is not set
                 //the ability 1 flag should not be set if neither of the gender flags are set, otherwise this will cause a problem with using alternate forms
@@ -8697,7 +8705,7 @@ namespace DSPRE {
             partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
             
             //if the name " -" is returned for ability 2 then there is no ability 2
-            if (ability2.Equals(" -") || gameFamily != GameFamilies.HGSS) {
+            if (ability2.Equals(" -") || (gameFamily != GameFamilies.HGSS && !RomInfo.AIBackportEnabled)) {
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
             } else {
                 string stringAbi2 = ability2;
@@ -8716,7 +8724,7 @@ namespace DSPRE {
             int currentPokemonGenderRatio = pokemonSpecies[partyPokemonComboboxList[partyPokemonPosition].SelectedIndex].GenderRatioMaleToFemale;
             PartyPokemon.GenderAndAbilityFlags currentPokemonGenderAndAbilityFlags = currentTrainerFile.party[partyPokemonPosition].genderAndAbilityFlags;
 
-            if (gameFamily == GameFamilies.HGSS) {
+            if (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled) {
                 switch (currentPokemonGenderRatio) {
                     case GENDER_RATIO_MALE:
                         partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
@@ -10053,6 +10061,5 @@ namespace DSPRE {
             Helpers.statusLabelMessage();
             Update();
         }
-
     }
 }
