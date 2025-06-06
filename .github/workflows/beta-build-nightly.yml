@@ -37,14 +37,16 @@ jobs:
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
 
-    - name: Move beta_canary tag to latest commit
+    - name: Get current timestamp
+      id: timestamp
+      run: echo "::set-output name=ts::$(date +'%Y%m%d-%H%M%S')"
+
+    - name: Create tag for current build
       run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
-        git tag -f beta_canary
-        git push -f origin beta_canary
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       git config user.name "github-actions[bot]"
+       git config user.email "github-actions[bot]@users.noreply.github.com"
+       git tag beta_canary-${{ steps.timestamp.outputs.ts }}
+       git push origin beta_canary-${{ steps.timestamp.outputs.ts }}
 
     - name: Delete previous release
       run: |
@@ -60,7 +62,7 @@ jobs:
     - name: Create new release
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: beta_canary
+        tag_name: beta_canary-${{ steps.timestamp.outputs.ts }}
         name: DSPRE Beta Canary Build ${{ steps.date.outputs.date }}
         files: DSPRE-beta-canary.zip
         token: ${{ secrets.GITHUB_TOKEN }}
