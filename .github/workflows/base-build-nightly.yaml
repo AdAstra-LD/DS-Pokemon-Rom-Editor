@@ -37,12 +37,19 @@ jobs:
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
 
+    - name: Update canary tag
+      run: |
+       git config user.name "github-actions[bot]"
+       git config user.email "github-actions[bot]@users.noreply.github.com"
+       git tag canary
+       git push origin canary
+    
     - name: Delete previous release
       run: |
         gh release delete --yes canary
-
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
