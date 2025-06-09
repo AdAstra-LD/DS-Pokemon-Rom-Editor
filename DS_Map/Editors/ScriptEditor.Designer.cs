@@ -31,12 +31,28 @@ namespace DSPRE.Editors
         {
             this.selectScriptFileComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.scriptEditorTabControl = new System.Windows.Forms.TabControl();
+            this.scriptsTabPage = new System.Windows.Forms.TabPage();
             this.PanelSearchScripts = new System.Windows.Forms.Panel();
             this.BtnNextFindScript = new System.Windows.Forms.Button();
             this.BtnPrevFindScript = new System.Windows.Forms.Button();
             this.BtnCloseFindScript = new System.Windows.Forms.Button();
             this.panelFindScriptTextBox = new System.Windows.Forms.TextBox();
             this.scintillaScriptsPanel = new System.Windows.Forms.Panel();
+            this.functionsTabPage = new System.Windows.Forms.TabPage();
+            this.PanelSearchFunctions = new System.Windows.Forms.Panel();
+            this.BtnNextFindFunc = new System.Windows.Forms.Button();
+            this.BtnPrevFindFunc = new System.Windows.Forms.Button();
+            this.BtnCloseFindFunc = new System.Windows.Forms.Button();
+            this.panelFindFunctionTextBox = new System.Windows.Forms.TextBox();
+            this.scintillaFunctionsPanel = new System.Windows.Forms.Panel();
+            this.actionsTabPage = new System.Windows.Forms.TabPage();
+            this.PanelSearchActions = new System.Windows.Forms.Panel();
+            this.BtnNextFindActions = new System.Windows.Forms.Button();
+            this.BtnPrevFindActions = new System.Windows.Forms.Button();
+            this.BtnCloseFindActions = new System.Windows.Forms.Button();
+            this.panelFindActionTextBox = new System.Windows.Forms.TextBox();
+            this.scintillaActionsPanel = new System.Windows.Forms.Panel();
             this.addScriptFileButton = new System.Windows.Forms.Button();
             this.removeScriptFileButton = new System.Windows.Forms.Button();
             this.saveScriptFileButton = new System.Windows.Forms.Button();
@@ -72,8 +88,13 @@ namespace DSPRE.Editors
             this.scriptEditorNumberFormatHex = new System.Windows.Forms.RadioButton();
             this.viewLevelScriptButton = new System.Windows.Forms.Button();
             this.locateCurrentScriptFile = new System.Windows.Forms.Button();
+            this.scriptEditorTabControl.SuspendLayout();
+            this.scriptsTabPage.SuspendLayout();
             this.PanelSearchScripts.SuspendLayout();
-            this.scintillaScriptsPanel.SuspendLayout();
+            this.functionsTabPage.SuspendLayout();
+            this.PanelSearchFunctions.SuspendLayout();
+            this.actionsTabPage.SuspendLayout();
+            this.PanelSearchActions.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox24.SuspendLayout();
             this.ScriptNavigatorTabControl.SuspendLayout();
@@ -102,6 +123,31 @@ namespace DSPRE.Editors
             this.label5.TabIndex = 1;
             this.label5.Text = "Script File";
             // 
+            // scriptEditorTabControl
+            // 
+            this.scriptEditorTabControl.Controls.Add(this.scriptsTabPage);
+            this.scriptEditorTabControl.Controls.Add(this.functionsTabPage);
+            this.scriptEditorTabControl.Controls.Add(this.actionsTabPage);
+            this.scriptEditorTabControl.Location = new System.Drawing.Point(481, 22);
+            this.scriptEditorTabControl.Name = "scriptEditorTabControl";
+            this.scriptEditorTabControl.SelectedIndex = 0;
+            this.scriptEditorTabControl.Size = new System.Drawing.Size(692, 591);
+            this.scriptEditorTabControl.TabIndex = 18;
+            this.scriptEditorTabControl.SelectedIndexChanged += new System.EventHandler(this.scriptEditorTabControl_TabIndexChanged);
+            // 
+            // scriptsTabPage
+            // 
+            this.scriptsTabPage.Controls.Add(this.PanelSearchScripts);
+            this.scriptsTabPage.Controls.Add(this.scintillaScriptsPanel);
+            this.scriptsTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.scriptsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.scriptsTabPage.Name = "scriptsTabPage";
+            this.scriptsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.scriptsTabPage.Size = new System.Drawing.Size(684, 565);
+            this.scriptsTabPage.TabIndex = 0;
+            this.scriptsTabPage.Text = "Scripts";
+            this.scriptsTabPage.UseVisualStyleBackColor = true;
+            // 
             // PanelSearchScripts
             // 
             this.PanelSearchScripts.BackColor = System.Drawing.Color.White;
@@ -110,7 +156,7 @@ namespace DSPRE.Editors
             this.PanelSearchScripts.Controls.Add(this.BtnPrevFindScript);
             this.PanelSearchScripts.Controls.Add(this.BtnCloseFindScript);
             this.PanelSearchScripts.Controls.Add(this.panelFindScriptTextBox);
-            this.PanelSearchScripts.Location = new System.Drawing.Point(383, 3);
+            this.PanelSearchScripts.Location = new System.Drawing.Point(386, 3);
             this.PanelSearchScripts.Name = "PanelSearchScripts";
             this.PanelSearchScripts.Size = new System.Drawing.Size(292, 40);
             this.PanelSearchScripts.TabIndex = 14;
@@ -172,12 +218,192 @@ namespace DSPRE.Editors
             // 
             // scintillaScriptsPanel
             // 
-            this.scintillaScriptsPanel.Controls.Add(this.PanelSearchScripts);
-            this.scintillaScriptsPanel.Location = new System.Drawing.Point(483, 50);
+            this.scintillaScriptsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scintillaScriptsPanel.Location = new System.Drawing.Point(3, 3);
             this.scintillaScriptsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.scintillaScriptsPanel.Name = "scintillaScriptsPanel";
             this.scintillaScriptsPanel.Size = new System.Drawing.Size(678, 559);
             this.scintillaScriptsPanel.TabIndex = 19;
+            // 
+            // functionsTabPage
+            // 
+            this.functionsTabPage.Controls.Add(this.PanelSearchFunctions);
+            this.functionsTabPage.Controls.Add(this.scintillaFunctionsPanel);
+            this.functionsTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.functionsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.functionsTabPage.Name = "functionsTabPage";
+            this.functionsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.functionsTabPage.Size = new System.Drawing.Size(684, 565);
+            this.functionsTabPage.TabIndex = 1;
+            this.functionsTabPage.Text = "Functions";
+            this.functionsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // PanelSearchFunctions
+            // 
+            this.PanelSearchFunctions.BackColor = System.Drawing.Color.White;
+            this.PanelSearchFunctions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PanelSearchFunctions.Controls.Add(this.BtnNextFindFunc);
+            this.PanelSearchFunctions.Controls.Add(this.BtnPrevFindFunc);
+            this.PanelSearchFunctions.Controls.Add(this.BtnCloseFindFunc);
+            this.PanelSearchFunctions.Controls.Add(this.panelFindFunctionTextBox);
+            this.PanelSearchFunctions.Location = new System.Drawing.Point(386, 3);
+            this.PanelSearchFunctions.Name = "PanelSearchFunctions";
+            this.PanelSearchFunctions.Size = new System.Drawing.Size(292, 40);
+            this.PanelSearchFunctions.TabIndex = 16;
+            this.PanelSearchFunctions.Visible = false;
+            // 
+            // BtnNextFindFunc
+            // 
+            this.BtnNextFindFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnNextFindFunc.ForeColor = System.Drawing.Color.White;
+            this.BtnNextFindFunc.Image = global::DSPRE.Properties.Resources.arrowdown;
+            this.BtnNextFindFunc.Location = new System.Drawing.Point(233, 4);
+            this.BtnNextFindFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnNextFindFunc.Name = "BtnNextFindFunc";
+            this.BtnNextFindFunc.Size = new System.Drawing.Size(25, 30);
+            this.BtnNextFindFunc.TabIndex = 36;
+            this.BtnNextFindFunc.Tag = "Find next (Enter)";
+            this.BtnNextFindFunc.UseVisualStyleBackColor = true;
+            this.BtnNextFindFunc.Click += new System.EventHandler(this.BtnNextFindFunc_Click);
+            // 
+            // BtnPrevFindFunc
+            // 
+            this.BtnPrevFindFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnPrevFindFunc.ForeColor = System.Drawing.Color.White;
+            this.BtnPrevFindFunc.Image = global::DSPRE.Properties.Resources.arrowup;
+            this.BtnPrevFindFunc.Location = new System.Drawing.Point(205, 4);
+            this.BtnPrevFindFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnPrevFindFunc.Name = "BtnPrevFindFunc";
+            this.BtnPrevFindFunc.Size = new System.Drawing.Size(25, 30);
+            this.BtnPrevFindFunc.TabIndex = 35;
+            this.BtnPrevFindFunc.Tag = "Find previous (Shift+Enter)";
+            this.BtnPrevFindFunc.UseVisualStyleBackColor = true;
+            this.BtnPrevFindFunc.Click += new System.EventHandler(this.BtnPrevFindFunc_Click);
+            // 
+            // BtnCloseFindFunc
+            // 
+            this.BtnCloseFindFunc.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCloseFindFunc.ForeColor = System.Drawing.Color.White;
+            this.BtnCloseFindFunc.Image = global::DSPRE.Properties.Resources.Cross;
+            this.BtnCloseFindFunc.Location = new System.Drawing.Point(261, 4);
+            this.BtnCloseFindFunc.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnCloseFindFunc.Name = "BtnCloseFindFunc";
+            this.BtnCloseFindFunc.Size = new System.Drawing.Size(25, 30);
+            this.BtnCloseFindFunc.TabIndex = 37;
+            this.BtnCloseFindFunc.Tag = "Close (Esc)";
+            this.BtnCloseFindFunc.UseVisualStyleBackColor = true;
+            this.BtnCloseFindFunc.Click += new System.EventHandler(this.BtnCloseFindFunc_Click);
+            // 
+            // panelFindFunctionTextBox
+            // 
+            this.panelFindFunctionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.panelFindFunctionTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panelFindFunctionTextBox.Location = new System.Drawing.Point(10, 6);
+            this.panelFindFunctionTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelFindFunctionTextBox.Name = "panelFindFunctionTextBox";
+            this.panelFindFunctionTextBox.Size = new System.Drawing.Size(189, 25);
+            this.panelFindFunctionTextBox.TabIndex = 34;
+            this.panelFindFunctionTextBox.TextChanged += new System.EventHandler(this.panelFindFunctionTextBox_TextChanged);
+            this.panelFindFunctionTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.functionTxtFind_KeyDown);
+            // 
+            // scintillaFunctionsPanel
+            // 
+            this.scintillaFunctionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scintillaFunctionsPanel.Location = new System.Drawing.Point(3, 3);
+            this.scintillaFunctionsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.scintillaFunctionsPanel.Name = "scintillaFunctionsPanel";
+            this.scintillaFunctionsPanel.Size = new System.Drawing.Size(678, 559);
+            this.scintillaFunctionsPanel.TabIndex = 20;
+            // 
+            // actionsTabPage
+            // 
+            this.actionsTabPage.Controls.Add(this.PanelSearchActions);
+            this.actionsTabPage.Controls.Add(this.scintillaActionsPanel);
+            this.actionsTabPage.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.actionsTabPage.Location = new System.Drawing.Point(4, 22);
+            this.actionsTabPage.Name = "actionsTabPage";
+            this.actionsTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.actionsTabPage.Size = new System.Drawing.Size(684, 565);
+            this.actionsTabPage.TabIndex = 2;
+            this.actionsTabPage.Text = "Actions";
+            this.actionsTabPage.UseVisualStyleBackColor = true;
+            // 
+            // PanelSearchActions
+            // 
+            this.PanelSearchActions.BackColor = System.Drawing.Color.White;
+            this.PanelSearchActions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PanelSearchActions.Controls.Add(this.BtnNextFindActions);
+            this.PanelSearchActions.Controls.Add(this.BtnPrevFindActions);
+            this.PanelSearchActions.Controls.Add(this.BtnCloseFindActions);
+            this.PanelSearchActions.Controls.Add(this.panelFindActionTextBox);
+            this.PanelSearchActions.Location = new System.Drawing.Point(386, 3);
+            this.PanelSearchActions.Name = "PanelSearchActions";
+            this.PanelSearchActions.Size = new System.Drawing.Size(292, 40);
+            this.PanelSearchActions.TabIndex = 16;
+            this.PanelSearchActions.Visible = false;
+            // 
+            // BtnNextFindActions
+            // 
+            this.BtnNextFindActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnNextFindActions.ForeColor = System.Drawing.Color.White;
+            this.BtnNextFindActions.Image = global::DSPRE.Properties.Resources.arrowdown;
+            this.BtnNextFindActions.Location = new System.Drawing.Point(233, 4);
+            this.BtnNextFindActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnNextFindActions.Name = "BtnNextFindActions";
+            this.BtnNextFindActions.Size = new System.Drawing.Size(25, 30);
+            this.BtnNextFindActions.TabIndex = 40;
+            this.BtnNextFindActions.Tag = "Find next (Enter)";
+            this.BtnNextFindActions.UseVisualStyleBackColor = true;
+            this.BtnNextFindActions.Click += new System.EventHandler(this.BtnNextFindActions_Click);
+            // 
+            // BtnPrevFindActions
+            // 
+            this.BtnPrevFindActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnPrevFindActions.ForeColor = System.Drawing.Color.White;
+            this.BtnPrevFindActions.Image = global::DSPRE.Properties.Resources.arrowup;
+            this.BtnPrevFindActions.Location = new System.Drawing.Point(205, 4);
+            this.BtnPrevFindActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnPrevFindActions.Name = "BtnPrevFindActions";
+            this.BtnPrevFindActions.Size = new System.Drawing.Size(25, 30);
+            this.BtnPrevFindActions.TabIndex = 39;
+            this.BtnPrevFindActions.Tag = "Find previous (Shift+Enter)";
+            this.BtnPrevFindActions.UseVisualStyleBackColor = true;
+            this.BtnPrevFindActions.Click += new System.EventHandler(this.BtnPrevFindActions_Click);
+            // 
+            // BtnCloseFindActions
+            // 
+            this.BtnCloseFindActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnCloseFindActions.ForeColor = System.Drawing.Color.White;
+            this.BtnCloseFindActions.Image = global::DSPRE.Properties.Resources.Cross;
+            this.BtnCloseFindActions.Location = new System.Drawing.Point(261, 4);
+            this.BtnCloseFindActions.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnCloseFindActions.Name = "BtnCloseFindActions";
+            this.BtnCloseFindActions.Size = new System.Drawing.Size(25, 30);
+            this.BtnCloseFindActions.TabIndex = 41;
+            this.BtnCloseFindActions.Tag = "Close (Esc)";
+            this.BtnCloseFindActions.UseVisualStyleBackColor = true;
+            this.BtnCloseFindActions.Click += new System.EventHandler(this.BtnCloseFindActions_Click);
+            // 
+            // panelFindActionTextBox
+            // 
+            this.panelFindActionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.panelFindActionTextBox.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panelFindActionTextBox.Location = new System.Drawing.Point(10, 6);
+            this.panelFindActionTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.panelFindActionTextBox.Name = "panelFindActionTextBox";
+            this.panelFindActionTextBox.Size = new System.Drawing.Size(189, 25);
+            this.panelFindActionTextBox.TabIndex = 38;
+            this.panelFindActionTextBox.TextChanged += new System.EventHandler(this.panelFindActionTextBox_TextChanged);
+            this.panelFindActionTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.actionTxtFind_KeyDown);
+            // 
+            // scintillaActionsPanel
+            // 
+            this.scintillaActionsPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scintillaActionsPanel.Location = new System.Drawing.Point(3, 3);
+            this.scintillaActionsPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.scintillaActionsPanel.Name = "scintillaActionsPanel";
+            this.scintillaActionsPanel.Size = new System.Drawing.Size(678, 559);
+            this.scintillaActionsPanel.TabIndex = 21;
             // 
             // addScriptFileButton
             // 
@@ -582,7 +808,6 @@ namespace DSPRE.Editors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.scintillaScriptsPanel);
             this.Controls.Add(this.locateCurrentScriptFile);
             this.Controls.Add(this.groupBox24);
             this.Controls.Add(this.viewLevelScriptButton);
@@ -600,11 +825,19 @@ namespace DSPRE.Editors
             this.Controls.Add(this.exportScriptFileButton);
             this.Controls.Add(this.importScriptFileButton);
             this.Controls.Add(this.groupBox8);
+            this.Controls.Add(this.scriptEditorTabControl);
             this.Name = "ScriptEditor";
             this.Size = new System.Drawing.Size(1177, 735);
+            this.scriptEditorTabControl.ResumeLayout(false);
+            this.scriptsTabPage.ResumeLayout(false);
             this.PanelSearchScripts.ResumeLayout(false);
             this.PanelSearchScripts.PerformLayout();
-            this.scintillaScriptsPanel.ResumeLayout(false);
+            this.functionsTabPage.ResumeLayout(false);
+            this.PanelSearchFunctions.ResumeLayout(false);
+            this.PanelSearchFunctions.PerformLayout();
+            this.actionsTabPage.ResumeLayout(false);
+            this.PanelSearchActions.ResumeLayout(false);
+            this.PanelSearchActions.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox24.ResumeLayout(false);
@@ -625,12 +858,28 @@ namespace DSPRE.Editors
 
         public System.Windows.Forms.ComboBox selectScriptFileComboBox;
         private System.Windows.Forms.Label label5;
+        public System.Windows.Forms.TabControl scriptEditorTabControl;
+        private System.Windows.Forms.TabPage scriptsTabPage;
         private System.Windows.Forms.Panel PanelSearchScripts;
         private System.Windows.Forms.Button BtnNextFindScript;
         private System.Windows.Forms.Button BtnPrevFindScript;
         private System.Windows.Forms.Button BtnCloseFindScript;
         private System.Windows.Forms.TextBox panelFindScriptTextBox;
         private System.Windows.Forms.Panel scintillaScriptsPanel;
+        private System.Windows.Forms.TabPage functionsTabPage;
+        private System.Windows.Forms.Panel PanelSearchFunctions;
+        private System.Windows.Forms.Button BtnNextFindFunc;
+        private System.Windows.Forms.Button BtnPrevFindFunc;
+        private System.Windows.Forms.Button BtnCloseFindFunc;
+        private System.Windows.Forms.TextBox panelFindFunctionTextBox;
+        private System.Windows.Forms.Panel scintillaFunctionsPanel;
+        private System.Windows.Forms.TabPage actionsTabPage;
+        private System.Windows.Forms.Panel PanelSearchActions;
+        private System.Windows.Forms.Button BtnNextFindActions;
+        private System.Windows.Forms.Button BtnPrevFindActions;
+        private System.Windows.Forms.Button BtnCloseFindActions;
+        private System.Windows.Forms.TextBox panelFindActionTextBox;
+        private System.Windows.Forms.Panel scintillaActionsPanel;
         private System.Windows.Forms.Button addScriptFileButton;
         private System.Windows.Forms.Button removeScriptFileButton;
         private System.Windows.Forms.Button saveScriptFileButton;

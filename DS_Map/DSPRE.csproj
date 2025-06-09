@@ -280,14 +280,16 @@
     <Compile Include="ROMFiles\SafariZoneEncounterFile.cs" />
     <Compile Include="ROMFiles\SafariZoneEncounterGroup.cs" />
     <Compile Include="ROMFiles\SafariZoneObjectRequirement.cs" />
+    <Compile Include="ROMFiles\ScriptActionContainer.cs" />
+    <Compile Include="ROMFiles\ScriptCommandContainer.cs" />
     <Compile Include="ROMFiles\ScriptFile.cs" />
-    <Compile Include="Script\LevelScriptTrigger.cs" />
-    <Compile Include="Script\MapScreenLoadTrigger.cs" />
-    <Compile Include="Script\ScriptAction.cs" />
+    <Compile Include="ROMFiles\LevelScriptTrigger.cs" />
+    <Compile Include="ROMFiles\MapScreenLoadTrigger.cs" />
+    <Compile Include="ROMFiles\ScriptAction.cs" />
     <Compile Include="Script\ScriptCommandPosition.cs" />
     <Compile Include="Script\ScriptLabeledSection.cs" />
     <Compile Include="Script\ScriptParameter.cs" />
-    <Compile Include="Script\ScriptReference.cs" />
+    <Compile Include="ROMFiles\ScriptReference.cs" />
     <Compile Include="ROMFiles\SpeciesFile.cs" />
     <Compile Include="ROMFiles\TrainerFile.cs" />
     <Compile Include="PatchToolboxDialog.cs">
@@ -303,7 +305,7 @@
       <DependentUpon>BuildingEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="RomInfo.cs" />
-    <Compile Include="Script\ScriptCommand.cs" />
+    <Compile Include="ROMFiles\ScriptCommand.cs" />
     <Compile Include="ScintillaUtils\HotKeyManager.cs" />
     <Compile Include="ScintillaUtils\ScriptTooltip.cs">
       <SubType>Form</SubType>
@@ -312,7 +314,7 @@
       <DependentUpon>ScriptTooltip.cs</DependentUpon>
     </Compile>
     <Compile Include="ScintillaUtils\SearchManager.cs" />
-    <Compile Include="Script\VariableValueTrigger.cs" />
+    <Compile Include="ROMFiles\VariableValueTrigger.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsWindow.cs">
       <SubType>Form</SubType>

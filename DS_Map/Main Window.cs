@@ -5494,12 +5494,14 @@ namespace DSPRE {
             } else {
                 ScriptFile itemScript = new ScriptFile(RomInfo.itemScriptFileNumber);
                 owItemComboBox.Items.Clear();
-                //foreach (ScriptCommandContainer cont in itemScript.allScripts) {
-                //    if (cont.commands.Count > 4) {
-                //        continue;
-                //    }
-                //    owItemComboBox.Items.Add(BitConverter.ToUInt16(cont.commands[1].Parameters[1].RawData, 0) + "x " + itemNames[BitConverter.ToUInt16(cont.commands[0].Parameters[1].RawData, 0)]);
-                //}
+                foreach (ScriptCommandContainer cont in itemScript.allScripts)
+                {
+                    if (cont.commands.Count > 4)
+                    {
+                        continue;
+                    }
+                    owItemComboBox.Items.Add(BitConverter.ToUInt16(cont.commands[1].cmdParams[1], 0) + "x " + itemNames[BitConverter.ToUInt16(cont.commands[0].cmdParams[1], 0)]);
+                }
             }
 
             /* Add ow movement list to box */
