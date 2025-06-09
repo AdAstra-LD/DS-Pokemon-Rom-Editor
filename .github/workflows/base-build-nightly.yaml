@@ -41,8 +41,8 @@ jobs:
       run: |
        git config user.name "github-actions[bot]"
        git config user.email "github-actions[bot]@users.noreply.github.com"
-       git tag canary
-       git push origin canary
+       git tag -f canary
+       git push -f origin canary
     
     - name: Delete previous release
       run: |
