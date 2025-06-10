@@ -1,4 +1,14 @@
-﻿using System;
+﻿using DSPRE.Editors;
+using DSPRE.Resources;
+using DSPRE.ROMFiles;
+using Ekona.Images;
+using Images;
+using LibNDSFormats.NSBMD;
+using LibNDSFormats.NSBTX;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using NarcAPI;
+using NSMBe4.NSBMD;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10062,6 +10072,12 @@ namespace DSPRE {
 
             Helpers.statusLabelMessage();
             Update();
+        }
+
+        private void flyWarpEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var flyEditor = new FlyEditor(gameFamily, headerListBoxNames);
+            flyEditor.Show();
         }
     }
 }

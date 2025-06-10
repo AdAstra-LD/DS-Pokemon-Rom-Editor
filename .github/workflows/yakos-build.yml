@@ -37,6 +37,15 @@ jobs:
 
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
+    
+    - name: Move yako_canary tag to latest commit
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -f yako_canary
+        git push -f origin yako_canary
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Update canary tag
       run: |
