@@ -36,11 +36,13 @@ namespace DSPRE {
             evoEditor.TopLevel = false;
             evoEditor.Show();
             evoPage.Controls.Add(evoEditor);
-
+            
             spriteEditor = new PokemonSpriteEditor(spritePage, this);
             spriteEditor.TopLevel = false;
             spriteEditor.Show();
             spritePage.Controls.Add(spriteEditor);
+            spritePage.Enabled = false;
+            spritePage.Visible = false;
         }
 
         public void TrySyncIndices(ComboBox sender) {
