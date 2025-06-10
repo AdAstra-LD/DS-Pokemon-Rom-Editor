@@ -73,12 +73,14 @@ namespace DSPRE.Editors {
 
             buttonAdd.Enabled = false;
             buttonRemove.Enabled = false;
+
+            buttonOpenSelectedScript.Enabled = true;
         }
 
         void enableButtons() {
-            // textBoxScriptID.Enabled = true;
-            // textBoxVariableName.Enabled = true;
-            // textBoxVariableValue.Enabled = true;
+            textBoxScriptID.Enabled = true;
+            textBoxVariableName.Enabled = true;
+            textBoxVariableValue.Enabled = true;
 
             radioButtonVariableValue.Enabled = true;
             radioButtonMapChange.Enabled = true;
@@ -93,6 +95,11 @@ namespace DSPRE.Editors {
             buttonSave.Enabled = true;
             buttonExport.Enabled = true;
             checkBoxPadding.Enabled = true;
+
+            //buttonAdd.Enabled = true;
+            //buttonRemove.Enabled = true;
+
+            buttonOpenSelectedScript.Enabled = false;
         }
 
         void buttonAdd_logic() {
