@@ -7930,6 +7930,7 @@ namespace DSPRE {
             pokemonSpecies = new SpeciesFile[numPokemonSpecies];
 
             RomInfo.SetMonIconsPalTableAddress();
+            RomInfo.SetAIBackportEnabled();
 
             partyPokemonComboboxList.Clear();
             partyPokemonComboboxList.Add(partyPokemon1ComboBox);
