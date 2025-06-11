@@ -1,8 +1,10 @@
-﻿using System;
+﻿using DSPRE.ROMFiles;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
-using DSPRE.ROMFiles;
+using static DSPRE.RomInfo;
 
 namespace DSPRE.Editors {
     public partial class LevelScriptEditor : UserControl {
@@ -12,6 +14,14 @@ namespace DSPRE.Editors {
 
         public LevelScriptEditor() {
             InitializeComponent();
+
+            toolTip1.SetToolTip(buttonOpenSelectedScript, "Open this script in the Script Editor.\nThis button will be disabled for real level scripts.");
+            toolTip1.SetToolTip(buttonOpenHeaderScript, "Open the script of the Header this level script is associated to.\nWill only display the first result!");
+            toolTip1.SetToolTip(buttonLocate, "Open the folder containing the selected level script file.");
+            toolTip1.SetToolTip(buttonImport, "Import a level script file.\nThis will overwrite the current level script file.");
+            toolTip1.SetToolTip(buttonSave, "Save the current level script file.\nThis will overwrite the current level script file.");
+            toolTip1.SetToolTip(buttonExport, "Export the current level script file.\nThis will not overwrite the current level script file.");
+            toolTip1.SetToolTip(buttonAdd, "Add a new trigger to the current level script file.\nMake sure to fill in the required fields first.");
 
         }
 
@@ -215,7 +225,29 @@ namespace DSPRE.Editors {
         }
 
         private void buttonOpenHeaderScript_Click(object sender, EventArgs e) {
-            EditorPanels.scriptEditor.OpenScriptEditor(this._parent, (int)EditorPanels.MainProgram.scriptFileUpDown.Value);
+            HashSet<string> result;
+            result = HeaderSearch.AdvancedSearch(0, (ushort)_parent.internalNames.Count, _parent.internalNames, (int)MapHeader.SearchableFields.LevelScriptID, (int)HeaderSearch.NumOperators.Equal, EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex.ToString());
+            //Console.WriteLine($"Found {result.Count} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex}");
+            //Console.WriteLine($"Searching for script file {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in headers: {string.Join(", ", result)}");
+            string[] arr = new string[result.Count];            
+            result.CopyTo(arr);
+            for (int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = arr[i].Remove(0,3).Replace(MapHeader.nameSeparator, "");
+            }
+            //Console.WriteLine($"Found {arr.Length} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in internal names: {string.Join(", ", arr)}");
+            ushort index = (ushort)_parent.internalNames.IndexOf(arr[0]);
+            MapHeader h;
+            if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
+            {
+                h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + index.ToString("D4"), index, 0);
+            }
+            else
+            {
+                h = MapHeader.LoadFromARM9(index);
+            }
+            //Console.WriteLine($"Opening script file {h.scriptFileID} for header {_parent.internalNames[index]} ({index})");
+            EditorPanels.scriptEditor.OpenScriptEditor(this._parent, (int)h.scriptFileID);
         }
 
         private void buttonOpenSelectedScript_Click(object sender, EventArgs e) {
