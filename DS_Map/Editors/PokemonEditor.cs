@@ -41,8 +41,10 @@ namespace DSPRE {
             spriteEditor.TopLevel = false;
             spriteEditor.Show();
             spritePage.Controls.Add(spriteEditor);
-            spritePage.Enabled = false;
-            spritePage.Visible = false;
+            //spritePage.Enabled = false;
+            //spritePage.Visible = false;
+
+            toolTip1.SetToolTip(syncChangesCheckbox, "When this CheckBox is marked, mon selection will be synchronized accross all tabs below.");
         }
 
         public void TrySyncIndices(ComboBox sender) {
