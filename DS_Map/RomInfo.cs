@@ -233,8 +233,6 @@ namespace DSPRE
             SetMoveTextNumbers();
             SetTypesTextNumber();
 
-            SetAIBackportEnabled();
-
             /* System */
             ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
 
