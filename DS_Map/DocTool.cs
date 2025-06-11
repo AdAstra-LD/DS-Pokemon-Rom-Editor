@@ -419,6 +419,7 @@ namespace DSPRE
             bool trainerMale = false;
 
             trainerMale = DVCalculator.TrainerClassGender.GetTrainerClassGender(trainerClassID);
+            DVCalculator.ResetGenderMod(trainerMale);
 
             // Get Pokemon Genders and Abilities from flags
             for (int j = 0; j < partyPokemon.Length; j++)
@@ -447,7 +448,7 @@ namespace DSPRE
                         genderOverride = 2;
                         break;
                 }
-                int abilityFlag = (int)monFlags[j] & 0xF0; // Get the upper 4 bits
+                int abilityFlag = ((int)monFlags[j] & 0xF0) >> 4; // Get the upper 4 bits
                 switch (abilityFlag)
                 {
                     case 0: // Unset
@@ -472,9 +473,8 @@ namespace DSPRE
                         abilityOverride = 2;
                         break;
                 }
-
-                uint PID = DVCalculator.generatePID((uint)trainerID, (uint)trainerClassID, trainerMale, (uint)partyPokemon[j].pokeID, (byte)partyPokemon[j].level, baseGenderRatio, genderOverride, abilityOverride, partyPokemon[j].difficulty);
-                natures[j] = DVCalculator.Natures[(int)DVCalculator.getNatureFromPID(PID)].Split(':')[0];
+                uint PID = DVCalculator.generatePID((uint)trainerID, (uint)trainerClassID, (uint)partyPokemon[j].pokeID, (byte)partyPokemon[j].level, baseGenderRatio, genderOverride, abilityOverride, partyPokemon[j].difficulty);
+                natures[j] = DVCalculator.Natures[DVCalculator.getNatureFromPID(PID)].Split(':')[0];
             }
         }
     }

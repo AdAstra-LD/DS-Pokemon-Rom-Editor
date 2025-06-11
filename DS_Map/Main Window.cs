@@ -8287,12 +8287,11 @@ namespace DSPRE {
             showTrainerEditorItemPic(5);
         }
 
-        private void DVExplainButton_Click(object sender, EventArgs e) {
-            uint trainerIdx = (uint)trainerComboBox.SelectedIndex;
-            uint trainerClassIdx = (uint)trainerClassListBox.SelectedIndex;
+        private void DVExplainButton_Click(object sender, EventArgs e) {            
 
-            DVCalc DVcalcForm = new DVCalc(trainerIdx, trainerClassIdx);
-            DVcalcForm.ShowDialog();
+            DVCalc DVCalcForm = new DVCalc(currentTrainerFile);
+
+            DVCalcForm.ShowDialog();
         }
 
         private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {
