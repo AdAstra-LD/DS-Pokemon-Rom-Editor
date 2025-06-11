@@ -26,6 +26,7 @@ namespace DSPRE.Editors {
     /// the contents of this method with the code editor.
     /// </summary>
     private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LevelScriptEditor));
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonExport = new System.Windows.Forms.Button();
@@ -57,6 +58,7 @@ namespace DSPRE.Editors {
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBoxScript.SuspendLayout();
             this.groupBoxVariable.SuspendLayout();
@@ -299,19 +301,19 @@ namespace DSPRE.Editors {
             // 
             this.buttonOpenHeaderScript.Location = new System.Drawing.Point(6, 19);
             this.buttonOpenHeaderScript.Name = "buttonOpenHeaderScript";
-            this.buttonOpenHeaderScript.Size = new System.Drawing.Size(88, 23);
+            this.buttonOpenHeaderScript.Size = new System.Drawing.Size(101, 23);
             this.buttonOpenHeaderScript.TabIndex = 2;
-            this.buttonOpenHeaderScript.Text = "Header Script";
+            this.buttonOpenHeaderScript.Text = "Associated Script";
             this.buttonOpenHeaderScript.UseVisualStyleBackColor = true;
             this.buttonOpenHeaderScript.Click += new System.EventHandler(this.buttonOpenHeaderScript_Click);
             // 
             // buttonOpenSelectedScript
             // 
-            this.buttonOpenSelectedScript.Location = new System.Drawing.Point(100, 19);
+            this.buttonOpenSelectedScript.Location = new System.Drawing.Point(113, 19);
             this.buttonOpenSelectedScript.Name = "buttonOpenSelectedScript";
-            this.buttonOpenSelectedScript.Size = new System.Drawing.Size(94, 23);
+            this.buttonOpenSelectedScript.Size = new System.Drawing.Size(82, 23);
             this.buttonOpenSelectedScript.TabIndex = 3;
-            this.buttonOpenSelectedScript.Text = "Selected Script";
+            this.buttonOpenSelectedScript.Text = "View Script";
             this.buttonOpenSelectedScript.UseVisualStyleBackColor = true;
             this.buttonOpenSelectedScript.Click += new System.EventHandler(this.buttonOpenSelectedScript_Click);
             // 
@@ -322,14 +324,14 @@ namespace DSPRE.Editors {
             this.groupBox3.Controls.Add(this.buttonOpenHeaderScript);
             this.groupBox3.Location = new System.Drawing.Point(3, 61);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(263, 52);
+            this.groupBox3.Size = new System.Drawing.Size(264, 52);
             this.groupBox3.TabIndex = 18;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Open";
             // 
             // buttonLocate
             // 
-            this.buttonLocate.Location = new System.Drawing.Point(200, 19);
+            this.buttonLocate.Location = new System.Drawing.Point(201, 19);
             this.buttonLocate.Name = "buttonLocate";
             this.buttonLocate.Size = new System.Drawing.Size(56, 23);
             this.buttonLocate.TabIndex = 3;
@@ -465,6 +467,7 @@ namespace DSPRE.Editors {
     private System.Windows.Forms.GroupBox groupBox6;
     private System.Windows.Forms.GroupBox groupBox7;
     private System.Windows.Forms.Button buttonLocate;
-  }
+        private System.Windows.Forms.ToolTip toolTip1;
+    }
 }
 
