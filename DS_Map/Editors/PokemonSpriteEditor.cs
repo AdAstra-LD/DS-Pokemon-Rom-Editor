@@ -103,6 +103,7 @@ namespace DSPRE.Editors
         Button SaveSingle;
         Button MakeShiny;
         Button OpenOther;
+        Button SaveChanges;
 
         NarcReader nr;
         PictureBox[,] Display;
@@ -350,6 +351,7 @@ namespace DSPRE.Editors
             SaveSingle = new Button();
             MakeShiny = new Button();
             OpenOther = new Button();
+            SaveChanges = new Button();
 
             lblMale = new Label();
             lblFemale = new Label();
@@ -449,6 +451,12 @@ namespace DSPRE.Editors
             MakeShiny.Text = "Create Shiny Palette";
             MakeShiny.Click += (MakeShiny_Click);
 
+            SaveChanges.Location = new Point(754, 8);
+            SaveChanges.Name = "SaveChanges";
+            SaveChanges.Size = new Size(70, 21);
+            SaveChanges.Text = "Save Changes";
+            SaveChanges.Click += (SaveChanges_Click);
+
             lblFemale.Text = "Female";
             lblFemale.Location = new Point(232, 36);
             Controls.Add(lblFemale);
@@ -485,6 +493,7 @@ namespace DSPRE.Editors
             Controls.Add(SaveSingle);
             Controls.Add(MakeShiny);
             Controls.Add(OpenOther);
+            Controls.Add(SaveChanges);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             Width = 760;
             Height = 808;
@@ -492,6 +501,7 @@ namespace DSPRE.Editors
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             OpenPngs.Enabled = false;
+            OpenOther.Visible = false;
         }
 
         void IndexBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -987,7 +997,7 @@ namespace DSPRE.Editors
             OpenPngs.Enabled = true;
         }
 
-        void menuItem8_Click(object sender, EventArgs e)
+        void SaveChanges_Click(object sender, EventArgs e)
         {
             if (OpenPngs.Enabled == false)
                 return;
