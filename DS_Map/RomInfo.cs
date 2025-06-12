@@ -171,7 +171,9 @@ namespace DSPRE
 
             interiorBuildingModels,
             learnsets,
-            evolutions
+            evolutions,
+
+            itemData
         };
 
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
@@ -1461,6 +1463,8 @@ namespace DSPRE
 
                         [DirNames.pokemonBattleSprites] = @"data\poketool\pokegra\pokegra.narc",
                         [DirNames.otherPokemonBattleSprites] = @"data\poketool\pokegra\otherpoke.narc",
+
+                        [DirNames.itemData] = @"data\itemtool\item_data.narc",
                     };
 
                     //Personal Data archive is different for Pearl
@@ -1513,6 +1517,8 @@ namespace DSPRE
                         [DirNames.encounters] = @"data\fielddata\encountdata\" + suffix + '_' + "enc_data.narc",
                         [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
                         [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
+
+                        [DirNames.itemData] = @"data\itemtool\pl_item_data.narc",
                     };
                     break;
 
@@ -1552,7 +1558,7 @@ namespace DSPRE
                         [DirNames.interiorBuildingModels] = @"data\a\1\4\8",
                         [DirNames.learnsets] = @"data\a\0\3\3",
                         [DirNames.evolutions] = @"data\a\0\3\4",
-
+                        [DirNames.itemData] = @"data\a\0\1\7",
                         [DirNames.safariZone] = @"data\a\2\3\0",
                         [DirNames.headbutt] = @"data\a\2\5\2", //both versions use the same folder with different data
                     };
