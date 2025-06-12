@@ -1,6 +1,5 @@
 ﻿using DSPRE.Resources;
 using DSPRE.ROMFiles;
-using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,7 +14,7 @@ namespace DSPRE.Editors
     public partial class ItemEditor : Form
     {
 
-        private readonly string[] itemFileNames;
+        private string[] itemFileNames;
         //private readonly string[] itemDescriptions;
 
         private int currentLoadedId = 0;
@@ -26,19 +25,45 @@ namespace DSPRE.Editors
 
         public ItemEditor(string[] itemFileNames) //, string[] itemDescriptions)
         {
-            this.itemFileNames = itemFileNames.ToArray();
+            int killCount = 0;
+            List<string> cleanNames = itemFileNames.ToList();
+            for (int i = 0; i < itemFileNames.Length; i++)
+            {
+                if (itemFileNames[i] == null || itemFileNames[i] == "???")
+                {
+                    cleanNames.RemoveAt(i-killCount);
+                    killCount++;
+                }
+            }
+            this.itemFileNames = cleanNames.ToArray();
             //this.itemDescriptions = itemDescriptions;
 
             InitializeComponent();
 
             Helpers.DisableHandlers();
 
-            itemNumberNumericUpDown.Maximum = itemFileNames.Length - 1;
-            itemNameInputComboBox.Items.AddRange(this.itemFileNames);
+            // Set up max and min for numerics
+            priceNumericUpDown.Minimum = 0;
+            priceNumericUpDown.Maximum = 65535;
+            itemNumberNumericUpDown.Minimum = 1;
+            itemNumberNumericUpDown.Maximum = this.itemFileNames.Length - 1;
+            holdEffectParameterNumericUpDown.Minimum = 0;
+            holdEffectParameterNumericUpDown.Maximum = 255;
+            pluckEffectNumericUpDown.Minimum = 0;
+            pluckEffectNumericUpDown.Maximum = 255;
+            flingEffectNumericUpDown.Minimum = 0;
+            flingEffectNumericUpDown.Maximum = 255;
+            flingPowerNumericUpDown.Minimum = 0;
+            flingPowerNumericUpDown.Maximum = 255;
+            naturalGiftPowerNumericUpDown.Minimum = 0;
+            naturalGiftPowerNumericUpDown.Maximum = 255;
 
+            // Set up combobox ranges
+            itemNameInputComboBox.Items.AddRange(this.itemFileNames);
             holdEffectComboBox.Items.AddRange(Enum.GetNames(typeof(HoldEffect)));
             fieldPocketComboBox.Items.AddRange(Enum.GetNames(typeof(FieldPocket)));
             battlePocketComboBox.Items.AddRange(Enum.GetNames(typeof(BattlePocket)));
+            naturalGiftTypeComboBox.Items.AddRange(Enum.GetNames(typeof(NaturalGiftType)));
 
             Helpers.EnableHandlers();
 
@@ -79,6 +104,7 @@ namespace DSPRE.Editors
 
         private void ChangeLoadedFile(int toLoad)
         {
+            Console.WriteLine("ItemEditor: ChangeLoadedFile: toLoad = " + toLoad);
             currentLoadedId = toLoad;
             currentLoadedFile = new ItemData(toLoad);
             PopulateAllFromCurrentFile();
@@ -87,9 +113,32 @@ namespace DSPRE.Editors
 
         private void PopulateAllFromCurrentFile()
         {
+            // Hold effects
             holdEffectComboBox.SelectedIndex = (int)currentLoadedFile.holdEffect;
+            holdEffectParameterNumericUpDown.Value = currentLoadedFile.HoldEffectParam;
+
+            // Pockets
             fieldPocketComboBox.SelectedIndex = (int)currentLoadedFile.fieldPocket;
-            battlePocketComboBox.SelectedIndex = (int)currentLoadedFile.battlePocket;
+            // Set the selected value for non sequential enums
+            BattlePocket battlePocket = (BattlePocket)currentLoadedFile.battlePocket;
+            string battlePocketEnum = Enum.GetName(typeof(BattlePocket), battlePocket);
+            battlePocketComboBox.SelectedItem = battlePocketEnum;
+
+            // Move Related
+            // Set the selected value for non sequential enums
+            NaturalGiftType naturalGiftType = (NaturalGiftType)currentLoadedFile.naturalGiftType;
+            string naturalGiftTypeEnum = Enum.GetName(typeof(NaturalGiftType), naturalGiftType);
+            naturalGiftTypeComboBox.SelectedItem = naturalGiftTypeEnum;
+            naturalGiftPowerNumericUpDown.Value = currentLoadedFile.NaturalGiftPower;
+            flingEffectNumericUpDown.Value = currentLoadedFile.FlingEffect;
+            flingPowerNumericUpDown.Value = currentLoadedFile.FlingPower;
+            pluckEffectNumericUpDown.Value = currentLoadedFile.PluckEffect;
+
+            // Checks
+            preventTossCheckBox.Checked = currentLoadedFile.PreventToss;
+            canSelectCheckBox.Checked = currentLoadedFile.Selectable;
+
+            // Price
             priceNumericUpDown.Value = currentLoadedFile.price;
 
             //descriptionTextBox.Text = itemDescriptions[currentLoadedId];
@@ -113,6 +162,7 @@ namespace DSPRE.Editors
             if (CheckDiscardChanges())
             {
                 int newId = itemNameInputComboBox.SelectedIndex;
+                Console.WriteLine("ItemEditor: itemNameInputComboBox_SelectedIndexChanged: newId = " + newId);
                 itemNumberNumericUpDown.Value = newId;
                 ChangeLoadedFile(newId);
             }
@@ -133,6 +183,7 @@ namespace DSPRE.Editors
             {
                 int newId = (int)itemNumberNumericUpDown.Value;
                 itemNameInputComboBox.SelectedIndex = newId;
+                Console.WriteLine("ItemEditor: itemNumberNumericUpDown_ValueChanged: newId = " + newId);
                 ChangeLoadedFile(newId);
             }
 
@@ -174,7 +225,7 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.battlePocket = (BattlePocket)battlePocketComboBox.SelectedIndex;
+            currentLoadedFile.battlePocket = (BattlePocket)battlePocketComboBox.SelectedValue;
             setDirty(true);
         }
 
@@ -186,6 +237,94 @@ namespace DSPRE.Editors
             }
 
             currentLoadedFile.price = (ushort)priceNumericUpDown.Value;
+            setDirty(true);
+        }
+
+        private void holdEffectParameterNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.HoldEffectParam = (byte)holdEffectParameterNumericUpDown.Value;
+            setDirty(true);
+        }
+
+        private void naturalGiftTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.naturalGiftType = (NaturalGiftType)naturalGiftTypeComboBox.SelectedIndex;
+            setDirty(true);
+        }
+
+        private void naturalGiftPowerNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.NaturalGiftPower = (byte)naturalGiftPowerNumericUpDown.Value;
+            setDirty(true);
+        }
+
+        private void pluckEffectNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.PluckEffect = (byte)pluckEffectNumericUpDown.Value;
+            setDirty(true);
+        }
+
+        private void flingEffectNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.FlingEffect = (byte)flingEffectNumericUpDown.Value;
+            setDirty(true);
+        }
+
+        private void flingPowerNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.FlingPower = (byte)flingPowerNumericUpDown.Value;
+            setDirty(true);
+        }
+
+        private void preventTossCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.PreventToss = preventTossCheckBox.Checked;
+            setDirty(true);
+        }
+
+        private void canSelectCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.Selectable = canSelectCheckBox.Checked;
             setDirty(true);
         }
     }

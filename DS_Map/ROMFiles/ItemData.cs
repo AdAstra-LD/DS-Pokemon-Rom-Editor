@@ -1,9 +1,33 @@
 ﻿using System;
 using System.IO;
 using static DSPRE.RomInfo;
+using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
 namespace DSPRE.ROMFiles
 {
+    public enum NaturalGiftType
+    {
+        Normal = 0,
+        Fighting = 1,
+        Flying = 2,
+        Poison = 3,
+        Ground = 4,
+        Rock = 5,
+        Bug = 6,
+        Ghost = 7,
+        Steel = 8,
+        Fire = 10,
+        Water = 11,
+        Grass = 12,
+        Electric = 13,
+        Psychic = 14,
+        Ice = 15,
+        Dragon = 16,
+        Dark = 17,
+        NONE = 31
+    }
+
+
     public enum FieldPocket
     {
         Items = 0,
@@ -13,8 +37,7 @@ namespace DSPRE.ROMFiles
         Berries = 4,
         Mail = 5,
         BattleItems = 6,
-        KeyItems = 7,
-        PocketsCount = 8
+        KeyItems = 7
     }
 
     public enum BattlePocket
@@ -263,7 +286,7 @@ namespace DSPRE.ROMFiles
         public byte NaturalGiftPower;
 
         // Bit-packed 16-bit value
-        public byte NaturalGiftType; // 5 bits
+        public NaturalGiftType naturalGiftType; // 5 bits
         public bool PreventToss;     // 1 bit
         public bool Selectable;      // 1 bit
         public FieldPocket fieldPocket;     // 4 bits
@@ -287,23 +310,24 @@ namespace DSPRE.ROMFiles
                 NaturalGiftPower = reader.ReadByte();
 
                 ushort bitfield = reader.ReadUInt16();
-                NaturalGiftType = (byte)(bitfield & 0b0001_1111);
+                naturalGiftType = (NaturalGiftType)(bitfield & 0b0001_1111);
                 PreventToss = (bitfield & (1 << 5)) != 0;
                 Selectable = (bitfield & (1 << 6)) != 0;
-                fieldPocket = (FieldPocket)(byte)((bitfield >> 7) & 0b1111);
-                battlePocket = (BattlePocket)(byte)((bitfield >> 11) & 0b11111);
+                fieldPocket = (FieldPocket)((bitfield >> 7) & 0b1111);
+                battlePocket = (BattlePocket)((bitfield >> 11) & 0b11111);
 
                 FieldUseFunc = reader.ReadByte();
                 BattleUseFunc = reader.ReadByte();
                 PartyUse = reader.ReadByte();
 
-                reader.ReadByte(); // padding
+                //reader.ReadByte(); // skip 1 byte padding_0D
 
                 PartyUseParam = new ItemPartyUseParam(reader);
 
-                reader.ReadBytes(2); // padding
+                reader.ReadBytes(2); // skip padding_22
             }
         }
+
 
         public ItemData(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
 
@@ -321,7 +345,7 @@ namespace DSPRE.ROMFiles
                 writer.Write(NaturalGiftPower);
 
                 ushort bitfield = 0;
-                bitfield |= (ushort)(NaturalGiftType & 0b11111);
+                bitfield |= (ushort)((byte)naturalGiftType & 0b11111);
                 if (PreventToss) bitfield |= (1 << 5);
                 if (Selectable) bitfield |= (1 << 6);
                 bitfield |= (ushort)(((byte)fieldPocket & 0b1111) << 7);
@@ -353,8 +377,22 @@ namespace DSPRE.ROMFiles
         public class ItemPartyUseParam
         {
             // Flags (bit-packed)
-            public byte HealStatus1; // slp, psn, brn, frz, prz, cfs, inf, guard_spec
-            public ushort Flags;     // revive, revive_all, level_up, evolve, etc.
+            public bool SlpHeal; 
+            public bool PsnHeal; 
+            public bool BrnHeal; 
+            public bool FrzHeal; 
+            public bool PrzHeal; 
+            public bool CfsHeal;
+            public bool InfHeal;
+
+            public bool GuardSpec;
+
+            public bool Revive;
+            public bool ReviveAll;
+
+            public bool LevelUp;
+
+            public bool Evolve;
 
             public sbyte AtkStages;
             public sbyte DefStages;
@@ -380,101 +418,151 @@ namespace DSPRE.ROMFiles
 
             public ItemPartyUseParam(BinaryReader reader)
             {
-                HealStatus1 = reader.ReadByte();
-                Flags = reader.ReadUInt16();
+                byte[] data = reader.ReadBytes(19); // Total size of struct
 
-                AtkStages = (sbyte)reader.ReadByte();
-                DefStages = (sbyte)reader.ReadByte();
-                SpAtkStages = (sbyte)reader.ReadByte();
-                SpDefStages = (sbyte)reader.ReadByte();
-                SpeedStages = (sbyte)reader.ReadByte();
-                AccuracyStages = (sbyte)reader.ReadByte();
-                CritRateStages = (sbyte)reader.ReadByte();
+                // Byte 0: HealStatus1 bits
+                byte healStatus1 = data[0];
+                SlpHeal = (healStatus1 & (1 << 0)) != 0;
+                PsnHeal = (healStatus1 & (1 << 1)) != 0;
+                BrnHeal = (healStatus1 & (1 << 2)) != 0;
+                FrzHeal = (healStatus1 & (1 << 3)) != 0;
+                PrzHeal = (healStatus1 & (1 << 4)) != 0;
+                CfsHeal = (healStatus1 & (1 << 5)) != 0;
+                InfHeal = (healStatus1 & (1 << 6)) != 0;
+                GuardSpec = (healStatus1 & (1 << 7)) != 0;
 
-                byte ppFlags = reader.ReadByte();
-                PPUps = (ppFlags & (1 << 0)) != 0;
-                PPMax = (ppFlags & (1 << 1)) != 0;
-                PPRestore = (ppFlags & (1 << 2)) != 0;
-                PPRestoreAll = (ppFlags & (1 << 3)) != 0;
-                HPRestore = (ppFlags & (1 << 4)) != 0;
+                // Byte 1: revive, revive_all, level_up, evolve, + 4 bits padding
+                byte flags1 = data[1];
+                Revive = (flags1 & (1 << 0)) != 0;
+                ReviveAll = (flags1 & (1 << 1)) != 0;
+                LevelUp = (flags1 & (1 << 2)) != 0;
+                Evolve = (flags1 & (1 << 3)) != 0;
 
-                byte evFlags = reader.ReadByte();
+                // Byte 2: atk_stages (4 bits), def_stages (4 bits)
+                byte stages1 = data[2];
+                AtkStages = (sbyte)(stages1 & 0x0F);
+                DefStages = (sbyte)((stages1 >> 4) & 0x0F);
+
+                // Byte 3: spatk_stages (4 bits), spdef_stages (4 bits)
+                byte stages2 = data[3];
+                SpAtkStages = (sbyte)(stages2 & 0x0F);
+                SpDefStages = (sbyte)((stages2 >> 4) & 0x0F);
+
+                // Byte 4: speed_stages (4 bits), accuracy_stages (4 bits)
+                byte stages3 = data[4];
+                SpeedStages = (sbyte)(stages3 & 0x0F);
+                AccuracyStages = (sbyte)((stages3 >> 4) & 0x0F);
+
+                // Byte 5: critrate_stages (2 bits), pp_up, pp_max, pp_restore, pp_restore_all, hp_restore (5 bits)
+                byte flags2 = data[5];
+                CritRateStages = (sbyte)(flags2 & 0x03);
+                PPUps = (flags2 & (1 << 2)) != 0;
+                PPMax = (flags2 & (1 << 3)) != 0;
+                PPRestore = (flags2 & (1 << 4)) != 0;
+                PPRestoreAll = (flags2 & (1 << 5)) != 0;
+                HPRestore = (flags2 & (1 << 6)) != 0;
+
+                // Byte 6: ev flags
+                byte evFlags = data[6];
+                EVUps = new bool[6];
                 for (int i = 0; i < 6; i++)
-                {
                     EVUps[i] = (evFlags & (1 << i)) != 0;
-                }
 
-                byte friendFlags = reader.ReadByte();
+                // Byte 7: friendship flags
+                byte friendFlags = data[7];
+                FriendshipMods = new bool[3];
                 for (int i = 0; i < 3; i++)
-                {
                     FriendshipMods[i] = (friendFlags & (1 << i)) != 0;
-                }
 
+                // Bytes 8-13: EVParams
+                EVParams = new sbyte[6];
                 for (int i = 0; i < 6; i++)
-                {
-                    EVParams[i] = reader.ReadSByte();
-                }
+                    EVParams[i] = (sbyte)data[8 + i];
 
-                HPRestoreParam = reader.ReadByte();
-                PPRestoreParam = reader.ReadByte();
+                // Byte 14: HPRestoreParam
+                HPRestoreParam = data[14];
 
+                // Byte 15: PPRestoreParam
+                PPRestoreParam = data[15];
+
+                // Bytes 16–18: FriendshipParams
+                FriendshipParams = new sbyte[3];
                 for (int i = 0; i < 3; i++)
-                {
-                    FriendshipParams[i] = reader.ReadSByte();
-                }
+                    FriendshipParams[i] = (sbyte)data[16 + i];
 
-                reader.ReadBytes(2); // padding
+                // Padding is ignored (2 bytes assumed to follow)
             }
 
             public void WriteTo(BinaryWriter writer)
             {
-                writer.Write(HealStatus1);
-                writer.Write(Flags);
-                writer.Write((byte)AtkStages);
-                writer.Write((byte)DefStages);
-                writer.Write((byte)SpAtkStages);
-                writer.Write((byte)SpDefStages);
-                writer.Write((byte)SpeedStages);
-                writer.Write((byte)AccuracyStages);
-                writer.Write((byte)CritRateStages);
+                byte[] data = new byte[18];
 
-                byte ppFlags = 0;
-                if (PPUps) ppFlags |= (1 << 0);
-                if (PPMax) ppFlags |= (1 << 1);
-                if (PPRestore) ppFlags |= (1 << 2);
-                if (PPRestoreAll) ppFlags |= (1 << 3);
-                if (HPRestore) ppFlags |= (1 << 4);
-                writer.Write(ppFlags);
+                // Byte 0: HealStatus1
+                data[0] = 0;
+                if (SlpHeal) data[0] |= (1 << 0);
+                if (PsnHeal) data[0] |= (1 << 1);
+                if (BrnHeal) data[0] |= (1 << 2);
+                if (FrzHeal) data[0] |= (1 << 3);
+                if (PrzHeal) data[0] |= (1 << 4);
+                if (CfsHeal) data[0] |= (1 << 5);
+                if (InfHeal) data[0] |= (1 << 6);
+                if (GuardSpec) data[0] |= (1 << 7);
 
-                byte evFlags = 0;
+                // Byte 1: revive, revive_all, level_up, evolve
+                data[1] = 0;
+                if (Revive) data[1] |= (1 << 0);
+                if (ReviveAll) data[1] |= (1 << 1);
+                if (LevelUp) data[1] |= (1 << 2);
+                if (Evolve) data[1] |= (1 << 3);
+
+                // Byte 2: atk + def stages
+                data[2] = (byte)((DefStages & 0x0F) << 4 | (AtkStages & 0x0F));
+
+                // Byte 3: spatk + spdef stages
+                data[3] = (byte)((SpDefStages & 0x0F) << 4 | (SpAtkStages & 0x0F));
+
+                // Byte 4: speed + accuracy stages
+                data[4] = (byte)((AccuracyStages & 0x0F) << 4 | (SpeedStages & 0x0F));
+
+                // Byte 5: crit rate + pp/hp flags
+                data[5] = (byte)(CritRateStages & 0x03);
+                if (PPUps) data[5] |= (1 << 2);
+                if (PPMax) data[5] |= (1 << 3);
+                if (PPRestore) data[5] |= (1 << 4);
+                if (PPRestoreAll) data[5] |= (1 << 5);
+                if (HPRestore) data[5] |= (1 << 6);
+
+                // Byte 6: EV flags
+                data[6] = 0;
                 for (int i = 0; i < 6; i++)
-                {
-                    if (EVUps[i]) evFlags |= (byte)(1 << i);
-                }
-                writer.Write(evFlags);
+                    if (EVUps[i]) data[6] |= (byte)(1 << i);
 
-                byte friendFlags = 0;
+                // Byte 7: Friendship flags
+                data[7] = 0;
                 for (int i = 0; i < 3; i++)
-                {
-                    if (FriendshipMods[i]) friendFlags |= (byte)(1 << i);
-                }
-                writer.Write(friendFlags);
+                    if (FriendshipMods[i]) data[7] |= (byte)(1 << i);
 
-                foreach (sbyte val in EVParams)
-                {
-                    writer.Write(val);
-                }
+                // Bytes 8-13: EVParams
+                for (int i = 0; i < 6; i++)
+                    data[8 + i] = (byte)EVParams[i];
 
-                writer.Write(HPRestoreParam);
-                writer.Write(PPRestoreParam);
+                // Byte 14: HPRestoreParam
+                data[14] = HPRestoreParam;
 
-                foreach (sbyte val in FriendshipParams)
-                {
-                    writer.Write(val);
-                }
+                // Byte 15: PPRestoreParam
+                data[15] = PPRestoreParam;
 
-                writer.Write(new byte[2]); // padding
+                // Bytes 16–18: FriendshipParams
+                for (int i = 0; i < 3; i++)
+                    data[16 + i] = (byte)FriendshipParams[i];
+
+                // Write all bytes
+                writer.Write(data);
+
+                // Write padding
+                writer.Write(new byte[2]);
             }
+
         }
     }
 }

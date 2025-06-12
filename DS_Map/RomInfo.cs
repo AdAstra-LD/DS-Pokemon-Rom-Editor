@@ -70,6 +70,7 @@ namespace DSPRE
         public static int attackNamesTextNumber { get; private set; }
         public static int[] pokemonNamesTextNumbers { get; private set; }
         public static int itemNamesTextNumber { get; private set; }
+        public static int itemDescriptionsTextNumber { get; private set; }
         public static int itemScriptFileNumber { get; internal set; }
         public static int trainerClassMessageNumber { get; private set; }
         public static int trainerNamesMessageNumber { get; private set; }
@@ -225,7 +226,7 @@ namespace DSPRE
             SetAbilityNamesTextNumber();
             SetAttackNamesTextNumber();
             SetPokemonNamesTextNumber();
-            SetItemNamesTextNumber();
+            SetItemsTextNumber();
             SetItemScriptFileNumber();
             SetLocationNamesTextNumber();
             SetTrainerNamesMessageNumber();
@@ -1017,20 +1018,23 @@ namespace DSPRE
             }
         }
 
-        private static void SetItemNamesTextNumber()
+        private static void SetItemsTextNumber()
         {
             switch (gameFamily)
             {
                 case GameFamilies.DP:
                     itemNamesTextNumber = 344;
+                    itemDescriptionsTextNumber = 0;
                     break;
 
                 case GameFamilies.Plat:
                     itemNamesTextNumber = 392;
+                    itemDescriptionsTextNumber = 0;
                     break;
 
                 default:
                     itemNamesTextNumber = gameLanguage == GameLanguages.Japanese ? 219 : 222;
+                    itemDescriptionsTextNumber = 221;
                     break;
             }
         }
