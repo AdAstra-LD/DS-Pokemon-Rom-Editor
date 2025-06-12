@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace DSPRE
     public partial class DVCalc : Form
     {
 
-        private TrainerFile trainerFile;
+        public TrainerFile trainerFile;
         private TrainerProperties trainerProp;
         private List<Label> pokeLabels = new List<Label>();
         private List<ComboBox> abilityCombos = new List<ComboBox>();
@@ -74,8 +75,8 @@ namespace DSPRE
             for (int i = 0; i < trainerProp.partyCount; i++)
             {
                 // Enable only if mon exists
-                abilityCombos[i].Enabled = true;
-                genderCombos[i].Enabled = true;
+                abilityCombos[i].Enabled = (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS || RomInfo.AIBackportEnabled);
+                genderCombos[i].Enabled = (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS || RomInfo.AIBackportEnabled);
                 upDownsDV[i].Enabled = true;
                 changeButtons[i].Enabled = true;
                 showAllButtons[i].Enabled = true;
@@ -136,18 +137,16 @@ namespace DSPRE
 
         private void valueChanged(object sender, EventArgs e)
         {
-            Helpers.DisableHandlers();
+            if (Helpers.HandlersDisabled || !listsSetup)
+                return;
+
             UpdateNatures();
-            Helpers.EnableHandlers();
         }
 
-        private void buttonShowAll_Click(object sender, EventArgs e)
+        private List<DVIVNatureTriplet> generateTriplets(int index)
         {
-            Button button = (Button) sender;
-            int index = button.Name.Last() - '1'; // Get the index from the button name
-
             DVCalculator.ResetGenderMod(radioMale.Checked);
-            List<DVIVNatureTriplet> triplets = 
+            List<DVIVNatureTriplet> triplets =
                 DVCalculator.getAllNatures(
                 trainerProp.trainerID,
                 trainerProp.trainerClass,
@@ -156,7 +155,7 @@ namespace DSPRE
                 new PokemonPersonalData((int)trainerFile.party[index].pokeID).genderVec,
                 genderCombos[index].SelectedIndex,
                 abilityCombos[index].SelectedIndex);
-        
+
 
             // Need to run this loop at least until we reach the current index :(
             // RIP performance
@@ -172,12 +171,89 @@ namespace DSPRE
                 abilityCombos[index].SelectedIndex);
 
             }
+
+            return triplets;
+        }
+
+        private void buttonShowAll_Click(object sender, EventArgs e)
+        {
+            Button button = (Button) sender;
+            int index = button.Name.Last() - '1'; // Get the index from the button name, maybe jank?
+
+            List<DVIVNatureTriplet> triplets = generateTriplets(index);
+
             // Show the nature viewer form with the triplets
             DVCalcNatureViewerForm form = new DVCalcNatureViewerForm(triplets);
             form.ShowDialog();
+            if (form.selectedDV != -1)
+                upDownsDV[index].Value = form.selectedDV;
 
         }
 
-        
+        private void buttonHelp_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("DV, or \"Difficulty Value\", is used by the game to calculate how tough an opponent Pokémon should be.\n" +
+               "The DV primarily affects a Pokémon's IVs - the higher the value, the higher the Pokémon's IVs.\n" +
+               "DVs will go from 0 (0 IVs) to 255 (31 IVs). Natures are chosen semi-randomly." +
+               "\nIVs will be the same value for all Stats at any DV, so Hidden Power will only be Fighting or Dark Type." +
+               "\nThis calculator allows you to choose a desired Nature and then find the highest possible DV that will yield that Nature." +
+               "\nIf you want a specific combination of IVs and Nature instead, please click the \"Show All\" button and find the one you want.\n\n" +
+               "For more information click \"More Info\""
+               , "Difficulty Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonUsage_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Click the \"Change\" or \"Show All\" buttons to open a list of possible nature / IV combinations. " +
+                "Double click an entry to select it. You can also try changing the ability and gender flags." +
+                "Because of the way that the PIDs of trainer Pokémon are generated, only certain combinations of " +
+                "gender, ability, IVs and nature are possible. This is a limitation of the game itself.\n" +
+                "In general changes made to gender and ability flags of a Pokémon in any given party slot " +
+                "will affect all the slots after it. You should therefore work from top to bottom.\n" +
+                "Diamond, Pearl and Platinum do not allow for gender or ability flags to be set."
+               , "DVCalc Usage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonMoreInfo_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to open a link to an external website?",
+                "Confirm Open Website", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://gist.github.com/YakosWG/2200732c473656db2e47c37ca72807d7",
+                    UseShellExecute = true
+                });
+            }
+
+        }
+
+        private void buttonChange_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            int index = button.Name.Last() - '1'; // Get the index from the button name, maybe jank?
+
+            List<DVIVNatureTriplet> triplets = generateTriplets(index);
+            DVCalculator.filterHighestDV(ref triplets);
+
+            // Show the nature viewer form with the triplets
+            DVCalcNatureViewerForm form = new DVCalcNatureViewerForm(triplets);
+            form.ShowDialog();
+            if (form.selectedDV != -1)
+                upDownsDV[index].Value = form.selectedDV;
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < trainerProp.partyCount; i++)
+            {
+                trainerFile.party[i].genderAndAbilityFlags = (PartyPokemon.GenderAndAbilityFlags)(((abilityCombos[i].SelectedIndex & 0x0F) << 4) 
+                    | (genderCombos[i].SelectedIndex & 0x0F));
+                trainerFile.party[i].difficulty = (byte)upDownsDV[i].Value;
+
+            }
+        }
     }
 }

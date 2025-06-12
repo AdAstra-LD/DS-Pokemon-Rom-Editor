@@ -17,6 +17,7 @@ namespace DSPRE
             this.IV = IV;
             this.Nature = Nature;
         }
+
     }
 
     public static class DVCalculator
@@ -46,18 +47,36 @@ namespace DSPRE
              genderMod = maleOrMulti ? 136u : 120u;   
         }
 
-        public static int findHighestDV(uint trainerIdx, uint trainerClassIdx, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride, uint nature)
+        public static void filterHighestDV(ref List<DVIVNatureTriplet> natures)
         {
-            byte DV;
-
-            for (DV = 255; DV > 0; DV--)
+            var result = new Dictionary<string, DVIVNatureTriplet>();
+            foreach (var triplet in natures)
             {
-                if (getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, pokeIdx, pokeLevel, baseGenderRatio, genderOverride, abilityOverride, DV)) == nature)
-                { return DV; }
+                if (!result.ContainsKey(triplet.Nature) || triplet.DV > result[triplet.Nature].DV)
+                {
+                    result[triplet.Nature] = triplet;
+                }
             }
+            natures = new List<DVIVNatureTriplet>(result.Values);
+        }
 
-            return -1;
-
+        public static void SortTriplets(ref List<DVIVNatureTriplet> triplets, string sortBy, bool ascending = true)
+        {
+            if (sortBy == "Nature")
+            {
+                if (ascending)
+                    triplets.Sort((a, b) => string.Compare(a.Nature, b.Nature));
+                else
+                    triplets.Sort((a, b) => string.Compare(b.Nature, a.Nature));
+            }
+            else if (sortBy == "DV" || sortBy == "IV")
+            {
+                // Ascending isn't really a sensible option here
+                if (!ascending)
+                    triplets.Sort((a, b) => a.DV.CompareTo(b.DV));
+                else
+                    triplets.Sort((a, b) => b.DV.CompareTo(a.DV));
+            }
         }
 
         public static uint generatePID(uint trainerIdx, uint trainerClassIdx, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride, byte difficultyValue)

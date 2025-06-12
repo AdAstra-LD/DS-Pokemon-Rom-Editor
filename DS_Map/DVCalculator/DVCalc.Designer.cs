@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DVCalc));
             this.panelPokeLabels = new System.Windows.Forms.Panel();
             this.pokeLabel6 = new System.Windows.Forms.Label();
             this.pokeLabel5 = new System.Windows.Forms.Label();
@@ -88,6 +89,12 @@
             this.radioFemale = new System.Windows.Forms.RadioButton();
             this.radioMale = new System.Windows.Forms.RadioButton();
             this.labelTrainerInfo = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonMoreInfo = new System.Windows.Forms.Button();
+            this.buttonUsage = new System.Windows.Forms.Button();
+            this.buttonHelp = new System.Windows.Forms.Button();
+            this.groupAbilityGender = new System.Windows.Forms.GroupBox();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.panelPokeLabels.SuspendLayout();
             this.panelAbilities.SuspendLayout();
             this.panelGenders.SuspendLayout();
@@ -101,6 +108,7 @@
             this.panelNaturesEdit.SuspendLayout();
             this.panelTrainerInfo.SuspendLayout();
             this.panelTrainerGender.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelPokeLabels
@@ -546,6 +554,7 @@
             this.buttonChange6.TabIndex = 26;
             this.buttonChange6.Text = "Change";
             this.buttonChange6.UseVisualStyleBackColor = true;
+            this.buttonChange6.Click += new System.EventHandler(this.buttonChange_Click);
             // 
             // buttonChange5
             // 
@@ -556,6 +565,7 @@
             this.buttonChange5.TabIndex = 25;
             this.buttonChange5.Text = "Change";
             this.buttonChange5.UseVisualStyleBackColor = true;
+            this.buttonChange5.Click += new System.EventHandler(this.buttonChange_Click);
             // 
             // buttonChange4
             // 
@@ -566,6 +576,7 @@
             this.buttonChange4.TabIndex = 24;
             this.buttonChange4.Text = "Change";
             this.buttonChange4.UseVisualStyleBackColor = true;
+            this.buttonChange4.Click += new System.EventHandler(this.buttonChange_Click);
             // 
             // buttonChange3
             // 
@@ -576,6 +587,7 @@
             this.buttonChange3.TabIndex = 23;
             this.buttonChange3.Text = "Change";
             this.buttonChange3.UseVisualStyleBackColor = true;
+            this.buttonChange3.Click += new System.EventHandler(this.buttonChange_Click);
             // 
             // buttonChange2
             // 
@@ -586,6 +598,7 @@
             this.buttonChange2.TabIndex = 22;
             this.buttonChange2.Text = "Change";
             this.buttonChange2.UseVisualStyleBackColor = true;
+            this.buttonChange2.Click += new System.EventHandler(this.buttonChange_Click);
             // 
             // buttonChange1
             // 
@@ -596,6 +609,7 @@
             this.buttonChange1.TabIndex = 21;
             this.buttonChange1.Text = "Change";
             this.buttonChange1.UseVisualStyleBackColor = true;
+            this.buttonChange1.Click += new System.EventHandler(this.buttonChange_Click);
             // 
             // labelNature6
             // 
@@ -754,16 +768,91 @@
             this.labelTrainerInfo.TabIndex = 8;
             this.labelTrainerInfo.Text = "Trainer Info";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.buttonSave);
+            this.panel1.Controls.Add(this.buttonMoreInfo);
+            this.panel1.Controls.Add(this.buttonUsage);
+            this.panel1.Controls.Add(this.buttonHelp);
+            this.panel1.Location = new System.Drawing.Point(529, 322);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(353, 116);
+            this.panel1.TabIndex = 15;
+            // 
+            // buttonMoreInfo
+            // 
+            this.buttonMoreInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonMoreInfo.Image = ((System.Drawing.Image)(resources.GetObject("buttonMoreInfo.Image")));
+            this.buttonMoreInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonMoreInfo.Location = new System.Drawing.Point(215, 8);
+            this.buttonMoreInfo.Name = "buttonMoreInfo";
+            this.buttonMoreInfo.Size = new System.Drawing.Size(128, 30);
+            this.buttonMoreInfo.TabIndex = 35;
+            this.buttonMoreInfo.Text = "More Info";
+            this.buttonMoreInfo.UseVisualStyleBackColor = true;
+            this.buttonMoreInfo.Click += new System.EventHandler(this.buttonMoreInfo_Click);
+            // 
+            // buttonUsage
+            // 
+            this.buttonUsage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonUsage.Location = new System.Drawing.Point(81, 8);
+            this.buttonUsage.Name = "buttonUsage";
+            this.buttonUsage.Size = new System.Drawing.Size(128, 30);
+            this.buttonUsage.TabIndex = 34;
+            this.buttonUsage.Text = "How to use";
+            this.buttonUsage.UseVisualStyleBackColor = true;
+            this.buttonUsage.Click += new System.EventHandler(this.buttonUsage_Click);
+            // 
+            // buttonHelp
+            // 
+            this.buttonHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonHelp.Image = ((System.Drawing.Image)(resources.GetObject("buttonHelp.Image")));
+            this.buttonHelp.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonHelp.Location = new System.Drawing.Point(7, 8);
+            this.buttonHelp.Name = "buttonHelp";
+            this.buttonHelp.Size = new System.Drawing.Size(68, 30);
+            this.buttonHelp.TabIndex = 33;
+            this.buttonHelp.Text = "Help";
+            this.buttonHelp.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonHelp.UseVisualStyleBackColor = true;
+            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
+            // 
+            // groupAbilityGender
+            // 
+            this.groupAbilityGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupAbilityGender.Location = new System.Drawing.Point(138, 2);
+            this.groupAbilityGender.Name = "groupAbilityGender";
+            this.groupAbilityGender.Size = new System.Drawing.Size(312, 316);
+            this.groupAbilityGender.TabIndex = 16;
+            this.groupAbilityGender.TabStop = false;
+            this.groupAbilityGender.Text = "HGSS Only";
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
+            this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonSave.Location = new System.Drawing.Point(215, 39);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(128, 71);
+            this.buttonSave.TabIndex = 36;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
             // DVCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(929, 444);
+            this.Controls.Add(this.panelGenders);
+            this.Controls.Add(this.panelAbilities);
+            this.Controls.Add(this.groupAbilityGender);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelTrainerInfo);
             this.Controls.Add(this.panelNaturesEdit);
             this.Controls.Add(this.panelDVs);
-            this.Controls.Add(this.panelGenders);
-            this.Controls.Add(this.panelAbilities);
             this.Controls.Add(this.panelPokeLabels);
             this.Name = "DVCalc";
             this.Text = "DVCalc";
@@ -787,6 +876,7 @@
             this.panelTrainerInfo.PerformLayout();
             this.panelTrainerGender.ResumeLayout(false);
             this.panelTrainerGender.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -853,5 +943,11 @@
         private System.Windows.Forms.Label labelTrainerClass;
         private System.Windows.Forms.Label labelTrainerName;
         private System.Windows.Forms.Label labelTrainerGender;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupAbilityGender;
+        private System.Windows.Forms.Button buttonHelp;
+        private System.Windows.Forms.Button buttonUsage;
+        private System.Windows.Forms.Button buttonMoreInfo;
+        private System.Windows.Forms.Button buttonSave;
     }
 }

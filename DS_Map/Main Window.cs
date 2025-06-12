@@ -8290,8 +8290,13 @@ namespace DSPRE {
         private void DVExplainButton_Click(object sender, EventArgs e) {            
 
             DVCalc DVCalcForm = new DVCalc(currentTrainerFile);
-
             DVCalcForm.ShowDialog();
+
+            currentTrainerFile = DVCalcForm.trainerFile;
+            Helpers.DisableHandlers();
+            RefreshTrainerPartyGUI();
+            Helpers.EnableHandlers();
+
         }
 
         private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {

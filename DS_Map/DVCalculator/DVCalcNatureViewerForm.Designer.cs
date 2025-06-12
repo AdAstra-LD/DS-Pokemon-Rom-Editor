@@ -52,6 +52,8 @@ namespace DSPRE
             this.natureGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.natureGridView.Size = new System.Drawing.Size(387, 333);
             this.natureGridView.TabIndex = 0;
+            this.natureGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.natureGridView_CellDoubleClick);
+            this.natureGridView.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.natureGridView_ColumnHeaderMouseClick);
             // 
             // DVCalcNatureViewerForm
             // 
