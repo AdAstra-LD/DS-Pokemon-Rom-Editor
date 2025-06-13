@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE
 {
@@ -92,8 +93,22 @@ namespace DSPRE
                 trainerClassIdx--;
                 random = getNextRandom();
             }
+            if (RomInfo.gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled)
+                UpdateGenderMod(baseGenderRatio, genderOverride, abilityOverride);
 
-            // Code from here in is HGSS exclusive
+            uint PID = (random << 8) + genderMod;
+
+            return (uint)PID;
+        }
+
+        public static int getNatureFromPID(uint PID)
+        {
+            return (int) (PID % 100) % 25;
+        }
+
+        public static void UpdateGenderMod(byte baseGenderRatio, int genderOverride, int abilityOverride)
+        {
+            // Code from here on is HGSS exclusive
             if (genderOverride == 1)
             {
                 genderMod = baseGenderRatio + 2u;
@@ -115,15 +130,6 @@ namespace DSPRE
             {
                 genderMod = (uint)(genderMod | 1);
             }
-
-            uint PID = (random << 8) + genderMod;
-
-            return (uint)PID;
-        }
-
-        public static int getNatureFromPID(uint PID)
-        {
-            return (int) (PID % 100) % 25;
         }
 
         public static List<DVIVNatureTriplet> getAllNatures(uint trainerIdx, uint trainerClassIdx, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride)
@@ -132,10 +138,13 @@ namespace DSPRE
 
             int DV;
             int natureIdx;
+            uint genderModLocal = genderMod;
 
             for (DV = 255; DV >= 0; DV--)
             {
                 natureIdx = getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, pokeIdx, pokeLevel, baseGenderRatio, genderOverride, abilityOverride, (byte) DV));
+
+                genderMod = genderModLocal;
 
                 natureDict.Add(new DVIVNatureTriplet(DV, DV * 31 / 255, Natures[natureIdx]));
 

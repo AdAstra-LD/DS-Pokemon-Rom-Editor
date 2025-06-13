@@ -7859,8 +7859,9 @@ namespace DSPRE {
         private const int TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX = 0;
         private const int TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX = 1;
         private const int TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX = 2;
-        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 0;
-        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 1;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_DEFAULT_INDEX = 0;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 1;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 2;
 
 
         string[] abilityNames;
@@ -8176,11 +8177,20 @@ namespace DSPRE {
                 setTrainerPartyPokemonForm(i);
                 setTrainerPokemonGender(i);
 
-                partyAbilityComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2)
-                    ? TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX
-                    : TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+                if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1))
+                {
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+                }
+                else if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2))
+                {
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX;
+                }
+                else
+                {
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_DEFAULT_INDEX;
+                }
 
-                partyFormComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].formID;
+                    partyFormComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].formID;
 
                 if (currentTrainerFile.party[i].moves == null) {
                     for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
@@ -8372,8 +8382,6 @@ namespace DSPRE {
                 currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
             }
 
-            // Need to account for the case where ability 2 was set on a previous mon. If so then ability one flag needs to be set on other mons with ability 1
-            bool wasAbility2Set = false;
 
             for (int i = 0; i < partyCountUpDown.Value; i++) {
                 currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
@@ -8408,21 +8416,13 @@ namespace DSPRE {
                 } else
                     currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
 
-
-
-                if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX) {
+                if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX)
+                {
+                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
+                }
+                else if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX)
+                {
                     currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2;
-                    wasAbility2Set = true;
-                }
-                // If ability 2 was set previously force ability 1 must be set here other wise the pokemon will have ability 2
-                else if (wasAbility2Set && partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX) {
-                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
-                }
-                //ability slot 1 flag must be set if the pokemon's gender is forced to male or female, otherwise the pokemon will have ability2 even if the ability2 flag is not set
-                //the ability 1 flag should not be set if neither of the gender flags are set, otherwise this will cause a problem with using alternate forms
-                else if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_MALE)
-                        || currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE)) {
-                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
                 }
 
                 currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
@@ -8718,23 +8718,34 @@ namespace DSPRE {
 
         private void setTrainerPartyPokemonAbilities(int partyPokemonPosition) {
             (string ability1, string ability2) = getPokemonAbilityNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
+            string noFlags = "No Flag";
+
             partyAbilityComboBoxList[partyPokemonPosition].Items.Clear();
-            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
-            
-            //if the name " -" is returned for ability 2 then there is no ability 2
-            if (ability2.Equals(" -") || (gameFamily != GameFamilies.HGSS && !RomInfo.AIBackportEnabled)) {
+
+            // In DPPt just show ability 1 and do not allow editing
+            if (RomInfo.gameFamily != GameFamilies.HGSS && !RomInfo.AIBackportEnabled)
+            {
+                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
-            } else {
-                string stringAbi2 = ability2;
-                if (ability2.Equals(ability1)) {
-                    stringAbi2 += " (2nd Slot)";
-                }
-
-                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(stringAbi2);
-                partyAbilityComboBoxList[partyPokemonPosition].Enabled = true;
+                return;
             }
+            
+            // In HGSS allow editing of ability flags
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(noFlags);
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
 
-            partyAbilityComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+            string stringAbi2 = ability2;
+            if (ability2.Equals(ability1))
+            {
+                stringAbi2 += " (2nd Slot)";
+            }
+            else if (ability2.Equals(" -"))
+            {
+                stringAbi2 = ability1 += " (2nd Slot)";
+            }
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(stringAbi2);
+
+                        
         }
 
         private void setTrainerPokemonGender(int partyPokemonPosition) {

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DVCalc));
             this.panelPokeLabels = new System.Windows.Forms.Panel();
             this.pokeLabel6 = new System.Windows.Forms.Label();
@@ -90,11 +91,12 @@
             this.radioMale = new System.Windows.Forms.RadioButton();
             this.labelTrainerInfo = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.buttonMoreInfo = new System.Windows.Forms.Button();
             this.buttonUsage = new System.Windows.Forms.Button();
             this.buttonHelp = new System.Windows.Forms.Button();
             this.groupAbilityGender = new System.Windows.Forms.GroupBox();
-            this.buttonSave = new System.Windows.Forms.Button();
+            this.toolTipDVCalc = new System.Windows.Forms.ToolTip(this.components);
             this.panelPokeLabels.SuspendLayout();
             this.panelAbilities.SuspendLayout();
             this.panelGenders.SuspendLayout();
@@ -122,7 +124,7 @@
             this.panelPokeLabels.Controls.Add(this.labelPokeNames);
             this.panelPokeLabels.Location = new System.Drawing.Point(12, 32);
             this.panelPokeLabels.Name = "panelPokeLabels";
-            this.panelPokeLabels.Size = new System.Drawing.Size(120, 284);
+            this.panelPokeLabels.Size = new System.Drawing.Size(194, 284);
             this.panelPokeLabels.TabIndex = 0;
             // 
             // pokeLabel6
@@ -268,7 +270,7 @@
             this.panelAbilities.Controls.Add(this.comboAbility2);
             this.panelAbilities.Controls.Add(this.comboAbility1);
             this.panelAbilities.Controls.Add(this.labelAbilities);
-            this.panelAbilities.Location = new System.Drawing.Point(139, 32);
+            this.panelAbilities.Location = new System.Drawing.Point(213, 32);
             this.panelAbilities.Name = "panelAbilities";
             this.panelAbilities.Size = new System.Drawing.Size(154, 284);
             this.panelAbilities.TabIndex = 9;
@@ -282,7 +284,7 @@
             this.panelGenders.Controls.Add(this.comboGender4);
             this.panelGenders.Controls.Add(this.comboGender5);
             this.panelGenders.Controls.Add(this.comboGender6);
-            this.panelGenders.Location = new System.Drawing.Point(299, 32);
+            this.panelGenders.Location = new System.Drawing.Point(374, 32);
             this.panelGenders.Name = "panelGenders";
             this.panelGenders.Size = new System.Drawing.Size(149, 284);
             this.panelGenders.TabIndex = 11;
@@ -360,7 +362,7 @@
             this.panelDVs.Controls.Add(this.numericUpDownDV2);
             this.panelDVs.Controls.Add(this.numericUpDownDV1);
             this.panelDVs.Controls.Add(this.labelDVs);
-            this.panelDVs.Location = new System.Drawing.Point(454, 32);
+            this.panelDVs.Location = new System.Drawing.Point(528, 32);
             this.panelDVs.Name = "panelDVs";
             this.panelDVs.Size = new System.Drawing.Size(69, 284);
             this.panelDVs.TabIndex = 12;
@@ -474,7 +476,7 @@
             this.panelNaturesEdit.Controls.Add(this.labelNature2);
             this.panelNaturesEdit.Controls.Add(this.labelNature1);
             this.panelNaturesEdit.Controls.Add(this.labelNatures);
-            this.panelNaturesEdit.Location = new System.Drawing.Point(529, 32);
+            this.panelNaturesEdit.Location = new System.Drawing.Point(603, 32);
             this.panelNaturesEdit.Name = "panelNaturesEdit";
             this.panelNaturesEdit.Size = new System.Drawing.Size(353, 284);
             this.panelNaturesEdit.TabIndex = 13;
@@ -689,7 +691,7 @@
             this.panelTrainerInfo.Controls.Add(this.labelTrainerInfo);
             this.panelTrainerInfo.Location = new System.Drawing.Point(12, 322);
             this.panelTrainerInfo.Name = "panelTrainerInfo";
-            this.panelTrainerInfo.Size = new System.Drawing.Size(511, 116);
+            this.panelTrainerInfo.Size = new System.Drawing.Size(585, 116);
             this.panelTrainerInfo.TabIndex = 14;
             // 
             // labelTrainerClass
@@ -717,7 +719,7 @@
             this.panelTrainerGender.Controls.Add(this.labelTrainerGender);
             this.panelTrainerGender.Controls.Add(this.radioFemale);
             this.panelTrainerGender.Controls.Add(this.radioMale);
-            this.panelTrainerGender.Location = new System.Drawing.Point(287, 12);
+            this.panelTrainerGender.Location = new System.Drawing.Point(362, 8);
             this.panelTrainerGender.Name = "panelTrainerGender";
             this.panelTrainerGender.Size = new System.Drawing.Size(149, 98);
             this.panelTrainerGender.TabIndex = 9;
@@ -774,10 +776,24 @@
             this.panel1.Controls.Add(this.buttonMoreInfo);
             this.panel1.Controls.Add(this.buttonUsage);
             this.panel1.Controls.Add(this.buttonHelp);
-            this.panel1.Location = new System.Drawing.Point(529, 322);
+            this.panel1.Location = new System.Drawing.Point(603, 322);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(353, 116);
             this.panel1.TabIndex = 15;
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
+            this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.buttonSave.Location = new System.Drawing.Point(215, 39);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(128, 71);
+            this.buttonSave.TabIndex = 36;
+            this.buttonSave.Text = "Save";
+            this.buttonSave.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonMoreInfo
             // 
@@ -820,32 +836,18 @@
             // groupAbilityGender
             // 
             this.groupAbilityGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupAbilityGender.Location = new System.Drawing.Point(138, 2);
+            this.groupAbilityGender.Location = new System.Drawing.Point(212, 2);
             this.groupAbilityGender.Name = "groupAbilityGender";
             this.groupAbilityGender.Size = new System.Drawing.Size(312, 316);
             this.groupAbilityGender.TabIndex = 16;
             this.groupAbilityGender.TabStop = false;
             this.groupAbilityGender.Text = "HGSS Only";
             // 
-            // buttonSave
-            // 
-            this.buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSave.Image = ((System.Drawing.Image)(resources.GetObject("buttonSave.Image")));
-            this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.buttonSave.Location = new System.Drawing.Point(215, 39);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(128, 71);
-            this.buttonSave.TabIndex = 36;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
             // DVCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(929, 444);
+            this.ClientSize = new System.Drawing.Size(962, 444);
             this.Controls.Add(this.panelGenders);
             this.Controls.Add(this.panelAbilities);
             this.Controls.Add(this.groupAbilityGender);
@@ -854,6 +856,7 @@
             this.Controls.Add(this.panelNaturesEdit);
             this.Controls.Add(this.panelDVs);
             this.Controls.Add(this.panelPokeLabels);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DVCalc";
             this.Text = "DVCalc";
             this.panelPokeLabels.ResumeLayout(false);
@@ -949,5 +952,6 @@
         private System.Windows.Forms.Button buttonUsage;
         private System.Windows.Forms.Button buttonMoreInfo;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.ToolTip toolTipDVCalc;
     }
 }
