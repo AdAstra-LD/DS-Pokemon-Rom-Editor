@@ -140,6 +140,12 @@
     <Compile Include="Editors\HeadbuttEncounterEditorTab.Designer.cs">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\ItemEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\ItemEditor.Designer.cs">
+      <DependentUpon>ItemEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\LevelScriptEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -279,6 +285,7 @@
     <Compile Include="ROMFiles\HeadbuttEncounterMap.cs" />
     <Compile Include="ROMFiles\HeadbuttTree.cs" />
     <Compile Include="ROMFiles\HeadbuttTreeGroup.cs" />
+    <Compile Include="ROMFiles\ItemData.cs" />
     <Compile Include="ROMFiles\LearnsetData.cs" />
     <Compile Include="ROMFiles\LevelScriptFile.cs" />
     <Compile Include="ROMFiles\MoveData.cs" />
@@ -432,6 +439,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\HeadbuttEncounterEditorTab.resx">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\ItemEditor.resx">
+      <DependentUpon>ItemEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\LevelScriptEditor.resx">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>

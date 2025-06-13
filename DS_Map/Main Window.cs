@@ -9263,7 +9263,7 @@ namespace DSPRE {
 
         private void unpackToFolderToolStripMenuItem_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
-                Filter = "NARC File (*.narc)|*.narc"
+                Filter = "NARC File (*.narc)|*.narc|All files (*.*)|*.*"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -10094,6 +10094,22 @@ namespace DSPRE {
         {
             var flyEditor = new FlyEditor(gameFamily, headerListBoxNames);
             flyEditor.Show();
+        }
+
+        private void itemEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Helpers.statusLabelMessage("Setting up Item Data Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.itemData });
+
+            ItemEditor itemEditor = new ItemEditor(
+                RomInfo.GetItemNames()
+            );
+            itemEditor.ShowDialog();
+
+            Helpers.statusLabelMessage();
+            Update();
         }
     }
 }

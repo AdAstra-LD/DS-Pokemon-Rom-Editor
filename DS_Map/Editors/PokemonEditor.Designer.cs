@@ -23,15 +23,16 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PokemonEditor));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.personalPage = new System.Windows.Forms.TabPage();
             this.learnsetPage = new System.Windows.Forms.TabPage();
             this.evoPage = new System.Windows.Forms.TabPage();
-            this.syncChangesCheckbox = new System.Windows.Forms.CheckBox();
-            this.syncChangesLabel = new System.Windows.Forms.Label();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.spritePage = new System.Windows.Forms.TabPage();
+            this.syncChangesCheckbox = new System.Windows.Forms.CheckBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -56,7 +57,7 @@
             this.personalPage.Location = new System.Drawing.Point(4, 22);
             this.personalPage.Name = "personalPage";
             this.personalPage.Padding = new System.Windows.Forms.Padding(3);
-            this.personalPage.Size = new System.Drawing.Size(1024, 534);
+            this.personalPage.Size = new System.Drawing.Size(1024, 817);
             this.personalPage.TabIndex = 0;
             this.personalPage.Text = "Personal Editor";
             this.personalPage.UseVisualStyleBackColor = true;
@@ -66,7 +67,7 @@
             this.learnsetPage.Location = new System.Drawing.Point(4, 22);
             this.learnsetPage.Name = "learnsetPage";
             this.learnsetPage.Padding = new System.Windows.Forms.Padding(3);
-            this.learnsetPage.Size = new System.Drawing.Size(1024, 526);
+            this.learnsetPage.Size = new System.Drawing.Size(1024, 817);
             this.learnsetPage.TabIndex = 1;
             this.learnsetPage.Text = "Learnset Editor";
             this.learnsetPage.UseVisualStyleBackColor = true;
@@ -76,10 +77,20 @@
             this.evoPage.Location = new System.Drawing.Point(4, 22);
             this.evoPage.Name = "evoPage";
             this.evoPage.Padding = new System.Windows.Forms.Padding(3);
-            this.evoPage.Size = new System.Drawing.Size(1024, 526);
+            this.evoPage.Size = new System.Drawing.Size(1024, 817);
             this.evoPage.TabIndex = 2;
             this.evoPage.Text = "Evolution Editor";
             this.evoPage.UseVisualStyleBackColor = true;
+            // 
+            // spritePage
+            // 
+            this.spritePage.Location = new System.Drawing.Point(4, 22);
+            this.spritePage.Name = "spritePage";
+            this.spritePage.Padding = new System.Windows.Forms.Padding(3);
+            this.spritePage.Size = new System.Drawing.Size(1024, 817);
+            this.spritePage.TabIndex = 3;
+            this.spritePage.Text = "Sprite Editor";
+            this.spritePage.UseVisualStyleBackColor = true;
             // 
             // syncChangesCheckbox
             // 
@@ -92,40 +103,15 @@
             this.syncChangesCheckbox.Text = "Synchronize Pokémon selection";
             this.syncChangesCheckbox.UseVisualStyleBackColor = true;
             // 
-            // syncChangesLabel
-            // 
-            this.syncChangesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.syncChangesLabel.AutoSize = true;
-            this.syncChangesLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.syncChangesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.syncChangesLabel.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.syncChangesLabel.Location = new System.Drawing.Point(186, 10);
-            this.syncChangesLabel.Name = "syncChangesLabel";
-            this.syncChangesLabel.Size = new System.Drawing.Size(433, 13);
-            this.syncChangesLabel.TabIndex = 2;
-            this.syncChangesLabel.Text = "When this CheckBox is marked, mon selection will be synchronized accross all tabs" +
-    " below.";
-            // 
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.Controls.Add(this.syncChangesCheckbox);
-            this.flowLayoutPanel1.Controls.Add(this.syncChangesLabel);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1032, 23);
             this.flowLayoutPanel1.TabIndex = 3;
-            // 
-            // spritePage
-            // 
-            this.spritePage.Location = new System.Drawing.Point(4, 22);
-            this.spritePage.Name = "spritePage";
-            this.spritePage.Padding = new System.Windows.Forms.Padding(3);
-            this.spritePage.Size = new System.Drawing.Size(1024, 817);
-            this.spritePage.TabIndex = 3;
-            this.spritePage.Text = "Sprite Editor";
-            this.spritePage.UseVisualStyleBackColor = true;
             // 
             // PokemonEditor
             // 
@@ -154,8 +140,8 @@
         private System.Windows.Forms.TabPage learnsetPage;
         private System.Windows.Forms.TabPage evoPage;
         private System.Windows.Forms.CheckBox syncChangesCheckbox;
-        private System.Windows.Forms.Label syncChangesLabel;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.TabPage spritePage;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
