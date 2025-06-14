@@ -29,7 +29,7 @@ namespace DSPRE
             string moveDataPath = Path.Combine(docsFolderPath, "MoveData.csv");
             string TMHMDataPath = Path.Combine(docsFolderPath, "TMHMData.csv");
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.trainerParty, DirNames.trainerProperties ,DirNames.moveData});
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.trainerParty, DirNames.trainerProperties ,DirNames.moveData, DirNames.itemData});
 
             string[] pokeNames = RomInfo.GetPokemonNames();
             string[] itemNames = RomInfo.GetItemNames();
