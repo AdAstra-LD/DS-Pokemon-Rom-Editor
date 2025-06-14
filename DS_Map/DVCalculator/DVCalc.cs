@@ -22,6 +22,7 @@ namespace DSPRE
         private List<ComboBox> abilityCombos = new List<ComboBox>();
         private List<ComboBox> genderCombos = new List<ComboBox>();
         private List<NumericUpDown> upDownsDV = new List<NumericUpDown>();
+        private List<Label> labelsIV = new List<Label>();
         private List<Label> natureLabels = new List<Label>();
         private List<Button> changeButtons = new List<Button>();
         private List<Button> showAllButtons = new List<Button>();
@@ -47,6 +48,9 @@ namespace DSPRE
             else
                 radioFemale.Checked = true;
 
+            Version version = new Version(major: 2, minor: 0);
+            this.Text = "DVCalc " + version.ToString();
+
             SetupLists();
             SetupToolTips();
             UpdateNatures();
@@ -60,6 +64,7 @@ namespace DSPRE
             abilityCombos.Clear();
             genderCombos.Clear();
             upDownsDV.Clear();
+            labelsIV.Clear();
             natureLabels.Clear();
             changeButtons.Clear();
             showAllButtons.Clear();
@@ -68,11 +73,10 @@ namespace DSPRE
             abilityCombos.AddRange(new ComboBox[] { comboAbility1, comboAbility2, comboAbility3, comboAbility4, comboAbility5, comboAbility6});
             genderCombos.AddRange(new ComboBox[] { comboGender1, comboGender2, comboGender3, comboGender4, comboGender5, comboGender6 });
             upDownsDV.AddRange(new NumericUpDown[] { numericUpDownDV1, numericUpDownDV2, numericUpDownDV3, numericUpDownDV4, numericUpDownDV5, numericUpDownDV6 });
+            labelsIV.AddRange(new Label[] { labelIV1, labelIV2, labelIV3, labelIV4, labelIV5, labelIV6 });
             natureLabels.AddRange(new Label[] { labelNature1, labelNature2, labelNature3, labelNature4, labelNature5, labelNature6 });
             changeButtons.AddRange(new Button[] { buttonChange1, buttonChange2, buttonChange3, buttonChange4, buttonChange5, buttonChange6 });
             showAllButtons.AddRange(new Button[] { buttonShowAll1, buttonShowAll2, buttonShowAll3, buttonShowAll4, buttonShowAll5, buttonShowAll6 });
-
-            string[] abilityNames = RomInfo.GetAbilityNames();
 
             for (int i = 0; i < trainerProp.partyCount; i++)
             {
@@ -100,6 +104,8 @@ namespace DSPRE
                 int DV = (int)trainerFile.party[i].difficulty;                
                 upDownsDV[i].Value = DV;
 
+                labelsIV[i].Text = ((int)(DV * 31 / 255)).ToString();
+
             }
             for (int i = trainerProp.partyCount; i < 6; i++)
             {
@@ -111,6 +117,7 @@ namespace DSPRE
 
                 pokeLabels[i].Text = "Empty Slot";
                 natureLabels[i].Text = "N/A";
+                labelsIV[i].Text = "N/A";
             }
 
             listsSetup = true;
@@ -170,6 +177,7 @@ namespace DSPRE
                 string nature = DVCalculator.Natures[DVCalculator.getNatureFromPID(PID)];
 
                 natureLabels[i].Text = nature;
+                labelsIV[i].Text = ((int)(upDownsDV[i].Value * 31 / 255)).ToString();
             }
 
         }

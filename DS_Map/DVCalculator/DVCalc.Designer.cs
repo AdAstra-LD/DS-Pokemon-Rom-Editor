@@ -97,6 +97,13 @@
             this.buttonHelp = new System.Windows.Forms.Button();
             this.groupAbilityGender = new System.Windows.Forms.GroupBox();
             this.toolTipDVCalc = new System.Windows.Forms.ToolTip(this.components);
+            this.labelIVs = new System.Windows.Forms.Label();
+            this.labelIV1 = new System.Windows.Forms.Label();
+            this.labelIV2 = new System.Windows.Forms.Label();
+            this.labelIV3 = new System.Windows.Forms.Label();
+            this.labelIV4 = new System.Windows.Forms.Label();
+            this.labelIV5 = new System.Windows.Forms.Label();
+            this.labelIV6 = new System.Windows.Forms.Label();
             this.panelPokeLabels.SuspendLayout();
             this.panelAbilities.SuspendLayout();
             this.panelGenders.SuspendLayout();
@@ -355,6 +362,13 @@
             // 
             // panelDVs
             // 
+            this.panelDVs.Controls.Add(this.labelIV6);
+            this.panelDVs.Controls.Add(this.labelIV5);
+            this.panelDVs.Controls.Add(this.labelIV4);
+            this.panelDVs.Controls.Add(this.labelIV3);
+            this.panelDVs.Controls.Add(this.labelIV2);
+            this.panelDVs.Controls.Add(this.labelIV1);
+            this.panelDVs.Controls.Add(this.labelIVs);
             this.panelDVs.Controls.Add(this.numericUpDownDV6);
             this.panelDVs.Controls.Add(this.numericUpDownDV5);
             this.panelDVs.Controls.Add(this.numericUpDownDV4);
@@ -364,7 +378,7 @@
             this.panelDVs.Controls.Add(this.labelDVs);
             this.panelDVs.Location = new System.Drawing.Point(528, 32);
             this.panelDVs.Name = "panelDVs";
-            this.panelDVs.Size = new System.Drawing.Size(69, 284);
+            this.panelDVs.Size = new System.Drawing.Size(110, 284);
             this.panelDVs.TabIndex = 12;
             // 
             // numericUpDownDV6
@@ -476,7 +490,7 @@
             this.panelNaturesEdit.Controls.Add(this.labelNature2);
             this.panelNaturesEdit.Controls.Add(this.labelNature1);
             this.panelNaturesEdit.Controls.Add(this.labelNatures);
-            this.panelNaturesEdit.Location = new System.Drawing.Point(603, 32);
+            this.panelNaturesEdit.Location = new System.Drawing.Point(644, 32);
             this.panelNaturesEdit.Name = "panelNaturesEdit";
             this.panelNaturesEdit.Size = new System.Drawing.Size(353, 284);
             this.panelNaturesEdit.TabIndex = 13;
@@ -691,7 +705,7 @@
             this.panelTrainerInfo.Controls.Add(this.labelTrainerInfo);
             this.panelTrainerInfo.Location = new System.Drawing.Point(12, 322);
             this.panelTrainerInfo.Name = "panelTrainerInfo";
-            this.panelTrainerInfo.Size = new System.Drawing.Size(585, 116);
+            this.panelTrainerInfo.Size = new System.Drawing.Size(626, 116);
             this.panelTrainerInfo.TabIndex = 14;
             // 
             // labelTrainerClass
@@ -776,7 +790,7 @@
             this.panel1.Controls.Add(this.buttonMoreInfo);
             this.panel1.Controls.Add(this.buttonUsage);
             this.panel1.Controls.Add(this.buttonHelp);
-            this.panel1.Location = new System.Drawing.Point(603, 322);
+            this.panel1.Location = new System.Drawing.Point(644, 322);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(353, 116);
             this.panel1.TabIndex = 15;
@@ -843,11 +857,81 @@
             this.groupAbilityGender.TabStop = false;
             this.groupAbilityGender.Text = "HGSS Only";
             // 
+            // labelIVs
+            // 
+            this.labelIVs.AutoSize = true;
+            this.labelIVs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIVs.Location = new System.Drawing.Point(69, 5);
+            this.labelIVs.Name = "labelIVs";
+            this.labelIVs.Size = new System.Drawing.Size(36, 20);
+            this.labelIVs.TabIndex = 14;
+            this.labelIVs.Text = "IVs";
+            // 
+            // labelIV1
+            // 
+            this.labelIV1.AutoSize = true;
+            this.labelIV1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIV1.Location = new System.Drawing.Point(71, 45);
+            this.labelIV1.Name = "labelIV1";
+            this.labelIV1.Size = new System.Drawing.Size(34, 20);
+            this.labelIV1.TabIndex = 33;
+            this.labelIV1.Text = "IV1";
+            // 
+            // labelIV2
+            // 
+            this.labelIV2.AutoSize = true;
+            this.labelIV2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIV2.Location = new System.Drawing.Point(71, 85);
+            this.labelIV2.Name = "labelIV2";
+            this.labelIV2.Size = new System.Drawing.Size(34, 20);
+            this.labelIV2.TabIndex = 34;
+            this.labelIV2.Text = "IV2";
+            // 
+            // labelIV3
+            // 
+            this.labelIV3.AutoSize = true;
+            this.labelIV3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIV3.Location = new System.Drawing.Point(71, 125);
+            this.labelIV3.Name = "labelIV3";
+            this.labelIV3.Size = new System.Drawing.Size(34, 20);
+            this.labelIV3.TabIndex = 35;
+            this.labelIV3.Text = "IV3";
+            // 
+            // labelIV4
+            // 
+            this.labelIV4.AutoSize = true;
+            this.labelIV4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIV4.Location = new System.Drawing.Point(71, 165);
+            this.labelIV4.Name = "labelIV4";
+            this.labelIV4.Size = new System.Drawing.Size(34, 20);
+            this.labelIV4.TabIndex = 36;
+            this.labelIV4.Text = "IV4";
+            // 
+            // labelIV5
+            // 
+            this.labelIV5.AutoSize = true;
+            this.labelIV5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIV5.Location = new System.Drawing.Point(71, 205);
+            this.labelIV5.Name = "labelIV5";
+            this.labelIV5.Size = new System.Drawing.Size(34, 20);
+            this.labelIV5.TabIndex = 37;
+            this.labelIV5.Text = "IV5";
+            // 
+            // labelIV6
+            // 
+            this.labelIV6.AutoSize = true;
+            this.labelIV6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelIV6.Location = new System.Drawing.Point(71, 245);
+            this.labelIV6.Name = "labelIV6";
+            this.labelIV6.Size = new System.Drawing.Size(34, 20);
+            this.labelIV6.TabIndex = 38;
+            this.labelIV6.Text = "IV6";
+            // 
             // DVCalc
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 444);
+            this.ClientSize = new System.Drawing.Size(1006, 444);
             this.Controls.Add(this.panelGenders);
             this.Controls.Add(this.panelAbilities);
             this.Controls.Add(this.groupAbilityGender);
@@ -953,5 +1037,12 @@
         private System.Windows.Forms.Button buttonMoreInfo;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.ToolTip toolTipDVCalc;
+        private System.Windows.Forms.Label labelIV6;
+        private System.Windows.Forms.Label labelIV5;
+        private System.Windows.Forms.Label labelIV4;
+        private System.Windows.Forms.Label labelIV3;
+        private System.Windows.Forms.Label labelIV2;
+        private System.Windows.Forms.Label labelIV1;
+        private System.Windows.Forms.Label labelIVs;
     }
 }
