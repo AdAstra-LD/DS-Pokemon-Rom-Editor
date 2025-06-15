@@ -551,7 +551,7 @@ namespace DSPRE {
                 return;
             }
 
-            if (!detectWSL(openRom.FileName)) {
+            if (!detectAndHandleWSL(openRom.FileName)) {
                 return; // User chose not to create a new work directory
             }
 
@@ -657,8 +657,8 @@ namespace DSPRE {
 
             string fullPath = Path.GetFullPath(fileName);
 
-            // File existence check
-            if (!File.Exists(fileName)) {
+            // File / directory existence check
+            if (!File.Exists(fileName) && !Directory.Exists(fileName)) {
                 MessageBox.Show("The specified file at path "+ fullPath +" does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
@@ -671,27 +671,36 @@ namespace DSPRE {
             return true;
         }
 
-        private bool detectWSL(string fileName) {
+        private bool detectAndHandleWSL(string fileName) {
             string fullPath = Path.GetFullPath(fileName);
 
-            if (fullPath.ToLower().Contains("wsl."))
+            if (!fullPath.ToLower().Contains("wsl.")) 
             {
-                DialogResult result = MessageBox.Show("WSL was detected in the path. " +
-                    "Do you want to create a build directory in the same folder as DSPRE to unpack to?", "WSL Detected", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                wslDetected = true;
-
-                if (result == DialogResult.Yes)
-                {
-                    return true; // User wants to create a new work directory
-                }
-                else
-                {
-                    MessageBox.Show("Unpacking will not be possible without a valid work directory.", "Unpacking aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
+                return true; // No WSL detected, proceed normally
+            }
+            if (Directory.Exists(fullPath))
+            {
+                MessageBox.Show("WSL was detected in the path. " +
+                    "The associated unpacked folder of a ROM should not be stored on the WSL file system! " +
+                    "Please move the folder to the same drive that DSPRE is located on.", "Invalid Path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
 
-            return true; // No WSL detected, proceed normally
+            DialogResult result = MessageBox.Show("WSL was detected in the path. " +
+                "Do you want to create a build directory in the same folder as DSPRE to unpack to?", "WSL Detected", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            wslDetected = true;
+
+            if (result == DialogResult.Yes)
+            {
+                return true; // User wants to create a new work directory
+            }
+            else
+            {
+                MessageBox.Show("Unpacking will not be possible without a valid work directory.", "Unpacking aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }           
+
+            
         }
 
         private void CheckROMLanguage() {
@@ -719,14 +728,26 @@ namespace DSPRE {
                 return;
             }
 
-            try {
-                SetupROMLanguage(Directory.GetFiles(romFolder.FileName).First(x => x.Contains("header.bin")));
+            // Validate path and check for OneDrive
+            if (!ValidateFilePath(romFolder.FileName)) {
+                return;
+            }
+
+            if (!detectAndHandleWSL(romFolder.FileName)) {
+                return; // User chose not to create a new work directory
+            }
+
+            string fileName = romFolder.FileName;
+
+            try
+            {
+                SetupROMLanguage(Directory.GetFiles(fileName).First(x => x.Contains("header.bin")));
             } catch (InvalidOperationException) {
                 MessageBox.Show("This folder does not seem to contain any data from a NDS Pokémon ROM.", "No ROM Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             /* Set ROM gameVersion and language */
-            romInfo = new RomInfo(gameCode, romFolder.FileName, useSuffix: false);
+            romInfo = new RomInfo(gameCode, fileName, useSuffix: false);
 
             if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName)) {
                 return;
