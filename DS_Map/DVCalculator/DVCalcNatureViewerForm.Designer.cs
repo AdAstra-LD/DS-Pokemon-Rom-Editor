@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using DSPRE.Properties;
+using System.Drawing;
+using System.Resources;
 using System.Windows.Forms;
 
 namespace DSPRE
@@ -31,7 +33,9 @@ namespace DSPRE
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.natureGridView = new System.Windows.Forms.DataGridView();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DVCalcNatureViewerForm));
             ((System.ComponentModel.ISupportInitialize)(this.natureGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,9 +56,11 @@ namespace DSPRE
             this.natureGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.natureGridView.Size = new System.Drawing.Size(387, 333);
             this.natureGridView.TabIndex = 0;
+            this.natureGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.natureGridView_CellDoubleClick);
+            this.natureGridView.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.natureGridView_ColumnHeaderMouseClick);
             // 
             // DVCalcNatureViewerForm
-            // 
+            //
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -65,14 +71,16 @@ namespace DSPRE
             this.MaximizeBox = false;
             this.Name = "DVCalcNatureViewerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Full List";
+            this.Text = "Nature List";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             ((System.ComponentModel.ISupportInitialize)(this.natureGridView)).EndInit();
             this.ResumeLayout(false);
+            
 
         }
 
         #endregion
 
-        private DataGridView natureGridView;
+        private System.Windows.Forms.DataGridView natureGridView;
     }
 }

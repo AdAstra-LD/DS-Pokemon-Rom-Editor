@@ -117,7 +117,9 @@
     <Compile Include="DVCalculator\DVCalcNatureViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DVCalculator\DVCalcNatureViewerForm.Designer.cs" />
+    <Compile Include="DVCalculator\DVCalcNatureViewerForm.Designer.cs">
+      <DependentUpon>DVCalcNatureViewerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DVCalculator\DVCalculator.cs" />
     <Compile Include="EditorPanels.cs" />
     <Compile Include="Editors\EncountersEditor.cs">
@@ -426,7 +428,9 @@
     <EmbeddedResource Include="DVCalculator\DVCalc.resx">
       <DependentUpon>DVCalc.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DVCalculator\DVCalcNatureViewerForm.resx" />
+    <EmbeddedResource Include="DVCalculator\DVCalcNatureViewerForm.resx">
+      <DependentUpon>DVCalcNatureViewerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\EncountersEditor.resx">
       <DependentUpon>EncountersEditor.cs</DependentUpon>
     </EmbeddedResource>

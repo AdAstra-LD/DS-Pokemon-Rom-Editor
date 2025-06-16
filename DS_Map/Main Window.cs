@@ -55,6 +55,7 @@ namespace DSPRE {
 
         #region Variables
         public bool iconON = false;
+        public bool wslDetected = false; // Not technically necessary rn, but it might be useful in the future
 
         /* Editors Setup */
         public bool matrixEditorIsReady { get; private set; } = false;
@@ -545,6 +546,45 @@ namespace DSPRE {
                 return;
             }
 
+            // Validate path and check for OneDrive
+            if (!ValidateFilePath(openRom.FileName)) {
+                return;
+            }
+
+            if (!detectAndHandleWSL(openRom.FileName)) {
+                return; // User chose not to create a new work directory
+            }
+
+            // Handle WSL
+            if (wslDetected)
+            {
+                string executablePath = Path.GetDirectoryName(Application.ExecutablePath);
+                string buildFolderPath = Path.Combine(executablePath, "build");
+                // Create a new work directory in the same folder as DSPRE
+                if (!Directory.Exists(buildFolderPath)) {
+                    Directory.CreateDirectory(buildFolderPath);
+                }
+
+                // Copy the ROM to the build folder
+                string newRomPath = Path.Combine(buildFolderPath, Path.GetFileName(openRom.FileName));
+
+                // Check if file already exists and ask to overwrite
+                if (File.Exists(newRomPath)) {
+                    DialogResult overwriteResult = MessageBox.Show("The ROM file already exists in the build folder. Do you want to overwrite it?", "File Exists", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (overwriteResult != DialogResult.Yes) {
+                        return; // User chose not to overwrite
+                    }
+                }
+
+                try {
+                    File.Copy(openRom.FileName, newRomPath, true);
+                    openRom.FileName = newRomPath; // Update the file name to the new path
+                } catch (IOException ex) {
+                    MessageBox.Show("Failed to copy ROM to build folder: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
             SetupROMLanguage(openRom.FileName);
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, openRom.FileName, useSuffix: true);
@@ -608,6 +648,61 @@ namespace DSPRE {
             ReadROMInitData();
         }
 
+        private bool ValidateFilePath(string fileName) {
+            // Empty file name check
+            if (string.IsNullOrWhiteSpace(fileName)) {
+                MessageBox.Show("File path is empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            string fullPath = Path.GetFullPath(fileName);
+
+            // File / directory existence check
+            if (!File.Exists(fileName) && !Directory.Exists(fileName)) {
+                MessageBox.Show("The specified file at path "+ fullPath +" does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            // One drive check
+            if (fullPath.ToLower().Contains("onedrive")) {
+                MessageBox.Show("OneDrive was detected in the path. DSPRE is not compatible with OneDrive. " +
+                    "Please move the ROM and unpacked folder to the same local drive DSPRE is stored on.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
+        private bool detectAndHandleWSL(string fileName) {
+            string fullPath = Path.GetFullPath(fileName);
+
+            if (!fullPath.ToLower().Contains("wsl.")) 
+            {
+                return true; // No WSL detected, proceed normally
+            }
+            if (Directory.Exists(fullPath))
+            {
+                MessageBox.Show("WSL was detected in the path. " +
+                    "The associated unpacked folder of a ROM should not be stored on the WSL file system! " +
+                    "Please move the folder to the same drive that DSPRE is located on.", "Invalid Path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            DialogResult result = MessageBox.Show("WSL was detected in the path. " +
+                "Do you want to create a build directory in the same folder as DSPRE to unpack to?", "WSL Detected", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            wslDetected = true;
+
+            if (result == DialogResult.Yes)
+            {
+                return true; // User wants to create a new work directory
+            }
+            else
+            {
+                MessageBox.Show("Unpacking will not be possible without a valid work directory.", "Unpacking aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }           
+
+            
+        }
+
         private void CheckROMLanguage() {
             versionLabel.Visible = true;
             languageLabel.Visible = true;
@@ -633,14 +728,26 @@ namespace DSPRE {
                 return;
             }
 
-            try {
-                SetupROMLanguage(Directory.GetFiles(romFolder.FileName).First(x => x.Contains("header.bin")));
+            // Validate path and check for OneDrive
+            if (!ValidateFilePath(romFolder.FileName)) {
+                return;
+            }
+
+            if (!detectAndHandleWSL(romFolder.FileName)) {
+                return; // User chose not to create a new work directory
+            }
+
+            string fileName = romFolder.FileName;
+
+            try
+            {
+                SetupROMLanguage(Directory.GetFiles(fileName).First(x => x.Contains("header.bin")));
             } catch (InvalidOperationException) {
                 MessageBox.Show("This folder does not seem to contain any data from a NDS Pokémon ROM.", "No ROM Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             /* Set ROM gameVersion and language */
-            romInfo = new RomInfo(gameCode, romFolder.FileName, useSuffix: false);
+            romInfo = new RomInfo(gameCode, fileName, useSuffix: false);
 
             if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName)) {
                 return;
@@ -7859,8 +7966,9 @@ namespace DSPRE {
         private const int TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX = 0;
         private const int TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX = 1;
         private const int TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX = 2;
-        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 0;
-        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 1;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_DEFAULT_INDEX = 0;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 1;
+        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 2;
 
 
         string[] abilityNames;
@@ -8176,11 +8284,20 @@ namespace DSPRE {
                 setTrainerPartyPokemonForm(i);
                 setTrainerPokemonGender(i);
 
-                partyAbilityComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2)
-                    ? TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX
-                    : TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+                if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1))
+                {
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+                }
+                else if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2))
+                {
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX;
+                }
+                else
+                {
+                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_DEFAULT_INDEX;
+                }
 
-                partyFormComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].formID;
+                    partyFormComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].formID;
 
                 if (currentTrainerFile.party[i].moves == null) {
                     for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
@@ -8287,12 +8404,16 @@ namespace DSPRE {
             showTrainerEditorItemPic(5);
         }
 
-        private void DVExplainButton_Click(object sender, EventArgs e) {
-            uint trainerIdx = (uint)trainerComboBox.SelectedIndex;
-            uint trainerClassIdx = (uint)trainerClassListBox.SelectedIndex;
+        private void DVExplainButton_Click(object sender, EventArgs e) {            
 
-            DVCalc DVcalcForm = new DVCalc(trainerIdx, trainerClassIdx);
-            DVcalcForm.ShowDialog();
+            DVCalc DVCalcForm = new DVCalc(currentTrainerFile);
+            DVCalcForm.ShowDialog();
+
+            currentTrainerFile = DVCalcForm.trainerFile;
+            Helpers.DisableHandlers();
+            RefreshTrainerPartyGUI();
+            Helpers.EnableHandlers();
+
         }
 
         private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {
@@ -8368,8 +8489,6 @@ namespace DSPRE {
                 currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
             }
 
-            // Need to account for the case where ability 2 was set on a previous mon. If so then ability one flag needs to be set on other mons with ability 1
-            bool wasAbility2Set = false;
 
             for (int i = 0; i < partyCountUpDown.Value; i++) {
                 currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
@@ -8404,21 +8523,13 @@ namespace DSPRE {
                 } else
                     currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
 
-
-
-                if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX) {
+                if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX)
+                {
+                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
+                }
+                else if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX)
+                {
                     currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2;
-                    wasAbility2Set = true;
-                }
-                // If ability 2 was set previously force ability 1 must be set here other wise the pokemon will have ability 2
-                else if (wasAbility2Set && partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX) {
-                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
-                }
-                //ability slot 1 flag must be set if the pokemon's gender is forced to male or female, otherwise the pokemon will have ability2 even if the ability2 flag is not set
-                //the ability 1 flag should not be set if neither of the gender flags are set, otherwise this will cause a problem with using alternate forms
-                else if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_MALE)
-                        || currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE)) {
-                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
                 }
 
                 currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
@@ -8714,23 +8825,34 @@ namespace DSPRE {
 
         private void setTrainerPartyPokemonAbilities(int partyPokemonPosition) {
             (string ability1, string ability2) = getPokemonAbilityNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
+            string noFlags = "No Flag";
+
             partyAbilityComboBoxList[partyPokemonPosition].Items.Clear();
-            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
-            
-            //if the name " -" is returned for ability 2 then there is no ability 2
-            if (ability2.Equals(" -") || (gameFamily != GameFamilies.HGSS && !RomInfo.AIBackportEnabled)) {
+
+            // In DPPt just show ability 1 and do not allow editing
+            if (RomInfo.gameFamily != GameFamilies.HGSS && !RomInfo.AIBackportEnabled)
+            {
+                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
                 partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
-            } else {
-                string stringAbi2 = ability2;
-                if (ability2.Equals(ability1)) {
-                    stringAbi2 += " (2nd Slot)";
-                }
-
-                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(stringAbi2);
-                partyAbilityComboBoxList[partyPokemonPosition].Enabled = true;
+                return;
             }
+            
+            // In HGSS allow editing of ability flags
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(noFlags);
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
 
-            partyAbilityComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
+            string stringAbi2 = ability2;
+            if (ability2.Equals(ability1))
+            {
+                stringAbi2 += " (2nd Slot)";
+            }
+            else if (ability2.Equals(" -"))
+            {
+                stringAbi2 = ability1 += " (2nd Slot)";
+            }
+            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(stringAbi2);
+
+                        
         }
 
         private void setTrainerPokemonGender(int partyPokemonPosition) {

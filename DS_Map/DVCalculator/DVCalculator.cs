@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE
 {
@@ -17,11 +18,13 @@ namespace DSPRE
             this.IV = IV;
             this.Nature = Nature;
         }
+
     }
 
-    internal static class DVCalculator
+    public static class DVCalculator
     {
         private static uint state;
+        private static uint genderMod;
         public static void setSeed(uint seed)
         {
 
@@ -40,21 +43,44 @@ namespace DSPRE
             return state >> 16;
         }
 
-        public static int findHighestDV(uint trainerIdx, uint trainerClassIdx, bool trainerClassMale, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride, uint nature)
-        {
-            byte DV;
-
-            for (DV = 255; DV > 0; DV--)
-            {
-                if (getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, trainerClassMale, pokeIdx, pokeLevel, baseGenderRatio, genderOverride, abilityOverride, DV)) == nature)
-                { return DV; }
-            }
-
-            return -1;
-
+        public static void ResetGenderMod(bool maleOrMulti)
+        {            
+             genderMod = maleOrMulti ? 136u : 120u;   
         }
 
-        public static uint generatePID(uint trainerIdx, uint trainerClassIdx, bool trainerClassMale, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride, byte difficultyValue)
+        public static void filterHighestDV(ref List<DVIVNatureTriplet> natures)
+        {
+            var result = new Dictionary<string, DVIVNatureTriplet>();
+            foreach (var triplet in natures)
+            {
+                if (!result.ContainsKey(triplet.Nature) || triplet.DV > result[triplet.Nature].DV)
+                {
+                    result[triplet.Nature] = triplet;
+                }
+            }
+            natures = new List<DVIVNatureTriplet>(result.Values);
+        }
+
+        public static void SortTriplets(ref List<DVIVNatureTriplet> triplets, string sortBy, bool ascending = true)
+        {
+            if (sortBy == "Nature")
+            {
+                if (ascending)
+                    triplets.Sort((a, b) => string.Compare(a.Nature, b.Nature));
+                else
+                    triplets.Sort((a, b) => string.Compare(b.Nature, a.Nature));
+            }
+            else if (sortBy == "DV" || sortBy == "IV")
+            {
+                // Ascending isn't really a sensible option here
+                if (!ascending)
+                    triplets.Sort((a, b) => a.DV.CompareTo(b.DV));
+                else
+                    triplets.Sort((a, b) => b.DV.CompareTo(a.DV));
+            }
+        }
+
+        public static uint generatePID(uint trainerIdx, uint trainerClassIdx, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride, byte difficultyValue)
         {
             uint newSeed = (uint)(trainerIdx + pokeIdx + pokeLevel + difficultyValue);
 
@@ -67,16 +93,22 @@ namespace DSPRE
                 trainerClassIdx--;
                 random = getNextRandom();
             }
+            if (RomInfo.gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled)
+                UpdateGenderMod(baseGenderRatio, genderOverride, abilityOverride);
 
-            uint genderMod = 0;
+            uint PID = (random << 8) + genderMod;
 
-            // this is always the case in platinum
-            if (genderOverride == 0)
-            {
-                genderMod = trainerClassMale ? 136u : 120u;
-            }
+            return (uint)PID;
+        }
 
-            // Code from here in is HGSS exclusive
+        public static int getNatureFromPID(uint PID)
+        {
+            return (int) (PID % 100) % 25;
+        }
+
+        public static void UpdateGenderMod(byte baseGenderRatio, int genderOverride, int abilityOverride)
+        {
+            // Code from here on is HGSS exclusive
             if (genderOverride == 1)
             {
                 genderMod = baseGenderRatio + 2u;
@@ -98,29 +130,23 @@ namespace DSPRE
             {
                 genderMod = (uint)(genderMod | 1);
             }
-
-            uint PID = (random << 8) + genderMod;
-
-            return (uint)PID;
         }
 
-        public static uint getNatureFromPID(uint PID)
-        {
-            return (PID % 100) % 25;
-        }
-
-        public static List<DVIVNatureTriplet> getAllNatures(uint trainerIdx, uint trainerClassIdx, bool trainerClassMale, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride)
+        public static List<DVIVNatureTriplet> getAllNatures(uint trainerIdx, uint trainerClassIdx, uint pokeIdx, byte pokeLevel, byte baseGenderRatio, int genderOverride, int abilityOverride)
         {
             List<DVIVNatureTriplet> natureDict = new List<DVIVNatureTriplet>();
 
-            byte DV;
-            uint natureIdx;
+            int DV;
+            int natureIdx;
+            uint genderModLocal = genderMod;
 
-            for (DV = 255; DV > 0; DV--)
+            for (DV = 255; DV >= 0; DV--)
             {
-                natureIdx = getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, trainerClassMale, pokeIdx, pokeLevel, baseGenderRatio, genderOverride, abilityOverride, DV));
+                natureIdx = getNatureFromPID(generatePID(trainerIdx, trainerClassIdx, pokeIdx, pokeLevel, baseGenderRatio, genderOverride, abilityOverride, (byte) DV));
 
-                natureDict.Add(new DVIVNatureTriplet(DV, DV * 31 / 255, Natures[(int)natureIdx]));
+                genderMod = genderModLocal;
+
+                natureDict.Add(new DVIVNatureTriplet(DV, DV * 31 / 255, Natures[natureIdx]));
 
             }
 
@@ -156,114 +182,114 @@ namespace DSPRE
             "Quirky: Neutral"
             };
 
-        public static class TrainerClassGender
+    public static class TrainerClassGender
+    {
+
+        // true represents male, false represents female
+        private static List<bool> trainerClassGenders = new List<bool>();
+
+        private static bool tableLoaded = false;
+
+        public static bool GetTrainerClassGender(int trainerClassID)
         {
-
-            // true represents male, false represents female
-            private static List<bool> trainerClassGenders = new List<bool>();
-
-            private static bool tableLoaded = false;
-
-            public static bool GetTrainerClassGender(int trainerClassID)
+            if (!tableLoaded)
             {
-                if (!tableLoaded)
-                {
-                    ReadTrainerClassGenderTable();
-                }
-                return trainerClassGenders[trainerClassID];
+                ReadTrainerClassGenderTable();
             }
+            return trainerClassGenders[trainerClassID];
+        }
                 
-            public static void ReadTrainerClassGenderTable()
+        public static void ReadTrainerClassGenderTable()
+        {
+            uint offset = GetTableOffset();
+            uint length = GetTableLength();
+            if (offset == 0 || length == 0)
             {
-                uint offset = GetTableOffset();
-                uint length = GetTableLength();
-                if (offset == 0 || length == 0)
-                {
-                    MessageBox.Show("Couldn't load trainer class gender table from arm9." +
-                        "\nTrainers will default to male when calculating natures.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    tableLoaded = true;
-                    return;
-                }
-
-                byte[] table = ARM9.ReadBytes(offset, length);
-
-                for (int i = 0; i < table.Length; i++)
-                {
-                    trainerClassGenders.Add(table[i] == 1 ? false : true);
-                }
+                MessageBox.Show("Couldn't load trainer class gender table from arm9." +
+                    "\nTrainers will default to male when calculating natures.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 tableLoaded = true;
-
+                return;
             }
 
-            private static uint GetTableLength()
+            byte[] table = ARM9.ReadBytes(offset, length);
+
+            for (int i = 0; i < table.Length; i++)
             {
-                switch (RomInfo.gameFamily)
-                {
-                    case RomInfo.GameFamilies.Plat:
-                        return 105; // Platinum has 105 trainer classes
-                    case RomInfo.GameFamilies.HGSS:
-                        return 128;
-                    case RomInfo.GameFamilies.DP:
-                        return 0;
-                    default:
-                        // Unknown game family
-                        return 0;
-                }
-                    
+                trainerClassGenders.Add(table[i] == 1 ? false : true);
             }
-
-            private static uint GetTableOffset()
-            {
-                switch (RomInfo.gameFamily)
-                {
-                    case RomInfo.GameFamilies.Plat:
-                        switch(RomInfo.gameLanguage)
-                        {
-                            case RomInfo.GameLanguages.English:
-                                return 0xF0714;
-                            case RomInfo.GameLanguages.Japanese:
-                                return 0xEFDA4;
-                            case RomInfo.GameLanguages.Spanish:
-                                return 0xF078A;
-                            case RomInfo.GameLanguages.German:
-                                return 0xF076C;
-                            case RomInfo.GameLanguages.French:
-                                return 0xF079C;
-                            case RomInfo.GameLanguages.Italian:
-                                return 0xF0730;
-                            default:
-                                // Unknown game language
-                                return 0;
-                        }
-                    case RomInfo.GameFamilies.HGSS:
-                        switch (RomInfo.gameLanguage)
-                        {
-                            case RomInfo.GameLanguages.English:
-                                return 0xFFB90;
-                            case RomInfo.GameLanguages.Japanese:
-                                return 0xFF310;
-                            case RomInfo.GameLanguages.Spanish:
-                                return 0xFFB90;
-                            case RomInfo.GameLanguages.German:
-                                return 0xFFB44;
-                            case RomInfo.GameLanguages.French:
-                                return 0xFFB74;
-                            case RomInfo.GameLanguages.Italian:
-                                return 0xFFB08;
-                            default:
-                                // Unknown game language
-                                return 0;
-                        }
-                    case RomInfo.GameFamilies.DP:
-                        // Dummy offset for DP
-                        return 0;
-                    default:
-                        // Unknown game family
-                        return 0;
-                }
-            }
+            tableLoaded = true;
 
         }
+
+        private static uint GetTableLength()
+        {
+            switch (RomInfo.gameFamily)
+            {
+                case RomInfo.GameFamilies.Plat:
+                    return 105; // Platinum has 105 trainer classes
+                case RomInfo.GameFamilies.HGSS:
+                    return 128;
+                case RomInfo.GameFamilies.DP:
+                    return 0;
+                default:
+                    // Unknown game family
+                    return 0;
+            }
+                    
+        }
+
+        private static uint GetTableOffset()
+        {
+            switch (RomInfo.gameFamily)
+            {
+                case RomInfo.GameFamilies.Plat:
+                    switch(RomInfo.gameLanguage)
+                    {
+                        case RomInfo.GameLanguages.English:
+                            return 0xF0714;
+                        case RomInfo.GameLanguages.Japanese:
+                            return 0xEFDA4;
+                        case RomInfo.GameLanguages.Spanish:
+                            return 0xF078A;
+                        case RomInfo.GameLanguages.German:
+                            return 0xF076C;
+                        case RomInfo.GameLanguages.French:
+                            return 0xF079C;
+                        case RomInfo.GameLanguages.Italian:
+                            return 0xF0730;
+                        default:
+                            // Unknown game language
+                            return 0;
+                    }
+                case RomInfo.GameFamilies.HGSS:
+                    switch (RomInfo.gameLanguage)
+                    {
+                        case RomInfo.GameLanguages.English:
+                            return 0xFFB90;
+                        case RomInfo.GameLanguages.Japanese:
+                            return 0xFF310;
+                        case RomInfo.GameLanguages.Spanish:
+                            return 0xFFB90;
+                        case RomInfo.GameLanguages.German:
+                            return 0xFFB44;
+                        case RomInfo.GameLanguages.French:
+                            return 0xFFB74;
+                        case RomInfo.GameLanguages.Italian:
+                            return 0xFFB08;
+                        default:
+                            // Unknown game language
+                            return 0;
+                    }
+                case RomInfo.GameFamilies.DP:
+                    // Dummy offset for DP
+                    return 0;
+                default:
+                    // Unknown game family
+                    return 0;
+            }
+        }
+
+    }
 
             
 

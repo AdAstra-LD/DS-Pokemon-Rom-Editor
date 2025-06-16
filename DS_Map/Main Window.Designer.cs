@@ -7800,9 +7800,9 @@
             // 
             this.DVExplainButton.Image = ((System.Drawing.Image)(resources.GetObject("DVExplainButton.Image")));
             this.DVExplainButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.DVExplainButton.Location = new System.Drawing.Point(242, 11);
+            this.DVExplainButton.Location = new System.Drawing.Point(220, 11);
             this.DVExplainButton.Name = "DVExplainButton";
-            this.DVExplainButton.Size = new System.Drawing.Size(118, 29);
+            this.DVExplainButton.Size = new System.Drawing.Size(140, 29);
             this.DVExplainButton.TabIndex = 45;
             this.DVExplainButton.Text = "Open DV Calculator";
             this.DVExplainButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
