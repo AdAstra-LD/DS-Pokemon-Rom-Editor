@@ -1,590 +1,300 @@
 ﻿using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 
 namespace DSPRE
 {
     public partial class DVCalc : Form
     {
 
-        public DVCalc()
+        public TrainerFile trainerFile;
+        private TrainerProperties trainerProp;
+        private List<Label> pokeLabels = new List<Label>();
+        private List<ComboBox> abilityCombos = new List<ComboBox>();
+        private List<ComboBox> genderCombos = new List<ComboBox>();
+        private List<NumericUpDown> upDownsDV = new List<NumericUpDown>();
+        private List<Label> labelsIV = new List<Label>();
+        private List<Label> natureLabels = new List<Label>();
+        private List<Button> changeButtons = new List<Button>();
+        private List<Button> showAllButtons = new List<Button>();
+
+        private readonly string[] abilitySelection = { "No Flag", "Force Ability 1", "Force Ability 2" };
+        private readonly string[] genderSelection = { "No Flag", "Force Male", "Force Female" };
+        private bool listsSetup = false;
+
+
+        public DVCalc(TrainerFile trainerFile)
         {
+            Helpers.DisableHandlers();
             InitializeComponent();
-            PopulateComboBox();
 
-            //make Pokemon searchable
-            pokemonSelector.TextChanged += PokemonSelector_TextChanged;
-            pokemonSelector.AutoCompleteMode = AutoCompleteMode.Suggest;
-            pokemonSelector.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            this.trainerFile = trainerFile;
+            this.trainerProp = trainerFile.trp;
 
-            AutoCompleteStringCollection autoCompleteSource = new AutoCompleteStringCollection();
-            foreach (KeyValuePair<int, string> item in pokemonSelector.Items)
-            {
-                autoCompleteSource.Add(item.Value);
-            }
+            labelTrainerName.Text = $"Trainer Name: [{trainerProp.trainerID}] " + RomInfo.GetSimpleTrainerNames()[trainerProp.trainerID];
+            labelTrainerClass.Text = $"Trainer Class: [{trainerProp.trainerClass}] " + RomInfo.GetTrainerClassNames()[trainerProp.trainerClass];
 
-            pokemonSelector.AutoCompleteCustomSource = autoCompleteSource;
+            if (DVCalculator.TrainerClassGender.GetTrainerClassGender(trainerProp.trainerClass))
+                radioMale.Checked = true;
+            else
+                radioFemale.Checked = true;
 
-            Version version = new Version(major: 1, minor: 1);
-
+            Version version = new Version(major: 2, minor: 0);
             this.Text = "DVCalc " + version.ToString();
 
-        }
-
-        public DVCalc(uint TrainerIndex, uint TrainerClassIndex) : this()
-        {
-            trainerIdx.Value = TrainerIndex;
-            trainerClassIdx.Value = TrainerClassIndex;
-
-            maleCheck.Checked = DVCalculator.TrainerClassGender.GetTrainerClassGender((int)TrainerClassIndex);
-        }
-
-        private void InitializeComponent()
-        {
-            this.poke_label = new System.Windows.Forms.Label();
-            this.trainerClassIdx_label = new System.Windows.Forms.Label();
-            this.trainerIdx_label = new System.Windows.Forms.Label();
-            this.pokeLVL_label = new System.Windows.Forms.Label();
-            this.pokeLevel = new System.Windows.Forms.NumericUpDown();
-            this.trainerClassIdx = new System.Windows.Forms.NumericUpDown();
-            this.trainerIdx = new System.Windows.Forms.NumericUpDown();
-            this.natureSelect = new System.Windows.Forms.ComboBox();
-            this.nature_label = new System.Windows.Forms.Label();
-            this.DV_label = new System.Windows.Forms.Label();
-            this.calcButton = new System.Windows.Forms.Button();
-            this.maleCheck = new System.Windows.Forms.CheckBox();
-            this.maxDVNature_label = new System.Windows.Forms.Label();
-            this.IV_label = new System.Windows.Forms.Label();
-            this.pokemonSelector = new System.Windows.Forms.ComboBox();
-            this.showAllButton = new System.Windows.Forms.Button();
-            this.radioButtonMale = new System.Windows.Forms.RadioButton();
-            this.radioButtonFemale = new System.Windows.Forms.RadioButton();
-            this.radioButtonAbility1 = new System.Windows.Forms.RadioButton();
-            this.radioButtonAbility2 = new System.Windows.Forms.RadioButton();
-            this.numericUpDownGender = new System.Windows.Forms.NumericUpDown();
-            this.groupBoxGender = new System.Windows.Forms.GroupBox();
-            this.radioButtonIngoreGender = new System.Windows.Forms.RadioButton();
-            this.groupBoxAbility = new System.Windows.Forms.GroupBox();
-            this.radioButtonIgnoreAbility = new System.Windows.Forms.RadioButton();
-            this.labelGenderRatio = new System.Windows.Forms.Label();
-            this.groupBoxHGSS = new System.Windows.Forms.GroupBox();
-            this.buttonHelp = new System.Windows.Forms.Button();
-            this.buttonHGSS = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pokeLevel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trainerClassIdx)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trainerIdx)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGender)).BeginInit();
-            this.groupBoxGender.SuspendLayout();
-            this.groupBoxAbility.SuspendLayout();
-            this.groupBoxHGSS.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // poke_label
-            // 
-            this.poke_label.AutoSize = true;
-            this.poke_label.Location = new System.Drawing.Point(22, 78);
-            this.poke_label.Name = "poke_label";
-            this.poke_label.Size = new System.Drawing.Size(65, 16);
-            this.poke_label.TabIndex = 3;
-            this.poke_label.Text = "Pokémon";
-            // 
-            // trainerClassIdx_label
-            // 
-            this.trainerClassIdx_label.AutoSize = true;
-            this.trainerClassIdx_label.Location = new System.Drawing.Point(172, 22);
-            this.trainerClassIdx_label.Name = "trainerClassIdx_label";
-            this.trainerClassIdx_label.Size = new System.Drawing.Size(122, 16);
-            this.trainerClassIdx_label.TabIndex = 4;
-            this.trainerClassIdx_label.Text = "Trainer Class Index";
-            // 
-            // trainerIdx_label
-            // 
-            this.trainerIdx_label.AutoSize = true;
-            this.trainerIdx_label.Location = new System.Drawing.Point(28, 21);
-            this.trainerIdx_label.Name = "trainerIdx_label";
-            this.trainerIdx_label.Size = new System.Drawing.Size(85, 16);
-            this.trainerIdx_label.TabIndex = 5;
-            this.trainerIdx_label.Text = "Trainer Index";
-            // 
-            // pokeLVL_label
-            // 
-            this.pokeLVL_label.AutoSize = true;
-            this.pokeLVL_label.Location = new System.Drawing.Point(315, 102);
-            this.pokeLVL_label.Name = "pokeLVL_label";
-            this.pokeLVL_label.Size = new System.Drawing.Size(33, 16);
-            this.pokeLVL_label.TabIndex = 6;
-            this.pokeLVL_label.Text = "LVL.";
-            // 
-            // pokeLevel
-            // 
-            this.pokeLevel.Location = new System.Drawing.Point(349, 100);
-            this.pokeLevel.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.pokeLevel.Name = "pokeLevel";
-            this.pokeLevel.Size = new System.Drawing.Size(46, 22);
-            this.pokeLevel.TabIndex = 7;
-            this.pokeLevel.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            // 
-            // trainerClassIdx
-            // 
-            this.trainerClassIdx.Location = new System.Drawing.Point(172, 45);
-            this.trainerClassIdx.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.trainerClassIdx.Name = "trainerClassIdx";
-            this.trainerClassIdx.Size = new System.Drawing.Size(125, 22);
-            this.trainerClassIdx.TabIndex = 9;
-            // 
-            // trainerIdx
-            // 
-            this.trainerIdx.Location = new System.Drawing.Point(28, 44);
-            this.trainerIdx.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.trainerIdx.Name = "trainerIdx";
-            this.trainerIdx.Size = new System.Drawing.Size(125, 22);
-            this.trainerIdx.TabIndex = 10;
-            // 
-            // natureSelect
-            // 
-            this.natureSelect.FormattingEnabled = true;
-            this.natureSelect.Location = new System.Drawing.Point(433, 44);
-            this.natureSelect.Name = "natureSelect";
-            this.natureSelect.Size = new System.Drawing.Size(227, 24);
-            this.natureSelect.TabIndex = 11;
-            // 
-            // nature_label
-            // 
-            this.nature_label.AutoSize = true;
-            this.nature_label.Location = new System.Drawing.Point(433, 21);
-            this.nature_label.Name = "nature_label";
-            this.nature_label.Size = new System.Drawing.Size(47, 16);
-            this.nature_label.TabIndex = 12;
-            this.nature_label.Text = "Nature";
-            // 
-            // DV_label
-            // 
-            this.DV_label.AutoSize = true;
-            this.DV_label.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DV_label.Location = new System.Drawing.Point(316, 139);
-            this.DV_label.Name = "DV_label";
-            this.DV_label.Size = new System.Drawing.Size(162, 28);
-            this.DV_label.TabIndex = 13;
-            this.DV_label.Text = "Difficulty Value: 0";
-            // 
-            // calcButton
-            // 
-            this.calcButton.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.calcButton.Location = new System.Drawing.Point(546, 292);
-            this.calcButton.Name = "calcButton";
-            this.calcButton.Size = new System.Drawing.Size(114, 51);
-            this.calcButton.TabIndex = 14;
-            this.calcButton.Text = "Calculate";
-            this.calcButton.UseVisualStyleBackColor = true;
-            this.calcButton.Click += new System.EventHandler(this.CalcButton_Click);
-            // 
-            // maleCheck
-            // 
-            this.maleCheck.AutoSize = true;
-            this.maleCheck.Checked = true;
-            this.maleCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.maleCheck.Location = new System.Drawing.Point(303, 46);
-            this.maleCheck.Name = "maleCheck";
-            this.maleCheck.Size = new System.Drawing.Size(112, 20);
-            this.maleCheck.TabIndex = 15;
-            this.maleCheck.Text = "Trainer Male?";
-            this.maleCheck.UseVisualStyleBackColor = true;
-            // 
-            // maxDVNature_label
-            // 
-            this.maxDVNature_label.AutoSize = true;
-            this.maxDVNature_label.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maxDVNature_label.Location = new System.Drawing.Point(316, 170);
-            this.maxDVNature_label.Name = "maxDVNature_label";
-            this.maxDVNature_label.Size = new System.Drawing.Size(133, 25);
-            this.maxDVNature_label.TabIndex = 16;
-            this.maxDVNature_label.Text = "DV 255 Nature:";
-            // 
-            // IV_label
-            // 
-            this.IV_label.AutoSize = true;
-            this.IV_label.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IV_label.Location = new System.Drawing.Point(315, 198);
-            this.IV_label.Name = "IV_label";
-            this.IV_label.Size = new System.Drawing.Size(116, 25);
-            this.IV_label.TabIndex = 17;
-            this.IV_label.Text = "Resulting IVs:";
-            // 
-            // pokemonSelector
-            // 
-            this.pokemonSelector.FormattingEnabled = true;
-            this.pokemonSelector.Location = new System.Drawing.Point(22, 99);
-            this.pokemonSelector.Name = "pokemonSelector";
-            this.pokemonSelector.Size = new System.Drawing.Size(287, 24);
-            this.pokemonSelector.TabIndex = 18;
-            this.pokemonSelector.TextChanged += new System.EventHandler(this.PokemonSelector_TextChanged);
-            // 
-            // showAllButton
-            // 
-            this.showAllButton.Location = new System.Drawing.Point(566, 88);
-            this.showAllButton.Name = "showAllButton";
-            this.showAllButton.Size = new System.Drawing.Size(94, 29);
-            this.showAllButton.TabIndex = 19;
-            this.showAllButton.Text = "Show All";
-            this.showAllButton.UseVisualStyleBackColor = true;
-            this.showAllButton.Click += new System.EventHandler(this.ShowAllButton_Click);
-            // 
-            // radioButtonMale
-            // 
-            this.radioButtonMale.AutoSize = true;
-            this.radioButtonMale.Location = new System.Drawing.Point(6, 47);
-            this.radioButtonMale.Name = "radioButtonMale";
-            this.radioButtonMale.Size = new System.Drawing.Size(96, 20);
-            this.radioButtonMale.TabIndex = 20;
-            this.radioButtonMale.TabStop = true;
-            this.radioButtonMale.Text = "Force Male";
-            this.radioButtonMale.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.radioButtonMale.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonFemale
-            // 
-            this.radioButtonFemale.AutoSize = true;
-            this.radioButtonFemale.Location = new System.Drawing.Point(6, 72);
-            this.radioButtonFemale.Name = "radioButtonFemale";
-            this.radioButtonFemale.Size = new System.Drawing.Size(112, 20);
-            this.radioButtonFemale.TabIndex = 21;
-            this.radioButtonFemale.TabStop = true;
-            this.radioButtonFemale.Text = "Force Female";
-            this.radioButtonFemale.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonAbility1
-            // 
-            this.radioButtonAbility1.AutoSize = true;
-            this.radioButtonAbility1.Location = new System.Drawing.Point(6, 47);
-            this.radioButtonAbility1.Name = "radioButtonAbility1";
-            this.radioButtonAbility1.Size = new System.Drawing.Size(112, 20);
-            this.radioButtonAbility1.TabIndex = 22;
-            this.radioButtonAbility1.TabStop = true;
-            this.radioButtonAbility1.Text = "Force Ability 1";
-            this.radioButtonAbility1.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonAbility2
-            // 
-            this.radioButtonAbility2.AutoSize = true;
-            this.radioButtonAbility2.Location = new System.Drawing.Point(6, 72);
-            this.radioButtonAbility2.Name = "radioButtonAbility2";
-            this.radioButtonAbility2.Size = new System.Drawing.Size(112, 20);
-            this.radioButtonAbility2.TabIndex = 23;
-            this.radioButtonAbility2.TabStop = true;
-            this.radioButtonAbility2.Text = "Force Ability 2";
-            this.radioButtonAbility2.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDownGender
-            // 
-            this.numericUpDownGender.Enabled = false;
-            this.numericUpDownGender.Location = new System.Drawing.Point(6, 170);
-            this.numericUpDownGender.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.numericUpDownGender.Name = "numericUpDownGender";
-            this.numericUpDownGender.Size = new System.Drawing.Size(120, 22);
-            this.numericUpDownGender.TabIndex = 24;
-            // 
-            // groupBoxGender
-            // 
-            this.groupBoxGender.Controls.Add(this.radioButtonIngoreGender);
-            this.groupBoxGender.Controls.Add(this.radioButtonMale);
-            this.groupBoxGender.Controls.Add(this.radioButtonFemale);
-            this.groupBoxGender.Location = new System.Drawing.Point(11, 22);
-            this.groupBoxGender.Name = "groupBoxGender";
-            this.groupBoxGender.Size = new System.Drawing.Size(132, 112);
-            this.groupBoxGender.TabIndex = 25;
-            this.groupBoxGender.TabStop = false;
-            this.groupBoxGender.Text = "Pokémon Gender";
-            // 
-            // radioButtonIngoreGender
-            // 
-            this.radioButtonIngoreGender.AutoSize = true;
-            this.radioButtonIngoreGender.Checked = true;
-            this.radioButtonIngoreGender.Location = new System.Drawing.Point(6, 22);
-            this.radioButtonIngoreGender.Name = "radioButtonIngoreGender";
-            this.radioButtonIngoreGender.Size = new System.Drawing.Size(76, 20);
-            this.radioButtonIngoreGender.TabIndex = 22;
-            this.radioButtonIngoreGender.TabStop = true;
-            this.radioButtonIngoreGender.Text = "No Flag";
-            this.radioButtonIngoreGender.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.radioButtonIngoreGender.UseVisualStyleBackColor = true;
-            this.radioButtonIngoreGender.CheckedChanged += new System.EventHandler(this.radioButtonNoFlag_CheckedChanged);
-            // 
-            // groupBoxAbility
-            // 
-            this.groupBoxAbility.Controls.Add(this.radioButtonIgnoreAbility);
-            this.groupBoxAbility.Controls.Add(this.radioButtonAbility1);
-            this.groupBoxAbility.Controls.Add(this.radioButtonAbility2);
-            this.groupBoxAbility.Location = new System.Drawing.Point(143, 22);
-            this.groupBoxAbility.Name = "groupBoxAbility";
-            this.groupBoxAbility.Size = new System.Drawing.Size(138, 112);
-            this.groupBoxAbility.TabIndex = 26;
-            this.groupBoxAbility.TabStop = false;
-            this.groupBoxAbility.Text = "Pokémon Ability";
-            // 
-            // radioButtonIgnoreAbility
-            // 
-            this.radioButtonIgnoreAbility.AutoSize = true;
-            this.radioButtonIgnoreAbility.Checked = true;
-            this.radioButtonIgnoreAbility.Location = new System.Drawing.Point(6, 22);
-            this.radioButtonIgnoreAbility.Name = "radioButtonIgnoreAbility";
-            this.radioButtonIgnoreAbility.Size = new System.Drawing.Size(76, 20);
-            this.radioButtonIgnoreAbility.TabIndex = 24;
-            this.radioButtonIgnoreAbility.TabStop = true;
-            this.radioButtonIgnoreAbility.Text = "No Flag";
-            this.radioButtonIgnoreAbility.UseVisualStyleBackColor = true;
-            this.radioButtonIgnoreAbility.CheckedChanged += new System.EventHandler(this.radioButtonNoFlag_CheckedChanged);
-            // 
-            // labelGenderRatio
-            // 
-            this.labelGenderRatio.AutoSize = true;
-            this.labelGenderRatio.Location = new System.Drawing.Point(6, 148);
-            this.labelGenderRatio.Name = "labelGenderRatio";
-            this.labelGenderRatio.Size = new System.Drawing.Size(148, 16);
-            this.labelGenderRatio.TabIndex = 27;
-            this.labelGenderRatio.Text = "Pokémon Gender Ratio";
-            // 
-            // groupBoxHGSS
-            // 
-            this.groupBoxHGSS.Controls.Add(this.buttonHGSS);
-            this.groupBoxHGSS.Controls.Add(this.groupBoxGender);
-            this.groupBoxHGSS.Controls.Add(this.labelGenderRatio);
-            this.groupBoxHGSS.Controls.Add(this.numericUpDownGender);
-            this.groupBoxHGSS.Controls.Add(this.groupBoxAbility);
-            this.groupBoxHGSS.Location = new System.Drawing.Point(22, 139);
-            this.groupBoxHGSS.Name = "groupBoxHGSS";
-            this.groupBoxHGSS.Size = new System.Drawing.Size(287, 204);
-            this.groupBoxHGSS.TabIndex = 28;
-            this.groupBoxHGSS.TabStop = false;
-            this.groupBoxHGSS.Text = "HGSS Only";
-            // 
-            // buttonHelp
-            // 
-            this.buttonHelp.Location = new System.Drawing.Point(591, 123);
-            this.buttonHelp.Name = "buttonHelp";
-            this.buttonHelp.Size = new System.Drawing.Size(69, 29);
-            this.buttonHelp.TabIndex = 29;
-            this.buttonHelp.Text = "Help";
-            this.buttonHelp.UseVisualStyleBackColor = true;
-            this.buttonHelp.Click += new System.EventHandler(this.buttonHelp_Click);
-            // 
-            // buttonHGSS
-            // 
-            this.buttonHGSS.Location = new System.Drawing.Point(170, 163);
-            this.buttonHGSS.Name = "buttonHGSS";
-            this.buttonHGSS.Size = new System.Drawing.Size(102, 29);
-            this.buttonHGSS.TabIndex = 28;
-            this.buttonHGSS.Text = "HGSS Help";
-            this.buttonHGSS.UseVisualStyleBackColor = true;
-            this.buttonHGSS.Click += new System.EventHandler(this.buttonHGSS_Click);
-            // 
-            // DVCalc
-            // 
-            this.ClientSize = new System.Drawing.Size(664, 347);
-            this.Controls.Add(this.buttonHelp);
-            this.Controls.Add(this.groupBoxHGSS);
-            this.Controls.Add(this.showAllButton);
-            this.Controls.Add(this.pokemonSelector);
-            this.Controls.Add(this.IV_label);
-            this.Controls.Add(this.maxDVNature_label);
-            this.Controls.Add(this.maleCheck);
-            this.Controls.Add(this.calcButton);
-            this.Controls.Add(this.DV_label);
-            this.Controls.Add(this.nature_label);
-            this.Controls.Add(this.natureSelect);
-            this.Controls.Add(this.trainerIdx);
-            this.Controls.Add(this.trainerClassIdx);
-            this.Controls.Add(this.pokeLevel);
-            this.Controls.Add(this.pokeLVL_label);
-            this.Controls.Add(this.trainerIdx_label);
-            this.Controls.Add(this.trainerClassIdx_label);
-            this.Controls.Add(this.poke_label);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.Name = "DVCalc";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DVCalc";
-            ((System.ComponentModel.ISupportInitialize)(this.pokeLevel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trainerClassIdx)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trainerIdx)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownGender)).EndInit();
-            this.groupBoxGender.ResumeLayout(false);
-            this.groupBoxGender.PerformLayout();
-            this.groupBoxAbility.ResumeLayout(false);
-            this.groupBoxAbility.PerformLayout();
-            this.groupBoxHGSS.ResumeLayout(false);
-            this.groupBoxHGSS.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            SetupLists();
+            SetupToolTips();
+            UpdateNatures();
+            Helpers.EnableHandlers();
 
         }
 
-        private void PopulateComboBox()
+        private void SetupLists()
         {
-            // Populate Nature ComboBox (static readonly List)
-            natureSelect.DataSource = DVCalculator.Natures;
+            pokeLabels.Clear();
+            abilityCombos.Clear();
+            genderCombos.Clear();
+            upDownsDV.Clear();
+            labelsIV.Clear();
+            natureLabels.Clear();
+            changeButtons.Clear();
+            showAllButtons.Clear();
 
-            // Fill the pokemon selector combo box with pokemon names from the ROM
-            string[] pokeNames = RomInfo.GetPokemonNames();
+            pokeLabels.AddRange(new Label[] { pokeLabel1, pokeLabel2, pokeLabel3, pokeLabel4, pokeLabel5, pokeLabel6});
+            abilityCombos.AddRange(new ComboBox[] { comboAbility1, comboAbility2, comboAbility3, comboAbility4, comboAbility5, comboAbility6});
+            genderCombos.AddRange(new ComboBox[] { comboGender1, comboGender2, comboGender3, comboGender4, comboGender5, comboGender6 });
+            upDownsDV.AddRange(new NumericUpDown[] { numericUpDownDV1, numericUpDownDV2, numericUpDownDV3, numericUpDownDV4, numericUpDownDV5, numericUpDownDV6 });
+            labelsIV.AddRange(new Label[] { labelIV1, labelIV2, labelIV3, labelIV4, labelIV5, labelIV6 });
+            natureLabels.AddRange(new Label[] { labelNature1, labelNature2, labelNature3, labelNature4, labelNature5, labelNature6 });
+            changeButtons.AddRange(new Button[] { buttonChange1, buttonChange2, buttonChange3, buttonChange4, buttonChange5, buttonChange6 });
+            showAllButtons.AddRange(new Button[] { buttonShowAll1, buttonShowAll2, buttonShowAll3, buttonShowAll4, buttonShowAll5, buttonShowAll6 });
 
-            pokemonSelector.Items.Clear();
-
-            for (int id = 0; id < pokeNames.Length; id++)
+            for (int i = 0; i < trainerProp.partyCount; i++)
             {
-                pokemonSelector.Items.Add(new KeyValuePair<int, string>(id, pokeNames[id]));
-            }
+                // Enable only if mon exists
+                abilityCombos[i].Enabled = (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS || RomInfo.AIBackportEnabled);
+                genderCombos[i].Enabled = (RomInfo.gameFamily == RomInfo.GameFamilies.HGSS || RomInfo.AIBackportEnabled);
+                upDownsDV[i].Enabled = true;
+                changeButtons[i].Enabled = true;
+                showAllButtons[i].Enabled = true;
+                abilityCombos[i].DataSource = new BindingSource(abilitySelection, string.Empty);
+                genderCombos[i].DataSource = new BindingSource(genderSelection, string.Empty);
 
-            pokemonSelector.SelectedIndex = 0;
+                // Pokemon names can be obtained from the ID
+                int pokeID = trainerFile.party[i].pokeID ?? (int)trainerFile.party[i].pokeID;
+                int pokeLevel = trainerFile.party[i].level;
+                pokeLabels[i].Text = RomInfo.GetPokemonNames()[pokeID] + " Lv. " + pokeLevel;
 
-        }
+                // Upper 4 bits = ability index (0 = no flag, 1 = ability 1, 2 = ability 2)
+                abilityCombos[i].SelectedIndex = (((int)trainerFile.party[i].genderAndAbilityFlags & 0xF0) >> 4);
 
-        private void CalcButton_Click(object sender, EventArgs e)
-        {
+                // Lower 4 bits = gender index (0 = no flag, 1 = force male, 2 = force female)
+                genderCombos[i].SelectedIndex = ((int)trainerFile.party[i].genderAndAbilityFlags & 0x0F);
 
-            uint nature = (uint)natureSelect.SelectedIndex;
+                // DV is stored as a single byte, so we can just cast it directly
+                int DV = (int)trainerFile.party[i].difficulty;                
+                upDownsDV[i].Value = DV;
 
-            uint pokemonIndex = 1;
-
-            if (pokemonSelector.SelectedItem != null)
-            {
-                KeyValuePair<int, string> selectedPokemon = (KeyValuePair<int, string>)pokemonSelector.SelectedItem;
-
-                pokemonIndex = (uint)selectedPokemon.Key;
-            }
-
-            int genderOverride = 0;
-            int abilityOverride = 0;
-
-            if (radioButtonMale.Checked) { genderOverride = 1; }
-            else if (radioButtonFemale.Checked) { genderOverride = 2; }
-
-            if (radioButtonAbility1.Checked) { abilityOverride = 1; }
-            else if (radioButtonAbility2.Checked) { abilityOverride = 2; }
-
-            int DV = DVCalculator.findHighestDV(
-                (uint)trainerIdx.Value, (uint)trainerClassIdx.Value, maleCheck.Checked, pokemonIndex,
-                (byte)pokeLevel.Value, (byte)numericUpDownGender.Value, genderOverride, abilityOverride, nature);
-
-            uint maxDVNature = DVCalculator.getNatureFromPID(DVCalculator.generatePID(
-
-                (uint)trainerIdx.Value, (uint)trainerClassIdx.Value, maleCheck.Checked, pokemonIndex,
-                (byte)pokeLevel.Value, (byte)numericUpDownGender.Value, genderOverride, abilityOverride, 255));
-
-            DV_label.Text = "Difficulty Value: " + DV;
-
-
-            IV_label.Text = "Resulting IVs: " + (DV * 31 / 255);
-            maxDVNature_label.Text = "DV 255 Nature: " + DVCalculator.Natures[(int)maxDVNature];
-
-
-        }
-
-        private void ShowAllButton_Click(object sender, EventArgs e)
-        {
-            uint pokemonIndex = 1;
-
-            if (pokemonSelector.SelectedItem != null)
-            {
-                KeyValuePair<int, string> selectedPokemon = (KeyValuePair<int, string>)pokemonSelector.SelectedItem;
-
-                pokemonIndex = (uint)selectedPokemon.Key;
+                labelsIV[i].Text = ((int)(DV * 31 / 255)).ToString();
 
             }
+            for (int i = trainerProp.partyCount; i < 6; i++)
+            {
+                abilityCombos[i].Enabled = false;
+                genderCombos[i].Enabled = false;
+                upDownsDV[i].Enabled = false;
+                changeButtons[i].Enabled = false;
+                showAllButtons[i].Enabled = false;
 
-            int genderOverride = 0;
-            int abilityOverride = 0;
+                pokeLabels[i].Text = "Empty Slot";
+                natureLabels[i].Text = "N/A";
+                labelsIV[i].Text = "N/A";
+            }
 
-            if (radioButtonMale.Checked) { genderOverride = 1; }
-            else if (radioButtonFemale.Checked) { genderOverride = 2; }
-
-            if (radioButtonAbility1.Checked) { abilityOverride = 1; }
-            else if (radioButtonAbility2.Checked) { abilityOverride = 2; }
-
-            // Create a list of DV-IV-Nature Triplets
-            List<DVIVNatureTriplet> natureDict = DVCalculator.getAllNatures(
-                (uint)trainerIdx.Value, (uint)trainerClassIdx.Value, maleCheck.Checked, pokemonIndex,
-                (byte)pokeLevel.Value, (byte)numericUpDownGender.Value, genderOverride, abilityOverride);
-
-            // Create an instance of the view form and pass the data
-            // There might be a better way to do this?
-            DVCalcNatureViewerForm natureViewer = new DVCalcNatureViewerForm(natureDict);
-            natureViewer.ShowDialog();
+            listsSetup = true;
         }
 
-        private void PokemonSelector_TextChanged(object sender, EventArgs e)
+        private void SetupToolTips()
         {
-            if (sender == null || !(sender is ComboBox)) { return; }
-
-            ComboBox comboBox = (ComboBox)sender;
-            string enteredText = comboBox.Text.ToLower();
-
-            // If name of pokemon is typed select that item
-            foreach (KeyValuePair<int, string> item in comboBox.Items)
+            for (int i = 0; i < 6; i++)
             {
-                if (item.Value.ToLower().Equals(enteredText))
+                toolTipDVCalc.SetToolTip(pokeLabels[i], "Pokemon Name and Level");
+                toolTipDVCalc.SetToolTip(abilityCombos[i], "This sets the ability flag of the Pokémon.\n" +
+                    "If there are no other gender or ability flags set, then \"No Flag\" will result in ability 1.");
+                toolTipDVCalc.SetToolTip(genderCombos[i], "This sets the gender flag of the Pokémon. Gender flags can affect the ability.\n" +
+                    "Make sure to also choose an ability flag if you want to prevent this.");
+                toolTipDVCalc.SetToolTip(upDownsDV[i], "This sets the Difficulty Value (DV) of the Pokémon.\n" +
+                    "The DV is used to calculate the IVs of the Pokémon.\n" +
+                    "The higher the DV, the higher the IVs. DVs can range from 0 to 255.");
+                toolTipDVCalc.SetToolTip(changeButtons[i], "Click to open a list of possible nature / IV combinations for this Pokémon.\n" +
+                    "You can double click an entry to select it.\nOnly the highest possible DV for each nature will be shown.");
+                toolTipDVCalc.SetToolTip(showAllButtons[i], "Click to open a list of all possible nature / IV combinations for this Pokémon.\n" +
+                    "You can double click an entry to select it.");
+            }
+
+            toolTipDVCalc.SetToolTip(buttonSave, "Click to save the changes made to the Pokémon's DVs and Flags.\n" +
+                "This will update the Trainer File with the new values.\n" + 
+                "Don't forget to also save in the main trainer editor!");
+
+            toolTipDVCalc.SetToolTip(buttonHelp, "Show some basic information about DVs");
+            toolTipDVCalc.SetToolTip(buttonUsage, "Show some basic usage information about DVCalc");
+            toolTipDVCalc.SetToolTip(buttonMoreInfo, "Open a link to a detailed explanation of how trainer Pokémon PID generation works");
+
+            string trainerGenderExplanation = "You can manually change the trainer gender here.\n" +
+                "If you've repointed the trainer gender table the value read by DSPRE may be wrong.\n" +
+                "This is only for the sake of the calculation. The trainer gender table will NOT be updated!";
+
+            toolTipDVCalc.SetToolTip(panelTrainerGender, trainerGenderExplanation);
+            toolTipDVCalc.SetToolTip(labelTrainerGender, trainerGenderExplanation);
+            toolTipDVCalc.SetToolTip(radioMale, trainerGenderExplanation);
+            toolTipDVCalc.SetToolTip(radioFemale, trainerGenderExplanation);
+        }
+
+        private void UpdateNatures()
+        {
+            if (!listsSetup)
+                return;
+
+            DVCalculator.ResetGenderMod(radioMale.Checked);
+
+            for (int i = 0; i < trainerProp.partyCount; i++)
+            {
+                uint pokeID = trainerFile.party[i].pokeID ?? (uint)trainerFile.party[i].pokeID;
+                byte pokeLevel = (byte) trainerFile.party[i].level;
+                byte baseGenderRatio = new PokemonPersonalData((int) pokeID).genderVec;
+
+                uint PID = DVCalculator.generatePID(trainerProp.trainerID,trainerProp.trainerClass, 
+                    pokeID, pokeLevel, baseGenderRatio, genderCombos[i].SelectedIndex, abilityCombos[i].SelectedIndex,(byte)upDownsDV[i].Value);
+                string nature = DVCalculator.Natures[DVCalculator.getNatureFromPID(PID)];
+
+                natureLabels[i].Text = nature;
+                labelsIV[i].Text = ((int)(upDownsDV[i].Value * 31 / 255)).ToString();
+            }
+
+        }
+
+        private void valueChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !listsSetup)
+                return;
+
+            UpdateNatures();
+        }
+
+        private List<DVIVNatureTriplet> generateTriplets(int index)
+        {
+            DVCalculator.ResetGenderMod(radioMale.Checked);
+
+            if (RomInfo.gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled)
+            {
+                // Need to run this loop at least until we reach the current index
+                for (int i = 0; i < index; i++)
                 {
-                    comboBox.SelectedItem = item;
-                    return;
+                    byte genderRatio = new PokemonPersonalData((int)trainerFile.party[i].pokeID).genderVec;
+                    DVCalculator.UpdateGenderMod(genderRatio, genderCombos[i].SelectedIndex, abilityCombos[i].SelectedIndex);
+
                 }
             }
+
+            List<DVIVNatureTriplet> triplets = DVCalculator.getAllNatures(
+                trainerProp.trainerID,
+                trainerProp.trainerClass,
+                (uint)trainerFile.party[index].pokeID,
+                (byte)trainerFile.party[index].level,
+                new PokemonPersonalData((int)trainerFile.party[index].pokeID).genderVec,
+                genderCombos[index].SelectedIndex,
+                abilityCombos[index].SelectedIndex);
+
+            return triplets;
         }
 
-        private void radioButtonNoFlag_CheckedChanged(object sender, EventArgs e)
+        private void buttonShowAll_Click(object sender, EventArgs e)
         {
-            if (radioButtonIgnoreAbility.Checked && radioButtonIngoreGender.Checked)
+            Button button = (Button) sender;
+            int index = button.Name.Last() - '1'; // Get the index from the button name, maybe jank?
+
+            List<DVIVNatureTriplet> triplets = generateTriplets(index);
+
+            // Show the nature viewer form with the triplets
+            DVCalcNatureViewerForm form = new DVCalcNatureViewerForm(triplets);
+            form.ShowDialog();
+            if (form.selectedDV != -1)
+                upDownsDV[index].Value = form.selectedDV;
+
+        }
+        private void buttonChange_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            int index = button.Name.Last() - '1'; // Get the index from the button name, maybe jank?
+
+            List<DVIVNatureTriplet> triplets = generateTriplets(index);
+            DVCalculator.filterHighestDV(ref triplets);
+
+            // Show the nature viewer form with the triplets
+            DVCalcNatureViewerForm form = new DVCalcNatureViewerForm(triplets);
+            form.ShowDialog();
+            if (form.selectedDV != -1)
+                upDownsDV[index].Value = form.selectedDV;
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < trainerProp.partyCount; i++)
             {
-                numericUpDownGender.Enabled = false;
-                return;
+                trainerFile.party[i].genderAndAbilityFlags = (PartyPokemon.GenderAndAbilityFlags)(((abilityCombos[i].SelectedIndex & 0x0F) << 4)
+                    | (genderCombos[i].SelectedIndex & 0x0F));
+                trainerFile.party[i].difficulty = (byte)upDownsDV[i].Value;
+
             }
-
-            numericUpDownGender.Enabled = true;
-
         }
 
         private void buttonHelp_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("DV, or \"Difficulty Value\", is used by the game engine to calculate how tough an opponent Pokemon should be.\n" +
-               "The DV affects a Pokemon's Nature and IVs - the higher the value, the stronger the Pokemon.\n" +
+            MessageBox.Show("DV, or \"Difficulty Value\", is used by the game to calculate how tough an opponent Pokémon should be.\n" +
+               "The DV primarily affects a Pokémon's IVs - the higher the value, the higher the Pokémon's IVs.\n" +
                "DVs will go from 0 (0 IVs) to 255 (31 IVs). Natures are chosen semi-randomly." +
                "\nIVs will be the same value for all Stats at any DV, so Hidden Power will only be Fighting or Dark Type." +
                "\nThis calculator allows you to choose a desired Nature and then find the highest possible DV that will yield that Nature." +
-               "\nIf you want a specific combination of IVs and Nature instead, please click the \"Show All\" button and find the one you want."
+               "\nIf you want a specific combination of IVs and Nature instead, please click the \"Show All\" button and find the one you want.\n\n" +
+               "For more information click \"More Info\""
                , "Difficulty Value", MessageBoxButtons.OK, MessageBoxIcon.Information);
-     
         }
 
-        private void buttonHGSS_Click(object sender, EventArgs e)
+        private void buttonUsage_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("In Diamond, Pearl and Platinum Pokemon will always have the same gender as their trainer and will always have ability 1. " +
-                "Heartgold and Soulsilver allow for the Pokemon's Gender and Ability to be set using special flags. " +
-                "Setting those flags will also affect a Pokemon's Nature. " +
-                "In order for this calculator to work it needs to know which flags have been set. " +
-                "You can follow this guide:\n" +
-                "- If the Pokemon whose nature you are trying to calculate has ability 2 then \"Force Ability 2\" must be selected.\n" +
-                "- If the Pokemon whose nature you are trying to calculate has a non-default gender then \"Force Male\" / \"Force Female\" must be selected.\n" +
-                "- If the Pokemon whose nature you are trying to calculate has a non-default gender and ability 1 then \"Force Ability 1\" must also be selected.\n" +
-                "If you are changing a Pokemon's gender you must also provide the correct Gender Ratio which you can look up using DSPRE's \"Pokémon Editor\".", "How to use" ,MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Click the \"Change\" or \"Show All\" buttons to open a list of possible nature / IV combinations. " +
+                "Double click an entry to select it. You can also try changing the ability and gender flags." +
+                "Because of the way that the PIDs of trainer Pokémon are generated, only certain combinations of " +
+                "gender, ability, IVs and nature are possible. This is a limitation of the game itself.\n" +
+                "In general changes made to gender and ability flags of a Pokémon in any given party slot " +
+                "will affect all the slots after it. You should therefore work from top to bottom.\n" +
+                "Diamond, Pearl and Platinum do not allow for gender or ability flags to be set."
+               , "DVCalc Usage", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void buttonMoreInfo_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Do you want to open a link to an external website?",
+                "Confirm Open Website", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "https://gist.github.com/YakosWG/2200732c473656db2e47c37ca72807d7",
+                    UseShellExecute = true
+                });
+            }
+
         }
     }
 }
