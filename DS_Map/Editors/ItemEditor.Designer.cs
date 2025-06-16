@@ -35,7 +35,6 @@
             this.itemNameInputComboBox = new System.Windows.Forms.ComboBox();
             this.priceNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.priceLabel = new System.Windows.Forms.Label();
             this.saveDataButton = new System.Windows.Forms.Button();
             this.holdFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.holdGroupBox = new System.Windows.Forms.GroupBox();
@@ -64,6 +63,14 @@
             this.preventTossCheckBox = new System.Windows.Forms.CheckBox();
             this.priceFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.priceGroupBox = new System.Windows.Forms.GroupBox();
+            this.priceLabel = new System.Windows.Forms.Label();
+            this.functionsFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.functionsGroupBox = new System.Windows.Forms.GroupBox();
+            this.battleFunctionComboBox = new System.Windows.Forms.ComboBox();
+            this.fieldFunctionLabel = new System.Windows.Forms.Label();
+            this.fieldFunctionComboBox = new System.Windows.Forms.ComboBox();
+            this.battleFunctionLabel = new System.Windows.Forms.Label();
+            this.partyUseCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumberNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -82,6 +89,8 @@
             this.checksGroupBox.SuspendLayout();
             this.priceFlowLayoutPanel.SuspendLayout();
             this.priceGroupBox.SuspendLayout();
+            this.functionsFlowLayoutPanel.SuspendLayout();
+            this.functionsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // itemNumberNumericUpDown
@@ -157,6 +166,7 @@
             this.tableLayoutPanel1.Controls.Add(this.moveRelatedFlowLayoutPanel, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.checksFlowLayoutPanel, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.priceFlowLayoutPanel, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.functionsFlowLayoutPanel, 0, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -166,17 +176,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1065, 563);
             this.tableLayoutPanel1.TabIndex = 6;
-            // 
-            // priceLabel
-            // 
-            this.priceLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.priceLabel.AutoSize = true;
-            this.priceLabel.Location = new System.Drawing.Point(30, 37);
-            this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(31, 13);
-            this.priceLabel.TabIndex = 9;
-            this.priceLabel.Text = "Price";
-            this.priceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // saveDataButton
             // 
@@ -423,6 +422,7 @@
             // 
             // checksGroupBox
             // 
+            this.checksGroupBox.Controls.Add(this.partyUseCheckBox);
             this.checksGroupBox.Controls.Add(this.canSelectCheckBox);
             this.checksGroupBox.Controls.Add(this.preventTossCheckBox);
             this.checksGroupBox.Location = new System.Drawing.Point(3, 3);
@@ -473,6 +473,91 @@
             this.priceGroupBox.TabStop = false;
             this.priceGroupBox.Text = "Price";
             // 
+            // priceLabel
+            // 
+            this.priceLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.priceLabel.AutoSize = true;
+            this.priceLabel.Location = new System.Drawing.Point(30, 37);
+            this.priceLabel.Name = "priceLabel";
+            this.priceLabel.Size = new System.Drawing.Size(31, 13);
+            this.priceLabel.TabIndex = 9;
+            this.priceLabel.Text = "Price";
+            this.priceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // functionsFlowLayoutPanel
+            // 
+            this.functionsFlowLayoutPanel.Controls.Add(this.functionsGroupBox);
+            this.functionsFlowLayoutPanel.Location = new System.Drawing.Point(3, 423);
+            this.functionsFlowLayoutPanel.Name = "functionsFlowLayoutPanel";
+            this.functionsFlowLayoutPanel.Size = new System.Drawing.Size(260, 137);
+            this.functionsFlowLayoutPanel.TabIndex = 16;
+            // 
+            // functionsGroupBox
+            // 
+            this.functionsGroupBox.Controls.Add(this.battleFunctionComboBox);
+            this.functionsGroupBox.Controls.Add(this.fieldFunctionLabel);
+            this.functionsGroupBox.Controls.Add(this.fieldFunctionComboBox);
+            this.functionsGroupBox.Controls.Add(this.battleFunctionLabel);
+            this.functionsGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.functionsGroupBox.Name = "functionsGroupBox";
+            this.functionsGroupBox.Size = new System.Drawing.Size(257, 134);
+            this.functionsGroupBox.TabIndex = 0;
+            this.functionsGroupBox.TabStop = false;
+            this.functionsGroupBox.Text = "Functions";
+            // 
+            // battleFunctionComboBox
+            // 
+            this.battleFunctionComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.battleFunctionComboBox.FormattingEnabled = true;
+            this.battleFunctionComboBox.Location = new System.Drawing.Point(113, 78);
+            this.battleFunctionComboBox.Name = "battleFunctionComboBox";
+            this.battleFunctionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.battleFunctionComboBox.TabIndex = 10;
+            this.battleFunctionComboBox.SelectedIndexChanged += new System.EventHandler(this.battleFunctionComboBox_SelectedIndexChanged);
+            // 
+            // fieldFunctionLabel
+            // 
+            this.fieldFunctionLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.fieldFunctionLabel.AutoSize = true;
+            this.fieldFunctionLabel.Location = new System.Drawing.Point(27, 38);
+            this.fieldFunctionLabel.Name = "fieldFunctionLabel";
+            this.fieldFunctionLabel.Size = new System.Drawing.Size(73, 13);
+            this.fieldFunctionLabel.TabIndex = 11;
+            this.fieldFunctionLabel.Text = "Field Function";
+            this.fieldFunctionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // fieldFunctionComboBox
+            // 
+            this.fieldFunctionComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.fieldFunctionComboBox.FormattingEnabled = true;
+            this.fieldFunctionComboBox.Location = new System.Drawing.Point(113, 35);
+            this.fieldFunctionComboBox.Name = "fieldFunctionComboBox";
+            this.fieldFunctionComboBox.Size = new System.Drawing.Size(121, 21);
+            this.fieldFunctionComboBox.TabIndex = 9;
+            this.fieldFunctionComboBox.SelectedIndexChanged += new System.EventHandler(this.fieldFunctionComboBox_SelectedIndexChanged);
+            // 
+            // battleFunctionLabel
+            // 
+            this.battleFunctionLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.battleFunctionLabel.AutoSize = true;
+            this.battleFunctionLabel.Location = new System.Drawing.Point(22, 81);
+            this.battleFunctionLabel.Name = "battleFunctionLabel";
+            this.battleFunctionLabel.Size = new System.Drawing.Size(78, 13);
+            this.battleFunctionLabel.TabIndex = 12;
+            this.battleFunctionLabel.Text = "Battle Function";
+            this.battleFunctionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // partyUseCheckBox
+            // 
+            this.partyUseCheckBox.AutoSize = true;
+            this.partyUseCheckBox.Location = new System.Drawing.Point(136, 39);
+            this.partyUseCheckBox.Name = "partyUseCheckBox";
+            this.partyUseCheckBox.Size = new System.Drawing.Size(72, 17);
+            this.partyUseCheckBox.TabIndex = 2;
+            this.partyUseCheckBox.Text = "Party Use";
+            this.partyUseCheckBox.UseVisualStyleBackColor = true;
+            this.partyUseCheckBox.CheckedChanged += new System.EventHandler(this.partyUseCheckBox_CheckedChanged);
+            // 
             // ItemEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -504,6 +589,9 @@
             this.priceFlowLayoutPanel.ResumeLayout(false);
             this.priceGroupBox.ResumeLayout(false);
             this.priceGroupBox.PerformLayout();
+            this.functionsFlowLayoutPanel.ResumeLayout(false);
+            this.functionsGroupBox.ResumeLayout(false);
+            this.functionsGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -546,5 +634,12 @@
         private System.Windows.Forms.CheckBox canSelectCheckBox;
         private System.Windows.Forms.FlowLayoutPanel priceFlowLayoutPanel;
         private System.Windows.Forms.GroupBox priceGroupBox;
+        private System.Windows.Forms.FlowLayoutPanel functionsFlowLayoutPanel;
+        private System.Windows.Forms.GroupBox functionsGroupBox;
+        private System.Windows.Forms.ComboBox battleFunctionComboBox;
+        private System.Windows.Forms.Label fieldFunctionLabel;
+        private System.Windows.Forms.ComboBox fieldFunctionComboBox;
+        private System.Windows.Forms.Label battleFunctionLabel;
+        private System.Windows.Forms.CheckBox partyUseCheckBox;
     }
 }

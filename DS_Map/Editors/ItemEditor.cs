@@ -45,7 +45,7 @@ namespace DSPRE.Editors
             // Set up max and min for numerics
             priceNumericUpDown.Minimum = 0;
             priceNumericUpDown.Maximum = 65535;
-            itemNumberNumericUpDown.Minimum = 1;
+            itemNumberNumericUpDown.Minimum = 0;
             itemNumberNumericUpDown.Maximum = this.itemFileNames.Length - 1;
             holdEffectParameterNumericUpDown.Minimum = 0;
             holdEffectParameterNumericUpDown.Maximum = 255;
@@ -64,6 +64,8 @@ namespace DSPRE.Editors
             fieldPocketComboBox.Items.AddRange(Enum.GetNames(typeof(FieldPocket)));
             battlePocketComboBox.Items.AddRange(Enum.GetNames(typeof(BattlePocket)));
             naturalGiftTypeComboBox.Items.AddRange(Enum.GetNames(typeof(NaturalGiftType)));
+            fieldFunctionComboBox.Items.AddRange(Enum.GetNames(typeof(FieldUseFunc)));
+            battleFunctionComboBox.Items.AddRange(Enum.GetNames(typeof(BattleUseFunc)));
 
             Helpers.EnableHandlers();
 
@@ -137,9 +139,15 @@ namespace DSPRE.Editors
             // Checks
             preventTossCheckBox.Checked = currentLoadedFile.PreventToss;
             canSelectCheckBox.Checked = currentLoadedFile.Selectable;
+            partyUseCheckBox.Checked = currentLoadedFile.PartyUse == 1;
 
             // Price
             priceNumericUpDown.Value = currentLoadedFile.price;
+
+            // Usage Functions
+            fieldFunctionComboBox.SelectedIndex = (int)currentLoadedFile.fieldUseFunc;
+            battleFunctionComboBox.SelectedIndex = (int)currentLoadedFile.battleUseFunc;
+
 
             //descriptionTextBox.Text = itemDescriptions[currentLoadedId];
         }
@@ -325,6 +333,39 @@ namespace DSPRE.Editors
             }
 
             currentLoadedFile.Selectable = canSelectCheckBox.Checked;
+            setDirty(true);
+        }
+
+        private void fieldFunctionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.fieldUseFunc = (FieldUseFunc)fieldFunctionComboBox.SelectedIndex;
+            setDirty(true);
+        }
+
+        private void battleFunctionComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.battleUseFunc = (BattleUseFunc)battleFunctionComboBox.SelectedIndex;
+            setDirty(true);
+        }
+
+        private void partyUseCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            currentLoadedFile.PartyUse = (byte)(partyUseCheckBox.Checked ? 1: 0);
             setDirty(true);
         }
     }

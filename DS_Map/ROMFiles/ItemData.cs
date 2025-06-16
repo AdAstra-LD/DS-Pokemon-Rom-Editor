@@ -27,6 +27,47 @@ namespace DSPRE.ROMFiles
         NONE = 31
     }
 
+    public enum FieldUseFunc : byte
+    {
+        Generic = 0,
+        HealingItem = 1,
+        Dummy1 = 2,
+        Dummy2 = 3,
+        Bicycle = 4,
+        Dummy3 = 5,
+        TMHM = 6,
+        Mail = 7,
+        Berry = 8,
+        Dummy4 = 9,
+        PalPad = 10,
+        Dummy5 = 11,
+        Dummy6 = 12,
+        Dummy7 = 13,
+        Honey = 14,
+        Dummy8 = 15,
+        OldRod = 16,
+        GoodRod = 17,
+        SuperRod = 18,
+        Generic2 = 19,
+        EvoStone = 20,
+        EscapeRope = 21,
+        Dummy9 = 22,
+        ApricornBox = 23,
+        BerryPots = 24,
+        UnownReport = 25,
+        DowsingMchn = 26,
+        GbSounds = 27,
+        Gracidea = 28,
+        VSRecorder = 29
+    }
+
+    public enum BattleUseFunc : byte
+    {
+        No_Use = 0,
+        Ball = 1,
+        Healing = 2,
+        Escape = 3
+    }
 
     public enum FieldPocket
     {
@@ -292,8 +333,8 @@ namespace DSPRE.ROMFiles
         public FieldPocket fieldPocket;     // 4 bits
         public BattlePocket battlePocket;    // 5 bits
 
-        public byte FieldUseFunc;
-        public byte BattleUseFunc;
+        public FieldUseFunc fieldUseFunc;
+        public BattleUseFunc battleUseFunc;
         public byte PartyUse;
         public ItemPartyUseParam PartyUseParam;
 
@@ -316,8 +357,8 @@ namespace DSPRE.ROMFiles
                 fieldPocket = (FieldPocket)((bitfield >> 7) & 0b1111);
                 battlePocket = (BattlePocket)((bitfield >> 11) & 0b11111);
 
-                FieldUseFunc = reader.ReadByte();
-                BattleUseFunc = reader.ReadByte();
+                fieldUseFunc = (FieldUseFunc)reader.ReadByte();
+                battleUseFunc = (BattleUseFunc)reader.ReadByte();
                 PartyUse = reader.ReadByte();
 
                 //reader.ReadByte(); // skip 1 byte padding_0D
@@ -352,8 +393,8 @@ namespace DSPRE.ROMFiles
                 bitfield |= (ushort)(((byte)battlePocket & 0b11111) << 11);
                 writer.Write(bitfield);
 
-                writer.Write(FieldUseFunc);
-                writer.Write(BattleUseFunc);
+                writer.Write((byte)fieldUseFunc);
+                writer.Write((byte)battleUseFunc);
                 writer.Write(PartyUse);
                 writer.Write((byte)0); // padding
 
