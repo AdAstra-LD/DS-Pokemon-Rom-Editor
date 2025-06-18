@@ -37,6 +37,7 @@ using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
+using DSPRE.Editors.BtxEditor;
 
 namespace DSPRE {
 
@@ -10182,6 +10183,13 @@ namespace DSPRE {
             form.Show();
         }
 
+
+        private void overworldEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            BtxEditor form = new BtxEditor();
+            form.Show();
+        }
         private void exportScriptDatabaseJSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Not implemented yet");
