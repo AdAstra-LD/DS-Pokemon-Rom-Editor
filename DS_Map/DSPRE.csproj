@@ -444,6 +444,12 @@
     <EmbeddedResource Include="DVCalculator\DVCalcNatureViewerForm.resx">
       <DependentUpon>DVCalcNatureViewerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\BtxEditor\BtxEditor.resx">
+      <DependentUpon>BtxEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\BtxEditor\BtxExitConfirmation.resx">
+      <DependentUpon>BtxExitConfirmation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\EncountersEditor.resx">
       <DependentUpon>EncountersEditor.cs</DependentUpon>
     </EmbeddedResource>
