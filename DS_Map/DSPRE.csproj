@@ -122,6 +122,18 @@
     </Compile>
     <Compile Include="DVCalculator\DVCalculator.cs" />
     <Compile Include="EditorPanels.cs" />
+    <Compile Include="Editors\BtxEditor\BtxEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\BtxEditor\BtxEditor.Designer.cs">
+      <DependentUpon>BtxEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\BtxEditor\BtxExitConfirmation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\BtxEditor\BtxExitConfirmation.Designer.cs">
+      <DependentUpon>BtxExitConfirmation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\EncountersEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -219,6 +231,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FlyEditor\FlyEditor.Designer.cs" />
+    <Compile Include="LibNDSFormats\BTX0.cs" />
     <Compile Include="GameCamera.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="InputComboBox.cs">
@@ -430,6 +443,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DVCalculator\DVCalcNatureViewerForm.resx">
       <DependentUpon>DVCalcNatureViewerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\BtxEditor\BtxEditor.resx">
+      <DependentUpon>BtxEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\BtxEditor\BtxExitConfirmation.resx">
+      <DependentUpon>BtxExitConfirmation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\EncountersEditor.resx">
       <DependentUpon>EncountersEditor.cs</DependentUpon>

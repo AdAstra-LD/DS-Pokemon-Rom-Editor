@@ -825,7 +825,8 @@
             this.overlayEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.flyWarpEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.overworldEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.flyWarpEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -10550,7 +10551,8 @@
             this.spawnEditorToolStripMenuItem,
             this.moveDataEditorToolStripMenuItem,
             this.flyWarpEditorToolStripMenuItem,
-            this.itemEditorToolStripMenuItem});
+            this.itemEditorToolStripMenuItem,
+            this.overworldEditorToolStripMenuItem});
             this.otherEditorsToolStripMenuItem.Enabled = false;
             this.otherEditorsToolStripMenuItem.Name = "otherEditorsToolStripMenuItem";
             this.otherEditorsToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
@@ -10590,7 +10592,15 @@
             this.flyWarpEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.flyWarpEditorToolStripMenuItem.Text = "Fly Warp Editor";
             this.flyWarpEditorToolStripMenuItem.Click += new System.EventHandler(this.flyWarpEditorToolStripMenuItem_Click);
+			
+			//  
+            // overworldEditorToolStripMenuItem
             // 
+            this.overworldEditorToolStripMenuItem.Name = "overworldEditorToolStripMenuItem";
+            this.overworldEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.overworldEditorToolStripMenuItem.Text = "Overworld Editor";
+            this.overworldEditorToolStripMenuItem.Click += new System.EventHandler(this.overworldEditorToolStripMenuItem_Click);
+
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
@@ -12131,6 +12141,7 @@
         private System.Windows.Forms.TrackBar transparencyBar;
         private System.Windows.Forms.ToolStripMenuItem addressHelperToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportScriptDatabaseJSONToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem overworldEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateCSVToolStripMenuItem;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
