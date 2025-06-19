@@ -361,7 +361,7 @@ namespace DSPRE.ROMFiles
                 battleUseFunc = (BattleUseFunc)reader.ReadByte();
                 PartyUse = reader.ReadByte();
 
-                //reader.ReadByte(); // skip 1 byte padding_0D
+                reader.ReadByte(); // skip 1 byte padding_0D
 
                 PartyUseParam = new ItemPartyUseParam(reader);
 
@@ -418,50 +418,28 @@ namespace DSPRE.ROMFiles
         public class ItemPartyUseParam
         {
             // Flags (bit-packed)
-            public bool SlpHeal; 
-            public bool PsnHeal; 
-            public bool BrnHeal; 
-            public bool FrzHeal; 
-            public bool PrzHeal; 
-            public bool CfsHeal;
-            public bool InfHeal;
-
+            public bool SlpHeal, PsnHeal, BrnHeal, FrzHeal, PrzHeal, CfsHeal, InfHeal;
             public bool GuardSpec;
 
-            public bool Revive;
-            public bool ReviveAll;
+            public bool Revive, ReviveAll, LevelUp, Evolve;
 
-            public bool LevelUp;
+            public sbyte AtkStages, DefStages, SpAtkStages, SpDefStages, SpeedStages, AccuracyStages, CritRateStages;
 
-            public bool Evolve;
+            public bool PPUps, PPMax, PPRestore, PPRestoreAll, HPRestore;
 
-            public sbyte AtkStages;
-            public sbyte DefStages;
-            public sbyte SpAtkStages;
-            public sbyte SpDefStages;
-            public sbyte SpeedStages;
-            public sbyte AccuracyStages;
-            public sbyte CritRateStages;
+            public bool[] EVUps = new bool[6];               // hp, atk, def, speed, spatk, spdef
+            public bool[] FriendshipMods = new bool[3];      // lo, med, hi
 
-            public bool PPUps;
-            public bool PPMax;
-            public bool PPRestore;
-            public bool PPRestoreAll;
-            public bool HPRestore;
-
-            public bool[] EVUps = new bool[6]; // hp, atk, def, speed, spatk, spdef
-            public bool[] FriendshipMods = new bool[3]; // lo, med, hi
-
-            public sbyte[] EVParams = new sbyte[6]; // hp, atk, def, speed, spatk, spdef
+            public sbyte[] EVParams = new sbyte[6];          // hp, atk, def, speed, spatk, spdef
             public byte HPRestoreParam;
             public byte PPRestoreParam;
-            public sbyte[] FriendshipParams = new sbyte[3]; // lo, med, hi
+            public sbyte[] FriendshipParams = new sbyte[3];  // lo, med, hi
 
             public ItemPartyUseParam(BinaryReader reader)
             {
-                byte[] data = reader.ReadBytes(19); // Total size of struct
+                byte[] data = reader.ReadBytes(19);
 
-                // Byte 0: HealStatus1 bits
+                // Byte 0: HealStatus1
                 byte healStatus1 = data[0];
                 SlpHeal = (healStatus1 & (1 << 0)) != 0;
                 PsnHeal = (healStatus1 & (1 << 1)) != 0;
@@ -472,71 +450,65 @@ namespace DSPRE.ROMFiles
                 InfHeal = (healStatus1 & (1 << 6)) != 0;
                 GuardSpec = (healStatus1 & (1 << 7)) != 0;
 
-                // Byte 1: revive, revive_all, level_up, evolve, + 4 bits padding
+                // Byte 1: revive, revive_all, level_up, evolve
                 byte flags1 = data[1];
                 Revive = (flags1 & (1 << 0)) != 0;
                 ReviveAll = (flags1 & (1 << 1)) != 0;
                 LevelUp = (flags1 & (1 << 2)) != 0;
                 Evolve = (flags1 & (1 << 3)) != 0;
 
-                // Byte 2: atk_stages (4 bits), def_stages (4 bits)
-                byte stages1 = data[2];
-                AtkStages = (sbyte)(stages1 & 0x0F);
-                DefStages = (sbyte)((stages1 >> 4) & 0x0F);
+                // Byte 2: atk + def stages (stored 0–15, mapped to -6 to +6 if needed)
+                AtkStages = DecodeStage(data[2] & 0x0F);
+                DefStages = DecodeStage((data[2] >> 4) & 0x0F);
 
-                // Byte 3: spatk_stages (4 bits), spdef_stages (4 bits)
-                byte stages2 = data[3];
-                SpAtkStages = (sbyte)(stages2 & 0x0F);
-                SpDefStages = (sbyte)((stages2 >> 4) & 0x0F);
+                // Byte 3: spatk + spdef
+                SpAtkStages = DecodeStage(data[3] & 0x0F);
+                SpDefStages = DecodeStage((data[3] >> 4) & 0x0F);
 
-                // Byte 4: speed_stages (4 bits), accuracy_stages (4 bits)
-                byte stages3 = data[4];
-                SpeedStages = (sbyte)(stages3 & 0x0F);
-                AccuracyStages = (sbyte)((stages3 >> 4) & 0x0F);
+                // Byte 4: speed + accuracy
+                SpeedStages = DecodeStage(data[4] & 0x0F);
+                AccuracyStages = DecodeStage((data[4] >> 4) & 0x0F);
 
-                // Byte 5: critrate_stages (2 bits), pp_up, pp_max, pp_restore, pp_restore_all, hp_restore (5 bits)
+                // Byte 5: crit rate (2 bits), pp/hp restore flags
                 byte flags2 = data[5];
-                CritRateStages = (sbyte)(flags2 & 0x03);
+                CritRateStages = (sbyte)(flags2 & 0x03);  // 0–3
                 PPUps = (flags2 & (1 << 2)) != 0;
                 PPMax = (flags2 & (1 << 3)) != 0;
                 PPRestore = (flags2 & (1 << 4)) != 0;
                 PPRestoreAll = (flags2 & (1 << 5)) != 0;
                 HPRestore = (flags2 & (1 << 6)) != 0;
 
-                // Byte 6: ev flags
+                // Byte 6: EV flags
                 byte evFlags = data[6];
-                EVUps = new bool[6];
                 for (int i = 0; i < 6; i++)
                     EVUps[i] = (evFlags & (1 << i)) != 0;
 
                 // Byte 7: friendship flags
                 byte friendFlags = data[7];
-                FriendshipMods = new bool[3];
                 for (int i = 0; i < 3; i++)
                     FriendshipMods[i] = (friendFlags & (1 << i)) != 0;
 
-                // Bytes 8-13: EVParams
-                EVParams = new sbyte[6];
+                // Bytes 8–13: EVParams (signed)
                 for (int i = 0; i < 6; i++)
                     EVParams[i] = (sbyte)data[8 + i];
 
-                // Byte 14: HPRestoreParam
+                // Byte 14: HP restore param (0–255)
                 HPRestoreParam = data[14];
 
-                // Byte 15: PPRestoreParam
+                // Byte 15: PP restore param (0–255)
                 PPRestoreParam = data[15];
 
-                // Bytes 16–18: FriendshipParams
-                FriendshipParams = new sbyte[3];
+                // Bytes 16–18: friendship params (signed)
                 for (int i = 0; i < 3; i++)
                     FriendshipParams[i] = (sbyte)data[16 + i];
 
-                // Padding is ignored (2 bytes assumed to follow)
+                // Skip padding in binary reader (2 bytes expected)
+                reader.BaseStream.Seek(2, SeekOrigin.Current);
             }
 
             public void WriteTo(BinaryWriter writer)
             {
-                byte[] data = new byte[18];
+                byte[] data = new byte[19];
 
                 // Byte 0: HealStatus1
                 data[0] = 0;
@@ -557,15 +529,15 @@ namespace DSPRE.ROMFiles
                 if (Evolve) data[1] |= (1 << 3);
 
                 // Byte 2: atk + def stages
-                data[2] = (byte)((DefStages & 0x0F) << 4 | (AtkStages & 0x0F));
+                data[2] = (byte)((EncodeStage(DefStages) << 4) | EncodeStage(AtkStages));
 
-                // Byte 3: spatk + spdef stages
-                data[3] = (byte)((SpDefStages & 0x0F) << 4 | (SpAtkStages & 0x0F));
+                // Byte 3: spatk + spdef
+                data[3] = (byte)((EncodeStage(SpDefStages) << 4) | EncodeStage(SpAtkStages));
 
-                // Byte 4: speed + accuracy stages
-                data[4] = (byte)((AccuracyStages & 0x0F) << 4 | (SpeedStages & 0x0F));
+                // Byte 4: speed + accuracy
+                data[4] = (byte)((EncodeStage(AccuracyStages) << 4) | EncodeStage(SpeedStages));
 
-                // Byte 5: crit rate + pp/hp flags
+                // Byte 5: crit rate + flags
                 data[5] = (byte)(CritRateStages & 0x03);
                 if (PPUps) data[5] |= (1 << 2);
                 if (PPMax) data[5] |= (1 << 3);
@@ -574,16 +546,14 @@ namespace DSPRE.ROMFiles
                 if (HPRestore) data[5] |= (1 << 6);
 
                 // Byte 6: EV flags
-                data[6] = 0;
                 for (int i = 0; i < 6; i++)
                     if (EVUps[i]) data[6] |= (byte)(1 << i);
 
-                // Byte 7: Friendship flags
-                data[7] = 0;
+                // Byte 7: friendship flags
                 for (int i = 0; i < 3; i++)
                     if (FriendshipMods[i]) data[7] |= (byte)(1 << i);
 
-                // Bytes 8-13: EVParams
+                // Bytes 8–13: EVParams
                 for (int i = 0; i < 6; i++)
                     data[8 + i] = (byte)EVParams[i];
 
@@ -597,13 +567,17 @@ namespace DSPRE.ROMFiles
                 for (int i = 0; i < 3; i++)
                     data[16 + i] = (byte)FriendshipParams[i];
 
-                // Write all bytes
+                // Write struct + padding
                 writer.Write(data);
-
-                // Write padding
                 writer.Write(new byte[2]);
             }
 
+            // Replace the problematic line with the following implementation of Clamp:
+            private static byte EncodeStage(sbyte val) => (byte)((val + 6 < 0) ? 0 : (val + 6 > 15) ? 15 : val + 6);
+
+            // Decodes 0 to 15 to -6 to +9 range (limited logic for now)
+            private static sbyte DecodeStage(int val) => (sbyte)(val - 6);
         }
+
     }
 }
