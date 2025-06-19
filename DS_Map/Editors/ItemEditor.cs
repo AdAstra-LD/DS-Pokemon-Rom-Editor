@@ -298,7 +298,6 @@ namespace DSPRE.Editors
             speedStagesNumeric.Value = param.SpeedStages;
             accuracyStagesNumeric.Value = param.AccuracyStages;
             critRateStagesNumeric.Value = param.CritRateStages;
-
             hpRestoreCheckBox.Checked = param.HPRestore;
             hpRestoreParamNumeric.Value = param.HPRestoreParam;
             ppRestoreCheckBox.Checked = param.PPRestore;
@@ -307,27 +306,27 @@ namespace DSPRE.Editors
             ppMaxCheckBox.Checked = param.PPMax;
             ppRestoreAllCheckBox.Checked = param.PPRestoreAll;
 
-            evHpCheckBox.Checked = param.EVUps[0];
-            evAtkCheckBox.Checked = param.EVUps[1];
-            evDefCheckBox.Checked = param.EVUps[2];
-            evSpeedCheckBox.Checked = param.EVUps[3];
-            evSpAtkCheckBox.Checked = param.EVUps[4];
-            evSpDefCheckBox.Checked = param.EVUps[5];
+            evHpCheckBox.Checked = param.EVHp;
+            evAtkCheckBox.Checked = param.EVAtk;
+            evDefCheckBox.Checked = param.EVDef;
+            evSpeedCheckBox.Checked = param.EVSpeed;
+            evSpAtkCheckBox.Checked = param.EVSpAtk;
+            evSpDefCheckBox.Checked = param.EVSpDef;
 
-            evHpValueNumeric.Value = param.EVParams[0];
-            evAtkValueNumeric.Value = param.EVParams[1];
-            evDefValueNumeric.Value = param.EVParams[2];
-            evSpeedValueNumeric.Value = param.EVParams[3];
-            evSpAtkValueNumeric.Value = param.EVParams[4];
-            evSpDefValueNumeric.Value = param.EVParams[5];
+            evHpValueNumeric.Value = param.EVHpValue;
+            evAtkValueNumeric.Value = param.EVAtkValue;
+            evDefValueNumeric.Value = param.EVDefValue;
+            evSpeedValueNumeric.Value = param.EVSpeedValue;
+            evSpAtkValueNumeric.Value = param.EVSpAtkValue;
+            evSpDefValueNumeric.Value = param.EVSpDefValue;
 
-            friendshipLowCheckBox.Checked = param.FriendshipMods[0];
-            friendshipMidCheckBox.Checked = param.FriendshipMods[1];
-            friendshipHighCheckBox.Checked = param.FriendshipMods[2];
+            friendshipLowCheckBox.Checked = param.FriendshipLow;
+            friendshipMidCheckBox.Checked = param.FriendshipMid;
+            friendshipHighCheckBox.Checked = param.FriendshipHigh;
 
-            friendshipLowValueNumeric.Value = param.FriendshipParams[0];
-            friendshipMidValueNumeric.Value = param.FriendshipParams[1];
-            friendshipHighValueNumeric.Value = param.FriendshipParams[2];
+            friendshipLowValueNumeric.Value = param.FriendshipLowValue;
+            friendshipMidValueNumeric.Value = param.FriendshipMidValue;
+            friendshipHighValueNumeric.Value = param.FriendshipHighValue;           
         }
 
         private void saveDataButton_Click(object sender, EventArgs e)
@@ -591,28 +590,28 @@ namespace DSPRE.Editors
             param.PPRestoreAll = ppRestoreAllCheckBox.Checked;
 
             // EVs
-            param.EVUps[0] = evHpCheckBox.Checked;
-            param.EVUps[1] = evAtkCheckBox.Checked;
-            param.EVUps[2] = evDefCheckBox.Checked;
-            param.EVUps[3] = evSpeedCheckBox.Checked;
-            param.EVUps[4] = evSpAtkCheckBox.Checked;
-            param.EVUps[5] = evSpDefCheckBox.Checked;
+            param.EVHp = evHpCheckBox.Checked;
+            param.EVAtk = evAtkCheckBox.Checked;
+            param.EVDef = evDefCheckBox.Checked;
+            param.EVSpeed = evSpeedCheckBox.Checked;
+            param.EVSpAtk = evSpAtkCheckBox.Checked;
+            param.EVSpDef = evSpDefCheckBox.Checked;
 
-            param.EVParams[0] = (sbyte)evHpValueNumeric.Value;
-            param.EVParams[1] = (sbyte)evAtkValueNumeric.Value;
-            param.EVParams[2] = (sbyte)evDefValueNumeric.Value;
-            param.EVParams[3] = (sbyte)evSpeedValueNumeric.Value;
-            param.EVParams[4] = (sbyte)evSpAtkValueNumeric.Value;
-            param.EVParams[5] = (sbyte)evSpDefValueNumeric.Value;
+            param.EVHpValue = (sbyte)evHpValueNumeric.Value;
+            param.EVAtkValue = (sbyte)evAtkValueNumeric.Value;
+            param.EVDefValue = (sbyte)evDefValueNumeric.Value;
+            param.EVSpeedValue = (sbyte)evSpeedValueNumeric.Value;
+            param.EVSpAtkValue = (sbyte)evSpAtkValueNumeric.Value;
+            param.EVSpDefValue = (sbyte)evSpDefValueNumeric.Value;
 
             // Friendship
-            param.FriendshipMods[0] = friendshipLowCheckBox.Checked;
-            param.FriendshipMods[1] = friendshipMidCheckBox.Checked;
-            param.FriendshipMods[2] = friendshipHighCheckBox.Checked;
+            param.FriendshipLow = friendshipLowCheckBox.Checked;
+            param.FriendshipMid = friendshipMidCheckBox.Checked;
+            param.FriendshipHigh = friendshipHighCheckBox.Checked;
 
-            param.FriendshipParams[0] = (sbyte)friendshipLowValueNumeric.Value;
-            param.FriendshipParams[1] = (sbyte)friendshipMidValueNumeric.Value;
-            param.FriendshipParams[2] = (sbyte)friendshipHighValueNumeric.Value;
+            param.FriendshipLowValue = (sbyte)friendshipLowValueNumeric.Value;
+            param.FriendshipMidValue = (sbyte)friendshipMidValueNumeric.Value;
+            param.FriendshipHighValue = (sbyte)friendshipHighValueNumeric.Value;
 
             setDirty(true);
         }

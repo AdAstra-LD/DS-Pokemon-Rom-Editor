@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Controls.Primitives;
 using static DSPRE.RomInfo;
 using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
 
@@ -417,166 +418,174 @@ namespace DSPRE.ROMFiles
 
         public class ItemPartyUseParam
         {
-            // Flags (bit-packed)
-            public bool SlpHeal, PsnHeal, BrnHeal, FrzHeal, PrzHeal, CfsHeal, InfHeal;
-            public bool GuardSpec;
-
+            public bool SlpHeal, PsnHeal, BrnHeal, FrzHeal, PrzHeal, CfsHeal, InfHeal, GuardSpec;
             public bool Revive, ReviveAll, LevelUp, Evolve;
-
-            public sbyte AtkStages, DefStages, SpAtkStages, SpDefStages, SpeedStages, AccuracyStages, CritRateStages;
-
+            public int AtkStages, DefStages, SpAtkStages, SpDefStages, SpeedStages, AccuracyStages, CritRateStages;
             public bool PPUps, PPMax, PPRestore, PPRestoreAll, HPRestore;
-
-            public bool[] EVUps = new bool[6];               // hp, atk, def, speed, spatk, spdef
-            public bool[] FriendshipMods = new bool[3];      // lo, med, hi
-
-            public sbyte[] EVParams = new sbyte[6];          // hp, atk, def, speed, spatk, spdef
-            public byte HPRestoreParam;
-            public byte PPRestoreParam;
-            public sbyte[] FriendshipParams = new sbyte[3];  // lo, med, hi
+            public bool EVHp, EVAtk, EVDef, EVSpeed, EVSpAtk, EVSpDef;
+            public bool FriendshipLow, FriendshipMid, FriendshipHigh;
+            public sbyte EVHpValue, EVAtkValue, EVDefValue, EVSpeedValue, EVSpAtkValue, EVSpDefValue;
+            public byte HPRestoreParam, PPRestoreParam;
+            public sbyte FriendshipLowValue, FriendshipMidValue, FriendshipHighValue;
 
             public ItemPartyUseParam(BinaryReader reader)
             {
-                byte[] data = reader.ReadBytes(19);
+                byte b0 = reader.ReadByte(); // byte 0
+                SlpHeal = (b0 & (1 << 0)) != 0;
+                PsnHeal = (b0 & (1 << 1)) != 0;
+                BrnHeal = (b0 & (1 << 2)) != 0;
+                FrzHeal = (b0 & (1 << 3)) != 0;
+                PrzHeal = (b0 & (1 << 4)) != 0;
+                CfsHeal = (b0 & (1 << 5)) != 0;
+                InfHeal = (b0 & (1 << 6)) != 0;
+                GuardSpec = (b0 & (1 << 7)) != 0;
 
-                // Byte 0: HealStatus1
-                byte healStatus1 = data[0];
-                SlpHeal = (healStatus1 & (1 << 0)) != 0;
-                PsnHeal = (healStatus1 & (1 << 1)) != 0;
-                BrnHeal = (healStatus1 & (1 << 2)) != 0;
-                FrzHeal = (healStatus1 & (1 << 3)) != 0;
-                PrzHeal = (healStatus1 & (1 << 4)) != 0;
-                CfsHeal = (healStatus1 & (1 << 5)) != 0;
-                InfHeal = (healStatus1 & (1 << 6)) != 0;
-                GuardSpec = (healStatus1 & (1 << 7)) != 0;
+                byte b1 = reader.ReadByte(); // byte 1
+                Revive = (b1 & (1 << 0)) != 0;
+                ReviveAll = (b1 & (1 << 1)) != 0;
+                LevelUp = (b1 & (1 << 2)) != 0;
+                Evolve = (b1 & (1 << 3)) != 0;
+                AtkStages = (sbyte)((b1 >> 4) & 0xF); // signed 4-bit from high nibble
 
-                // Byte 1: revive, revive_all, level_up, evolve
-                byte flags1 = data[1];
-                Revive = (flags1 & (1 << 0)) != 0;
-                ReviveAll = (flags1 & (1 << 1)) != 0;
-                LevelUp = (flags1 & (1 << 2)) != 0;
-                Evolve = (flags1 & (1 << 3)) != 0;
+                byte b2 = reader.ReadByte(); // byte 2
+                DefStages = (sbyte)(b2 & 0xF);
+                SpAtkStages = (sbyte)((b2 >> 4) & 0xF);
 
-                // Byte 2: atk + def stages (stored 0–15, mapped to -6 to +6 if needed)
-                AtkStages = DecodeStage(data[2] & 0x0F);
-                DefStages = DecodeStage((data[2] >> 4) & 0x0F);
+                byte b3 = reader.ReadByte(); // byte 3
+                SpDefStages = (sbyte)(b3 & 0xF);
+                SpeedStages = (sbyte)((b3 >> 4) & 0xF);
 
-                // Byte 3: spatk + spdef
-                SpAtkStages = DecodeStage(data[3] & 0x0F);
-                SpDefStages = DecodeStage((data[3] >> 4) & 0x0F);
+                byte b4 = reader.ReadByte(); // byte 4
+                AccuracyStages = (sbyte)(b4 & 0xF);
+                CritRateStages = (sbyte)((b4 >> 4) & 0x3);
+                PPUps = (b4 & (1 << 6)) != 0;
+                PPMax = (b4 & (1 << 7)) != 0;
 
-                // Byte 4: speed + accuracy
-                SpeedStages = DecodeStage(data[4] & 0x0F);
-                AccuracyStages = DecodeStage((data[4] >> 4) & 0x0F);
+                byte b5 = reader.ReadByte(); // byte 5
+                PPRestore = (b5 & (1 << 0)) != 0;
+                PPRestoreAll = (b5 & (1 << 1)) != 0;
+                HPRestore = (b5 & (1 << 2)) != 0;
+                EVHp = (b5 & (1 << 3)) != 0;
+                EVAtk = (b5 & (1 << 4)) != 0;
+                EVDef = (b5 & (1 << 5)) != 0;
+                EVSpeed = (b5 & (1 << 6)) != 0;
+                EVSpAtk = (b5 & (1 << 7)) != 0;
 
-                // Byte 5: crit rate (2 bits), pp/hp restore flags
-                byte flags2 = data[5];
-                CritRateStages = (sbyte)(flags2 & 0x03);  // 0–3
-                PPUps = (flags2 & (1 << 2)) != 0;
-                PPMax = (flags2 & (1 << 3)) != 0;
-                PPRestore = (flags2 & (1 << 4)) != 0;
-                PPRestoreAll = (flags2 & (1 << 5)) != 0;
-                HPRestore = (flags2 & (1 << 6)) != 0;
+                byte b6 = reader.ReadByte(); // byte 6
+                EVSpDef = (b6 & (1 << 0)) != 0;
+                FriendshipLow = (b6 & (1 << 1)) != 0;
+                FriendshipMid = (b6 & (1 << 2)) != 0;
+                FriendshipHigh = (b6 & (1 << 3)) != 0;
+                // bits 4-7 unused
 
-                // Byte 6: EV flags
-                byte evFlags = data[6];
-                for (int i = 0; i < 6; i++)
-                    EVUps[i] = (evFlags & (1 << i)) != 0;
+                // Remaining bytes (7–18): values
+                EVHpValue = reader.ReadSByte();
+                EVAtkValue = reader.ReadSByte();
+                EVDefValue = reader.ReadSByte();
+                EVSpeedValue = reader.ReadSByte();
+                EVSpAtkValue = reader.ReadSByte();
+                EVSpDefValue = reader.ReadSByte();
+                HPRestoreParam = reader.ReadByte();
+                PPRestoreParam = reader.ReadByte();
+                FriendshipLowValue = reader.ReadSByte();
+                FriendshipMidValue = reader.ReadSByte();
+                FriendshipHighValue = reader.ReadSByte();
 
-                // Byte 7: friendship flags
-                byte friendFlags = data[7];
-                for (int i = 0; i < 3; i++)
-                    FriendshipMods[i] = (friendFlags & (1 << i)) != 0;
-
-                // Bytes 8–13: EVParams (signed)
-                for (int i = 0; i < 6; i++)
-                    EVParams[i] = (sbyte)data[8 + i];
-
-                // Byte 14: HP restore param (0–255)
-                HPRestoreParam = data[14];
-
-                // Byte 15: PP restore param (0–255)
-                PPRestoreParam = data[15];
-
-                // Bytes 16–18: friendship params (signed)
-                for (int i = 0; i < 3; i++)
-                    FriendshipParams[i] = (sbyte)data[16 + i];
-
-                // Skip padding in binary reader (2 bytes expected)
-                reader.BaseStream.Seek(2, SeekOrigin.Current);
+                reader.BaseStream.Seek(2, SeekOrigin.Current); // skip padding
             }
+
 
             public void WriteTo(BinaryWriter writer)
             {
-                byte[] data = new byte[19];
+                // Byte 0
+                byte b0 = 0;
+                b0 |= (byte)(SlpHeal ? 1 << 0 : 0);
+                b0 |= (byte)(PsnHeal ? 1 << 1 : 0);
+                b0 |= (byte)(BrnHeal ? 1 << 2 : 0);
+                b0 |= (byte)(FrzHeal ? 1 << 3 : 0);
+                b0 |= (byte)(PrzHeal ? 1 << 4 : 0);
+                b0 |= (byte)(CfsHeal ? 1 << 5 : 0);
+                b0 |= (byte)(InfHeal ? 1 << 6 : 0);
+                b0 |= (byte)(GuardSpec ? 1 << 7 : 0);
+                writer.Write(b0);
 
-                // Byte 0: HealStatus1
-                data[0] = 0;
-                if (SlpHeal) data[0] |= (1 << 0);
-                if (PsnHeal) data[0] |= (1 << 1);
-                if (BrnHeal) data[0] |= (1 << 2);
-                if (FrzHeal) data[0] |= (1 << 3);
-                if (PrzHeal) data[0] |= (1 << 4);
-                if (CfsHeal) data[0] |= (1 << 5);
-                if (InfHeal) data[0] |= (1 << 6);
-                if (GuardSpec) data[0] |= (1 << 7);
+                // Byte 1
+                byte b1 = 0;
+                b1 |= (byte)(Revive ? 1 << 0 : 0);
+                b1 |= (byte)(ReviveAll ? 1 << 1 : 0);
+                b1 |= (byte)(LevelUp ? 1 << 2 : 0);
+                b1 |= (byte)(Evolve ? 1 << 3 : 0);
+                b1 |= (byte)((AtkStages & 0x0F) << 4); // signed 4-bit
+                writer.Write(b1);
 
-                // Byte 1: revive, revive_all, level_up, evolve
-                data[1] = 0;
-                if (Revive) data[1] |= (1 << 0);
-                if (ReviveAll) data[1] |= (1 << 1);
-                if (LevelUp) data[1] |= (1 << 2);
-                if (Evolve) data[1] |= (1 << 3);
+                // Byte 2
+                byte b2 = 0;
+                b2 |= (byte)((DefStages & 0x0F));
+                b2 |= (byte)((SpAtkStages & 0x0F) << 4);
+                writer.Write(b2);
 
-                // Byte 2: atk + def stages
-                data[2] = (byte)((EncodeStage(DefStages) << 4) | EncodeStage(AtkStages));
+                // Byte 3
+                byte b3 = 0;
+                b3 |= (byte)((SpDefStages & 0x0F));
+                b3 |= (byte)((SpeedStages & 0x0F) << 4);
+                writer.Write(b3);
 
-                // Byte 3: spatk + spdef
-                data[3] = (byte)((EncodeStage(SpDefStages) << 4) | EncodeStage(SpAtkStages));
+                // Byte 4
+                byte b4 = 0;
+                b4 |= (byte)((AccuracyStages & 0x0F));
+                b4 |= (byte)((CritRateStages & 0x03) << 4);
+                b4 |= (byte)(PPUps ? 1 << 6 : 0);
+                b4 |= (byte)(PPMax ? 1 << 7 : 0);
+                writer.Write(b4);
 
-                // Byte 4: speed + accuracy
-                data[4] = (byte)((EncodeStage(AccuracyStages) << 4) | EncodeStage(SpeedStages));
+                // Byte 5
+                byte b5 = 0;
+                b5 |= (byte)(PPRestore ? 1 << 0 : 0);
+                b5 |= (byte)(PPRestoreAll ? 1 << 1 : 0);
+                b5 |= (byte)(HPRestore ? 1 << 2 : 0);
+                b5 |= (byte)(EVHp ? 1 << 3 : 0);
+                b5 |= (byte)(EVAtk ? 1 << 4 : 0);
+                b5 |= (byte)(EVDef ? 1 << 5 : 0);
+                b5 |= (byte)(EVSpeed ? 1 << 6 : 0);
+                b5 |= (byte)(EVSpAtk ? 1 << 7 : 0);
+                writer.Write(b5);
 
-                // Byte 5: crit rate + flags
-                data[5] = (byte)(CritRateStages & 0x03);
-                if (PPUps) data[5] |= (1 << 2);
-                if (PPMax) data[5] |= (1 << 3);
-                if (PPRestore) data[5] |= (1 << 4);
-                if (PPRestoreAll) data[5] |= (1 << 5);
-                if (HPRestore) data[5] |= (1 << 6);
+                // Byte 6
+                byte b6 = 0;
+                b6 |= (byte)(EVSpDef ? 1 << 0 : 0);
+                b6 |= (byte)(FriendshipLow ? 1 << 1 : 0);
+                b6 |= (byte)(FriendshipMid ? 1 << 2 : 0);
+                b6 |= (byte)(FriendshipHigh ? 1 << 3 : 0);
+                // bits 4-7 unused
+                writer.Write(b6);
 
-                // Byte 6: EV flags
-                for (int i = 0; i < 6; i++)
-                    if (EVUps[i]) data[6] |= (byte)(1 << i);
+                // Bytes 7–18: raw values
+                writer.Write(EVHpValue);
+                writer.Write(EVAtkValue);
+                writer.Write(EVDefValue);
+                writer.Write(EVSpeedValue);
+                writer.Write(EVSpAtkValue);
+                writer.Write(EVSpDefValue);
+                writer.Write(HPRestoreParam);
+                writer.Write(PPRestoreParam);
+                writer.Write(FriendshipLowValue);
+                writer.Write(FriendshipMidValue);
+                writer.Write(FriendshipHighValue);
 
-                // Byte 7: friendship flags
-                for (int i = 0; i < 3; i++)
-                    if (FriendshipMods[i]) data[7] |= (byte)(1 << i);
-
-                // Bytes 8–13: EVParams
-                for (int i = 0; i < 6; i++)
-                    data[8 + i] = (byte)EVParams[i];
-
-                // Byte 14: HPRestoreParam
-                data[14] = HPRestoreParam;
-
-                // Byte 15: PPRestoreParam
-                data[15] = PPRestoreParam;
-
-                // Bytes 16–18: FriendshipParams
-                for (int i = 0; i < 3; i++)
-                    data[16 + i] = (byte)FriendshipParams[i];
-
-                // Write struct + padding
-                writer.Write(data);
-                writer.Write(new byte[2]);
+                // Bytes 19–20: padding
+                writer.Write((byte)0);
+                writer.Write((byte)0);
             }
 
-            // Replace the problematic line with the following implementation of Clamp:
-            private static byte EncodeStage(sbyte val) => (byte)((val + 6 < 0) ? 0 : (val + 6 > 15) ? 15 : val + 6);
+            private static bool GetBit(ulong val, int bit) => ((val >> bit) & 1) != 0;
+            private static void SetBit(ref ulong val, int bit, bool on)
+            {
+                if (on) val |= 1UL << bit;
+                else val &= ~(1UL << bit);
+            }
 
-            // Decodes 0 to 15 to -6 to +9 range (limited logic for now)
-            private static sbyte DecodeStage(int val) => (sbyte)(val - 6);
+            private static byte EncodeStage(sbyte val) => (byte)((val + 6 < 0) ? 0 : (val + 6 > 15) ? 15 : val + 6);
+            private static sbyte DecodeStage(byte val) => (sbyte)(val - 6);
         }
 
     }
