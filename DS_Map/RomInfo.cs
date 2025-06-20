@@ -1468,7 +1468,7 @@ namespace DSPRE
                         [DirNames.pokemonBattleSprites] = @"data\poketool\pokegra\pokegra.narc",
                         [DirNames.otherPokemonBattleSprites] = @"data\poketool\pokegra\otherpoke.narc",
 
-                        [DirNames.itemData] = @"data\itemtool\item_data.narc",
+                        [DirNames.itemData] = @"data\itemtool\itemdata\item_data.narc",
                     };
 
                     //Personal Data archive is different for Pearl
@@ -1522,7 +1522,7 @@ namespace DSPRE
                         [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
                         [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
 
-                        [DirNames.itemData] = @"data\itemtool\pl_item_data.narc",
+                        [DirNames.itemData] = @"data\itemtool\itemdata\pl_item_data.narc",
                     };
                     break;
 
