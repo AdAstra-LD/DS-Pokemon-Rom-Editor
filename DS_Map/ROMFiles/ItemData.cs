@@ -339,7 +339,7 @@ namespace DSPRE.ROMFiles
         public byte PartyUse;
         public ItemPartyUseParam PartyUseParam;
 
-        private int RealID;
+        public int RealID;
 
         public ItemData(Stream stream, int ID)
         {

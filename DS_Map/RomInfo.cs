@@ -13,7 +13,7 @@ using Path = System.IO.Path;
 namespace DSPRE
 {
     /// <summary>
-    /// Class to store ROM data from GEN IV Pokémon games
+    /// Class to store ROM data from GEN IV Pokï¿½mon games
     /// </summary>
 
     public class RomInfo
@@ -174,7 +174,8 @@ namespace DSPRE
             learnsets,
             evolutions,
 
-            itemData
+            itemData,
+            itemIcons
         };
 
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
@@ -208,7 +209,7 @@ namespace DSPRE
             }
             catch (KeyNotFoundException)
             {
-                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
+                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokï¿½mon ROMS, for now.", "Unsupported ROM",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -1469,6 +1470,7 @@ namespace DSPRE
                         [DirNames.otherPokemonBattleSprites] = @"data\poketool\pokegra\otherpoke.narc",
 
                         [DirNames.itemData] = @"data\itemtool\itemdata\item_data.narc",
+                        [DirNames.itemIcons] = @"data\itemtool\itemdata\item_icon.narc"
                     };
 
                     //Personal Data archive is different for Pearl
@@ -1523,6 +1525,7 @@ namespace DSPRE
                         [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
 
                         [DirNames.itemData] = @"data\itemtool\itemdata\pl_item_data.narc",
+                        [DirNames.itemIcons] = @"data\itemtool\itemdata\item_icon.narc"
                     };
                     break;
 

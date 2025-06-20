@@ -1,5 +1,7 @@
 ﻿using DSPRE.Resources;
 using DSPRE.ROMFiles;
+using Ekona.Images;
+using Images;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +10,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
 using static DSPRE.ROMFiles.ItemData;
+using static DSPRE.RomInfo;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DSPRE.Editors
@@ -36,7 +39,7 @@ namespace DSPRE.Editors
         private uint itemNarcTableOffset;
 
         public ItemEditor(string[] itemFileNames) //, string[] itemDescriptions)
-        {
+         {
             itemNarcTableOffset = (uint)(RomInfo.gameFamily == RomInfo.GameFamilies.HGSS ? 0x100194 : RomInfo.gameFamily == RomInfo.GameFamilies.Plat ? 0xF0CC4 : 0xF85B4);
             int killCount = 0;
             itemNarcTable = new ItemNarcTableEntry[itemFileNames.Length];
@@ -152,7 +155,7 @@ namespace DSPRE.Editors
             critRateStagesNumeric.Minimum = 0;
             critRateStagesNumeric.Maximum = 3;
         }
-
+        
 
 
         private void SetItemParamToolTips()
@@ -287,10 +290,35 @@ namespace DSPRE.Editors
             battleFunctionComboBox.SelectedIndex = (int)currentLoadedFile.battleUseFunc;
 
 
-            //descriptionTextBox.Text = itemDescriptions[currentLoadedId];
-
             itemParamsTabControl.Enabled = partyUseCheckBox.Checked;
             PopulateItemPartyParamsUI();
+
+            var itemIconId = itemNarcTable[currentLoadedFile.RealID].itemIcon;
+            var itemPaletteId = itemNarcTable[currentLoadedFile.RealID].itemPalette;
+
+            string paletteFilename = itemPaletteId.ToString("D4");
+            var itemPalette = new NCLR(gameDirs[DirNames.itemIcons].unpackedDir + "\\" + paletteFilename, (int)itemPaletteId, paletteFilename);
+
+            string spriteFilename = itemIconId.ToString("D4");
+            ImageBase imageBase = new NCGR(gameDirs[DirNames.itemIcons].unpackedDir + "\\" + spriteFilename, (int)itemIconId, spriteFilename);
+
+            int ncerFileId = 1; // there's only one ncer in pt (0001.ncer), probably the case in hg too, but is it the 0001?
+            string ncerFileName = ncerFileId.ToString("D4");
+            SpriteBase spriteBase = new NCER(gameDirs[DirNames.itemIcons].unpackedDir + "\\" + ncerFileName, 2, ncerFileName);
+
+            try
+            {
+                itemEditorSelectedPictureBox.Image = spriteBase.Get_Image(imageBase, itemPalette, 0, imageBase.Width, imageBase.Height, false, false, false, true, true, -1);
+                itemEditorSelectedPictureBox.Height = imageBase.Height;
+                itemEditorSelectedPictureBox.Width = imageBase.Width;
+            }
+            catch (FormatException)
+            {
+                itemEditorSelectedPictureBox.Image = null;
+            }
+
+
+
         }
 
         private void PopulateItemPartyParamsUI()

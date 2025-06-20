@@ -74,63 +74,64 @@
             this.battleFunctionLabel = new System.Windows.Forms.Label();
             this.itemParamsTabControl = new System.Windows.Forms.TabControl();
             this.statusHealtTabPage = new System.Windows.Forms.TabPage();
-            this.levelUpEvolveTabPage = new System.Windows.Forms.TabPage();
-            this.statStagesTabPage = new System.Windows.Forms.TabPage();
-            this.hpPpRestoreTabPage = new System.Windows.Forms.TabPage();
-            this.evsTabPage = new System.Windows.Forms.TabPage();
-            this.friendshipTabPage = new System.Windows.Forms.TabPage();
-            this.slpHealCheckBox = new System.Windows.Forms.CheckBox();
-            this.psnHealCheckBox = new System.Windows.Forms.CheckBox();
-            this.brnHealCheckBox = new System.Windows.Forms.CheckBox();
-            this.frzHealCheckBox = new System.Windows.Forms.CheckBox();
-            this.przHealCheckBox = new System.Windows.Forms.CheckBox();
-            this.cfsHealCheckBox = new System.Windows.Forms.CheckBox();
-            this.infHealCheckBox = new System.Windows.Forms.CheckBox();
-            this.guardSpecCheckBox = new System.Windows.Forms.CheckBox();
-            this.reviveCheckBox = new System.Windows.Forms.CheckBox();
             this.reviveAllCheckBox = new System.Windows.Forms.CheckBox();
-            this.levelUpCheckBox = new System.Windows.Forms.CheckBox();
+            this.reviveCheckBox = new System.Windows.Forms.CheckBox();
+            this.guardSpecCheckBox = new System.Windows.Forms.CheckBox();
+            this.infHealCheckBox = new System.Windows.Forms.CheckBox();
+            this.cfsHealCheckBox = new System.Windows.Forms.CheckBox();
+            this.przHealCheckBox = new System.Windows.Forms.CheckBox();
+            this.frzHealCheckBox = new System.Windows.Forms.CheckBox();
+            this.brnHealCheckBox = new System.Windows.Forms.CheckBox();
+            this.psnHealCheckBox = new System.Windows.Forms.CheckBox();
+            this.slpHealCheckBox = new System.Windows.Forms.CheckBox();
+            this.levelUpEvolveTabPage = new System.Windows.Forms.TabPage();
             this.evolveCheckBox = new System.Windows.Forms.CheckBox();
-            this.atkStagesNumeric = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.defStagesNumeric = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.spAtkStagesNumeric = new System.Windows.Forms.NumericUpDown();
-            this.label4 = new System.Windows.Forms.Label();
-            this.spDefStagesNumeric = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.speedStagesNumeric = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.accuracyStagesNumeric = new System.Windows.Forms.NumericUpDown();
+            this.levelUpCheckBox = new System.Windows.Forms.CheckBox();
+            this.statStagesTabPage = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
             this.critRateStagesNumeric = new System.Windows.Forms.NumericUpDown();
-            this.hpRestoreCheckBox = new System.Windows.Forms.CheckBox();
-            this.ppRestoreCheckBox = new System.Windows.Forms.CheckBox();
-            this.ppUpsCheckBox = new System.Windows.Forms.CheckBox();
-            this.ppMaxCheckBox = new System.Windows.Forms.CheckBox();
-            this.ppRestoreAllCheckBox = new System.Windows.Forms.CheckBox();
-            this.hpRestoreParamNumeric = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.accuracyStagesNumeric = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.speedStagesNumeric = new System.Windows.Forms.NumericUpDown();
+            this.label4 = new System.Windows.Forms.Label();
+            this.spDefStagesNumeric = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.spAtkStagesNumeric = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.defStagesNumeric = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.atkStagesNumeric = new System.Windows.Forms.NumericUpDown();
+            this.hpPpRestoreTabPage = new System.Windows.Forms.TabPage();
             this.ppRestoreParamNumeric = new System.Windows.Forms.NumericUpDown();
-            this.evHpValueNumeric = new System.Windows.Forms.NumericUpDown();
-            this.evHpCheckBox = new System.Windows.Forms.CheckBox();
-            this.evAtkValueNumeric = new System.Windows.Forms.NumericUpDown();
-            this.evAtkCheckBox = new System.Windows.Forms.CheckBox();
-            this.evDefValueNumeric = new System.Windows.Forms.NumericUpDown();
-            this.evDefCheckBox = new System.Windows.Forms.CheckBox();
-            this.evSpeedValueNumeric = new System.Windows.Forms.NumericUpDown();
-            this.evSpeedCheckBox = new System.Windows.Forms.CheckBox();
-            this.evSpAtkValueNumeric = new System.Windows.Forms.NumericUpDown();
-            this.evSpAtkCheckBox = new System.Windows.Forms.CheckBox();
+            this.hpRestoreParamNumeric = new System.Windows.Forms.NumericUpDown();
+            this.ppRestoreAllCheckBox = new System.Windows.Forms.CheckBox();
+            this.ppMaxCheckBox = new System.Windows.Forms.CheckBox();
+            this.ppUpsCheckBox = new System.Windows.Forms.CheckBox();
+            this.ppRestoreCheckBox = new System.Windows.Forms.CheckBox();
+            this.hpRestoreCheckBox = new System.Windows.Forms.CheckBox();
+            this.evsTabPage = new System.Windows.Forms.TabPage();
             this.evSpDefValueNumeric = new System.Windows.Forms.NumericUpDown();
             this.evSpDefCheckBox = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.friendshipLowValueNumeric = new System.Windows.Forms.NumericUpDown();
-            this.friendshipLowCheckBox = new System.Windows.Forms.CheckBox();
-            this.friendshipMidValueNumeric = new System.Windows.Forms.NumericUpDown();
-            this.friendshipMidCheckBox = new System.Windows.Forms.CheckBox();
+            this.evSpAtkValueNumeric = new System.Windows.Forms.NumericUpDown();
+            this.evSpAtkCheckBox = new System.Windows.Forms.CheckBox();
+            this.evSpeedValueNumeric = new System.Windows.Forms.NumericUpDown();
+            this.evSpeedCheckBox = new System.Windows.Forms.CheckBox();
+            this.evDefValueNumeric = new System.Windows.Forms.NumericUpDown();
+            this.evDefCheckBox = new System.Windows.Forms.CheckBox();
+            this.evAtkValueNumeric = new System.Windows.Forms.NumericUpDown();
+            this.evAtkCheckBox = new System.Windows.Forms.CheckBox();
+            this.evHpValueNumeric = new System.Windows.Forms.NumericUpDown();
+            this.evHpCheckBox = new System.Windows.Forms.CheckBox();
+            this.friendshipTabPage = new System.Windows.Forms.TabPage();
             this.friendshipHighValueNumeric = new System.Windows.Forms.NumericUpDown();
             this.friendshipHighCheckBox = new System.Windows.Forms.CheckBox();
+            this.friendshipMidValueNumeric = new System.Windows.Forms.NumericUpDown();
+            this.friendshipMidCheckBox = new System.Windows.Forms.CheckBox();
+            this.friendshipLowValueNumeric = new System.Windows.Forms.NumericUpDown();
+            this.friendshipLowCheckBox = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.itemEditorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumberNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -155,27 +156,28 @@
             this.statusHealtTabPage.SuspendLayout();
             this.levelUpEvolveTabPage.SuspendLayout();
             this.statStagesTabPage.SuspendLayout();
-            this.hpPpRestoreTabPage.SuspendLayout();
-            this.evsTabPage.SuspendLayout();
-            this.friendshipTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.atkStagesNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.defStagesNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spAtkStagesNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spDefStagesNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.speedStagesNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accuracyStagesNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.critRateStagesNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hpRestoreParamNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accuracyStagesNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedStagesNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spDefStagesNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spAtkStagesNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.defStagesNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.atkStagesNumeric)).BeginInit();
+            this.hpPpRestoreTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ppRestoreParamNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evHpValueNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evAtkValueNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evDefValueNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evSpeedValueNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evSpAtkValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hpRestoreParamNumeric)).BeginInit();
+            this.evsTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.evSpDefValueNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evSpAtkValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evSpeedValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evDefValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evAtkValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evHpValueNumeric)).BeginInit();
+            this.friendshipTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipHighValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // itemNumberNumericUpDown
@@ -253,6 +255,7 @@
             this.tableLayoutPanel1.Controls.Add(this.priceFlowLayoutPanel, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.functionsFlowLayoutPanel, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.itemParamsTabControl, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.itemEditorSelectedPictureBox, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -260,6 +263,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1065, 563);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
@@ -680,6 +684,106 @@
             this.statusHealtTabPage.TabIndex = 0;
             this.statusHealtTabPage.Text = "Status Heals";
             // 
+            // reviveAllCheckBox
+            // 
+            this.reviveAllCheckBox.AutoSize = true;
+            this.reviveAllCheckBox.Location = new System.Drawing.Point(262, 46);
+            this.reviveAllCheckBox.Name = "reviveAllCheckBox";
+            this.reviveAllCheckBox.Size = new System.Drawing.Size(79, 17);
+            this.reviveAllCheckBox.TabIndex = 9;
+            this.reviveAllCheckBox.Text = "Revives All";
+            this.reviveAllCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // reviveCheckBox
+            // 
+            this.reviveCheckBox.AutoSize = true;
+            this.reviveCheckBox.Location = new System.Drawing.Point(262, 23);
+            this.reviveCheckBox.Name = "reviveCheckBox";
+            this.reviveCheckBox.Size = new System.Drawing.Size(92, 17);
+            this.reviveCheckBox.TabIndex = 8;
+            this.reviveCheckBox.Text = "Revive Single";
+            this.reviveCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // guardSpecCheckBox
+            // 
+            this.guardSpecCheckBox.AutoSize = true;
+            this.guardSpecCheckBox.Location = new System.Drawing.Point(135, 46);
+            this.guardSpecCheckBox.Name = "guardSpecCheckBox";
+            this.guardSpecCheckBox.Size = new System.Drawing.Size(102, 17);
+            this.guardSpecCheckBox.TabIndex = 7;
+            this.guardSpecCheckBox.Text = "Set Guard Spec";
+            this.guardSpecCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // infHealCheckBox
+            // 
+            this.infHealCheckBox.AutoSize = true;
+            this.infHealCheckBox.Location = new System.Drawing.Point(135, 23);
+            this.infHealCheckBox.Name = "infHealCheckBox";
+            this.infHealCheckBox.Size = new System.Drawing.Size(101, 17);
+            this.infHealCheckBox.TabIndex = 6;
+            this.infHealCheckBox.Text = "Heals All Health";
+            this.infHealCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // cfsHealCheckBox
+            // 
+            this.cfsHealCheckBox.AutoSize = true;
+            this.cfsHealCheckBox.Location = new System.Drawing.Point(16, 138);
+            this.cfsHealCheckBox.Name = "cfsHealCheckBox";
+            this.cfsHealCheckBox.Size = new System.Drawing.Size(103, 17);
+            this.cfsHealCheckBox.TabIndex = 5;
+            this.cfsHealCheckBox.Text = "Heals Confusion";
+            this.cfsHealCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // przHealCheckBox
+            // 
+            this.przHealCheckBox.AutoSize = true;
+            this.przHealCheckBox.Location = new System.Drawing.Point(16, 115);
+            this.przHealCheckBox.Name = "przHealCheckBox";
+            this.przHealCheckBox.Size = new System.Drawing.Size(97, 17);
+            this.przHealCheckBox.TabIndex = 4;
+            this.przHealCheckBox.Text = "Heals Paralysis";
+            this.przHealCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // frzHealCheckBox
+            // 
+            this.frzHealCheckBox.AutoSize = true;
+            this.frzHealCheckBox.Location = new System.Drawing.Point(16, 92);
+            this.frzHealCheckBox.Name = "frzHealCheckBox";
+            this.frzHealCheckBox.Size = new System.Drawing.Size(88, 17);
+            this.frzHealCheckBox.TabIndex = 3;
+            this.frzHealCheckBox.Text = "Heals Freeze";
+            this.frzHealCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // brnHealCheckBox
+            // 
+            this.brnHealCheckBox.AutoSize = true;
+            this.brnHealCheckBox.Location = new System.Drawing.Point(16, 69);
+            this.brnHealCheckBox.Name = "brnHealCheckBox";
+            this.brnHealCheckBox.Size = new System.Drawing.Size(78, 17);
+            this.brnHealCheckBox.TabIndex = 2;
+            this.brnHealCheckBox.Text = "Heals Burn";
+            this.brnHealCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // psnHealCheckBox
+            // 
+            this.psnHealCheckBox.AutoSize = true;
+            this.psnHealCheckBox.Location = new System.Drawing.Point(16, 46);
+            this.psnHealCheckBox.Name = "psnHealCheckBox";
+            this.psnHealCheckBox.Size = new System.Drawing.Size(88, 17);
+            this.psnHealCheckBox.TabIndex = 1;
+            this.psnHealCheckBox.Text = "Heals Poison";
+            this.psnHealCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // slpHealCheckBox
+            // 
+            this.slpHealCheckBox.AutoSize = true;
+            this.slpHealCheckBox.Location = new System.Drawing.Point(16, 23);
+            this.slpHealCheckBox.Name = "slpHealCheckBox";
+            this.slpHealCheckBox.Size = new System.Drawing.Size(83, 17);
+            this.slpHealCheckBox.TabIndex = 0;
+            this.slpHealCheckBox.Text = "Heals Sleep";
+            this.slpHealCheckBox.UseVisualStyleBackColor = true;
+            // 
             // levelUpEvolveTabPage
             // 
             this.levelUpEvolveTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -691,6 +795,26 @@
             this.levelUpEvolveTabPage.Size = new System.Drawing.Size(518, 251);
             this.levelUpEvolveTabPage.TabIndex = 1;
             this.levelUpEvolveTabPage.Text = "Level Up & Evolve";
+            // 
+            // evolveCheckBox
+            // 
+            this.evolveCheckBox.AutoSize = true;
+            this.evolveCheckBox.Location = new System.Drawing.Point(135, 22);
+            this.evolveCheckBox.Name = "evolveCheckBox";
+            this.evolveCheckBox.Size = new System.Drawing.Size(64, 17);
+            this.evolveCheckBox.TabIndex = 11;
+            this.evolveCheckBox.Text = "Evolves";
+            this.evolveCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // levelUpCheckBox
+            // 
+            this.levelUpCheckBox.AutoSize = true;
+            this.levelUpCheckBox.Location = new System.Drawing.Point(26, 22);
+            this.levelUpCheckBox.Name = "levelUpCheckBox";
+            this.levelUpCheckBox.Size = new System.Drawing.Size(69, 17);
+            this.levelUpCheckBox.TabIndex = 10;
+            this.levelUpCheckBox.Text = "Level Up";
+            this.levelUpCheckBox.UseVisualStyleBackColor = true;
             // 
             // statStagesTabPage
             // 
@@ -716,6 +840,118 @@
             this.statStagesTabPage.TabIndex = 2;
             this.statStagesTabPage.Text = "Stat Stages";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(16, 207);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Crit Rate";
+            // 
+            // critRateStagesNumeric
+            // 
+            this.critRateStagesNumeric.Location = new System.Drawing.Point(96, 205);
+            this.critRateStagesNumeric.Name = "critRateStagesNumeric";
+            this.critRateStagesNumeric.Size = new System.Drawing.Size(42, 20);
+            this.critRateStagesNumeric.TabIndex = 12;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 176);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(52, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Accuracy";
+            // 
+            // accuracyStagesNumeric
+            // 
+            this.accuracyStagesNumeric.Location = new System.Drawing.Point(96, 174);
+            this.accuracyStagesNumeric.Name = "accuracyStagesNumeric";
+            this.accuracyStagesNumeric.Size = new System.Drawing.Size(42, 20);
+            this.accuracyStagesNumeric.TabIndex = 10;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 147);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(38, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Speed";
+            // 
+            // speedStagesNumeric
+            // 
+            this.speedStagesNumeric.Location = new System.Drawing.Point(96, 145);
+            this.speedStagesNumeric.Name = "speedStagesNumeric";
+            this.speedStagesNumeric.Size = new System.Drawing.Size(42, 20);
+            this.speedStagesNumeric.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 118);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(40, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Sp Def";
+            // 
+            // spDefStagesNumeric
+            // 
+            this.spDefStagesNumeric.Location = new System.Drawing.Point(96, 116);
+            this.spDefStagesNumeric.Name = "spDefStagesNumeric";
+            this.spDefStagesNumeric.Size = new System.Drawing.Size(42, 20);
+            this.spDefStagesNumeric.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(16, 86);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(39, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Sp Atk";
+            // 
+            // spAtkStagesNumeric
+            // 
+            this.spAtkStagesNumeric.Location = new System.Drawing.Point(96, 84);
+            this.spAtkStagesNumeric.Name = "spAtkStagesNumeric";
+            this.spAtkStagesNumeric.Size = new System.Drawing.Size(42, 20);
+            this.spAtkStagesNumeric.TabIndex = 4;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 51);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(24, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Def";
+            // 
+            // defStagesNumeric
+            // 
+            this.defStagesNumeric.Location = new System.Drawing.Point(96, 49);
+            this.defStagesNumeric.Name = "defStagesNumeric";
+            this.defStagesNumeric.Size = new System.Drawing.Size(42, 20);
+            this.defStagesNumeric.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(23, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Atk";
+            // 
+            // atkStagesNumeric
+            // 
+            this.atkStagesNumeric.Location = new System.Drawing.Point(96, 14);
+            this.atkStagesNumeric.Name = "atkStagesNumeric";
+            this.atkStagesNumeric.Size = new System.Drawing.Size(42, 20);
+            this.atkStagesNumeric.TabIndex = 0;
+            // 
             // hpPpRestoreTabPage
             // 
             this.hpPpRestoreTabPage.BackColor = System.Drawing.SystemColors.Control;
@@ -732,6 +968,70 @@
             this.hpPpRestoreTabPage.Size = new System.Drawing.Size(518, 251);
             this.hpPpRestoreTabPage.TabIndex = 3;
             this.hpPpRestoreTabPage.Text = "HP/PP Restore";
+            // 
+            // ppRestoreParamNumeric
+            // 
+            this.ppRestoreParamNumeric.Location = new System.Drawing.Point(103, 55);
+            this.ppRestoreParamNumeric.Name = "ppRestoreParamNumeric";
+            this.ppRestoreParamNumeric.Size = new System.Drawing.Size(57, 20);
+            this.ppRestoreParamNumeric.TabIndex = 17;
+            // 
+            // hpRestoreParamNumeric
+            // 
+            this.hpRestoreParamNumeric.Location = new System.Drawing.Point(103, 21);
+            this.hpRestoreParamNumeric.Name = "hpRestoreParamNumeric";
+            this.hpRestoreParamNumeric.Size = new System.Drawing.Size(57, 20);
+            this.hpRestoreParamNumeric.TabIndex = 16;
+            // 
+            // ppRestoreAllCheckBox
+            // 
+            this.ppRestoreAllCheckBox.AutoSize = true;
+            this.ppRestoreAllCheckBox.Location = new System.Drawing.Point(16, 105);
+            this.ppRestoreAllCheckBox.Name = "ppRestoreAllCheckBox";
+            this.ppRestoreAllCheckBox.Size = new System.Drawing.Size(94, 17);
+            this.ppRestoreAllCheckBox.TabIndex = 15;
+            this.ppRestoreAllCheckBox.Text = "PP Restore All";
+            this.ppRestoreAllCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ppMaxCheckBox
+            // 
+            this.ppMaxCheckBox.AutoSize = true;
+            this.ppMaxCheckBox.Location = new System.Drawing.Point(16, 184);
+            this.ppMaxCheckBox.Name = "ppMaxCheckBox";
+            this.ppMaxCheckBox.Size = new System.Drawing.Size(63, 17);
+            this.ppMaxCheckBox.TabIndex = 14;
+            this.ppMaxCheckBox.Text = "PP Max";
+            this.ppMaxCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ppUpsCheckBox
+            // 
+            this.ppUpsCheckBox.AutoSize = true;
+            this.ppUpsCheckBox.Location = new System.Drawing.Point(16, 155);
+            this.ppUpsCheckBox.Name = "ppUpsCheckBox";
+            this.ppUpsCheckBox.Size = new System.Drawing.Size(57, 17);
+            this.ppUpsCheckBox.TabIndex = 13;
+            this.ppUpsCheckBox.Text = "PP Up";
+            this.ppUpsCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ppRestoreCheckBox
+            // 
+            this.ppRestoreCheckBox.AutoSize = true;
+            this.ppRestoreCheckBox.Location = new System.Drawing.Point(16, 56);
+            this.ppRestoreCheckBox.Name = "ppRestoreCheckBox";
+            this.ppRestoreCheckBox.Size = new System.Drawing.Size(80, 17);
+            this.ppRestoreCheckBox.TabIndex = 12;
+            this.ppRestoreCheckBox.Text = "PP Restore";
+            this.ppRestoreCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // hpRestoreCheckBox
+            // 
+            this.hpRestoreCheckBox.AutoSize = true;
+            this.hpRestoreCheckBox.Location = new System.Drawing.Point(16, 22);
+            this.hpRestoreCheckBox.Name = "hpRestoreCheckBox";
+            this.hpRestoreCheckBox.Size = new System.Drawing.Size(81, 17);
+            this.hpRestoreCheckBox.TabIndex = 11;
+            this.hpRestoreCheckBox.Text = "HP Restore";
+            this.hpRestoreCheckBox.UseVisualStyleBackColor = true;
             // 
             // evsTabPage
             // 
@@ -755,385 +1055,22 @@
             this.evsTabPage.TabIndex = 4;
             this.evsTabPage.Text = "EVs";
             // 
-            // friendshipTabPage
-            // 
-            this.friendshipTabPage.BackColor = System.Drawing.SystemColors.Control;
-            this.friendshipTabPage.Controls.Add(this.friendshipHighValueNumeric);
-            this.friendshipTabPage.Controls.Add(this.friendshipHighCheckBox);
-            this.friendshipTabPage.Controls.Add(this.friendshipMidValueNumeric);
-            this.friendshipTabPage.Controls.Add(this.friendshipMidCheckBox);
-            this.friendshipTabPage.Controls.Add(this.friendshipLowValueNumeric);
-            this.friendshipTabPage.Controls.Add(this.friendshipLowCheckBox);
-            this.friendshipTabPage.Location = new System.Drawing.Point(4, 22);
-            this.friendshipTabPage.Name = "friendshipTabPage";
-            this.friendshipTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.friendshipTabPage.Size = new System.Drawing.Size(518, 251);
-            this.friendshipTabPage.TabIndex = 5;
-            this.friendshipTabPage.Text = "Friendship";
-            // 
-            // slpHealCheckBox
-            // 
-            this.slpHealCheckBox.AutoSize = true;
-            this.slpHealCheckBox.Location = new System.Drawing.Point(16, 23);
-            this.slpHealCheckBox.Name = "slpHealCheckBox";
-            this.slpHealCheckBox.Size = new System.Drawing.Size(83, 17);
-            this.slpHealCheckBox.TabIndex = 0;
-            this.slpHealCheckBox.Text = "Heals Sleep";
-            this.slpHealCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // psnHealCheckBox
-            // 
-            this.psnHealCheckBox.AutoSize = true;
-            this.psnHealCheckBox.Location = new System.Drawing.Point(16, 46);
-            this.psnHealCheckBox.Name = "psnHealCheckBox";
-            this.psnHealCheckBox.Size = new System.Drawing.Size(88, 17);
-            this.psnHealCheckBox.TabIndex = 1;
-            this.psnHealCheckBox.Text = "Heals Poison";
-            this.psnHealCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // brnHealCheckBox
-            // 
-            this.brnHealCheckBox.AutoSize = true;
-            this.brnHealCheckBox.Location = new System.Drawing.Point(16, 69);
-            this.brnHealCheckBox.Name = "brnHealCheckBox";
-            this.brnHealCheckBox.Size = new System.Drawing.Size(78, 17);
-            this.brnHealCheckBox.TabIndex = 2;
-            this.brnHealCheckBox.Text = "Heals Burn";
-            this.brnHealCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // frzHealCheckBox
-            // 
-            this.frzHealCheckBox.AutoSize = true;
-            this.frzHealCheckBox.Location = new System.Drawing.Point(16, 92);
-            this.frzHealCheckBox.Name = "frzHealCheckBox";
-            this.frzHealCheckBox.Size = new System.Drawing.Size(88, 17);
-            this.frzHealCheckBox.TabIndex = 3;
-            this.frzHealCheckBox.Text = "Heals Freeze";
-            this.frzHealCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // przHealCheckBox
-            // 
-            this.przHealCheckBox.AutoSize = true;
-            this.przHealCheckBox.Location = new System.Drawing.Point(16, 115);
-            this.przHealCheckBox.Name = "przHealCheckBox";
-            this.przHealCheckBox.Size = new System.Drawing.Size(97, 17);
-            this.przHealCheckBox.TabIndex = 4;
-            this.przHealCheckBox.Text = "Heals Paralysis";
-            this.przHealCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // cfsHealCheckBox
-            // 
-            this.cfsHealCheckBox.AutoSize = true;
-            this.cfsHealCheckBox.Location = new System.Drawing.Point(16, 138);
-            this.cfsHealCheckBox.Name = "cfsHealCheckBox";
-            this.cfsHealCheckBox.Size = new System.Drawing.Size(103, 17);
-            this.cfsHealCheckBox.TabIndex = 5;
-            this.cfsHealCheckBox.Text = "Heals Confusion";
-            this.cfsHealCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // infHealCheckBox
-            // 
-            this.infHealCheckBox.AutoSize = true;
-            this.infHealCheckBox.Location = new System.Drawing.Point(135, 23);
-            this.infHealCheckBox.Name = "infHealCheckBox";
-            this.infHealCheckBox.Size = new System.Drawing.Size(101, 17);
-            this.infHealCheckBox.TabIndex = 6;
-            this.infHealCheckBox.Text = "Heals All Health";
-            this.infHealCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // guardSpecCheckBox
-            // 
-            this.guardSpecCheckBox.AutoSize = true;
-            this.guardSpecCheckBox.Location = new System.Drawing.Point(135, 46);
-            this.guardSpecCheckBox.Name = "guardSpecCheckBox";
-            this.guardSpecCheckBox.Size = new System.Drawing.Size(102, 17);
-            this.guardSpecCheckBox.TabIndex = 7;
-            this.guardSpecCheckBox.Text = "Set Guard Spec";
-            this.guardSpecCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // reviveCheckBox
-            // 
-            this.reviveCheckBox.AutoSize = true;
-            this.reviveCheckBox.Location = new System.Drawing.Point(262, 23);
-            this.reviveCheckBox.Name = "reviveCheckBox";
-            this.reviveCheckBox.Size = new System.Drawing.Size(92, 17);
-            this.reviveCheckBox.TabIndex = 8;
-            this.reviveCheckBox.Text = "Revive Single";
-            this.reviveCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // reviveAllCheckBox
-            // 
-            this.reviveAllCheckBox.AutoSize = true;
-            this.reviveAllCheckBox.Location = new System.Drawing.Point(262, 46);
-            this.reviveAllCheckBox.Name = "reviveAllCheckBox";
-            this.reviveAllCheckBox.Size = new System.Drawing.Size(79, 17);
-            this.reviveAllCheckBox.TabIndex = 9;
-            this.reviveAllCheckBox.Text = "Revives All";
-            this.reviveAllCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // levelUpCheckBox
-            // 
-            this.levelUpCheckBox.AutoSize = true;
-            this.levelUpCheckBox.Location = new System.Drawing.Point(26, 22);
-            this.levelUpCheckBox.Name = "levelUpCheckBox";
-            this.levelUpCheckBox.Size = new System.Drawing.Size(69, 17);
-            this.levelUpCheckBox.TabIndex = 10;
-            this.levelUpCheckBox.Text = "Level Up";
-            this.levelUpCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // evolveCheckBox
-            // 
-            this.evolveCheckBox.AutoSize = true;
-            this.evolveCheckBox.Location = new System.Drawing.Point(135, 22);
-            this.evolveCheckBox.Name = "evolveCheckBox";
-            this.evolveCheckBox.Size = new System.Drawing.Size(64, 17);
-            this.evolveCheckBox.TabIndex = 11;
-            this.evolveCheckBox.Text = "Evolves";
-            this.evolveCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // atkStagesNumeric
-            // 
-            this.atkStagesNumeric.Location = new System.Drawing.Point(96, 14);
-            this.atkStagesNumeric.Name = "atkStagesNumeric";
-            this.atkStagesNumeric.Size = new System.Drawing.Size(42, 20);
-            this.atkStagesNumeric.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Atk";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 51);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(24, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Def";
-            // 
-            // defStagesNumeric
-            // 
-            this.defStagesNumeric.Location = new System.Drawing.Point(96, 49);
-            this.defStagesNumeric.Name = "defStagesNumeric";
-            this.defStagesNumeric.Size = new System.Drawing.Size(42, 20);
-            this.defStagesNumeric.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 86);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Sp Atk";
-            // 
-            // spAtkStagesNumeric
-            // 
-            this.spAtkStagesNumeric.Location = new System.Drawing.Point(96, 84);
-            this.spAtkStagesNumeric.Name = "spAtkStagesNumeric";
-            this.spAtkStagesNumeric.Size = new System.Drawing.Size(42, 20);
-            this.spAtkStagesNumeric.TabIndex = 4;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 118);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Sp Def";
-            // 
-            // spDefStagesNumeric
-            // 
-            this.spDefStagesNumeric.Location = new System.Drawing.Point(96, 116);
-            this.spDefStagesNumeric.Name = "spDefStagesNumeric";
-            this.spDefStagesNumeric.Size = new System.Drawing.Size(42, 20);
-            this.spDefStagesNumeric.TabIndex = 6;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 147);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(38, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Speed";
-            // 
-            // speedStagesNumeric
-            // 
-            this.speedStagesNumeric.Location = new System.Drawing.Point(96, 145);
-            this.speedStagesNumeric.Name = "speedStagesNumeric";
-            this.speedStagesNumeric.Size = new System.Drawing.Size(42, 20);
-            this.speedStagesNumeric.TabIndex = 8;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(16, 176);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Accuracy";
-            // 
-            // accuracyStagesNumeric
-            // 
-            this.accuracyStagesNumeric.Location = new System.Drawing.Point(96, 174);
-            this.accuracyStagesNumeric.Name = "accuracyStagesNumeric";
-            this.accuracyStagesNumeric.Size = new System.Drawing.Size(42, 20);
-            this.accuracyStagesNumeric.TabIndex = 10;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(16, 207);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(48, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Crit Rate";
-            // 
-            // critRateStagesNumeric
-            // 
-            this.critRateStagesNumeric.Location = new System.Drawing.Point(96, 205);
-            this.critRateStagesNumeric.Name = "critRateStagesNumeric";
-            this.critRateStagesNumeric.Size = new System.Drawing.Size(42, 20);
-            this.critRateStagesNumeric.TabIndex = 12;
-            // 
-            // hpRestoreCheckBox
-            // 
-            this.hpRestoreCheckBox.AutoSize = true;
-            this.hpRestoreCheckBox.Location = new System.Drawing.Point(16, 22);
-            this.hpRestoreCheckBox.Name = "hpRestoreCheckBox";
-            this.hpRestoreCheckBox.Size = new System.Drawing.Size(81, 17);
-            this.hpRestoreCheckBox.TabIndex = 11;
-            this.hpRestoreCheckBox.Text = "HP Restore";
-            this.hpRestoreCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // ppRestoreCheckBox
-            // 
-            this.ppRestoreCheckBox.AutoSize = true;
-            this.ppRestoreCheckBox.Location = new System.Drawing.Point(16, 56);
-            this.ppRestoreCheckBox.Name = "ppRestoreCheckBox";
-            this.ppRestoreCheckBox.Size = new System.Drawing.Size(80, 17);
-            this.ppRestoreCheckBox.TabIndex = 12;
-            this.ppRestoreCheckBox.Text = "PP Restore";
-            this.ppRestoreCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // ppUpsCheckBox
-            // 
-            this.ppUpsCheckBox.AutoSize = true;
-            this.ppUpsCheckBox.Location = new System.Drawing.Point(16, 155);
-            this.ppUpsCheckBox.Name = "ppUpsCheckBox";
-            this.ppUpsCheckBox.Size = new System.Drawing.Size(57, 17);
-            this.ppUpsCheckBox.TabIndex = 13;
-            this.ppUpsCheckBox.Text = "PP Up";
-            this.ppUpsCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // ppMaxCheckBox
-            // 
-            this.ppMaxCheckBox.AutoSize = true;
-            this.ppMaxCheckBox.Location = new System.Drawing.Point(16, 184);
-            this.ppMaxCheckBox.Name = "ppMaxCheckBox";
-            this.ppMaxCheckBox.Size = new System.Drawing.Size(63, 17);
-            this.ppMaxCheckBox.TabIndex = 14;
-            this.ppMaxCheckBox.Text = "PP Max";
-            this.ppMaxCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // ppRestoreAllCheckBox
-            // 
-            this.ppRestoreAllCheckBox.AutoSize = true;
-            this.ppRestoreAllCheckBox.Location = new System.Drawing.Point(16, 105);
-            this.ppRestoreAllCheckBox.Name = "ppRestoreAllCheckBox";
-            this.ppRestoreAllCheckBox.Size = new System.Drawing.Size(94, 17);
-            this.ppRestoreAllCheckBox.TabIndex = 15;
-            this.ppRestoreAllCheckBox.Text = "PP Restore All";
-            this.ppRestoreAllCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // hpRestoreParamNumeric
-            // 
-            this.hpRestoreParamNumeric.Location = new System.Drawing.Point(103, 21);
-            this.hpRestoreParamNumeric.Name = "hpRestoreParamNumeric";
-            this.hpRestoreParamNumeric.Size = new System.Drawing.Size(57, 20);
-            this.hpRestoreParamNumeric.TabIndex = 16;
-            // 
-            // ppRestoreParamNumeric
-            // 
-            this.ppRestoreParamNumeric.Location = new System.Drawing.Point(103, 55);
-            this.ppRestoreParamNumeric.Name = "ppRestoreParamNumeric";
-            this.ppRestoreParamNumeric.Size = new System.Drawing.Size(57, 20);
-            this.ppRestoreParamNumeric.TabIndex = 17;
-            // 
-            // evHpValueNumeric
-            // 
-            this.evHpValueNumeric.Location = new System.Drawing.Point(252, 36);
-            this.evHpValueNumeric.Name = "evHpValueNumeric";
-            this.evHpValueNumeric.Size = new System.Drawing.Size(53, 20);
-            this.evHpValueNumeric.TabIndex = 18;
-            // 
-            // evHpCheckBox
-            // 
-            this.evHpCheckBox.AutoSize = true;
-            this.evHpCheckBox.Location = new System.Drawing.Point(165, 37);
-            this.evHpCheckBox.Name = "evHpCheckBox";
-            this.evHpCheckBox.Size = new System.Drawing.Size(41, 17);
-            this.evHpCheckBox.TabIndex = 17;
-            this.evHpCheckBox.Text = "HP";
-            this.evHpCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // evAtkValueNumeric
-            // 
-            this.evAtkValueNumeric.Location = new System.Drawing.Point(252, 59);
-            this.evAtkValueNumeric.Name = "evAtkValueNumeric";
-            this.evAtkValueNumeric.Size = new System.Drawing.Size(53, 20);
-            this.evAtkValueNumeric.TabIndex = 20;
-            // 
-            // evAtkCheckBox
-            // 
-            this.evAtkCheckBox.AutoSize = true;
-            this.evAtkCheckBox.Location = new System.Drawing.Point(165, 60);
-            this.evAtkCheckBox.Name = "evAtkCheckBox";
-            this.evAtkCheckBox.Size = new System.Drawing.Size(42, 17);
-            this.evAtkCheckBox.TabIndex = 19;
-            this.evAtkCheckBox.Text = "Atk";
-            this.evAtkCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // evDefValueNumeric
-            // 
-            this.evDefValueNumeric.Location = new System.Drawing.Point(252, 85);
-            this.evDefValueNumeric.Name = "evDefValueNumeric";
-            this.evDefValueNumeric.Size = new System.Drawing.Size(53, 20);
-            this.evDefValueNumeric.TabIndex = 22;
-            // 
-            // evDefCheckBox
-            // 
-            this.evDefCheckBox.AutoSize = true;
-            this.evDefCheckBox.Location = new System.Drawing.Point(165, 86);
-            this.evDefCheckBox.Name = "evDefCheckBox";
-            this.evDefCheckBox.Size = new System.Drawing.Size(43, 17);
-            this.evDefCheckBox.TabIndex = 21;
-            this.evDefCheckBox.Text = "Def";
-            this.evDefCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // evSpeedValueNumeric
-            // 
-            this.evSpeedValueNumeric.Location = new System.Drawing.Point(252, 125);
-            this.evSpeedValueNumeric.Name = "evSpeedValueNumeric";
-            this.evSpeedValueNumeric.Size = new System.Drawing.Size(53, 20);
-            this.evSpeedValueNumeric.TabIndex = 24;
-            // 
-            // evSpeedCheckBox
-            // 
-            this.evSpeedCheckBox.AutoSize = true;
-            this.evSpeedCheckBox.Location = new System.Drawing.Point(165, 126);
-            this.evSpeedCheckBox.Name = "evSpeedCheckBox";
-            this.evSpeedCheckBox.Size = new System.Drawing.Size(57, 17);
-            this.evSpeedCheckBox.TabIndex = 23;
-            this.evSpeedCheckBox.Text = "Speed";
-            this.evSpeedCheckBox.UseVisualStyleBackColor = true;
+            // evSpDefValueNumeric
+            // 
+            this.evSpDefValueNumeric.Location = new System.Drawing.Point(252, 192);
+            this.evSpDefValueNumeric.Name = "evSpDefValueNumeric";
+            this.evSpDefValueNumeric.Size = new System.Drawing.Size(53, 20);
+            this.evSpDefValueNumeric.TabIndex = 28;
+            // 
+            // evSpDefCheckBox
+            // 
+            this.evSpDefCheckBox.AutoSize = true;
+            this.evSpDefCheckBox.Location = new System.Drawing.Point(165, 193);
+            this.evSpDefCheckBox.Name = "evSpDefCheckBox";
+            this.evSpDefCheckBox.Size = new System.Drawing.Size(59, 17);
+            this.evSpDefCheckBox.TabIndex = 27;
+            this.evSpDefCheckBox.Text = "Sp Def";
+            this.evSpDefCheckBox.UseVisualStyleBackColor = true;
             // 
             // evSpAtkValueNumeric
             // 
@@ -1152,39 +1089,106 @@
             this.evSpAtkCheckBox.Text = "Sp Atk";
             this.evSpAtkCheckBox.UseVisualStyleBackColor = true;
             // 
-            // evSpDefValueNumeric
+            // evSpeedValueNumeric
             // 
-            this.evSpDefValueNumeric.Location = new System.Drawing.Point(252, 192);
-            this.evSpDefValueNumeric.Name = "evSpDefValueNumeric";
-            this.evSpDefValueNumeric.Size = new System.Drawing.Size(53, 20);
-            this.evSpDefValueNumeric.TabIndex = 28;
+            this.evSpeedValueNumeric.Location = new System.Drawing.Point(252, 125);
+            this.evSpeedValueNumeric.Name = "evSpeedValueNumeric";
+            this.evSpeedValueNumeric.Size = new System.Drawing.Size(53, 20);
+            this.evSpeedValueNumeric.TabIndex = 24;
             // 
-            // evSpDefCheckBox
+            // evSpeedCheckBox
             // 
-            this.evSpDefCheckBox.AutoSize = true;
-            this.evSpDefCheckBox.Location = new System.Drawing.Point(165, 193);
-            this.evSpDefCheckBox.Name = "evSpDefCheckBox";
-            this.evSpDefCheckBox.Size = new System.Drawing.Size(59, 17);
-            this.evSpDefCheckBox.TabIndex = 27;
-            this.evSpDefCheckBox.Text = "Sp Def";
-            this.evSpDefCheckBox.UseVisualStyleBackColor = true;
+            this.evSpeedCheckBox.AutoSize = true;
+            this.evSpeedCheckBox.Location = new System.Drawing.Point(165, 126);
+            this.evSpeedCheckBox.Name = "evSpeedCheckBox";
+            this.evSpeedCheckBox.Size = new System.Drawing.Size(57, 17);
+            this.evSpeedCheckBox.TabIndex = 23;
+            this.evSpeedCheckBox.Text = "Speed";
+            this.evSpeedCheckBox.UseVisualStyleBackColor = true;
             // 
-            // friendshipLowValueNumeric
+            // evDefValueNumeric
             // 
-            this.friendshipLowValueNumeric.Location = new System.Drawing.Point(226, 37);
-            this.friendshipLowValueNumeric.Name = "friendshipLowValueNumeric";
-            this.friendshipLowValueNumeric.Size = new System.Drawing.Size(53, 20);
-            this.friendshipLowValueNumeric.TabIndex = 20;
+            this.evDefValueNumeric.Location = new System.Drawing.Point(252, 85);
+            this.evDefValueNumeric.Name = "evDefValueNumeric";
+            this.evDefValueNumeric.Size = new System.Drawing.Size(53, 20);
+            this.evDefValueNumeric.TabIndex = 22;
             // 
-            // friendshipLowCheckBox
+            // evDefCheckBox
             // 
-            this.friendshipLowCheckBox.AutoSize = true;
-            this.friendshipLowCheckBox.Location = new System.Drawing.Point(110, 38);
-            this.friendshipLowCheckBox.Name = "friendshipLowCheckBox";
-            this.friendshipLowCheckBox.Size = new System.Drawing.Size(97, 17);
-            this.friendshipLowCheckBox.TabIndex = 19;
-            this.friendshipLowCheckBox.Text = "Low Friendship";
-            this.friendshipLowCheckBox.UseVisualStyleBackColor = true;
+            this.evDefCheckBox.AutoSize = true;
+            this.evDefCheckBox.Location = new System.Drawing.Point(165, 86);
+            this.evDefCheckBox.Name = "evDefCheckBox";
+            this.evDefCheckBox.Size = new System.Drawing.Size(43, 17);
+            this.evDefCheckBox.TabIndex = 21;
+            this.evDefCheckBox.Text = "Def";
+            this.evDefCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // evAtkValueNumeric
+            // 
+            this.evAtkValueNumeric.Location = new System.Drawing.Point(252, 59);
+            this.evAtkValueNumeric.Name = "evAtkValueNumeric";
+            this.evAtkValueNumeric.Size = new System.Drawing.Size(53, 20);
+            this.evAtkValueNumeric.TabIndex = 20;
+            // 
+            // evAtkCheckBox
+            // 
+            this.evAtkCheckBox.AutoSize = true;
+            this.evAtkCheckBox.Location = new System.Drawing.Point(165, 60);
+            this.evAtkCheckBox.Name = "evAtkCheckBox";
+            this.evAtkCheckBox.Size = new System.Drawing.Size(42, 17);
+            this.evAtkCheckBox.TabIndex = 19;
+            this.evAtkCheckBox.Text = "Atk";
+            this.evAtkCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // evHpValueNumeric
+            // 
+            this.evHpValueNumeric.Location = new System.Drawing.Point(252, 36);
+            this.evHpValueNumeric.Name = "evHpValueNumeric";
+            this.evHpValueNumeric.Size = new System.Drawing.Size(53, 20);
+            this.evHpValueNumeric.TabIndex = 18;
+            // 
+            // evHpCheckBox
+            // 
+            this.evHpCheckBox.AutoSize = true;
+            this.evHpCheckBox.Location = new System.Drawing.Point(165, 37);
+            this.evHpCheckBox.Name = "evHpCheckBox";
+            this.evHpCheckBox.Size = new System.Drawing.Size(41, 17);
+            this.evHpCheckBox.TabIndex = 17;
+            this.evHpCheckBox.Text = "HP";
+            this.evHpCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // friendshipTabPage
+            // 
+            this.friendshipTabPage.BackColor = System.Drawing.SystemColors.Control;
+            this.friendshipTabPage.Controls.Add(this.friendshipHighValueNumeric);
+            this.friendshipTabPage.Controls.Add(this.friendshipHighCheckBox);
+            this.friendshipTabPage.Controls.Add(this.friendshipMidValueNumeric);
+            this.friendshipTabPage.Controls.Add(this.friendshipMidCheckBox);
+            this.friendshipTabPage.Controls.Add(this.friendshipLowValueNumeric);
+            this.friendshipTabPage.Controls.Add(this.friendshipLowCheckBox);
+            this.friendshipTabPage.Location = new System.Drawing.Point(4, 22);
+            this.friendshipTabPage.Name = "friendshipTabPage";
+            this.friendshipTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.friendshipTabPage.Size = new System.Drawing.Size(518, 251);
+            this.friendshipTabPage.TabIndex = 5;
+            this.friendshipTabPage.Text = "Friendship";
+            // 
+            // friendshipHighValueNumeric
+            // 
+            this.friendshipHighValueNumeric.Location = new System.Drawing.Point(226, 143);
+            this.friendshipHighValueNumeric.Name = "friendshipHighValueNumeric";
+            this.friendshipHighValueNumeric.Size = new System.Drawing.Size(53, 20);
+            this.friendshipHighValueNumeric.TabIndex = 24;
+            // 
+            // friendshipHighCheckBox
+            // 
+            this.friendshipHighCheckBox.AutoSize = true;
+            this.friendshipHighCheckBox.Location = new System.Drawing.Point(110, 143);
+            this.friendshipHighCheckBox.Name = "friendshipHighCheckBox";
+            this.friendshipHighCheckBox.Size = new System.Drawing.Size(99, 17);
+            this.friendshipHighCheckBox.TabIndex = 23;
+            this.friendshipHighCheckBox.Text = "High Friendship";
+            this.friendshipHighCheckBox.UseVisualStyleBackColor = true;
             // 
             // friendshipMidValueNumeric
             // 
@@ -1203,22 +1207,33 @@
             this.friendshipMidCheckBox.Text = "Mid Friendship";
             this.friendshipMidCheckBox.UseVisualStyleBackColor = true;
             // 
-            // friendshipHighValueNumeric
+            // friendshipLowValueNumeric
             // 
-            this.friendshipHighValueNumeric.Location = new System.Drawing.Point(226, 143);
-            this.friendshipHighValueNumeric.Name = "friendshipHighValueNumeric";
-            this.friendshipHighValueNumeric.Size = new System.Drawing.Size(53, 20);
-            this.friendshipHighValueNumeric.TabIndex = 24;
+            this.friendshipLowValueNumeric.Location = new System.Drawing.Point(226, 37);
+            this.friendshipLowValueNumeric.Name = "friendshipLowValueNumeric";
+            this.friendshipLowValueNumeric.Size = new System.Drawing.Size(53, 20);
+            this.friendshipLowValueNumeric.TabIndex = 20;
             // 
-            // friendshipHighCheckBox
+            // friendshipLowCheckBox
             // 
-            this.friendshipHighCheckBox.AutoSize = true;
-            this.friendshipHighCheckBox.Location = new System.Drawing.Point(110, 143);
-            this.friendshipHighCheckBox.Name = "friendshipHighCheckBox";
-            this.friendshipHighCheckBox.Size = new System.Drawing.Size(99, 17);
-            this.friendshipHighCheckBox.TabIndex = 23;
-            this.friendshipHighCheckBox.Text = "High Friendship";
-            this.friendshipHighCheckBox.UseVisualStyleBackColor = true;
+            this.friendshipLowCheckBox.AutoSize = true;
+            this.friendshipLowCheckBox.Location = new System.Drawing.Point(110, 38);
+            this.friendshipLowCheckBox.Name = "friendshipLowCheckBox";
+            this.friendshipLowCheckBox.Size = new System.Drawing.Size(97, 17);
+            this.friendshipLowCheckBox.TabIndex = 19;
+            this.friendshipLowCheckBox.Text = "Low Friendship";
+            this.friendshipLowCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // itemEditorSelectedPictureBox
+            // 
+            this.itemEditorSelectedPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.itemEditorSelectedPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.itemEditorSelectedPictureBox.Name = "itemEditorSelectedPictureBox";
+            this.itemEditorSelectedPictureBox.Size = new System.Drawing.Size(260, 134);
+            this.itemEditorSelectedPictureBox.TabIndex = 18;
+            this.itemEditorSelectedPictureBox.TabStop = false;
             // 
             // ItemEditor
             // 
@@ -1261,30 +1276,31 @@
             this.levelUpEvolveTabPage.PerformLayout();
             this.statStagesTabPage.ResumeLayout(false);
             this.statStagesTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.critRateStagesNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.accuracyStagesNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedStagesNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spDefStagesNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spAtkStagesNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.defStagesNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.atkStagesNumeric)).EndInit();
             this.hpPpRestoreTabPage.ResumeLayout(false);
             this.hpPpRestoreTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ppRestoreParamNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hpRestoreParamNumeric)).EndInit();
             this.evsTabPage.ResumeLayout(false);
             this.evsTabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.evSpDefValueNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evSpAtkValueNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evSpeedValueNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evDefValueNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evAtkValueNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.evHpValueNumeric)).EndInit();
             this.friendshipTabPage.ResumeLayout(false);
             this.friendshipTabPage.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.atkStagesNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.defStagesNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spAtkStagesNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.spDefStagesNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.speedStagesNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.accuracyStagesNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.critRateStagesNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hpRestoreParamNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ppRestoreParamNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evHpValueNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evAtkValueNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evDefValueNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evSpeedValueNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evSpAtkValueNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.evSpDefValueNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipHighValueNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1393,5 +1409,6 @@
         private System.Windows.Forms.CheckBox friendshipMidCheckBox;
         private System.Windows.Forms.NumericUpDown friendshipLowValueNumeric;
         private System.Windows.Forms.CheckBox friendshipLowCheckBox;
+        private System.Windows.Forms.PictureBox itemEditorSelectedPictureBox;
     }
 }
