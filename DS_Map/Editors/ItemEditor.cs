@@ -275,8 +275,8 @@ namespace DSPRE.Editors
 
         private void PopulateItemPartyParamsUI()
         {
+            ResetItemPartyParamsUI();
             ItemPartyUseParam param = currentLoadedFile.PartyUseParam;
-
             slpHealCheckBox.Checked = param.SlpHeal;
             psnHealCheckBox.Checked = param.PsnHeal;
             brnHealCheckBox.Checked = param.BrnHeal;
@@ -326,8 +326,70 @@ namespace DSPRE.Editors
 
             friendshipLowValueNumeric.Value = param.FriendshipLowValue;
             friendshipMidValueNumeric.Value = param.FriendshipMidValue;
-            friendshipHighValueNumeric.Value = param.FriendshipHighValue;           
+            friendshipHighValueNumeric.Value = param.FriendshipHighValue;
+            Update();
         }
+
+        private void ResetItemPartyParamsUI()
+        {
+            // Uncheck all CheckBoxes
+            slpHealCheckBox.Checked = false;
+            psnHealCheckBox.Checked = false;
+            brnHealCheckBox.Checked = false;
+            frzHealCheckBox.Checked = false;
+            przHealCheckBox.Checked = false;
+            cfsHealCheckBox.Checked = false;
+            infHealCheckBox.Checked = false;
+            guardSpecCheckBox.Checked = false;
+
+            reviveCheckBox.Checked = false;
+            reviveAllCheckBox.Checked = false;
+            levelUpCheckBox.Checked = false;
+            evolveCheckBox.Checked = false;
+
+            hpRestoreCheckBox.Checked = false;
+            ppRestoreCheckBox.Checked = false;
+            ppUpsCheckBox.Checked = false;
+            ppMaxCheckBox.Checked = false;
+            ppRestoreAllCheckBox.Checked = false;
+
+            evHpCheckBox.Checked = false;
+            evAtkCheckBox.Checked = false;
+            evDefCheckBox.Checked = false;
+            evSpeedCheckBox.Checked = false;
+            evSpAtkCheckBox.Checked = false;
+            evSpDefCheckBox.Checked = false;
+
+            friendshipLowCheckBox.Checked = false;
+            friendshipMidCheckBox.Checked = false;
+            friendshipHighCheckBox.Checked = false;
+
+            // Reset all NumericUpDowns to 0
+            atkStagesNumeric.Value = 0;
+            defStagesNumeric.Value = 0;
+            spAtkStagesNumeric.Value = 0;
+            spDefStagesNumeric.Value = 0;
+            speedStagesNumeric.Value = 0;
+            accuracyStagesNumeric.Value = 0;
+            critRateStagesNumeric.Value = 0;
+
+            hpRestoreParamNumeric.Value = 0;
+            ppRestoreParamNumeric.Value = 0;
+
+            evHpValueNumeric.Value = 0;
+            evAtkValueNumeric.Value = 0;
+            evDefValueNumeric.Value = 0;
+            evSpeedValueNumeric.Value = 0;
+            evSpAtkValueNumeric.Value = 0;
+            evSpDefValueNumeric.Value = 0;
+
+            friendshipLowValueNumeric.Value = 0;
+            friendshipMidValueNumeric.Value = 0;
+            friendshipHighValueNumeric.Value = 0;
+
+            Update();
+        }
+
 
         private void saveDataButton_Click(object sender, EventArgs e)
         {
@@ -551,6 +613,10 @@ namespace DSPRE.Editors
 
         private void PartyParamsControlChanged(object sender, EventArgs e)
         {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
             if (currentLoadedFile == null) return;
 
             ItemPartyUseParam param = currentLoadedFile.PartyUseParam;

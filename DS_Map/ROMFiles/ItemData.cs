@@ -586,6 +586,11 @@ namespace DSPRE.ROMFiles
 
             private static byte EncodeStage(sbyte val) => (byte)((val + 6 < 0) ? 0 : (val + 6 > 15) ? 15 : val + 6);
             private static sbyte DecodeStage(byte val) => (sbyte)(val - 6);
+
+            public override string ToString()
+            {
+                return $"ItemPartyUseParam: SlpHeal={SlpHeal}, PsnHeal={PsnHeal}, BrnHeal={BrnHeal}, FrzHeal={FrzHeal}, PrzHeal={PrzHeal}, CfsHeal={CfsHeal}, InfHeal={InfHeal}, GuardSpec={GuardSpec},\nRevive={Revive}, ReviveAll={ReviveAll}, LevelUp={LevelUp}, Evolve={Evolve},\nAtkStages={AtkStages}, DefStages={DefStages}, SpAtkStages={SpAtkStages}, SpDefStages={SpDefStages}, SpeedStages={SpeedStages}, AccuracyStages={AccuracyStages}, CritRateStages={CritRateStages},\nPPUps={PPUps}, PPMax={PPMax}, PPRestore={PPRestore}, PPRestoreAll={PPRestoreAll}, HPRestore={HPRestore},\nEVHp={EVHp}, EVAtk={EVAtk}, EVDef={EVDef}, EVSpeed={EVSpeed}, EVSpAtk={EVSpAtk}, EVSpDef={EVSpDef}, \nFriendshipLow={FriendshipLow}, FriendshipMid={FriendshipMid}, FriendshipHigh={FriendshipHigh}";
+            }
         }
 
     }
