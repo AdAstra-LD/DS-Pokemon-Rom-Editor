@@ -13,7 +13,7 @@ using Path = System.IO.Path;
 namespace DSPRE
 {
     /// <summary>
-    /// Class to store ROM data from GEN IV Pok�mon games
+    /// Class to store ROM data from GEN IV Pokémon games
     /// </summary>
 
     public class RomInfo
@@ -209,7 +209,7 @@ namespace DSPRE
             }
             catch (KeyNotFoundException)
             {
-                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pok�mon ROMS, for now.", "Unsupported ROM",
+                MessageBox.Show("The ROM you attempted to load is not supported.\nYou can only load Gen IV Pokémon ROMS, for now.", "Unsupported ROM",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
