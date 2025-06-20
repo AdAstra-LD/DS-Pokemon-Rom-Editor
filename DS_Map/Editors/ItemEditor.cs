@@ -11,6 +11,7 @@ using System.Text;
 using System.Windows.Forms;
 using static DSPRE.ROMFiles.ItemData;
 using static DSPRE.RomInfo;
+using static Images.NCOB.sNCOB;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DSPRE.Editors
@@ -38,6 +39,9 @@ namespace DSPRE.Editors
         private ItemNarcTableEntry[] itemNarcTable;
         private uint itemNarcTableOffset;
 
+        private HashSet<uint> iconIdSet = new HashSet<uint>();
+        private HashSet<uint> paletteIdSet = new HashSet<uint>();
+
         public ItemEditor(string[] itemFileNames) //, string[] itemDescriptions)
          {
             itemNarcTableOffset = (uint)(RomInfo.gameFamily == RomInfo.GameFamilies.HGSS ? 0x100194 : RomInfo.gameFamily == RomInfo.GameFamilies.Plat ? 0xF0CC4 : 0xF85B4);
@@ -52,7 +56,8 @@ namespace DSPRE.Editors
                 itemNarcTableEntry.itemPalette = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 4));
                 itemNarcTableEntry.itemAGB = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 6));
                 itemNarcTable[i] = itemNarcTableEntry;
-                Console.WriteLine("ItemEditor: itemNarcTable[" + i + "] = " + itemNarcTable[i].itemData + ", " + itemNarcTable[i].itemIcon + ", " + itemNarcTable[i].itemPalette + ", " + itemNarcTable[i].itemAGB);
+                iconIdSet.Add(itemNarcTableEntry.itemIcon);
+                paletteIdSet.Add(itemNarcTableEntry.itemPalette);
                 if (itemFileNames[i] == null || itemFileNames[i] == "???")
                 {
                     cleanNames.RemoveAt(i-killCount);
@@ -95,11 +100,30 @@ namespace DSPRE.Editors
             BindItemParamsEvents();
             SetItemParamToolTips();
             SetItemParamRanges();
+            PopulateIconPaletteDropdowns();
 
             Helpers.EnableHandlers();
 
             itemNameInputComboBox.SelectedIndex = 1;
         }
+
+        private void PopulateIconPaletteDropdowns()
+        {
+            imageComboBox.BeginUpdate();
+            paletteComboBox.BeginUpdate();
+            imageComboBox.Items.Clear();
+            paletteComboBox.Items.Clear();
+
+            foreach (var icon in iconIdSet.OrderBy(i => i))
+                imageComboBox.Items.Add(icon.ToString("D4"));
+
+            foreach (var palette in paletteIdSet.OrderBy(p => p))
+                paletteComboBox.Items.Add(palette.ToString("D4"));
+
+            imageComboBox.EndUpdate();
+            paletteComboBox.EndUpdate();
+        }
+
 
         private void BindItemParamsEvents()
         {
@@ -293,6 +317,27 @@ namespace DSPRE.Editors
             itemParamsTabControl.Enabled = partyUseCheckBox.Checked;
             PopulateItemPartyParamsUI();
 
+            var entry = itemNarcTable[currentLoadedFile.RealID];
+
+            string iconID = entry.itemIcon.ToString("D4");
+            string paletteID = entry.itemPalette.ToString("D4");
+
+            if (imageComboBox.Items.Contains(iconID))
+            {
+                imageComboBox.SelectedItem = iconID;
+            }
+
+            if (paletteComboBox.Items.Contains(paletteID))
+            {
+                paletteComboBox.SelectedItem = paletteID;
+            }
+
+            SetUpIcon();
+
+        }
+
+        private void SetUpIcon()
+        {
             var itemIconId = itemNarcTable[currentLoadedFile.RealID].itemIcon;
             var itemPaletteId = itemNarcTable[currentLoadedFile.RealID].itemPalette;
 
@@ -314,11 +359,8 @@ namespace DSPRE.Editors
             }
             catch (FormatException)
             {
-                itemEditorSelectedPictureBox.Image = null;
+                itemEditorSelectedPictureBox.Image = Properties.Resources.IconItem;
             }
-
-
-
         }
 
         private void PopulateItemPartyParamsUI()
@@ -730,6 +772,55 @@ namespace DSPRE.Editors
             setDirty(true);
         }
 
-        
+
+        private void imageComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || imageComboBox.SelectedItem == null) return;
+
+            uint newIconID = uint.Parse(imageComboBox.SelectedItem.ToString());
+            itemNarcTable[currentLoadedFile.RealID].itemIcon = newIconID;
+
+            SetUpIcon();
+            setDirty(true);
+        }
+
+        private void paletteComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || paletteComboBox.SelectedItem == null) return;
+
+            uint newPaletteID = uint.Parse(paletteComboBox.SelectedItem.ToString());
+            itemNarcTable[currentLoadedFile.RealID].itemPalette = newPaletteID;
+
+            SetUpIcon();
+            setDirty(true);
+        }
+
+        private void saveIconButton_Click(object sender, EventArgs e)
+        {
+            if(Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            for (int i = 0; i < itemNarcTable.Length; i++)
+            {
+                ItemNarcTableEntry itemNarcTableEntry = new ItemNarcTableEntry();
+                itemNarcTableEntry.itemData = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8));
+                itemNarcTableEntry.itemIcon = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 2));
+                if (itemNarcTable[i].itemIcon != itemNarcTableEntry.itemIcon)
+                {
+                    byte[] bytes = BitConverter.GetBytes((ushort)itemNarcTableEntry.itemIcon);
+                    ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedFile.RealID * 8 + 2));
+                }   
+                itemNarcTableEntry.itemPalette = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 4));
+                if (itemNarcTable[i].itemPalette != itemNarcTableEntry.itemPalette)
+                {
+                    byte[] bytes = BitConverter.GetBytes((ushort)itemNarcTableEntry.itemPalette);
+                    ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedFile.RealID * 8 + 4));
+                }
+                itemNarcTableEntry.itemAGB = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 6));
+            }
+            setDirty(false);
+        }
     }
 }

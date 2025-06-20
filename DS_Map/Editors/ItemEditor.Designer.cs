@@ -130,8 +130,15 @@
             this.friendshipMidCheckBox = new System.Windows.Forms.CheckBox();
             this.friendshipLowValueNumeric = new System.Windows.Forms.NumericUpDown();
             this.friendshipLowCheckBox = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.itemEditorSelectedPictureBox = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.itemEditorSelectedPictureFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.itemEditorSelectedPictureGroupBox = new System.Windows.Forms.GroupBox();
+            this.imageLabel = new System.Windows.Forms.Label();
+            this.paletteLabel = new System.Windows.Forms.Label();
+            this.imageComboBox = new System.Windows.Forms.ComboBox();
+            this.paletteComboBox = new System.Windows.Forms.ComboBox();
+            this.saveIconButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumberNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -178,6 +185,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).BeginInit();
+            this.itemEditorSelectedPictureFlowLayoutPanel.SuspendLayout();
+            this.itemEditorSelectedPictureGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // itemNumberNumericUpDown
@@ -255,7 +264,7 @@
             this.tableLayoutPanel1.Controls.Add(this.priceFlowLayoutPanel, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.functionsFlowLayoutPanel, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.itemParamsTabControl, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.itemEditorSelectedPictureBox, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.itemEditorSelectedPictureFlowLayoutPanel, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -270,11 +279,11 @@
             // saveDataButton
             // 
             this.saveDataButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.saveDataButton.Location = new System.Drawing.Point(883, 58);
+            this.saveDataButton.Location = new System.Drawing.Point(869, 58);
             this.saveDataButton.Name = "saveDataButton";
-            this.saveDataButton.Size = new System.Drawing.Size(96, 23);
+            this.saveDataButton.Size = new System.Drawing.Size(125, 23);
             this.saveDataButton.TabIndex = 10;
-            this.saveDataButton.Text = "Save Changes";
+            this.saveDataButton.Text = "Save Item Changes";
             this.saveDataButton.UseVisualStyleBackColor = true;
             this.saveDataButton.Click += new System.EventHandler(this.saveDataButton_Click);
             // 
@@ -1226,14 +1235,84 @@
             // 
             // itemEditorSelectedPictureBox
             // 
-            this.itemEditorSelectedPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.itemEditorSelectedPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.itemEditorSelectedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.itemEditorSelectedPictureBox.Image = global::DSPRE.Properties.Resources.IconItem;
+            this.itemEditorSelectedPictureBox.Location = new System.Drawing.Point(180, 54);
             this.itemEditorSelectedPictureBox.Name = "itemEditorSelectedPictureBox";
-            this.itemEditorSelectedPictureBox.Size = new System.Drawing.Size(260, 134);
+            this.itemEditorSelectedPictureBox.Size = new System.Drawing.Size(47, 47);
             this.itemEditorSelectedPictureBox.TabIndex = 18;
             this.itemEditorSelectedPictureBox.TabStop = false;
+            // 
+            // itemEditorSelectedPictureFlowLayoutPanel
+            // 
+            this.itemEditorSelectedPictureFlowLayoutPanel.Controls.Add(this.itemEditorSelectedPictureGroupBox);
+            this.itemEditorSelectedPictureFlowLayoutPanel.Location = new System.Drawing.Point(3, 3);
+            this.itemEditorSelectedPictureFlowLayoutPanel.Name = "itemEditorSelectedPictureFlowLayoutPanel";
+            this.itemEditorSelectedPictureFlowLayoutPanel.Size = new System.Drawing.Size(260, 134);
+            this.itemEditorSelectedPictureFlowLayoutPanel.TabIndex = 19;
+            // 
+            // itemEditorSelectedPictureGroupBox
+            // 
+            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.saveIconButton);
+            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.paletteComboBox);
+            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.imageComboBox);
+            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.paletteLabel);
+            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.imageLabel);
+            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.itemEditorSelectedPictureBox);
+            this.itemEditorSelectedPictureGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.itemEditorSelectedPictureGroupBox.Name = "itemEditorSelectedPictureGroupBox";
+            this.itemEditorSelectedPictureGroupBox.Size = new System.Drawing.Size(257, 131);
+            this.itemEditorSelectedPictureGroupBox.TabIndex = 19;
+            this.itemEditorSelectedPictureGroupBox.TabStop = false;
+            this.itemEditorSelectedPictureGroupBox.Text = "Icon";
+            // 
+            // imageLabel
+            // 
+            this.imageLabel.AutoSize = true;
+            this.imageLabel.Location = new System.Drawing.Point(11, 21);
+            this.imageLabel.Name = "imageLabel";
+            this.imageLabel.Size = new System.Drawing.Size(36, 13);
+            this.imageLabel.TabIndex = 20;
+            this.imageLabel.Text = "Image";
+            // 
+            // paletteLabel
+            // 
+            this.paletteLabel.AutoSize = true;
+            this.paletteLabel.Location = new System.Drawing.Point(11, 63);
+            this.paletteLabel.Name = "paletteLabel";
+            this.paletteLabel.Size = new System.Drawing.Size(40, 13);
+            this.paletteLabel.TabIndex = 22;
+            this.paletteLabel.Text = "Palette";
+            // 
+            // imageComboBox
+            // 
+            this.imageComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.imageComboBox.FormattingEnabled = true;
+            this.imageComboBox.Location = new System.Drawing.Point(77, 18);
+            this.imageComboBox.Name = "imageComboBox";
+            this.imageComboBox.Size = new System.Drawing.Size(58, 21);
+            this.imageComboBox.TabIndex = 23;
+            this.imageComboBox.SelectedIndexChanged += new System.EventHandler(this.imageComboBox_SelectedIndexChanged);
+            // 
+            // paletteComboBox
+            // 
+            this.paletteComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.paletteComboBox.FormattingEnabled = true;
+            this.paletteComboBox.Location = new System.Drawing.Point(77, 60);
+            this.paletteComboBox.Name = "paletteComboBox";
+            this.paletteComboBox.Size = new System.Drawing.Size(58, 21);
+            this.paletteComboBox.TabIndex = 24;
+            this.paletteComboBox.SelectedIndexChanged += new System.EventHandler(this.paletteComboBox_SelectedIndexChanged);
+            // 
+            // saveIconButton
+            // 
+            this.saveIconButton.Location = new System.Drawing.Point(14, 102);
+            this.saveIconButton.Name = "saveIconButton";
+            this.saveIconButton.Size = new System.Drawing.Size(121, 23);
+            this.saveIconButton.TabIndex = 25;
+            this.saveIconButton.Text = "Save Icon Changes";
+            this.saveIconButton.UseVisualStyleBackColor = true;
+            this.saveIconButton.Click += new System.EventHandler(this.saveIconButton_Click);
             // 
             // ItemEditor
             // 
@@ -1301,6 +1380,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).EndInit();
+            this.itemEditorSelectedPictureFlowLayoutPanel.ResumeLayout(false);
+            this.itemEditorSelectedPictureGroupBox.ResumeLayout(false);
+            this.itemEditorSelectedPictureGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1410,5 +1492,12 @@
         private System.Windows.Forms.NumericUpDown friendshipLowValueNumeric;
         private System.Windows.Forms.CheckBox friendshipLowCheckBox;
         private System.Windows.Forms.PictureBox itemEditorSelectedPictureBox;
+        private System.Windows.Forms.FlowLayoutPanel itemEditorSelectedPictureFlowLayoutPanel;
+        private System.Windows.Forms.GroupBox itemEditorSelectedPictureGroupBox;
+        private System.Windows.Forms.Label paletteLabel;
+        private System.Windows.Forms.Label imageLabel;
+        private System.Windows.Forms.ComboBox paletteComboBox;
+        private System.Windows.Forms.ComboBox imageComboBox;
+        private System.Windows.Forms.Button saveIconButton;
     }
 }

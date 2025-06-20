@@ -1566,6 +1566,8 @@ namespace DSPRE
                         [DirNames.learnsets] = @"data\a\0\3\3",
                         [DirNames.evolutions] = @"data\a\0\3\4",
                         [DirNames.itemData] = @"data\a\0\1\7",
+                        [DirNames.itemIcons] = @"data\a\0\1\8",
+
                         [DirNames.safariZone] = @"data\a\2\3\0",
                         [DirNames.headbutt] = @"data\a\2\5\2", //both versions use the same folder with different data
                     };

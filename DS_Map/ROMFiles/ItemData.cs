@@ -343,7 +343,7 @@ namespace DSPRE.ROMFiles
 
         public ItemData(Stream stream, int ID)
         {
-            RealID = ID > 113 ? ID + 21 : ID; // Adjust ID for unused items
+            RealID = ID > 112 ? ID + 22 : ID; // Adjust ID for unused items
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 price = reader.ReadUInt16();
