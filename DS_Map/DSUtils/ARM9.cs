@@ -52,6 +52,20 @@ namespace DSPRE {
             DSUtils.WriteToFile(RomInfo.arm9Path, bytesToWrite, destOffset, indexFirstByteToWrite, indexLastByteToWrite);
         }
 
+        public static ushort ReadWordLE(uint startOffset)
+        {
+            byte[] bytes = ReadBytes(startOffset, 2);
+            ushort word = (ushort)(bytes[0] | (bytes[1] << 8));
+            return word;
+        }
+
+        public static ushort ReadWordBE(uint startOffset)
+        {
+            byte[] bytes = ReadBytes(startOffset, 2);
+            ushort word = (ushort)((bytes[0] << 8) | bytes[1]);
+            return word;
+        }
+
         public static byte ReadByte(uint startOffset) {
             return DSUtils.ReadFromFile(RomInfo.arm9Path, startOffset, 1)[0];
         }

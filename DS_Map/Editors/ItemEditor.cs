@@ -12,6 +12,14 @@ using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DSPRE.Editors
 {
+    struct ItemNarcTableEntry
+    {
+        public uint itemData;
+        public uint itemIcon;
+        public uint itemPalette;
+        public uint itemAGB;
+    };
+
     public partial class ItemEditor : Form
     {
 
@@ -24,12 +32,24 @@ namespace DSPRE.Editors
         private static bool dirty = false;
         private static readonly string formName = "Item Data Editor";
 
+        private ItemNarcTableEntry[] itemNarcTable;
+        private uint itemNarcTableOffset;
+
         public ItemEditor(string[] itemFileNames) //, string[] itemDescriptions)
         {
+            itemNarcTableOffset = (uint)(RomInfo.gameFamily == RomInfo.GameFamilies.HGSS ? 0x100194 : RomInfo.gameFamily == RomInfo.GameFamilies.Plat ? 0xF0CC4 : 0xF85B4);
             int killCount = 0;
+            itemNarcTable = new ItemNarcTableEntry[itemFileNames.Length];
             List<string> cleanNames = itemFileNames.ToList();
             for (int i = 0; i < itemFileNames.Length; i++)
             {
+                ItemNarcTableEntry itemNarcTableEntry = new ItemNarcTableEntry();
+                itemNarcTableEntry.itemData = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i*8));
+                itemNarcTableEntry.itemIcon = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 2));
+                itemNarcTableEntry.itemPalette = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 4));
+                itemNarcTableEntry.itemAGB = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 6));
+                itemNarcTable[i] = itemNarcTableEntry;
+                Console.WriteLine("ItemEditor: itemNarcTable[" + i + "] = " + itemNarcTable[i].itemData + ", " + itemNarcTable[i].itemIcon + ", " + itemNarcTable[i].itemPalette + ", " + itemNarcTable[i].itemAGB);
                 if (itemFileNames[i] == null || itemFileNames[i] == "???")
                 {
                     cleanNames.RemoveAt(i-killCount);

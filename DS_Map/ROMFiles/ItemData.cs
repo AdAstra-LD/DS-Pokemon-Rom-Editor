@@ -339,8 +339,11 @@ namespace DSPRE.ROMFiles
         public byte PartyUse;
         public ItemPartyUseParam PartyUseParam;
 
-        public ItemData(Stream stream)
+        private int RealID;
+
+        public ItemData(Stream stream, int ID)
         {
+            RealID = ID > 113 ? ID + 21 : ID; // Adjust ID for unused items
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 price = reader.ReadUInt16();
@@ -371,7 +374,7 @@ namespace DSPRE.ROMFiles
         }
 
 
-        public ItemData(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
+        public ItemData(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open), ID) { }
 
         public override byte[] ToByteArray()
         {
