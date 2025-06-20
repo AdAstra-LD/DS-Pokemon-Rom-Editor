@@ -79,11 +79,20 @@ namespace DSPRE {
 
         #region Subroutines
         private void MainProgram_FormClosing(object sender, FormClosingEventArgs e) {
-            if (MessageBox.Show("Are you sure you want to quit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
+            if (e.CloseReason != CloseReason.ApplicationExitCall && MessageBox.Show("Are you sure you want to quit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
                 e.Cancel = true;
             }
             Properties.Settings.Default.Save();
         }
+
+        private void MainProgram_Shown(object sender, EventArgs e) {
+            if (!DetectRequiredTools())
+            {
+                BeginInvoke(new Action(() => Application.Exit()));
+                return;
+            }
+        }
+
         private string[] GetBuildingsList(bool interior) {
             List<string> names = new List<string>();
             string path = romInfo.GetBuildingModelsDirPath(interior);
@@ -699,9 +708,52 @@ namespace DSPRE {
             {
                 MessageBox.Show("Unpacking will not be possible without a valid work directory.", "Unpacking aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-            }           
-
+            }               
+        }
+        private bool DetectRequiredTools()
+        {
             
+            bool toolsMissing = false;
+            List<string> missingToolsList = new List<string>();
+
+            if (!File.Exists(@"Tools\ndstool.exe"))
+            {
+                toolsMissing = true;
+                missingToolsList.Add("ndstool.exe");
+            }
+            if (!File.Exists(@"Tools\blz.exe"))
+            {
+                toolsMissing = true;
+                missingToolsList.Add("blz.exe");
+            }
+            if (!File.Exists(@"Tools\apicula.exe"))
+            {
+                toolsMissing = true;
+                missingToolsList.Add("apicula.exe");
+            }
+
+            if (toolsMissing)
+            {
+                string message = "The following required tools are missing from the DSPRE Tools folder:\n-" +
+                    string.Join("\n-", missingToolsList) + "\n\n" +
+                    "Please ensure that the Tools folder is intact and contains all necessary files.\n" +
+                    "Common causes for this issue are:\n" +
+                    "   - DSPRE is stored in OneDrive\n" +
+                    "   - You opened DSPRE from Windows search\n" +
+                    "   - Your Antivirus software has removed critical files\n\n" +
+                    "DSPRE will now close.";
+                MessageBox.Show(message, "Missing Tools", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // If the program somehow doesn't close after this, we also disable the buttons and hope this is enough to dissuade the user from using it.
+                this.loadRomButton.Enabled = false; // Disable Load ROM button
+                this.readDataFromFolderButton.Enabled = false; // Disable Read Data from Folder button
+                this.fileToolStripMenuItem.DropDownItems[0].Enabled = false; // Disable Open ROM menu item
+                this.fileToolStripMenuItem.DropDownItems[1].Enabled = false; // Disable Open Folder menu item
+
+                return false;
+            }            
+
+            return true;
         }
 
         private void CheckROMLanguage() {
