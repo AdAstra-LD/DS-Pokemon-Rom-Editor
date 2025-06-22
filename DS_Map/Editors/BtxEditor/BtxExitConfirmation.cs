@@ -48,8 +48,7 @@ namespace DSPRE.Editors.BtxEditor
             afterSpriteBox.Width = newSprite.Width;
             afterSpriteBox.Height = newSprite.Height;
 
-            ushort overlayTableEntryID = (ushort)_overworldList.ElementAt(selectedObj.Key).Key;
-            uint spriteID = _overworldList[overlayTableEntryID].spriteID;
+            uint spriteID = _overworldList[selectedObj.Key].spriteID;
             string path = RomInfo.gameDirs[DirNames.OWSprites].unpackedDir + "\\" + spriteID.ToString("D4");
 
             if (File.Exists(path))

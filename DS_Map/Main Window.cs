@@ -50,6 +50,17 @@ namespace DSPRE {
             Helpers.Initialize(this);
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
             Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
+            
+            string romFolder = Properties.Settings.Default.openDefaultRom;
+            if (romFolder != string.Empty)
+            {
+                if(!Properties.Settings.Default.neverAskForOpening) {
+                    ReopenProjectConfirmation confirmOpen = new ReopenProjectConfirmation();
+                    if (confirmOpen.ShowDialog() == DialogResult.No) return;
+                }
+
+                OpenRomFromFolder(romFolder);
+            }
         }
 
         #region Program Window
@@ -781,28 +792,40 @@ namespace DSPRE {
                 return;
             }
 
+            string fileName = romFolder.FileName;
+            OpenRomFromFolder(fileName);
+
+        }
+
+        private void OpenRomFromFolder(string romFolderPath)
+        {
             // Validate path and check for OneDrive
-            if (!ValidateFilePath(romFolder.FileName)) {
+            if (!ValidateFilePath(romFolderPath))
+            {
                 return;
             }
 
-            if (!detectAndHandleWSL(romFolder.FileName)) {
+            if (!detectAndHandleWSL(romFolderPath))
+            {
                 return; // User chose not to create a new work directory
             }
 
-            string fileName = romFolder.FileName;
+          
 
             try
             {
-                SetupROMLanguage(Directory.GetFiles(fileName).First(x => x.Contains("header.bin")));
-            } catch (InvalidOperationException) {
+                SetupROMLanguage(Directory.GetFiles(romFolderPath).First(x => x.Contains("header.bin")));
+            }
+            catch (InvalidOperationException)
+            {
                 MessageBox.Show("This folder does not seem to contain any data from a NDS Pokémon ROM.", "No ROM Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             /* Set ROM gameVersion and language */
-            romInfo = new RomInfo(gameCode, fileName, useSuffix: false);
+            romInfo = new RomInfo(gameCode, romFolderPath, useSuffix: false);
 
-            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName)) {
+            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName))
+            {
                 return;
             }
 
@@ -4932,7 +4955,7 @@ namespace DSPRE {
 
         private void importMapButton_Click(object sender, EventArgs e) {
             OpenFileDialog im = new OpenFileDialog {
-                Filter = "NSBTX File (*.nsbtx)|*.nsbtx",
+                Filter = MapFile.NSBMDFilter,
                 InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
             };
             if (im.ShowDialog(this) != DialogResult.OK) {
@@ -7546,7 +7569,8 @@ namespace DSPRE {
         private void importNSBTXButton_Click(object sender, EventArgs e) {
             /* Prompt user to select .nsbtx file */
             OpenFileDialog ofd = new OpenFileDialog {
-                Filter = "NSBTX File (*.nsbtx)|*.nsbtx"
+                Filter = "NSBTX File (*.nsbtx)|*.nsbtx",
+                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
             };
             if (ofd.ShowDialog(this) != DialogResult.OK) {
                 return;

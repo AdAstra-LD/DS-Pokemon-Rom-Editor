@@ -37,6 +37,11 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.clearButtonExport = new System.Windows.Forms.Button();
             this.clearButtonMap = new System.Windows.Forms.Button();
+            this.clearButtonOpenDefault = new System.Windows.Forms.Button();
+            this.changeOpenDefaultPathButton = new System.Windows.Forms.Button();
+            this.openDefaultRomTextBox = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dontAskOpenCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // romExportPathLabel
@@ -59,7 +64,7 @@
             // mapImportBasePathLabel
             // 
             this.mapImportBasePathLabel.AutoSize = true;
-            this.mapImportBasePathLabel.Location = new System.Drawing.Point(15, 89);
+            this.mapImportBasePathLabel.Location = new System.Drawing.Point(15, 148);
             this.mapImportBasePathLabel.Name = "mapImportBasePathLabel";
             this.mapImportBasePathLabel.Size = new System.Drawing.Size(112, 13);
             this.mapImportBasePathLabel.TabIndex = 2;
@@ -68,7 +73,7 @@
             // 
             // mapImportPathTextBox
             // 
-            this.mapImportPathTextBox.Location = new System.Drawing.Point(18, 106);
+            this.mapImportPathTextBox.Location = new System.Drawing.Point(18, 165);
             this.mapImportPathTextBox.Name = "mapImportPathTextBox";
             this.mapImportPathTextBox.ReadOnly = true;
             this.mapImportPathTextBox.Size = new System.Drawing.Size(622, 20);
@@ -86,7 +91,7 @@
             // 
             // changePathButton2
             // 
-            this.changePathButton2.Location = new System.Drawing.Point(533, 132);
+            this.changePathButton2.Location = new System.Drawing.Point(533, 191);
             this.changePathButton2.Name = "changePathButton2";
             this.changePathButton2.Size = new System.Drawing.Size(107, 23);
             this.changePathButton2.TabIndex = 5;
@@ -97,7 +102,7 @@
             // saveButton
             // 
             this.saveButton.Image = global::DSPRE.Properties.Resources.saveButton;
-            this.saveButton.Location = new System.Drawing.Point(617, 170);
+            this.saveButton.Location = new System.Drawing.Point(617, 237);
             this.saveButton.Name = "saveButton";
             this.saveButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.saveButton.Size = new System.Drawing.Size(64, 30);
@@ -123,7 +128,7 @@
             // 
             // clearButtonMap
             // 
-            this.clearButtonMap.Location = new System.Drawing.Point(452, 132);
+            this.clearButtonMap.Location = new System.Drawing.Point(452, 191);
             this.clearButtonMap.Name = "clearButtonMap";
             this.clearButtonMap.Size = new System.Drawing.Size(75, 23);
             this.clearButtonMap.TabIndex = 8;
@@ -131,11 +136,67 @@
             this.clearButtonMap.UseVisualStyleBackColor = true;
             this.clearButtonMap.Click += new System.EventHandler(this.clearButtonMap_Click);
             // 
+            // clearButtonOpenDefault
+            // 
+            this.clearButtonOpenDefault.Location = new System.Drawing.Point(455, 120);
+            this.clearButtonOpenDefault.Name = "clearButtonOpenDefault";
+            this.clearButtonOpenDefault.Size = new System.Drawing.Size(75, 24);
+            this.clearButtonOpenDefault.TabIndex = 16;
+            this.clearButtonOpenDefault.Text = "Clear";
+            this.clearButtonOpenDefault.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.clearButtonOpenDefault.UseMnemonic = false;
+            this.clearButtonOpenDefault.UseVisualStyleBackColor = true;
+            this.clearButtonOpenDefault.UseWaitCursor = true;
+            this.clearButtonOpenDefault.Click += new System.EventHandler(this.clearButtonOpenDefault_Click);
+            // 
+            // changeOpenDefaultPathButton
+            // 
+            this.changeOpenDefaultPathButton.Location = new System.Drawing.Point(536, 121);
+            this.changeOpenDefaultPathButton.Name = "changeOpenDefaultPathButton";
+            this.changeOpenDefaultPathButton.Size = new System.Drawing.Size(107, 23);
+            this.changeOpenDefaultPathButton.TabIndex = 15;
+            this.changeOpenDefaultPathButton.Text = "Change Path";
+            this.changeOpenDefaultPathButton.UseVisualStyleBackColor = true;
+            this.changeOpenDefaultPathButton.Click += new System.EventHandler(this.changeOpenDefaultPathButton_Click);
+            // 
+            // openDefaultRomTextBox
+            // 
+            this.openDefaultRomTextBox.Location = new System.Drawing.Point(15, 95);
+            this.openDefaultRomTextBox.Name = "openDefaultRomTextBox";
+            this.openDefaultRomTextBox.ReadOnly = true;
+            this.openDefaultRomTextBox.Size = new System.Drawing.Size(628, 20);
+            this.openDefaultRomTextBox.TabIndex = 14;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 79);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(95, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Open Default Rom";
+            // 
+            // dontAskOpenCheckbox
+            // 
+            this.dontAskOpenCheckbox.AutoSize = true;
+            this.dontAskOpenCheckbox.Location = new System.Drawing.Point(326, 124);
+            this.dontAskOpenCheckbox.Name = "dontAskOpenCheckbox";
+            this.dontAskOpenCheckbox.Size = new System.Drawing.Size(123, 17);
+            this.dontAskOpenCheckbox.TabIndex = 17;
+            this.dontAskOpenCheckbox.Text = "Open without asking";
+            this.dontAskOpenCheckbox.UseVisualStyleBackColor = true;
+            this.dontAskOpenCheckbox.CheckedChanged += new System.EventHandler(this.dontAskOpenCheckbox_CheckedChanged);
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 212);
+            this.ClientSize = new System.Drawing.Size(693, 278);
+            this.Controls.Add(this.dontAskOpenCheckbox);
+            this.Controls.Add(this.clearButtonOpenDefault);
+            this.Controls.Add(this.changeOpenDefaultPathButton);
+            this.Controls.Add(this.openDefaultRomTextBox);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.clearButtonMap);
             this.Controls.Add(this.clearButtonExport);
             this.Controls.Add(this.saveButton);
@@ -160,11 +221,16 @@
         private System.Windows.Forms.Label romExportPathLabel;
         private System.Windows.Forms.TextBox romExportPathTextBox;
         private System.Windows.Forms.Label mapImportBasePathLabel;
-        private System.Windows.Forms.TextBox mapImportPathTextBox;
         private System.Windows.Forms.Button changePathButton1;
         private System.Windows.Forms.Button changePathButton2;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button clearButtonExport;
         private System.Windows.Forms.Button clearButtonMap;
+        private System.Windows.Forms.TextBox mapImportPathTextBox;
+        private System.Windows.Forms.Button clearButtonOpenDefault;
+        private System.Windows.Forms.Button changeOpenDefaultPathButton;
+        private System.Windows.Forms.TextBox openDefaultRomTextBox;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox dontAskOpenCheckbox;
     }
 }
