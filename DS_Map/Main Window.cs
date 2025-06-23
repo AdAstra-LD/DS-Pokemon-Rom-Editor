@@ -968,40 +968,13 @@ namespace DSPRE {
             Properties.Settings.Default.Save();
             Helpers.statusLabelMessage();
             var date = DateTime.Now;
-            var StringDate = formatTime(date.Hour) + ":" + formatTime(date.Minute) + ":" + formatTime(date.Second);
-            int timeSpent = CalculateTimeDifferenceInSeconds(dateBegin.Hour, dateBegin.Minute, dateBegin.Second, date.Hour, date.Minute, date.Second);
+            var StringDate = Helpers.formatTime(date.Hour) + ":" + Helpers.formatTime(date.Minute) + ":" + Helpers.formatTime(date.Second);
+            int timeSpent = Helpers.CalculateTimeDifferenceInSeconds(dateBegin.Hour, dateBegin.Minute, dateBegin.Second, date.Hour, date.Minute, date.Second);
 
-            Helpers.statusLabelMessage("Ready - " + StringDate + " | Build time: " + timeSpent.ToString() + "s");
+            Helpers.statusLabelMessage("Ready - " + StringDate + " | Build time: " + timeSpent.ToString() + "s | " + saveRom.FileName);
         }
 
-        static int CalculateTimeDifferenceInSeconds(int startHour, int startMinute, int startSecond, int endHour, int endMinute, int endSecond)
-        {
-            // Convert start time and end time to seconds since midnight
-            int startTimeInSeconds = (startHour * 3600) + (startMinute * 60) + startSecond;
-            int endTimeInSeconds = (endHour * 3600) + (endMinute * 60) + endSecond;
-
-            // Calculate difference
-            int timeDifference = endTimeInSeconds - startTimeInSeconds;
-
-            // If time difference is negative (end time is past midnight), adjust
-            if (timeDifference < 0)
-            {
-                timeDifference += 24 * 3600; // Add 24 hours in seconds
-            }
-
-            return timeDifference;
-        }
-
-        private String formatTime(int time)
-        {
-            string stringTime = time.ToString();
-            if (time < 10)
-            {
-                stringTime = "0" + stringTime;
-            }
-
-            return stringTime;
-        }
+ 
         private void unpackAllButton_Click(object sender, EventArgs e) {
             Helpers.statusLabelMessage("Awaiting user response...");
             DialogResult d = MessageBox.Show("Do you wish to unpack all extracted NARCS?\n" +
