@@ -30,10 +30,7 @@ namespace DSPRE.Editors
         #region Variables
         public TextArchive currentTextArchive;
         #endregion
-
-        #region Subroutines
-
-        #endregion
+        
 
         private void addTextArchiveButton_Click(object sender, EventArgs e)
         {

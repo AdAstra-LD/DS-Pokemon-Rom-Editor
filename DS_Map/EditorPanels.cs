@@ -17,7 +17,11 @@ namespace DSPRE {
         
         public static EncountersEditor encountersEditor { get { return MainProgram.encountersEditor; } }
 
+        public static CameraEditor cameraEditor { get { return MainProgram.cameraEditor;  } }
+
         public static TabPage scriptEditorTabPage { get { return MainProgram.tabPageScriptEditor; } }
+
+        public static TabPage cameraEditorTabPage { get { return MainProgram.cameraEditorTabPage; } }
         public static TabPage levelScriptEditorTabPage { get { return MainProgram.tabPageLevelScriptEditor; } }
 
         public static TabPage textEditorTabPage { get { return MainProgram.textEditorTabPage; } }

@@ -134,6 +134,12 @@
     <Compile Include="Editors\BtxEditor\BtxExitConfirmation.Designer.cs">
       <DependentUpon>BtxExitConfirmation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\CameraEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\CameraEditor.Designer.cs">
+      <DependentUpon>CameraEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\EncountersEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -455,6 +461,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\BtxEditor\BtxExitConfirmation.resx">
       <DependentUpon>BtxExitConfirmation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\CameraEditor.resx">
+      <DependentUpon>CameraEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\EncountersEditor.resx">
       <DependentUpon>EncountersEditor.cs</DependentUpon>
