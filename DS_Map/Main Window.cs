@@ -1067,7 +1067,7 @@ namespace DSPRE {
                 SetupNSBTXEditor();
                 SetupEventEditor();
                 SetupScriptEditor();
-                textEditor.SetupTextEditor(this, locationNameComboBox);
+                textEditor.SetupTextEditor(this);
                 SetupTrainerEditor();
 
                 Helpers.statusLabelMessage();
@@ -1132,7 +1132,7 @@ namespace DSPRE {
                     eventEditorIsReady = true;
                 }
             } else if (mainTabControl.SelectedTab == EditorPanels.textEditorTabPage) {
-                textEditor.SetupTextEditor(this, locationNameComboBox);
+                textEditor.SetupTextEditor(this);
             } else if (mainTabControl.SelectedTab == trainerEditorTabPage) {
                 if (!trainerEditorIsReady) {
                     SetupTrainerEditor();
@@ -1255,7 +1255,7 @@ namespace DSPRE {
 
             /*Add list of options to each control */
             textEditor.currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
-            textEditor.ReloadHeaderEditorLocationsList(textEditor.currentTextArchive.messages, locationNameComboBox);
+            textEditor.ReloadHeaderEditorLocationsList(textEditor.currentTextArchive.messages, this);
 
             switch (RomInfo.gameFamily) {
                 case GameFamilies.DP:

@@ -18,7 +18,6 @@ namespace DSPRE.Editors
     {
         MainProgram _parent;
         public bool textEditorIsReady { get; set; } = false;
-        private ComboBox _locationNameComboBox;
         public TextEditor()
         {
             InitializeComponent();
@@ -116,7 +115,7 @@ namespace DSPRE.Editors
 
             if (textSelection == RomInfo.locationNamesTextNumber)
             {
-                ReloadHeaderEditorLocationsList(currentTextArchive.messages);
+                ReloadHeaderEditorLocationsList(currentTextArchive.messages, _parent);
             }
         }
 
@@ -125,7 +124,7 @@ namespace DSPRE.Editors
             currentTextArchive.SaveToFileDefaultDir(selectTextFileComboBox.SelectedIndex);
             if (selectTextFileComboBox.SelectedIndex == RomInfo.locationNamesTextNumber)
             {
-                ReloadHeaderEditorLocationsList(currentTextArchive.messages);
+                ReloadHeaderEditorLocationsList(currentTextArchive.messages, _parent);
             }
         }
         private void selectedLineMoveUpButton_Click(object sender, EventArgs e)
@@ -158,18 +157,13 @@ namespace DSPRE.Editors
             }
         }
         //TODO : Externalize this function in a helper
-        public void ReloadHeaderEditorLocationsList(IEnumerable<string> contents, ComboBox forcedLocationNameComboBox=null)
+        public void ReloadHeaderEditorLocationsList(IEnumerable<string> contents, MainProgram parent=null)
         {
-            if (_locationNameComboBox == null && forcedLocationNameComboBox == null) return;
-            if (forcedLocationNameComboBox != null)
-            {
-                _locationNameComboBox = forcedLocationNameComboBox;
-            }
-            _locationNameComboBox = forcedLocationNameComboBox;
-            int selection = _locationNameComboBox.SelectedIndex;
-            _locationNameComboBox.Items.Clear();
-            _locationNameComboBox.Items.AddRange(contents.ToArray());
-            _locationNameComboBox.SelectedIndex = selection;
+            if(parent != null) _parent = parent;
+            int selection =  _parent.locationNameComboBox.SelectedIndex;
+             _parent.locationNameComboBox.Items.Clear();
+             _parent.locationNameComboBox.Items.AddRange(contents.ToArray());
+             _parent.locationNameComboBox.SelectedIndex = selection;
         }
         private void importTextFileButton_Click(object sender, EventArgs e)
         {
@@ -554,19 +548,19 @@ namespace DSPRE.Editors
         public void OpenTextEditor(MainProgram parent, int TextArchiveID, ComboBox locationNameComboBox)
         {
 
-            SetupTextEditor(parent, locationNameComboBox);
+            SetupTextEditor(parent);
 
             selectTextFileComboBox.SelectedIndex = TextArchiveID;
             EditorPanels.mainTabControl.SelectedTab = EditorPanels.textEditorTabPage;
         }
 
-        public void SetupTextEditor(MainProgram parent, ComboBox locationNameComboBox, bool force = false)
+        public void SetupTextEditor(MainProgram parent, bool force = false)
         {
             if (textEditorIsReady && !force) { return; }
             textEditorIsReady = true;
             this._parent = parent;
 
-            _locationNameComboBox = locationNameComboBox;
+             _parent.locationNameComboBox = _parent.locationNameComboBox;
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.textArchives });
             Helpers.statusLabelMessage("Setting up Text Editor...");
