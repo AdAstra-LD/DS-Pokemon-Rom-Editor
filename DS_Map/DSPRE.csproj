@@ -204,11 +204,11 @@
     <Compile Include="Editors\SpriteCropper.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editors\WeatherEditor.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Editors\TextEditor.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Editors\WeatherEditor.Designer.cs">
-      <DependentUpon>WeatherEditor.cs</DependentUpon>
+    <Compile Include="Editors\TextEditor.Designer.cs">
+      <DependentUpon>TextEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
@@ -486,6 +486,9 @@
     <EmbeddedResource Include="Editors\ScriptEditor.resx">
       <DependentUpon>ScriptEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TextEditor.resx">
+      <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EventFileImport.resx">
       <DependentUpon>EventFileImport.cs</DependentUpon>
     </EmbeddedResource>
@@ -740,6 +743,7 @@
     <None Include="Resources\Graphics\Program Icons\open_rom.png" />
     <None Include="Resources\Graphics\Program Icons\questionMark.png" />
     <None Include="Resources\Graphics\Program Icons\narcToFolderIcon.png" />
+    <Content Include="Resources\Graphics\Program Icons\popout.png" />
     <Content Include="Resources\Graphics\Program Icons\resetColorTable.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImage.png" />
     <None Include="Resources\Graphics\Program Icons\wideLensImageTransp.png" />
