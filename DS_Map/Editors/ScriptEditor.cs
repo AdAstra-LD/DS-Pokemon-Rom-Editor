@@ -736,6 +736,7 @@ namespace DSPRE.Editors
         {
             string path = Filesystem.GetScriptPath(selectScriptFileComboBox.SelectedIndex);
             Helpers.ExplorerSelect(path);
+
         }
         private void findNext(SearchManager searchManager)
         {

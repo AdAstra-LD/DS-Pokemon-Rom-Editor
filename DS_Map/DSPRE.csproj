@@ -179,6 +179,12 @@
     <Compile Include="Editors\MoveDataEditor.designer.cs">
       <DependentUpon>MoveDataEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\NsbtxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\NsbtxEditor.Designer.cs">
+      <DependentUpon>NsbtxEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\PokemonSpriteEditor.cs" />
     <Compile Include="Editors\SafariZoneEditor.cs">
       <SubType>UserControl</SubType>
@@ -494,6 +500,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\MoveDataEditor.resx">
       <DependentUpon>MoveDataEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\NsbtxEditor.resx">
+      <DependentUpon>NsbtxEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\SafariZoneEditor.resx">
       <DependentUpon>SafariZoneEditor.cs</DependentUpon>

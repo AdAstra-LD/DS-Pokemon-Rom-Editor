@@ -8,6 +8,8 @@ namespace DSPRE {
     public static void Initialize(MainProgram mainProgram) {
       MainProgram = mainProgram;
     }
+
+        #region Editors
         public static TabControl mainTabControl { get { return MainProgram.mainTabControl; } }
 
         public static ScriptEditor scriptEditor { get { return MainProgram.scriptEditor; } }
@@ -23,6 +25,11 @@ namespace DSPRE {
 
         public static CameraEditor cameraEditor { get { return MainProgram.cameraEditor;  } }
 
+        public static NsbtxEditor nsbtxEditor { get { return MainProgram.nsbtxEditor; } }
+
+        #endregion
+
+        #region Tabs
         public static TabPage scriptEditorTabPage { get { return MainProgram.tabPageScriptEditor; } }
 
         public static TabPage cameraEditorTabPage { get { return MainProgram.cameraEditorTabPage; } }
@@ -32,8 +39,11 @@ namespace DSPRE {
         public static TabPage tabPageEncountersEditor { get { return MainProgram.tabPageEncountersEditor; } }
         public static TabPage tabPageTableEditor { get { return MainProgram.tableEditorTabPage; } }
 
-        public static TabPage trainerEditortTabPage { get { return MainProgram.trainerEditorTabPage; } }
+        public static TabPage trainerEditorTabPage { get { return MainProgram.trainerEditorTabPage; } }
 
+        public static TabPage nsbtxEditorTabPage { get { return MainProgram.nsbtxEditorTabPage; } }
+
+        #endregion
 
     }
 }

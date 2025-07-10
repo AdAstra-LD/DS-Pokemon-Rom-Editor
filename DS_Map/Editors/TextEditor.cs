@@ -40,6 +40,12 @@ namespace DSPRE.Editors
             selectTextFileComboBox.Items.Add("Text Archive " + selectTextFileComboBox.Items.Count);
             selectTextFileComboBox.SelectedIndex = selectTextFileComboBox.Items.Count - 1;
         }
+
+        private void locateCurrentTextArchive_Click(object sender, EventArgs e)
+        {
+            Helpers.ExplorerSelect(Path.Combine(gameDirs[DirNames.textArchives].unpackedDir, EditorPanels.textEditor.currentTextArchive.initialKey.ToString("D4")));
+        }
+
         private void addStringButton_Click(object sender, EventArgs e)
         {
             currentTextArchive.messages.Add("");
