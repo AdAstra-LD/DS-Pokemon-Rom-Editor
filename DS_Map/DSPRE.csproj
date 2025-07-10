@@ -222,6 +222,12 @@
     <Compile Include="Editors\TextEditor.Designer.cs">
       <DependentUpon>TextEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\TrainerEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\TrainerEditor.Designer.cs">
+      <DependentUpon>TrainerEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -506,6 +512,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\TextEditor.resx">
       <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TrainerEditor.resx">
+      <DependentUpon>TrainerEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EventFileImport.resx">
       <DependentUpon>EventFileImport.cs</DependentUpon>
