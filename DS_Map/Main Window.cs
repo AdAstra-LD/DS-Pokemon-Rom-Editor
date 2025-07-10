@@ -38,7 +38,7 @@ using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
 using DSPRE.Editors.BtxEditor;
-
+using static DSPRE.Helpers;
 namespace DSPRE {
 
 
@@ -74,21 +74,104 @@ namespace DSPRE {
         public bool mapEditorIsReady { get; private set; } = false;
         public bool nsbtxEditorIsReady { get; private set; } = false;
         public bool eventEditorIsReady { get; private set; } = false;
-        public bool scriptEditorIsReady { get; private set; } = false;
-        public bool textEditorIsReady { get; private set; } = false;
-        public bool cameraEditorIsReady { get; private set; } = false;
         public bool trainerEditorIsReady { get; private set; } = false;
-        public bool tableEditorIsReady { get; private set; } = false;
 
         /* ROM Information */
         public static string gameCode;
         public static byte europeByte;
-        RomInfo romInfo;
+        public RomInfo romInfo;
         public Dictionary<ushort /*evFile*/, ushort /*header*/> eventToHeader = new Dictionary<ushort, ushort>();
 
         #endregion
 
         #region Subroutines
+
+        private void SetMenuLayout(byte layoutStyle)
+        {
+            Console.WriteLine("Setting menuLayout to" + layoutStyle);
+
+            IList list = menuViewToolStripMenuItem.DropDownItems;
+            for (int i = 0; i < list.Count; i++)
+            {
+                (list[i] as ToolStripMenuItem).Checked = (i == layoutStyle);
+            }
+
+            Properties.Settings.Default.menuLayout = layoutStyle;
+
+            switch (layoutStyle)
+            {
+                case 0:
+                    buildNarcFromFolderToolStripButton.Visible = false;
+                    unpackNARCtoFolderToolStripButton.Visible = false;
+                    separator_afterNarcUtils.Visible = false;
+
+                    listBasedBatchRenameToolStripButton.Visible = false;
+                    contentBasedBatchRenameToolStripButton.Visible = false;
+                    separator_afterRenameUtils.Visible = false;
+
+                    enumBasedListBuilderToolStripButton.Visible = false;
+                    folderBasedListBuilderToolStriButton.Visible = false;
+                    separator_afterListUtils.Visible = false;
+
+                    nsbmdAddTexButton.Visible = false;
+                    nsbmdRemoveTexButton.Visible = false;
+                    nsbmdExportTexButton.Visible = false;
+                    separator_afterNsbmdUtils.Visible = false;
+
+                    wildEditorButton.Visible = false;
+                    romToolboxToolStripButton.Visible = false;
+                    break;
+                case 1:
+                    buildNarcFromFolderToolStripButton.Visible = false;
+                    unpackNARCtoFolderToolStripButton.Visible = false;
+                    separator_afterNarcUtils.Visible = false;
+
+                    listBasedBatchRenameToolStripButton.Visible = false;
+                    contentBasedBatchRenameToolStripButton.Visible = false;
+                    separator_afterRenameUtils.Visible = false;
+
+                    enumBasedListBuilderToolStripButton.Visible = false;
+                    folderBasedListBuilderToolStriButton.Visible = false;
+                    separator_afterListUtils.Visible = false;
+
+                    nsbmdAddTexButton.Visible = true;
+                    nsbmdRemoveTexButton.Visible = true;
+                    nsbmdExportTexButton.Visible = true;
+                    separator_afterNsbmdUtils.Visible = true;
+
+                    wildEditorButton.Visible = true;
+                    romToolboxToolStripButton.Visible = true;
+                    break;
+                case 2:
+                    buildNarcFromFolderToolStripButton.Visible = true;
+                    unpackNARCtoFolderToolStripButton.Visible = true;
+                    separator_afterNarcUtils.Visible = true;
+
+                    listBasedBatchRenameToolStripButton.Visible = false;
+                    contentBasedBatchRenameToolStripButton.Visible = false;
+                    separator_afterRenameUtils.Visible = false;
+
+                    enumBasedListBuilderToolStripButton.Visible = false;
+                    folderBasedListBuilderToolStriButton.Visible = false;
+                    separator_afterListUtils.Visible = false;
+
+                    nsbmdAddTexButton.Visible = true;
+                    nsbmdRemoveTexButton.Visible = true;
+                    nsbmdExportTexButton.Visible = true;
+                    separator_afterNsbmdUtils.Visible = true;
+
+                    wildEditorButton.Visible = true;
+                    romToolboxToolStripButton.Visible = true;
+                    break;
+                case 3:
+                default:
+                    foreach (ToolStripItem c in mainToolStrip.Items)
+                    {
+                        c.Visible = true;
+                    }
+                    break;
+            }
+        }
         private void MainProgram_FormClosing(object sender, FormClosingEventArgs e) {
             if (e.CloseReason != CloseReason.ApplicationExitCall && MessageBox.Show("Are you sure you want to quit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
                 e.Cancel = true;
@@ -263,25 +346,6 @@ namespace DSPRE {
 
             EditorPanels.scriptEditor.UpdateScriptNumberCheckBox((NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference);
             EditorPanels.scriptEditor.selectScriptFileComboBox.SelectedIndex = 0;
-            Helpers.statusLabelMessage();
-        }
-        private void SetupTextEditor() {
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.textArchives });
-
-            Helpers.statusLabelMessage("Setting up Text Editor...");
-            Update();
-
-            selectTextFileComboBox.Items.Clear();
-            int textCount = romInfo.GetTextArchivesCount();
-            for (int i = 0; i < textCount; i++) {
-                selectTextFileComboBox.Items.Add("Text Archive " + i);
-            }
-
-            Helpers.DisableHandlers();
-            hexRadiobutton.Checked = Properties.Settings.Default.textEditorPreferHex;
-            Helpers.EnableHandlers();
-
-            selectTextFileComboBox.SelectedIndex = 0;
             Helpers.statusLabelMessage();
         }
 
@@ -1002,7 +1066,7 @@ namespace DSPRE {
                 SetupNSBTXEditor();
                 SetupEventEditor();
                 SetupScriptEditor();
-                SetupTextEditor();
+                textEditor.SetupTextEditor(this);
                 SetupTrainerEditor();
 
                 Helpers.statusLabelMessage();
@@ -1066,34 +1130,25 @@ namespace DSPRE {
                     SetupEventEditor();
                     eventEditorIsReady = true;
                 }
-            } else if (mainTabControl.SelectedTab == textEditorTabPage) {
-                if (!textEditorIsReady) {
-                    SetupTextEditor();
-                    textEditorIsReady = true;
-                }
-            } else if (mainTabControl.SelectedTab == cameraEditorTabPage) {
-                if (!cameraEditorIsReady) {
-                    SetupCameraEditor();
-                    cameraEditorIsReady = true;
-                }
+            } else if (mainTabControl.SelectedTab == EditorPanels.textEditorTabPage) {
+                textEditor.SetupTextEditor(this);
             } else if (mainTabControl.SelectedTab == trainerEditorTabPage) {
                 if (!trainerEditorIsReady) {
                     SetupTrainerEditor();
                     trainerEditorIsReady = true;
                 }
             } else if (mainTabControl.SelectedTab == tableEditorTabPage) {
-                if (!tableEditorIsReady) {
-                    resetHeaderSearch();
-                    SetupConditionalMusicTable();
-                    SetupBattleEffectsTables();
-                    tableEditorIsReady = true;
-                }
+                resetHeaderSearch();
+                //SetupConditionalMusicTable();
+                //SetupBattleEffectsTables();
             } else if (mainTabControl.SelectedTab == EditorPanels.scriptEditorTabPage) {
                 scriptEditor.SetupScriptEditor(this);
             } else if (mainTabControl.SelectedTab == EditorPanels.levelScriptEditorTabPage) {
                 levelScriptEditor.SetUpLevelScriptEditor(this);
             } else if (mainTabControl.SelectedTab == EditorPanels.tabPageEncountersEditor) {
                 encountersEditor.SetupEncountersEditor();
+            } else if (mainTabControl.SelectedTab == cameraEditorTabPage) {
+                cameraEditor.SetupCameraEditor(this);
             }
         }
 
@@ -1194,10 +1249,9 @@ namespace DSPRE {
                 return;
             }
 
-
             /*Add list of options to each control */
-            currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
-            ReloadHeaderEditorLocationsList(currentTextArchive.messages);
+            textEditor.currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
+            textEditor.ReloadHeaderEditorLocationsList(textEditor.currentTextArchive.messages, this);
 
             switch (RomInfo.gameFamily) {
                 case GameFamilies.DP:
@@ -1878,12 +1932,7 @@ namespace DSPRE {
             }
         }
         private void openTextArchiveButton_Click(object sender, EventArgs e) {
-            if (!textEditorIsReady) {
-                SetupTextEditor();
-                textEditorIsReady = true;
-            }
-            selectTextFileComboBox.SelectedIndex = (int)textFileUpDown.Value;
-            mainTabControl.SelectedTab = textEditorTabPage;
+            textEditor.OpenTextEditor(this, (int)textFileUpDown.Value, locationNameComboBox);
         }
         private void saveHeaderButton_Click(object sender, EventArgs e) {
             /* Check if dynamic headers patch has been applied, and save header to arm9 or a/0/5/0 accordingly */
@@ -3747,11 +3796,11 @@ namespace DSPRE {
             }
         }
         private void bldPlaceLockXcheckbox_CheckedChanged(object sender, EventArgs e) {
-            ExclusiveCBInvert(bldPlaceLockZcheckbox);
+            Helpers.ExclusiveCBInvert(bldPlaceLockZcheckbox);
         }
 
         private void bldPlaceLockZcheckbox_CheckedChanged(object sender, EventArgs e) {
-            ExclusiveCBInvert(bldPlaceLockXcheckbox);
+            Helpers.ExclusiveCBInvert(bldPlaceLockXcheckbox);
         }
         private void mapPartsTabControl_SelectedIndexChanged(object sender, EventArgs e) {
             if (mapPartsTabControl.SelectedTab == buildingsTabPage) {
@@ -7017,428 +7066,6 @@ namespace DSPRE {
         #endregion
         #endregion
 
-        #region Text Editor
-
-        #region Variables
-        TextArchive currentTextArchive;
-        #endregion
-
-        #region Subroutines
-
-        #endregion
-
-        private void addTextArchiveButton_Click(object sender, EventArgs e) {
-            /* Add copy of message 0 to text archives folder */
-            new TextArchive(0, new List<string>() { "Your text here." }, discardLines: true).SaveToFileDefaultDir(selectTextFileComboBox.Items.Count);
-
-            /* Update ComboBox and select new file */
-            selectTextFileComboBox.Items.Add("Text Archive " + selectTextFileComboBox.Items.Count);
-            selectTextFileComboBox.SelectedIndex = selectTextFileComboBox.Items.Count - 1;
-        }
-        private void addStringButton_Click(object sender, EventArgs e) {
-            currentTextArchive.messages.Add("");
-            textEditorDataGridView.Rows.Add("");
-
-            int rowInd = textEditorDataGridView.RowCount - 1;
-
-            Helpers.DisableHandlers();
-
-            string format = "X";
-            string prefix = "0x";
-            if (decimalRadioButton.Checked) {
-                format = "D";
-                prefix = "";
-            }
-
-            textEditorDataGridView.Rows[rowInd].HeaderCell.Value = prefix + rowInd.ToString(format);
-            Helpers.EnableHandlers();
-
-        }
-        private void exportTextFileButton_Click(object sender, EventArgs e) {
-            int textSelection = selectTextFileComboBox.SelectedIndex;
-
-            string msgFileType = "Gen IV Text Archive";
-            string txtFileType = "Plaintext file";
-            string suggestedFileName = "Text Archive " + textSelection;
-            bool showSuccessMessage = true;
-
-            SaveFileDialog sf = new SaveFileDialog {
-                Filter = $"{msgFileType} (*.msg)|*.msg|{txtFileType} (*.txt)|*.txt"
-            };
-
-            if (!string.IsNullOrWhiteSpace(suggestedFileName)) {
-                sf.FileName = suggestedFileName;
-            }
-
-            if (sf.ShowDialog() != DialogResult.OK) {
-                return;
-            }
-
-            string selectedExtension = Path.GetExtension(sf.FileName);
-            string type = currentTextArchive.GetType().Name;
-
-            if (selectedExtension == ".msg") {
-                // Handle .msg case
-                currentTextArchive.SaveToFile(sf.FileName, showSuccessMessage);
-            } else if (selectedExtension == ".txt") {
-                // Handle .txt case
-                const int txtLinesWarningThreshold = 300;
-                if (currentTextArchive.messages.Count > txtLinesWarningThreshold) {
-                    DialogResult result = MessageBox.Show($"This {type} has over {txtLinesWarningThreshold} messages. Writing a large text file may take a long time, especially on slow machines.\n\nAre you sure you want to proceed?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (result == DialogResult.No) {
-                        return;
-                    }
-                }
-                File.WriteAllText(sf.FileName, currentTextArchive.ToString());
-
-                if (showSuccessMessage) {
-                    MessageBox.Show($"{type} saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-
-            if (textSelection == RomInfo.locationNamesTextNumber) {
-                ReloadHeaderEditorLocationsList(currentTextArchive.messages);
-            }
-        }
-
-        private void saveTextArchiveButton_Click(object sender, EventArgs e) {
-            currentTextArchive.SaveToFileDefaultDir(selectTextFileComboBox.SelectedIndex);
-            if (selectTextFileComboBox.SelectedIndex == RomInfo.locationNamesTextNumber) {
-                ReloadHeaderEditorLocationsList(currentTextArchive.messages);
-            }
-        }
-        private void selectedLineMoveUpButton_Click(object sender, EventArgs e) {
-            int cc = textEditorDataGridView.CurrentCell.RowIndex;
-
-            if (cc > 0) {
-                DataGridViewRowCollection rows = textEditorDataGridView.Rows;
-                DataGridViewCell current = rows[cc].Cells[0];
-                DataGridViewCell previous = rows[cc - 1].Cells[0];
-
-                (current.Value, previous.Value) = (previous.Value, current.Value);
-                textEditorDataGridView.CurrentCell = previous;
-            }
-        }
-
-        private void selectedLineMoveDownButton_Click(object sender, EventArgs e) {
-            int cc = textEditorDataGridView.CurrentCell.RowIndex;
-
-            if (cc < textEditorDataGridView.RowCount - 1) {
-                DataGridViewRowCollection rows = textEditorDataGridView.Rows;
-                DataGridViewCell current = rows[cc].Cells[0];
-                DataGridViewCell next = rows[cc + 1].Cells[0];
-
-                (current.Value, next.Value) = (next.Value, current.Value);
-                textEditorDataGridView.CurrentCell = next;
-            }
-        }
-        private void ReloadHeaderEditorLocationsList(IEnumerable<string> contents) {
-            int selection = locationNameComboBox.SelectedIndex;
-            locationNameComboBox.Items.Clear();
-            locationNameComboBox.Items.AddRange(contents.ToArray());
-            locationNameComboBox.SelectedIndex = selection;
-        }
-        private void importTextFileButton_Click(object sender, EventArgs e) {
-            /* Prompt user to select .msg or .txt file */
-            OpenFileDialog of = new OpenFileDialog {
-                Filter = "Text Archive (*.msg;*.txt)|*.msg;*.txt|Gen IV Text Archive (*.msg)|*.msg|Plaintext file (*.txt)|*.txt"
-            };
-            if (of.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            /* Update Text Archive object in memory */
-            string path = RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + selectTextFileComboBox.SelectedIndex.ToString("D4");
-            string selectedExtension = Path.GetExtension(of.FileName);
-
-            bool readagain = false;
-
-            if (selectedExtension == ".msg") {
-                // Handle .msg case
-                File.Copy(of.FileName, path, true);
-                readagain = true;
-            } else if (selectedExtension == ".txt") {
-                // Handle .txt case
-                try {
-                    string[] lines = File.ReadAllLines(of.FileName);
-                    currentTextArchive.messages.Clear();
-                    currentTextArchive.messages.AddRange(lines);
-                } catch (Exception ex) {
-                    MessageBox.Show($"Failed to import text file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-
-            /* Refresh controls */
-            UpdateTextEditorFileView(readagain);
-
-            /* Display success message */
-            MessageBox.Show("Text Archive imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void removeMessageFileButton_Click(object sender, EventArgs e) {
-            DialogResult d = MessageBox.Show("Are you sure you want to delete the last Text Archive?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (d.Equals(DialogResult.Yes)) {
-                /* Delete Text Archive */
-                File.Delete(RomInfo.gameDirs[DirNames.textArchives].unpackedDir + "\\" + (selectTextFileComboBox.Items.Count - 1).ToString("D4"));
-
-                /* Check if currently selected file is the last one, and in that case select the one before it */
-                int lastIndex = selectTextFileComboBox.Items.Count - 1;
-                if (selectTextFileComboBox.SelectedIndex == lastIndex) {
-                    selectTextFileComboBox.SelectedIndex--;
-                }
-
-                /* Remove item from ComboBox */
-                selectTextFileComboBox.Items.RemoveAt(lastIndex);
-            }
-        }
-        private void removeStringButton_Click(object sender, EventArgs e) {
-            if (currentTextArchive.messages.Count > 0) {
-                currentTextArchive.messages.RemoveAt(currentTextArchive.messages.Count - 1);
-                textEditorDataGridView.Rows.RemoveAt(textEditorDataGridView.Rows.Count - 1);
-            }
-        }
-        private void searchMessageButton_Click(object sender, EventArgs e) {
-            if (searchMessageTextBox.Text == "") {
-                return;
-            }
-
-            int firstArchiveNumber;
-            int lastArchiveNumber;
-
-            if (searchAllArchivesCheckBox.Checked) {
-                firstArchiveNumber = 0;
-                lastArchiveNumber = romInfo.GetTextArchivesCount();
-            } else {
-                firstArchiveNumber = selectTextFileComboBox.SelectedIndex;
-                lastArchiveNumber = firstArchiveNumber + 1;
-            }
-
-            textSearchResultsListBox.Items.Clear();
-
-            lastArchiveNumber = Math.Min(lastArchiveNumber, 828);
-
-            textSearchProgressBar.Maximum = lastArchiveNumber;
-
-            List<string> results = null;
-            if (caseSensitiveTextSearchCheckbox.Checked) {
-                results = searchTexts(firstArchiveNumber, lastArchiveNumber, (string x) => x.Contains(searchMessageTextBox.Text));
-            } else {
-                results = searchTexts(firstArchiveNumber, lastArchiveNumber, (string x) => x.IndexOf(searchMessageTextBox.Text, StringComparison.InvariantCultureIgnoreCase) >= 0);
-            }
-
-            textSearchResultsListBox.Items.AddRange(results.ToArray());
-            textSearchProgressBar.Value = 0;
-            caseSensitiveTextSearchCheckbox.Enabled = true;
-        }
-
-        private List<string> searchTexts(int firstArchive, int lastArchive, Func<string, bool> criteria) {
-            List<string> results = new List<string>();
-
-            for (int i = firstArchive; i < lastArchive; i++) {
-
-                TextArchive file = new TextArchive(i);
-                for (int j = 0; j < file.messages.Count; j++) {
-                    if (criteria(file.messages[j])) {
-                        results.Add("(" + i.ToString("D3") + ")" + " - #" + j.ToString("D2") + " --- " + file.messages[j].Substring(0, Math.Min(file.messages[j].Length, 40)));
-                    }
-                }
-                textSearchProgressBar.Value = i;
-            }
-            return results;
-        }
-
-        private void searchMessageTextBox_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
-                searchMessageButton_Click(null, null);
-            }
-        }
-        private void replaceMessageButton_Click(object sender, EventArgs e) {
-            if (searchMessageTextBox.Text == "") {
-                return;
-            }
-
-            int firstArchiveNumber;
-            int lastArchiveNumber;
-
-            string specify;
-            if (searchAllArchivesCheckBox.Checked) {
-                firstArchiveNumber = 0;
-                lastArchiveNumber = romInfo.GetTextArchivesCount();
-                specify = " in every Text Bank of the game (" + firstArchiveNumber + " to " + lastArchiveNumber + ")";
-            } else {
-                firstArchiveNumber = selectTextFileComboBox.SelectedIndex;
-                lastArchiveNumber = firstArchiveNumber + 1;
-                specify = " in the current text bank only (" + firstArchiveNumber + ")";
-            }
-
-            string message = "You are about to replace every occurrence of " + '"' + searchMessageTextBox.Text + '"'
-                + " with " + '"' + replaceMessageTextBox.Text + '"' + specify +
-                ".\nThe operation can't be interrupted nor undone.\n\nProceed?";
-            DialogResult d = MessageBox.Show(message, "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (d == DialogResult.Yes) {
-                string searchString = searchMessageTextBox.Text;
-                string replaceString = replaceMessageTextBox.Text;
-                textSearchResultsListBox.Items.Clear();
-
-                lastArchiveNumber = Math.Min(lastArchiveNumber, 828);
-                textSearchProgressBar.Maximum = lastArchiveNumber;
-
-                for (int cur = firstArchiveNumber; cur < lastArchiveNumber; cur++) {
-                    currentTextArchive = new TextArchive(cur);
-                    bool found = false;
-
-                    if (caseSensitiveTextReplaceCheckbox.Checked) {
-                        for (int j = 0; j < currentTextArchive.messages.Count; j++) {
-                            while (currentTextArchive.messages[j].IndexOf(searchString) >= 0) {
-                                currentTextArchive.messages[j] = currentTextArchive.messages[j].Replace(searchString, replaceString);
-                                found = true;
-                            }
-                        }
-                    } else {
-                        for (int j = 0; j < currentTextArchive.messages.Count; j++) {
-                            int posFound;
-                            while ((posFound = currentTextArchive.messages[j].IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase)) >= 0) {
-                                currentTextArchive.messages[j] = currentTextArchive.messages[j].Substring(0, posFound) + replaceString + currentTextArchive.messages[j].Substring(posFound + searchString.Length);
-                                found = true;
-                            }
-                        }
-                    }
-
-                    textSearchProgressBar.Value = cur;
-                    if (found) {
-                        Helpers.DisableHandlers();
-
-                        textSearchResultsListBox.Items.Add("Text archive (" + cur + ") - Succesfully edited");
-                        currentTextArchive.SaveToFileDefaultDir(cur, showSuccessMessage: false);
-
-                        if (cur == lastArchiveNumber) {
-                            UpdateTextEditorFileView(false);
-                        }
-
-                        Helpers.EnableHandlers();
-                    }
-                    //else searchMessageResultTextBox.AppendText(searchString + " not found in this file");
-                    //this.saveMessageFileButton_Click(sender, e);
-                }
-                MessageBox.Show("Operation completed.", "Replace All Text", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                UpdateTextEditorFileView(readAgain: true);
-                textSearchProgressBar.Value = 0;
-            }
-        }
-        private void selectTextFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdateTextEditorFileView(true);
-        }
-        private void UpdateTextEditorFileView(bool readAgain) {
-            Helpers.DisableHandlers();
-
-            textEditorDataGridView.Rows.Clear();
-            if (currentTextArchive is null || readAgain) {
-                currentTextArchive = new TextArchive(selectTextFileComboBox.SelectedIndex);
-            }
-
-            foreach (string msg in currentTextArchive.messages) {
-                textEditorDataGridView.Rows.Add(msg);
-            }
-
-            if (hexRadiobutton.Checked) {
-                PrintTextEditorLinesHex();
-            } else {
-                PrintTextEditorLinesDecimal();
-            }
-
-            Helpers.EnableHandlers();
-
-            textEditorDataGridView_CurrentCellChanged(textEditorDataGridView, null);
-        }
-        private void PrintTextEditorLinesHex() {
-            int final = Math.Min(textEditorDataGridView.Rows.Count, currentTextArchive.messages.Count);
-
-            for (int i = 0; i < final; i++) {
-                textEditorDataGridView.Rows[i].HeaderCell.Value = "0x" + i.ToString("X");
-            }
-        }
-        private void PrintTextEditorLinesDecimal() {
-            int final = Math.Min(textEditorDataGridView.Rows.Count, currentTextArchive.messages.Count);
-
-            for (int i = 0; i < final; i++) {
-                textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
-            }
-        }
-        private void textEditorDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            if (e.RowIndex > -1 && e.ColumnIndex > -1) {
-                try {
-                    currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                } catch (NullReferenceException) {
-                    currentTextArchive.messages[e.RowIndex] = "";
-                }
-            }
-        }
-        private void textEditorDataGridView_CurrentCellChanged(object sender, EventArgs e) {
-            DataGridView dgv = sender as DataGridView;
-            if (Helpers.HandlersDisabled || dgv == null || dgv.CurrentCell == null) {
-                return;
-            }
-
-            Console.WriteLine("R: " + dgv.CurrentCell.RowIndex);
-            Console.WriteLine("Last index: " + (dgv.RowCount - 1).ToString());
-
-            if (dgv.CurrentCell.RowIndex > 0) {
-                selectedLineMoveUpButton.Enabled = true;
-            } else {
-                selectedLineMoveUpButton.Enabled = false;
-            }
-
-            if (dgv.CurrentCell.RowIndex < dgv.RowCount - 1) {
-                selectedLineMoveDownButton.Enabled = true;
-            } else {
-                selectedLineMoveDownButton.Enabled = false;
-            }
-        }
-        private void textSearchResultsListBox_GoToEntryResult(object sender, MouseEventArgs e) {
-            if (textSearchResultsListBox.SelectedIndex < 0) {
-                return;
-            }
-
-            string[] msgResult = textSearchResultsListBox.Text.Split(new string[] { " --- " }, StringSplitOptions.RemoveEmptyEntries);
-            string[] parts = msgResult[0].Substring(1).Split(new string[] { ") - #" }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (int.TryParse(parts[0], out int msg)) {
-                if (int.TryParse(parts[1], out int line)) {
-                    selectTextFileComboBox.SelectedIndex = msg;
-                    textEditorDataGridView.ClearSelection();
-                    textEditorDataGridView.Rows[line].Selected = true;
-                    textEditorDataGridView.Rows[line].Cells[0].Selected = true;
-                    textEditorDataGridView.CurrentCell = textEditorDataGridView.Rows[line].Cells[0];
-
-                    return;
-                }
-            }
-        }
-        private void textSearchResultsListBox_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
-                textSearchResultsListBox_GoToEntryResult(null, null);
-            }
-        }
-        private void hexRadiobutton_CheckedChanged(object sender, EventArgs e) {
-            updateTextEditorLineNumbers();
-            Properties.Settings.Default.textEditorPreferHex = hexRadiobutton.Checked;
-        }
-        private void updateTextEditorLineNumbers() {
-            Helpers.DisableHandlers();
-            if (hexRadiobutton.Checked) {
-                PrintTextEditorLinesHex();
-            } else {
-                PrintTextEditorLinesDecimal();
-            }
-            Helpers.EnableHandlers();
-        }
-        #endregion
-
         #region NSBTX Editor
         public NSBTX_File currentNsbtx;
         public AreaData currentAreaData;
@@ -7841,164 +7468,6 @@ namespace DSPRE {
         }
         #endregion
 
-        #region Camera Editor
-        GameCamera[] currentCameraTable;
-        uint overlayCameraTblOffset;
-
-        private void SetupCameraEditor() {
-            RomInfo.PrepareCameraData();
-            cameraEditorDataGridView.Rows.Clear();
-
-            if (OverlayUtils.OverlayTable.IsDefaultCompressed(RomInfo.cameraTblOverlayNumber)) {
-                DialogResult d1 = MessageBox.Show("It is STRONGLY recommended to configure Overlay1 as uncompressed before proceeding.\n\n" +
-                        "More details in the following dialog.\n\n" + "Do you want to know more?",
-                        "Confirm to proceed", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-                bool userConfirmed = (d1 == DialogResult.Yes && PatchToolboxDialog.ConfigureOverlay1Uncompressed());
-
-
-                if (!userConfirmed) {
-                    MessageBox.Show("You chose not to apply the patch. Use this editor responsibly.\n\n" +
-                            "If you change your mind, you can apply it later by accessing the Patch Toolbox.",
-                            "Caution", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    if (OverlayUtils.IsCompressed(RomInfo.cameraTblOverlayNumber)) {
-                        OverlayUtils.Decompress(RomInfo.cameraTblOverlayNumber);
-                    }
-                }
-            }
-
-
-            uint[] RAMaddresses = new uint[RomInfo.cameraTblOffsetsToRAMaddress.Length];
-            string camOverlayPath = OverlayUtils.GetPath(RomInfo.cameraTblOverlayNumber);
-            using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath)) {
-                for (int i = 0; i < RomInfo.cameraTblOffsetsToRAMaddress.Length; i++) {
-                    br.BaseStream.Position = RomInfo.cameraTblOffsetsToRAMaddress[i];
-                    RAMaddresses[i] = br.ReadUInt32();
-                }
-            }
-
-            uint referenceAddress = RAMaddresses[0];
-            for (int i = 1; i < RAMaddresses.Length; i++) {
-                uint ramAddress = RAMaddresses[i];
-                if (ramAddress != referenceAddress) {
-                    MessageBox.Show("Value of RAM Pointer to the overlay table is different between Offset #1 and Offset #" + (i + 1) + Environment.NewLine +
-                        "The camera values might be wrong.", "Possible errors ahead", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-
-            overlayCameraTblOffset = RAMaddresses[0] - OverlayUtils.OverlayTable.GetRAMAddress(RomInfo.cameraTblOverlayNumber);
-            using (DSUtils.EasyReader br = new DSUtils.EasyReader(camOverlayPath, overlayCameraTblOffset)) {
-                if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                    currentCameraTable = new GameCamera[17];
-                    for (int i = 0; i < currentCameraTable.Length; i++) {
-                        currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
-                                                br.ReadInt16(), br.ReadByte(), br.ReadByte(),
-                                                br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32(),
-                                                br.ReadInt32(), br.ReadInt32(), br.ReadInt32());
-
-                    }
-                } else {
-                    currentCameraTable = new GameCamera[16];
-                    for (int i = 0; i < 3; i++) {
-                        cameraEditorDataGridView.Columns.RemoveAt(cameraEditorDataGridView.Columns.Count - 3);
-                    }
-                    for (int i = 0; i < currentCameraTable.Length; i++) {
-                        currentCameraTable[i] = new GameCamera(br.ReadUInt32(), br.ReadInt16(), br.ReadInt16(), br.ReadInt16(),
-                                                br.ReadInt16(), br.ReadByte(), br.ReadByte(),
-                                                br.ReadUInt16(), br.ReadUInt32(), br.ReadUInt32());
-                    }
-                }
-
-                cameraEditorDataGridView.RowTemplate.Height = 32 * 16 / currentCameraTable.Length;
-                for (int i = 0; i < currentCameraTable.Length; i++) {
-                    currentCameraTable[i].ShowInGridView(cameraEditorDataGridView, i);
-                }
-            }
-        }
-        private void saveCameraTableButton_Click(object sender, EventArgs e) {
-            SaveCameraTable(OverlayUtils.GetPath(RomInfo.cameraTblOverlayNumber), overlayCameraTblOffset);
-        }
-        private void cameraEditorDataGridView_CellValidated(object sender, DataGridViewCellEventArgs e) {
-            currentCameraTable[e.RowIndex][e.ColumnIndex] = cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-            cameraEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = currentCameraTable[e.RowIndex][e.ColumnIndex];
-        }
-        private void exportCameraTableButton_Click(object sender, EventArgs e) {
-            SaveFileDialog of = new SaveFileDialog {
-                Filter = "Camera Table File (*.bin)|*.bin",
-                FileName = Path.GetFileNameWithoutExtension(RomInfo.fileName) + " - CameraTable.bin"
-            };
-            if (of.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            File.Delete(of.FileName);
-            SaveCameraTable(of.FileName, 0);
-        }
-        private void SaveCameraTable(string path, uint destFileOffset) {
-            for (int i = 0; i < currentCameraTable.Length; i++) {
-                DSUtils.WriteToFile(path, currentCameraTable[i].ToByteArray(), (uint)(destFileOffset + i * RomInfo.cameraSize));
-            }
-            MessageBox.Show("Camera table correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void cameraEditorDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-            var senderTable = (DataGridView)sender;
-
-            if (senderTable.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0) {
-                string type = "Camera File";
-                if (e.ColumnIndex == cameraEditorDataGridView.Columns.Count - 2) { //Export
-                    SaveFileDialog sf = new SaveFileDialog {
-                        Filter = type + " (*.bin)|*.bin",
-                        FileName = Path.GetFileNameWithoutExtension(RomInfo.fileName) + " - Camera " + e.RowIndex + ".bin"
-                    };
-
-                    if (sf.ShowDialog(this) != DialogResult.OK) {
-                        return;
-                    }
-
-                    DSUtils.WriteToFile(sf.FileName, currentCameraTable[e.RowIndex].ToByteArray(), fmode: FileMode.Create);
-                    MessageBox.Show("Camera correctly saved.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                } else if (e.ColumnIndex == cameraEditorDataGridView.Columns.Count - 1) { //Import
-                    OpenFileDialog of = new OpenFileDialog {
-                        Filter = type + " (*.bin)|*.bin",
-                    };
-
-                    if (of.ShowDialog(this) != DialogResult.OK) {
-                        return;
-                    }
-
-                    currentCameraTable[e.RowIndex] = new GameCamera(File.ReadAllBytes(of.FileName));
-                    currentCameraTable[e.RowIndex].ShowInGridView(senderTable, e.RowIndex);
-                    MessageBox.Show("Camera correctly imported.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
-        private void importCameraTableButton_Click(object sender, EventArgs e) {
-            string fileType = "Camera Table File";
-            OpenFileDialog of = new OpenFileDialog {
-                Filter = fileType + " (*.bin)|*.bin",
-            };
-
-            if (of.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            long l = new FileInfo(of.FileName).Length;
-            if (l % RomInfo.cameraSize != 0) {
-                MessageBox.Show("This is not a " + RomInfo.gameFamily + ' ' + fileType +
-                    "\nMake sure the file length is a multiple of " + RomInfo.cameraSize + " and try again.", "Wrong file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            byte nCameras = (byte)(l / RomInfo.cameraSize);
-            for (byte b = 0; b < nCameras; b++) {
-                currentCameraTable[b] = new GameCamera(DSUtils.ReadFromFile(of.FileName, b * RomInfo.cameraSize, RomInfo.cameraSize));
-                currentCameraTable[b].ShowInGridView(cameraEditorDataGridView, b);
-            }
-            MessageBox.Show("Camera Table imported correctly.", "Success!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        #endregion
-
         #region Trainer Editor
         private List<ComboBox> partyPokemonComboboxList = new List<ComboBox>();
         private List<ComboBox> partyItemsComboboxList = new List<ComboBox>();
@@ -8027,9 +7496,9 @@ namespace DSPRE {
         private (int abi1, int abi2)[] pokemonSpeciesAbilities;
 
         TrainerFile currentTrainerFile;
-        PaletteBase trainerPal;
-        ImageBase trainerTile;
-        SpriteBase trainerSprite;
+        public PaletteBase trainerPal;
+        public ImageBase trainerTile;
+        public SpriteBase trainerSprite;
 
         Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)> trainerClassEncounterMusicDict;
         private void SetupTrainerClassEncounterMusicTable() {
@@ -8651,8 +8120,8 @@ namespace DSPRE {
             }
 
             try {
-                int maxFrames = LoadTrainerClassPic(selection);
-                UpdateTrainerClassPic(trainerClassPicBox);
+                int maxFrames = Helpers.LoadTrainerClassPic(selection, trainerPal, trainerTile, trainerSprite);
+                Helpers.UpdateTrainerClassPic(trainerClassPicBox, trainerPal, trainerTile, trainerSprite, trainerClassPicBox.Height, trainerClassPicBox.Width);
 
                 trClassFramePreviewUpDown.Maximum = maxFrames;
                 trainerClassFrameMaxLabel.Text = "/" + maxFrames;
@@ -8673,43 +8142,6 @@ namespace DSPRE {
             eyeContactMusicAltLabel.Enabled = encounterSSEQAltUpDown.Enabled = (encounterSSEQMainUpDown.Enabled && gameFamily == GameFamilies.HGSS);
             encounterSSEQAltUpDown.Value = output.musicN != null ? (ushort)output.musicN : 0;
             currentTrainerFile.trp.trainerClass = (byte)selection;
-        }
-
-        private int LoadTrainerClassPic(int trClassID) {
-            int paletteFileID = (trClassID * 5 + 1);
-            string paletteFilename = paletteFileID.ToString("D4");
-            trainerPal = new NCLR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + paletteFilename, paletteFileID, paletteFilename);
-
-            int tilesFileID = trClassID * 5;
-            string tilesFilename = tilesFileID.ToString("D4");
-            trainerTile = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
-
-            if (gameFamily == GameFamilies.DP) {
-                return 0;
-            }
-
-            int spriteFileID = (trClassID * 5 + 2);
-            string spriteFilename = spriteFileID.ToString("D4");
-            trainerSprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
-
-            return trainerSprite.Banks.Length - 1;
-        }
-        private void UpdateTrainerClassPic(PictureBox pb, int frameNumber = 0) {
-            if (trainerSprite == null) {
-                Console.WriteLine("Sprite is null!");
-                return;
-            }
-
-            int bank0OAMcount = trainerSprite.Banks[0].oams.Length;
-            int[] OAMenabled = new int[bank0OAMcount];
-            for (int i = 0; i < OAMenabled.Length; i++) {
-                OAMenabled[i] = i;
-            }
-
-            frameNumber = Math.Min(trainerSprite.Banks.Length, frameNumber);
-            Image trSprite = trainerSprite.Get_Image(trainerTile, trainerPal, frameNumber, trainerClassPicBox.Width, trainerClassPicBox.Height, false, false, false, true, true, -1, OAMenabled);
-            pb.Image = trSprite;
-            pb.Update();
         }
 
         private void addTrainerButton_Click(object sender, EventArgs e) {
@@ -8843,11 +8275,13 @@ namespace DSPRE {
             }
             Helpers.EnableHandlers();
 
-            if (gameFamily.Equals(GameFamilies.HGSS) && tableEditorIsReady) {
-                pbEffectsTrainerCombobox.Items[selectedTrClass] = trainerClassListBox.Items[selectedTrClass];
-                for (int i = 0; i < vsTrainerEffectsList.Count; i++) {
-                    if (vsTrainerEffectsList[i].trainerClass == selectedTrClass) {
-                        pbEffectsVsTrainerListbox.Items[i] = pbEffectsTrainerCombobox.Items[selectedTrClass] + " uses Combo #" + vsTrainerEffectsList[i].comboID;
+            if (gameFamily.Equals(GameFamilies.HGSS) && EditorPanels.tableEditor.battleTableEditorIsReady && EditorPanels.tableEditor.conditionnalMusicTableEditorIsReady) {
+                EditorPanels.tableEditor.pbEffectsTrainerCombobox.Items[selectedTrClass] = trainerClassListBox.Items[selectedTrClass];
+                for (int i = 0; i < EditorPanels.tableEditor.vsTrainerEffectsList.Count; i++)
+                {
+                    if (EditorPanels.tableEditor.vsTrainerEffectsList[i].trainerClass == selectedTrClass)
+                    {
+                        EditorPanels.tableEditor.pbEffectsVsTrainerListbox.Items[i] = EditorPanels.tableEditor.pbEffectsTrainerCombobox.Items[selectedTrClass] + " uses Combo #" + EditorPanels.tableEditor.vsTrainerEffectsList[i].comboID;
                     }
                 }
             }
@@ -8855,7 +8289,7 @@ namespace DSPRE {
         }
 
         private void trClassFramePreviewUpDown_ValueChanged(object sender, EventArgs e) {
-            UpdateTrainerClassPic(trainerClassPicBox, (int)((NumericUpDown)sender).Value);
+            Helpers.UpdateTrainerClassPic(trainerClassPicBox, trainerPal, trainerTile, trainerSprite, trainerClassPicBox.Height, trainerClassPicBox.Width, (int)((NumericUpDown)sender).Value);
         }
 
         private (int abi1, int abi2)[] getPokemonAbilities(int numPokemonSpecies) {
@@ -9014,410 +8448,7 @@ namespace DSPRE {
 
         #endregion
 
-        #region Table Editor
-        #region Variables
-
-        string[] pokeNames;
-        string[] trcNames;
-
-        List<(ushort header, ushort flag, ushort music)> conditionalMusicTable;
-        uint conditionalMusicTableStartAddress;
-
-        List<(int trainerClass, int comboID)> vsTrainerEffectsList;
-        List<(int pokemonID, int comboID)> vsPokemonEffectsList;
-        List<(ushort vsGraph, ushort battleSSEQ)> effectsComboTable;
-
-        uint vsTrainerTableStartAddress;
-        uint vsPokemonTableStartAddress;
-        uint effectsComboMainTableStartAddress;
-
-        //Show Pokemon Icons
-        private readonly PaletteBase tableEditorMonIconPal;
-        private readonly ImageBase tableEditorMonIconTile;
-        private readonly SpriteBase tableEditorMonIconSprite;
-        #endregion
-
-        private void SetupConditionalMusicTable() {
-            switch (RomInfo.gameFamily) {
-                case GameFamilies.HGSS:
-                    RomInfo.SetConditionalMusicTableOffsetToRAMAddress();
-                    conditionalMusicTable = new List<(ushort, ushort, ushort)>();
-
-                    conditionalMusicTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.conditionalMusicTableOffsetToRAMAddress, 4), 0) - ARM9.address;
-                    byte tableEntriesCount = ARM9.ReadByte(RomInfo.conditionalMusicTableOffsetToRAMAddress - 8);
-
-                    conditionalMusicTableListBox.Items.Clear();
-                    using (ARM9.Reader ar = new ARM9.Reader(conditionalMusicTableStartAddress)) {
-                        for (int i = 0; i < tableEntriesCount; i++) {
-                            ushort header = ar.ReadUInt16();
-                            ushort flag = ar.ReadUInt16();
-                            ushort musicID = ar.ReadUInt16();
-
-                            conditionalMusicTable.Add((header, flag, musicID));
-                            conditionalMusicTableListBox.Items.Add(headerListBox.Items[header]);
-                        }
-                    }
-
-                    headerConditionalMusicComboBox.Items.Clear();
-                    foreach (string location in headerListBox.Items) {
-                        headerConditionalMusicComboBox.Items.Add(location);
-                    }
-
-                    if (conditionalMusicTableListBox.Items.Count > 0) {
-                        conditionalMusicTableListBox.SelectedIndex = 0;
-                    }
-                    break;
-
-                case GameFamilies.Plat:
-                    pbEffectsMonGroupBox.Enabled = false;
-                    pbEffectsTrainerGroupBox.Enabled = false;
-                    conditionalMusicGroupBox.Enabled = false;
-                    break;
-
-                default:
-                    pbEffectsMonGroupBox.Enabled = false;
-                    pbEffectsTrainerGroupBox.Enabled = false;
-                    conditionalMusicGroupBox.Enabled = false;
-                    pbEffectsGroupBox.Enabled = false;
-                    break;
-            }
-        }
-        private void SetupBattleEffectsTables() {
-            if (RomInfo.gameFamily == GameFamilies.HGSS || RomInfo.gameFamily == GameFamilies.Plat) {
-                DSUtils.TryUnpackNarcs(new List<DirNames> {
-                    DirNames.trainerGraphics,
-                    DirNames.textArchives,
-                    DirNames.monIcons
-                });
-                RomInfo.SetBattleEffectsData();
-                RomInfo.SetMonIconsPalTableAddress();
-
-                effectsComboTable = new List<(ushort vsGraph, ushort battleSSEQ)>();
-
-                effectsComboMainTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.effectsComboTableOffsetToRAMAddress, 4), 0);
-                PatchToolboxDialog.flag_MainComboTableRepointed = (effectsComboMainTableStartAddress >= RomInfo.synthOverlayLoadAddress);
-                effectsComboMainTableStartAddress -= PatchToolboxDialog.flag_MainComboTableRepointed ? RomInfo.synthOverlayLoadAddress : ARM9.address;
-
-                byte comboTableEntriesCount;
-
-                if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                    comboTableEntriesCount = ARM9.ReadByte(RomInfo.effectsComboTableOffsetToSizeLimiter);
-
-                    vsPokemonEffectsList = new List<(int pokemonID, int comboID)>();
-                    vsTrainerEffectsList = new List<(int trainerClass, int comboID)>();
-
-                    vsPokemonTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.vsPokemonEntryTableOffsetToRAMAddress, 4), 0);
-                    PatchToolboxDialog.flag_PokemonBattleTableRepointed = (vsPokemonTableStartAddress >= RomInfo.synthOverlayLoadAddress);
-                    vsPokemonTableStartAddress -= PatchToolboxDialog.flag_PokemonBattleTableRepointed ? RomInfo.synthOverlayLoadAddress : ARM9.address;
-
-                    vsTrainerTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.vsTrainerEntryTableOffsetToRAMAddress, 4), 0);
-                    PatchToolboxDialog.flag_TrainerClassBattleTableRepointed = (vsTrainerTableStartAddress >= RomInfo.synthOverlayLoadAddress);
-                    vsTrainerTableStartAddress -= PatchToolboxDialog.flag_TrainerClassBattleTableRepointed ? RomInfo.synthOverlayLoadAddress : ARM9.address;
-
-
-                    pbEffectsPokemonCombobox.Items.Clear();
-                    pokeNames = RomInfo.GetPokemonNames();
-                    for (int i = 0; i < pokeNames.Length; i++) {
-                        pbEffectsPokemonCombobox.Items.Add("[" + i + "]" + " " + pokeNames[i]);
-                    }
-
-                    RepopulateTableEditorTrainerClasses();
-
-                    pbEffectsVsTrainerListbox.Items.Clear();
-                    pbEffectsVsPokemonListbox.Items.Clear();
-                } else {
-                    comboTableEntriesCount = 35;
-                }
-
-                pbEffectsCombosListbox.Items.Clear();
-
-                String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
-
-                if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                    using (DSUtils.EasyReader ar = new DSUtils.EasyReader(PatchToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress)) {
-                        byte trainerTableEntriesCount = ARM9.ReadByte(RomInfo.vsTrainerEntryTableOffsetToSizeLimiter);
-
-                        for (int i = 0; i < trainerTableEntriesCount; i++) {
-                            ushort entry = ar.ReadUInt16();
-                            int classID = entry & 1023;
-                            int comboID = entry >> 10;
-                            vsTrainerEffectsList.Add((classID, comboID));
-                            pbEffectsVsTrainerListbox.Items.Add(pbEffectsTrainerCombobox.Items[classID] + " uses Combo #" + comboID);
-                        }
-                    }
-
-                    using (DSUtils.EasyReader ar = new DSUtils.EasyReader(PatchToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress)) {
-                        byte pokemonTableEntriesCount = ARM9.ReadByte(RomInfo.vsPokemonEntryTableOffsetToSizeLimiter);
-
-                        for (int i = 0; i < pokemonTableEntriesCount; i++) {
-                            ushort entry = ar.ReadUInt16();
-                            int pokeID = entry & 1023;
-                            int comboID = entry >> 10;
-                            vsPokemonEffectsList.Add((pokeID, comboID));
-
-                            string pokeName;
-                            try {
-                                pokeName = pokeNames[pokeID];
-                            } catch (IndexOutOfRangeException) {
-                                pokeName = "UNKNOWN";
-                            }
-                            pbEffectsVsPokemonListbox.Items.Add("[" + pokeID.ToString("D3") + "]" + " " + pokeName + " uses Combo #" + comboID);
-                        }
-                    }
-                }
-
-                using (DSUtils.EasyReader ar = new DSUtils.EasyReader(PatchToolboxDialog.flag_MainComboTableRepointed ? expArmPath : RomInfo.arm9Path, effectsComboMainTableStartAddress)) {
-                    for (int i = 0; i < comboTableEntriesCount; i++) {
-                        ushort battleIntroEffect = ar.ReadUInt16();
-                        ushort battleMusic = ar.ReadUInt16();
-                        effectsComboTable.Add((battleIntroEffect, battleMusic));
-                        pbEffectsCombosListbox.Items.Add("Combo " + i.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic);
-                    }
-                }
-
-                if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                    var items = pbEffectsCombosListbox.Items.Cast<Object>().ToArray();
-
-                    pbEffectsPokemonChooseMainCombobox.Items.Clear();
-                    pbEffectsPokemonChooseMainCombobox.Items.AddRange(items);
-                    pbEffectsTrainerChooseMainCombobox.Items.Clear();
-                    pbEffectsTrainerChooseMainCombobox.Items.AddRange(items);
-
-                    if (pbEffectsVsTrainerListbox.Items.Count > 0) {
-                        pbEffectsVsTrainerListbox.SelectedIndex = 0;
-                    }
-                    if (pbEffectsVsPokemonListbox.Items.Count > 0) {
-                        pbEffectsVsPokemonListbox.SelectedIndex = 0;
-                    }
-                }
-
-                if (pbEffectsCombosListbox.Items.Count > 0) {
-                    pbEffectsCombosListbox.SelectedIndex = 0;
-                }
-
-            } else {
-                pbEffectsGroupBox.Enabled = false;
-            }
-        }
-
-        private void RepopulateTableEditorTrainerClasses() {
-            pbEffectsTrainerCombobox.Items.Clear();
-            trcNames = RomInfo.GetTrainerClassNames();
-            for (int i = 0; i < trcNames.Length; i++) {
-                pbEffectsTrainerCombobox.Items.Add("[" + i.ToString("D3") + "]" + " " + trcNames[i]);
-            }
-        }
-
-        private void conditionalMusicTableListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            int selection = conditionalMusicTableListBox.SelectedIndex;
-            headerConditionalMusicComboBox.SelectedIndex = conditionalMusicTable[selection].header;
-
-            Helpers.DisableHandlers();
-
-            flagConditionalMusicUpDown.Value = conditionalMusicTable[selection].flag;
-            musicIDconditionalMusicUpDown.Value = conditionalMusicTable[selection].music;
-
-            Helpers.EnableHandlers();
-        }
-        private void headerConditionalMusicComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-
-            (ushort header, ushort flag, ushort music) oldTuple = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex];
-            (ushort header, ushort flag, ushort music) newTuple = ((ushort)headerConditionalMusicComboBox.SelectedIndex, oldTuple.flag, oldTuple.music);
-            conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex] = newTuple;
-
-            MapHeader selected = MapHeader.LoadFromARM9(newTuple.header);
-            switch (RomInfo.gameFamily) {
-                case GameFamilies.DP:
-                    locationNameConditionalMusicLBL.Text = RomInfo.GetLocationNames()[(selected as HeaderDP).locationName];
-                    break;
-                case GameFamilies.Plat:
-                    locationNameConditionalMusicLBL.Text = RomInfo.GetLocationNames()[(selected as HeaderPt).locationName];
-                    break;
-                case GameFamilies.HGSS:
-                    locationNameConditionalMusicLBL.Text = RomInfo.GetLocationNames()[(selected as HeaderHGSS).locationName];
-                    break;
-            }
-        }
-        private void flagConditionalMusicUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-
-            (ushort header, ushort flag, ushort music) oldTuple = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex];
-            conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex] = (oldTuple.header, (ushort)flagConditionalMusicUpDown.Value, oldTuple.music);
-        }
-
-        private void musicIDconditionalMusicUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-
-            (ushort header, ushort flag, ushort music) oldTuple = conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex];
-            conditionalMusicTable[conditionalMusicTableListBox.SelectedIndex] = (oldTuple.header, oldTuple.flag, (ushort)musicIDconditionalMusicUpDown.Value);
-        }
-        private void HOWconditionalMusicTableButton_Click(object sender, EventArgs e) {
-            MessageBox.Show("For each Location in the list, override Header's music with chosen Music ID, if Flag is set.", "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void saveConditionalMusicTableBTN_Click(object sender, EventArgs e) {
-            for (int i = 0; i < conditionalMusicTable.Count; i++) {
-                ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].header), (uint)(conditionalMusicTableStartAddress + 6 * i));
-                ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].flag), (uint)(conditionalMusicTableStartAddress + 6 * i + 2));
-                ARM9.WriteBytes(BitConverter.GetBytes(conditionalMusicTable[i].music), (uint)(conditionalMusicTableStartAddress + 6 * i + 4));
-            }
-        }
-
-        private void TBLEditortrainerClassPreviewPic_ValueChanged(object sender, EventArgs e) {
-            UpdateTrainerClassPic(tbEditorTrClassPictureBox, (int)((NumericUpDown)sender).Value);
-        }
-
-        private void saveEffectComboBTN_Click(object sender, EventArgs e) {
-            int index = pbEffectsCombosListbox.SelectedIndex;
-            ushort battleIntroEffect = (ushort)pbEffectsVSAnimationUpDown.Value;
-            ushort battleMusic = (ushort)pbEffectsBattleSSEQUpDown.Value;
-
-            effectsComboTable[index] = (battleIntroEffect, battleMusic);
-
-            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
-            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(PatchToolboxDialog.flag_MainComboTableRepointed ? expArmPath : RomInfo.arm9Path, effectsComboMainTableStartAddress + 4 * index)) {
-                wr.Write(battleIntroEffect);
-                wr.Write(battleMusic);
-            };
-
-            Helpers.DisableHandlers();
-
-            string updatedEntry = "Combo " + index.ToString("D2") + " - " + "Effect #" + battleIntroEffect + ", " + "Music #" + battleMusic;
-            pbEffectsCombosListbox.Items[index] = updatedEntry;
-
-            if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                pbEffectsTrainerChooseMainCombobox.Items[index] = pbEffectsPokemonChooseMainCombobox.Items[index] = updatedEntry;
-            }
-            Helpers.EnableHandlers();
-        }
-
-        private void saveVSPokemonEntryBTN_Click(object sender, EventArgs e) {
-            int index = pbEffectsVsPokemonListbox.SelectedIndex;
-            ushort pokemonID = (ushort)pbEffectsPokemonCombobox.SelectedIndex;
-            ushort comboID = (ushort)pbEffectsPokemonChooseMainCombobox.SelectedIndex;
-
-            vsPokemonEffectsList[index] = (pokemonID, comboID);
-
-            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
-            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(PatchToolboxDialog.flag_PokemonBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsPokemonTableStartAddress + 2 * index)) {
-                wr.Write((ushort)((pokemonID & 1023) + (comboID << 10))); //PokemonID
-            };
-
-            Helpers.DisableHandlers();
-            pbEffectsVsPokemonListbox.Items[index] = "[" + pokemonID.ToString("D3") + "]" + " " + pokeNames[pokemonID] + " uses Combo #" + comboID;
-            Helpers.EnableHandlers();
-        }
-
-        private void saveVSTrainerEntryBTN_Click(object sender, EventArgs e) {
-            int index = pbEffectsVsTrainerListbox.SelectedIndex;
-            ushort trainerClass = (ushort)pbEffectsTrainerCombobox.SelectedIndex;
-            ushort comboID = (ushort)pbEffectsTrainerChooseMainCombobox.SelectedIndex;
-
-            vsTrainerEffectsList[index] = (trainerClass, comboID);
-            String expArmPath = RomInfo.gameDirs[DirNames.synthOverlay].unpackedDir + '\\' + PatchToolboxDialog.expandedARMfileID.ToString("D4");
-            using (DSUtils.EasyWriter wr = new DSUtils.EasyWriter(PatchToolboxDialog.flag_TrainerClassBattleTableRepointed ? expArmPath : RomInfo.arm9Path, vsTrainerTableStartAddress + 2 * index)) {
-                wr.Write((ushort)((trainerClass & 1023) + (comboID << 10)));
-            };
-
-            Helpers.DisableHandlers();
-            pbEffectsVsTrainerListbox.Items[index] = "[" + trainerClass.ToString("D3") + "]" + " " + trcNames[trainerClass] + " uses Combo #" + comboID;
-            Helpers.EnableHandlers();
-        }
-
-        private void HOWpbEffectsTableButton_Click(object sender, EventArgs e) {
-            MessageBox.Show("An entry of this table is a combination of VS. Graphics + Battle Theme.\n\n" +
-                (RomInfo.gameFamily.Equals(GameFamilies.HGSS) ? "Each entry can be \"inherited\" by one or more Pokémon or Trainer classes." : ""),
-                "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void HOWvsPokemonButton_Click(object sender, EventArgs e) {
-            MessageBox.Show("Each entry of this table links a \"Wild\" Pokémon to an Effect Combo from the Combos Table.\n\n" +
-                "Whenever that Pokémon is encountered in the tall grass or via script command, its VS. Sequence and Battle Theme will be automatically triggered.",
-                 "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void HOWVsTrainerButton_Click(object sender, EventArgs e) {
-            MessageBox.Show("Each entry of this table links a Trainer Class to an Effect Combo from the Combos Table.\n\n" +
-                "Every Trainer Class with a given combo will start the same VS. Sequence and Battle Theme.", "How this table works", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void pbEffectsVsTrainerListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            int trainerSelection = pbEffectsVsTrainerListbox.SelectedIndex;
-            if (Helpers.HandlersDisabled || trainerSelection < 0) {
-                return;
-            }
-
-            (int trainerClass, int comboID) entry = vsTrainerEffectsList[trainerSelection];
-            pbEffectsTrainerCombobox.SelectedIndex = entry.trainerClass;
-            pbEffectsCombosListbox.SelectedIndex = pbEffectsTrainerChooseMainCombobox.SelectedIndex = entry.comboID;
-
-            tbEditorTrClassFramePreviewUpDown.Value = 0;
-        }
-
-        private void pbEffectsVsPokemonListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            int pokemonSelection = pbEffectsVsPokemonListbox.SelectedIndex;
-
-            if (Helpers.HandlersDisabled || pokemonSelection < 0) {
-                return;
-            }
-
-            (int pokemonID, int comboID) entry = vsPokemonEffectsList[pokemonSelection];
-
-            try {
-                pbEffectsPokemonCombobox.SelectedIndex = entry.pokemonID;
-            } catch (ArgumentOutOfRangeException) {
-                pbEffectsPokemonCombobox.SelectedIndex = 0;
-            }
-            pbEffectsCombosListbox.SelectedIndex = pbEffectsPokemonChooseMainCombobox.SelectedIndex = entry.comboID;
-        }
-
-        private void pbEffectsCombosListbox_SelectedIndexChanged(object sender, EventArgs e) {
-            int comboSelection = pbEffectsCombosListbox.SelectedIndex;
-
-            if (Helpers.HandlersDisabled || comboSelection < 0) {
-                return;
-            }
-
-            (ushort vsGraph, ushort battleSSEQ) entry = effectsComboTable[comboSelection];
-            pbEffectsBattleSSEQUpDown.Value = entry.battleSSEQ;
-            pbEffectsVSAnimationUpDown.Value = entry.vsGraph;
-        }
-
-        private void pbEffectsTrainerCombobox_SelectedIndexChanged(object sender, EventArgs e) {
-            int maxFrames = LoadTrainerClassPic((sender as ComboBox).SelectedIndex);
-            UpdateTrainerClassPic(tbEditorTrClassPictureBox);
-
-            tbEditorTrClassFramePreviewUpDown.Maximum = maxFrames;
-            tbEditortrainerClassFrameMaxLabel.Text = "/" + maxFrames;
-        }
-        private void pbEffectsPokemonCombobox_SelectedIndexChanged(object sender, EventArgs e) {
-            ComboBox cb = sender as ComboBox;
-            tbEditorPokeminiPictureBox.Image = DSUtils.GetPokePic(cb.SelectedIndex, tbEditorPokeminiPictureBox.Width, tbEditorPokeminiPictureBox.Height);
-            tbEditorPokeminiPictureBox.Update();
-        }
-
-        #endregion
-        private void ExclusiveCBInvert(CheckBox cb) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-
-            Helpers.DisableHandlers();
-
-            if (cb.Checked) {
-                cb.Checked = !cb.Checked;
-            }
-
-            Helpers.EnableHandlers();
-        }
-
+        #region Tooltrip Menu
         private void unpackToFolderToolStripMenuItem_Click(object sender, EventArgs e) {
             OpenFileDialog of = new OpenFileDialog {
                 Filter = "NARC File (*.narc)|*.narc|All files (*.*)|*.*"
@@ -9449,7 +8480,7 @@ namespace DSPRE {
 
             DialogResult d = MessageBox.Show("Do you want to rename the files according to their contents?", "Waiting for user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (d.Equals(DialogResult.Yes)) {
-                ContentBasedBatchRename(new DirectoryInfo(finalExtractedPath));
+                ContentBasedBatchRename(this, new DirectoryInfo(finalExtractedPath));
             }
         }
 
@@ -9573,125 +8604,61 @@ namespace DSPRE {
         }
 
         private void contentBasedToolStripMenuItem_Click(object sender, EventArgs e) {
-            ContentBasedBatchRename();
+            ContentBasedBatchRename(this);
         }
 
-        private void ContentBasedBatchRename(DirectoryInfo d = null) {
-            (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(d, title: "Content-Based Batch Rename Tool");
-            d = dirData.d;
-            FileInfo[] files = dirData.files;
-
-            if (d == null || files == null) {
-                return;
-            }
-
-            DialogResult dr = MessageBox.Show("About to rename " + files.Length + " file" + (files.Length > 1 ? "s" : "") +
-                " from the input folder (taken in ascending order), according to their content.\n" +
-                "If a destination file already exists, DSPRE will append a number to its name.\n\n" +
-                "Do you want to proceed?", "Confirm operation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (dr.Equals(DialogResult.Yes)) {
-                List<string> enumerationFile = new List<string> {
-                    "#============================================================================",
-                    "# File enumeration definition for folder " + "\"" + d.Name + "\"",
-                    "#============================================================================"
-                };
-                int initialLength = enumerationFile.Count;
-
-                const byte toRead = 16;
-                foreach (FileInfo f in files) {
-                    Console.WriteLine(f.Name);
-
-                    string fileNameOnly = Path.GetFileNameWithoutExtension(f.FullName);
-                    string dirNameOnly = Path.GetDirectoryName(f.FullName);
-
-                    string destName = "";
-                    byte[] b = DSUtils.ReadFromFile(f.FullName, 0, toRead);
-
-                    if (b == null || b.Length < toRead) {
-                        continue;
-                    }
-
-                    string magic = "";
-
-                    if (b[0] == 'B' && b[3] == '0') { //B**0
-                        ushort nameOffset;
-
-                        destName = dirNameOnly + "\\"; //Full filename can be changed
-                        nameOffset = (ushort)(52 + (4 * (BitConverter.ToUInt16(b, 0xE) - 1)));
-
-                        if (b[1] == 'T' && b[2] == 'X') { //BTX0
-#if false
-                            nameOffset += 0xEC;
-#else
-                            destName = fileNameOnly;
-#endif
-                        }
-
-                        string nameRead = Encoding.UTF8.GetString(DSUtils.ReadFromFile(f.FullName, nameOffset, 16)).TrimEnd(new char[] { (char)0 });
-
-                        if (nameRead.Length <= 0 || nameRead.IndexOfAny(Path.GetInvalidPathChars()) >= 0) {
-                            destName = fileNameOnly; //Filename can't be changed, only extension
-                        } else {
-                            destName += nameRead;
-                        }
-
-                        destName += ".ns";
-                        for (int i = 0; i < 3; i++) {
-                            magic += Char.ToLower((char)b[i]);
-                        }
-                    } else {
-                        destName = fileNameOnly + ".";
-                        byte offset = 0;
-
-                        if (b[5] == 'R' && b[8] == 'N') {
-                            offset = 5;
-                        }
-
-                        for (int i = 0; i < 4; i++) {
-                            magic += Char.ToLower((char)b[offset + i]);
-                        }
-                    }
-
-                    if (string.IsNullOrWhiteSpace(magic) || !magic.All(char.IsLetterOrDigit)) {
-                        continue;
-                    }
-
-                    destName += magic;
-
-                    if (string.IsNullOrWhiteSpace(destName)) {
-                        continue;
-                    }
-
-                    destName = MakeUniqueName(destName, fileNameOnly = null, dirNameOnly);
-                    File.Move(f.FullName, Path.Combine(Path.GetDirectoryName(f.FullName), Path.GetFileName(destName)));
-
-                    enumerationFile.Add(Path.GetFileName(destName));
-                }
-
-                if (enumerationFile.Count > initialLength) {
-                    MessageBox.Show("Files inside folder \"" + d.FullName + "\" have been renamed according to their contents.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    DialogResult response = MessageBox.Show("Do you want to save a file enumeration list?", "Waiting for user", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (response.Equals(DialogResult.Yes)) {
-                        MessageBox.Show("Choose where to save the output list file.", "Name your list file", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        SaveFileDialog sf = new SaveFileDialog {
-                            Filter = "List File (*.txt; *.list)|*.txt;*.list",
-                            FileName = d.Name + ".list"
-                        };
-                        if (sf.ShowDialog(this) != DialogResult.OK) {
-                            return;
-                        }
-
-                        File.WriteAllLines(sf.FileName, enumerationFile);
-                        MessageBox.Show("List file saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                } else {
-                    MessageBox.Show("No file content could be recognized.", "Operation terminated", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+        private void addressHelperToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddressHelper form = new AddressHelper();
+            form.Show();
         }
+
+
+        private void overworldEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            BtxEditor form = new BtxEditor();
+            form.Show();
+        }
+        private void exportScriptDatabaseJSONToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Not implemented yet");
+        }
+
+        private void generateCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Helpers.statusLabelMessage("Exporting to CSV...");
+            Update();
+            DocTool.ExportAll();
+
+            Helpers.statusLabelMessage();
+            Update();
+        }
+
+        private void flyWarpEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var flyEditor = new FlyEditor(gameFamily, headerListBoxNames);
+            flyEditor.Show();
+        }
+
+        private void itemEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Helpers.statusLabelMessage("Setting up Item Data Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.itemData });
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.itemIcons });
+
+            ItemEditor itemEditor = new ItemEditor(
+                RomInfo.GetItemNames()
+            );
+            itemEditor.ShowDialog();
+
+            Helpers.statusLabelMessage();
+            Update();
+        }
+
+
         private void fromFolderContentsToolStripMenuItem_Click(object sender, EventArgs e) {
             (DirectoryInfo d, FileInfo[] files) dirData = OpenNonEmptyDir(title: "Folder-Based List Builder");
             DirectoryInfo d = dirData.d;
@@ -9830,147 +8797,69 @@ namespace DSPRE {
             }
         }
 
-        private string MakeUniqueName(string fileName, string fileNameOnly = null, string dirNameOnly = null, string extension = null) {
-            if (fileNameOnly == null) {
-                fileNameOnly = Path.GetFileNameWithoutExtension(fileName);
-            }
-            if (dirNameOnly == null) {
-                dirNameOnly = Path.GetDirectoryName(fileName);
-            }
-            if (extension == null) {
-                extension = Path.GetExtension(fileName);
-            }
-
-            int append = 1;
-
-            while (File.Exists(Path.Combine(dirNameOnly, fileName))) {
-                string tmp = fileNameOnly + "(" + (append++) + ")";
-                fileName = Path.Combine(dirNameOnly, tmp + extension);
-            }
-            return fileName;
-        }
-
-        private (DirectoryInfo, FileInfo[]) OpenNonEmptyDir(DirectoryInfo d = null, string title = "Waiting for user") {
-            /*==================================================================*/
-            if (d == null) {
-                MessageBox.Show("Choose a source folder.", title, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CommonOpenFileDialog sourceDirDialog = new CommonOpenFileDialog {
-                    IsFolderPicker = true,
-                    Multiselect = false
-                };
-
-                if (sourceDirDialog.ShowDialog() != CommonFileDialogResult.Ok) {
-                    return (null, null);
-                }
-
-                d = new DirectoryInfo(sourceDirDialog.FileName);
-            }
-
-            FileInfo[] tempfiles = d.GetFiles();
-            FileInfo[] files = tempfiles.OrderBy(n => System.Text.RegularExpressions.Regex.Replace(n.Name, @"\d+", e => e.Value.PadLeft(tempfiles.Length.ToString().Length, '0'))).ToArray();
-
-            if (files.Length <= 0) {
-                MessageBox.Show("Folder " + "\"" + d.FullName + "\"" + " is empty.\nCan't proceed.", "Invalid folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return (null, null);
-            };
-
-            return (d, files);
-        }
-
         private void simpleToolStripMenuItem_MouseDown(object sender, MouseEventArgs e) {
             ToolStripMenuItem tsmi = (sender as ToolStripMenuItem);
             SetMenuLayout((byte)tsmi.GetCurrentParent().Items.IndexOf(tsmi));
         }
 
-        private void SetMenuLayout(byte layoutStyle) {
-            Console.WriteLine("Setting menuLayout to" + layoutStyle);
+        private void overlayEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Helpers.statusLabelMessage("Setting up Overlay Editor...");
+            Update();
+            OverlayEditor ovlEditor = new OverlayEditor();
+            ovlEditor.ShowDialog();
 
-            IList list = menuViewToolStripMenuItem.DropDownItems;
-            for (int i = 0; i < list.Count; i++) {
-                (list[i] as ToolStripMenuItem).Checked = (i == layoutStyle);
-            }
-
-            Properties.Settings.Default.menuLayout = layoutStyle;
-
-            switch (layoutStyle) {
-                case 0:
-                    buildNarcFromFolderToolStripButton.Visible = false;
-                    unpackNARCtoFolderToolStripButton.Visible = false;
-                    separator_afterNarcUtils.Visible = false;
-
-                    listBasedBatchRenameToolStripButton.Visible = false;
-                    contentBasedBatchRenameToolStripButton.Visible = false;
-                    separator_afterRenameUtils.Visible = false;
-
-                    enumBasedListBuilderToolStripButton.Visible = false;
-                    folderBasedListBuilderToolStriButton.Visible = false;
-                    separator_afterListUtils.Visible = false;
-
-                    nsbmdAddTexButton.Visible = false;
-                    nsbmdRemoveTexButton.Visible = false;
-                    nsbmdExportTexButton.Visible = false;
-                    separator_afterNsbmdUtils.Visible = false;
-
-                    wildEditorButton.Visible = false;
-                    romToolboxToolStripButton.Visible = false;
-                    break;
-                case 1:
-                    buildNarcFromFolderToolStripButton.Visible = false;
-                    unpackNARCtoFolderToolStripButton.Visible = false;
-                    separator_afterNarcUtils.Visible = false;
-
-                    listBasedBatchRenameToolStripButton.Visible = false;
-                    contentBasedBatchRenameToolStripButton.Visible = false;
-                    separator_afterRenameUtils.Visible = false;
-
-                    enumBasedListBuilderToolStripButton.Visible = false;
-                    folderBasedListBuilderToolStriButton.Visible = false;
-                    separator_afterListUtils.Visible = false;
-
-                    nsbmdAddTexButton.Visible = true;
-                    nsbmdRemoveTexButton.Visible = true;
-                    nsbmdExportTexButton.Visible = true;
-                    separator_afterNsbmdUtils.Visible = true;
-
-                    wildEditorButton.Visible = true;
-                    romToolboxToolStripButton.Visible = true;
-                    break;
-                case 2:
-                    buildNarcFromFolderToolStripButton.Visible = true;
-                    unpackNARCtoFolderToolStripButton.Visible = true;
-                    separator_afterNarcUtils.Visible = true;
-
-                    listBasedBatchRenameToolStripButton.Visible = false;
-                    contentBasedBatchRenameToolStripButton.Visible = false;
-                    separator_afterRenameUtils.Visible = false;
-
-                    enumBasedListBuilderToolStripButton.Visible = false;
-                    folderBasedListBuilderToolStriButton.Visible = false;
-                    separator_afterListUtils.Visible = false;
-
-                    nsbmdAddTexButton.Visible = true;
-                    nsbmdRemoveTexButton.Visible = true;
-                    nsbmdExportTexButton.Visible = true;
-                    separator_afterNsbmdUtils.Visible = true;
-
-                    wildEditorButton.Visible = true;
-                    romToolboxToolStripButton.Visible = true;
-                    break;
-                case 3:
-                default:
-                    foreach (ToolStripItem c in mainToolStrip.Items) {
-                        c.Visible = true;
-                    }
-                    break;
-            }
+            Helpers.statusLabelMessage();
+            Update();
         }
 
-        //Locate File - buttons
-        public static void ExplorerSelect(string path) {
-            if (File.Exists(path)) {
-                Process.Start("explorer.exe", "/select" + "," + "\"" + path + "\"");
-            }
+        private void moveDataEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Helpers.statusLabelMessage("Setting up Move Data Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.moveData });
+
+            string[] moveDescriptions = new TextArchive(RomInfo.moveDescriptionsTextNumbers).messages.Select(
+            x => x.Replace("\\n", Environment.NewLine)).ToArray();
+
+            MoveDataEditor mde = new MoveDataEditor(
+                new TextArchive(RomInfo.moveNamesTextNumbers).messages.ToArray(),
+                moveDescriptions
+            );
+            mde.ShowDialog();
+
+            Helpers.statusLabelMessage();
+            Update();
         }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (SettingsWindow editor = new SettingsWindow())
+                editor.ShowDialog();
+        }
+
+        private void pokemonDataEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] itemNames = RomInfo.GetItemNames();
+            string[] abilityNames = RomInfo.GetAbilityNames();
+            string[] moveNames = RomInfo.GetAttackNames();
+
+            Helpers.statusLabelMessage("Setting up Pokémon Data Editor...");
+            Update();
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.monIcons });
+            RomInfo.SetMonIconsPalTableAddress();
+
+            PokemonEditor pde = new PokemonEditor(itemNames, abilityNames, moveNames);
+            Helpers.statusLabelMessage();
+            Update();
+
+            pde.ShowDialog();
+        }
+
+
+        #endregion
 
         private void locateCurrentMatrixFile_Click(object sender, EventArgs e) {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.matrices].unpackedDir, selectMatrixComboBox.SelectedIndex.ToString("D4")));
@@ -9998,7 +8887,7 @@ namespace DSPRE {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.scripts].unpackedDir, EditorPanels.scriptEditor.selectScriptFileComboBox.SelectedIndex.ToString("D4")));
         }
         private void locateCurrentTextArchive_Click(object sender, EventArgs e) {
-            ExplorerSelect(Path.Combine(gameDirs[DirNames.textArchives].unpackedDir, selectTextFileComboBox.SelectedIndex.ToString("D4")));
+           ExplorerSelect(Path.Combine(gameDirs[DirNames.textArchives].unpackedDir, EditorPanels.textEditor.currentTextArchive.initialKey.ToString("D4")));
         }
 
         //////////////////////////////////////////
@@ -10039,6 +8928,7 @@ namespace DSPRE {
             }
             return ret.ctrlCode;
         }
+
         private void scalingTrackBar_Scroll(object sender, EventArgs e) {
             int val = (sender as TrackBar).Value;
             nsbtxScaleFactor = (float)(val > 0 ? val + 1 : Math.Pow(2, (sender as TrackBar).Value));
@@ -10148,65 +9038,6 @@ namespace DSPRE {
             Console.WriteLine("CSV file exported successfully.");
         }
 
-        private void pokemonDataEditorToolStripMenuItem_Click(object sender, EventArgs e) {
-            string[] itemNames = RomInfo.GetItemNames();
-            string[] abilityNames = RomInfo.GetAbilityNames();
-            string[] moveNames = RomInfo.GetAttackNames();
-
-            Helpers.statusLabelMessage("Setting up Pokémon Data Editor...");
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.monIcons });
-            RomInfo.SetMonIconsPalTableAddress();
-
-            PokemonEditor pde = new PokemonEditor(itemNames, abilityNames, moveNames);
-            Helpers.statusLabelMessage();
-            Update();
-            
-            pde.ShowDialog();
-        }
-
-        private void overlayEditorToolStripMenuItem_Click(object sender, EventArgs e) {
-            Helpers.statusLabelMessage("Setting up Overlay Editor...");
-            Update();
-            OverlayEditor ovlEditor = new OverlayEditor();
-            ovlEditor.ShowDialog();
-
-            Helpers.statusLabelMessage();
-            Update();
-        }
-
-        private void moveDataEditorToolStripMenuItem_Click(object sender, EventArgs e) {
-            Helpers.statusLabelMessage("Setting up Move Data Editor...");
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.moveData });
-
-            string[] moveDescriptions = new TextArchive(RomInfo.moveDescriptionsTextNumbers).messages.Select(
-            x => x.Replace("\\n", Environment.NewLine)).ToArray();
-
-            MoveDataEditor mde = new MoveDataEditor(
-                new TextArchive(RomInfo.moveNamesTextNumbers).messages.ToArray(),
-                moveDescriptions
-            );
-            mde.ShowDialog();
-
-            Helpers.statusLabelMessage();
-            Update();
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (SettingsWindow editor = new SettingsWindow())
-                editor.ShowDialog();
-        }
-
-        private void weatherMapEditor_Click(object sender, EventArgs e)
-        {
-            WeatherEditor form = new WeatherEditor();
-            form.Show();
-        }
-
         private void MainProgram_Load(object sender, EventArgs e)
         {
             transparencyBar.Value = Transparency;
@@ -10226,55 +9057,43 @@ namespace DSPRE {
 
         }
 
-        private void addressHelperToolStripMenuItem_Click(object sender, EventArgs e)
+        #region Poppout Buttons
+
+        private void popoutTextEditorButton_Click(object sender, EventArgs e)
         {
-            AddressHelper form = new AddressHelper();
-            form.Show();
+            textEditorPoppedOutLabel.Visible = true; // Show Editor popped-out label
+            popoutTextEditorButton.Enabled = false; // Disable popout button
+
+            Helpers.PopOutEditor(textEditor, "Text Editor", mainTabImageList.Images[4], ctrl =>
+            {
+                textEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
+                popoutTextEditorButton.Enabled = true; // Enable popout button
+            });
         }
 
-
-        private void overworldEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void popoutLevelScriptEditorButton_Click(object sender, EventArgs e)
         {
+            LSEditorPoppedOutLabel.Visible = true; // Show Editor popped-out label
+            popoutLevelScriptEditorButton.Enabled = false; // Disable popout button
 
-            BtxEditor form = new BtxEditor();
-            form.Show();
-        }
-        private void exportScriptDatabaseJSONToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Not implemented yet");
-        }
-
-        private void generateCSVToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Helpers.statusLabelMessage("Exporting to CSV...");
-            Update();
-            DocTool.ExportAll();
-
-            Helpers.statusLabelMessage();
-            Update();
+            Helpers.PopOutEditor(levelScriptEditor, "Level Script Editor", mainTabImageList.Images[3], ctrl =>
+            {
+                LSEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
+                popoutLevelScriptEditorButton.Enabled = true; // Enable popout button
+            });
         }
 
-        private void flyWarpEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void popoutScriptEditorButton_Click(object sender, EventArgs e)
         {
-            var flyEditor = new FlyEditor(gameFamily, headerListBoxNames);
-            flyEditor.Show();
+            scriptEditorPoppedOutLabel.Visible = true; // Show Editor popped-out label
+            popoutScriptEditorButton.Enabled = false; // Disable popout button
+
+            Helpers.PopOutEditor(scriptEditor, "Script Editor", mainTabImageList.Images[3], ctrl =>
+            {
+                scriptEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
+                popoutScriptEditorButton.Enabled = true; // Enable popout button
+            });
         }
-
-        private void itemEditorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Helpers.statusLabelMessage("Setting up Item Data Editor...");
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.itemData });
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.itemIcons });
-
-            ItemEditor itemEditor = new ItemEditor(
-                RomInfo.GetItemNames()
-            );
-            itemEditor.ShowDialog();
-
-            Helpers.statusLabelMessage();
-            Update();
-        }
+        #endregion
     }
 }
