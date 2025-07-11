@@ -1805,7 +1805,7 @@ namespace DSPRE.Resources {
                 /* 213 */ "Camouflage effect",
                 /* 214 */ "Roost effect",
                 /* 215 */ "Gravity effect",
-                /* 216 */ "2x power if target is asleep; wakes up target",
+                /* 216 */ "Miracle Eye effect",
                 /* 217 */ "Wake-Up Slap effect",
                 /* 218 */ "Lowers user's Spd",
                 /* 219 */ "Power = min(150; (25 x Target's Current Speed / User's Current Speed) + 1)",
