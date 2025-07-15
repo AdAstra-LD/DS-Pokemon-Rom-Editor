@@ -331,7 +331,7 @@ namespace DSPRE.Editors
 
         private void TBLEditortrainerClassPreviewPic_ValueChanged(object sender, EventArgs e)
         {
-            Helpers.UpdateTrainerClassPic(tbEditorTrClassPictureBox, _parent.trainerPal, _parent.trainerTile, _parent.trainerSprite, _parent.trainerClassPicBox.Height, _parent.trainerClassPicBox.Width, (int)((NumericUpDown)sender).Value);
+            EditorPanels.trainerEditor.UpdateTrainerClassPic(tbEditorTrClassPictureBox, (int)((NumericUpDown)sender).Value);
         }
 
         private void saveEffectComboBTN_Click(object sender, EventArgs e)
@@ -457,8 +457,8 @@ namespace DSPRE.Editors
 
         private void pbEffectsTrainerCombobox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int maxFrames = Helpers.LoadTrainerClassPic((sender as ComboBox).SelectedIndex, _parent.trainerPal,_parent.trainerTile, _parent.trainerSprite);
-            Helpers.UpdateTrainerClassPic(tbEditorTrClassPictureBox, _parent.trainerPal, _parent.trainerTile, _parent.trainerSprite, _parent.trainerClassPicBox.Height, _parent.trainerClassPicBox.Width);
+            int maxFrames = EditorPanels.trainerEditor.LoadTrainerClassPic((sender as ComboBox).SelectedIndex);
+            EditorPanels.trainerEditor.UpdateTrainerClassPic(tbEditorTrClassPictureBox);
 
             tbEditorTrClassFramePreviewUpDown.Maximum = maxFrames;
             tbEditortrainerClassFrameMaxLabel.Text = "/" + maxFrames;

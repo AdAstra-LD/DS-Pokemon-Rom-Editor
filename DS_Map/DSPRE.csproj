@@ -102,6 +102,8 @@
     <Compile Include="AddressHelper.Designer.cs">
       <DependentUpon>AddressHelper.cs</DependentUpon>
     </Compile>
+    <Compile Include="AppLogger.cs" />
+    <Compile Include="CrashReporter.cs" />
     <Compile Include="DocTool.cs" />
     <Compile Include="DSUtils\ARM9.cs" />
     <Compile Include="DSUtils\DSUtils.cs" />
@@ -179,6 +181,12 @@
     <Compile Include="Editors\MoveDataEditor.designer.cs">
       <DependentUpon>MoveDataEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\NsbtxEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\NsbtxEditor.Designer.cs">
+      <DependentUpon>NsbtxEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\PokemonSpriteEditor.cs" />
     <Compile Include="Editors\SafariZoneEditor.cs">
       <SubType>UserControl</SubType>
@@ -221,6 +229,12 @@
     </Compile>
     <Compile Include="Editors\TextEditor.Designer.cs">
       <DependentUpon>TextEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\TrainerEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\TrainerEditor.Designer.cs">
+      <DependentUpon>TrainerEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
@@ -489,6 +503,9 @@
     <EmbeddedResource Include="Editors\MoveDataEditor.resx">
       <DependentUpon>MoveDataEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\NsbtxEditor.resx">
+      <DependentUpon>NsbtxEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\SafariZoneEditor.resx">
       <DependentUpon>SafariZoneEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -506,6 +523,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\TextEditor.resx">
       <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TrainerEditor.resx">
+      <DependentUpon>TrainerEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EventFileImport.resx">
       <DependentUpon>EventFileImport.cs</DependentUpon>

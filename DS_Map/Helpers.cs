@@ -678,49 +678,38 @@ namespace DSPRE {
             return fileName;
         }
 
-
-        public static int LoadTrainerClassPic(int trClassID, PaletteBase trainerPal, ImageBase trainerTile, SpriteBase trainerSprite)
+        public static void ExportTrainerUsageToCSV(Dictionary<string, Dictionary<string, int>> trainerUsage, string csvFilePath)
         {
-            int paletteFileID = (trClassID * 5 + 1);
-            string paletteFilename = paletteFileID.ToString("D4");
-            trainerPal = new NCLR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + paletteFilename, paletteFileID, paletteFilename);
+            // Create the StreamWriter to write data to the CSV file
+            var sortedTrainerClasses = trainerUsage.Keys.OrderBy(className => className);
 
-            int tilesFileID = trClassID * 5;
-            string tilesFilename = tilesFileID.ToString("D4");
-            trainerTile = new NCGR(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + tilesFilename, tilesFileID, tilesFilename);
-
-            if (gameFamily == GameFamilies.DP)
+            using (StreamWriter sw = new StreamWriter(csvFilePath))
             {
-                return 0;
+                // Write the header row
+                sw.WriteLine("Trainer Class;Pokemon Name;Occurrences");
+
+                // Iterate over the sorted trainer class names
+                foreach (string className in sortedTrainerClasses)
+                {
+                    Dictionary<string, int> innerDict = trainerUsage[className];
+
+                    // Sort the Pokemon names alphabetically
+                    var sortedPokemonNames = innerDict.Keys.OrderByDescending(pokeName => innerDict[pokeName]);
+
+                    // Iterate over the sorted mon names
+                    foreach (string pokeName in sortedPokemonNames)
+                    {
+                        int occurrences = innerDict[pokeName];
+
+                        // Write the data row
+                        sw.WriteLine($"{className};{pokeName};{occurrences}");
+                    }
+                    sw.WriteLine($"-;-;-");
+                }
             }
 
-            int spriteFileID = (trClassID * 5 + 2);
-            string spriteFilename = spriteFileID.ToString("D4");
-            trainerSprite = new NCER(gameDirs[DirNames.trainerGraphics].unpackedDir + "\\" + spriteFilename, spriteFileID, spriteFilename);
-
-            return trainerSprite.Banks.Length - 1;
+            Console.WriteLine("CSV file exported successfully.");
         }
-        public static void UpdateTrainerClassPic(PictureBox pb, PaletteBase trainerPal, ImageBase trainerTile, SpriteBase trainerSprite, int boxH, int boxW, int frameNumber = 0)
-        {
-            if (trainerSprite == null)
-            {
-                Console.WriteLine("Sprite is null!");
-                return;
-            }
-
-            int bank0OAMcount = trainerSprite.Banks[0].oams.Length;
-            int[] OAMenabled = new int[bank0OAMcount];
-            for (int i = 0; i < OAMenabled.Length; i++)
-            {
-                OAMenabled[i] = i;
-            }
-
-            frameNumber = Math.Min(trainerSprite.Banks.Length, frameNumber);
-            Image trSprite = trainerSprite.Get_Image(trainerTile, trainerPal, frameNumber, boxW, boxH, false, false, false, true, true, -1, OAMenabled);
-            pb.Image = trSprite;
-            pb.Update();
-        }
-
 
     }
 }

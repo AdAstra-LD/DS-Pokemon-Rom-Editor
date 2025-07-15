@@ -143,6 +143,7 @@
             this.locateCurrentTextArchive.TabIndex = 64;
             this.locateCurrentTextArchive.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.locateCurrentTextArchive.UseVisualStyleBackColor = true;
+            this.locateCurrentTextArchive.Click += new System.EventHandler(this.locateCurrentTextArchive_Click);
             // 
             // saveTextArchiveButton
             // 

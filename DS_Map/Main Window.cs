@@ -33,7 +33,6 @@ using ScintillaNET.Utils;
 using System.Globalization;
 using static DSPRE.ROMFiles.Event;
 using NSMBe4.NSBMD;
-using static DSPRE.ROMFiles.SpeciesFile;
 using System.Reflection;
 using System.ComponentModel;
 using DSPRE.Editors;
@@ -46,21 +45,51 @@ namespace DSPRE {
 
         public MainProgram() {
             InitializeComponent();
+
             EditorPanels.Initialize(this);
             Helpers.Initialize(this);
+#if DEBUG
+            AppLogger.Initialize(this, minLevel: LogLevel.Debug);
+#else
+            AppLogger.Initialize(this, minLevel: LogLevel.Info);
+#endif
+            CrashReporter.Initialize(this);
+
+            AppLogger.Info("=== Application started. === ");
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
             Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
-            
+
             string romFolder = Properties.Settings.Default.openDefaultRom;
             if (romFolder != string.Empty)
             {
-                if(!Properties.Settings.Default.neverAskForOpening) {
+                AppLogger.Info($"Detected stored ROM folder: {romFolder}");
+
+                if (!Properties.Settings.Default.neverAskForOpening)
+                {
+                    AppLogger.Debug("Prompting user to confirm auto-opening the ROM folder.");
+
                     ReopenProjectConfirmation confirmOpen = new ReopenProjectConfirmation();
-                    if (confirmOpen.ShowDialog() == DialogResult.No) return;
+                    if (confirmOpen.ShowDialog() == DialogResult.No)
+                    {
+                        AppLogger.Info("User declined to reopen the previous ROM project.");
+                        return;
+                    }
+
+                    AppLogger.Info("User confirmed reopening the previous ROM project.");
+                }
+                else
+                {
+                    AppLogger.Info("Auto-opening ROM without asking the user (neverAskForOpening is enabled).");
                 }
 
+                AppLogger.Info("Opening ROM project from saved folder.");
                 OpenRomFromFolder(romFolder);
             }
+            else
+            {
+                AppLogger.Debug("No stored ROM folder found on startup.");
+            }
+
         }
 
         #region Program Window
@@ -199,31 +228,6 @@ namespace DSPRE {
                 }
             }
             return names.ToArray();
-        }
-        private string[] GetTrainerNames() {
-            List<string> trainerList = new List<string>();
-
-            /* Store all trainer names and classes */
-            TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
-            TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
-            string trainerPropertiesUnpackedDir = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir;
-
-            int trainerCount = Directory.GetFiles(trainerPropertiesUnpackedDir).Length;
-
-            for (int i = 0; i < trainerCount; i++) {
-                int classMessageID = DSUtils.ReadFromFile(trainerPropertiesUnpackedDir + "\\" + i.ToString("D4"), startOffset: 1, 1)[0];
-                string currentTrainerName;
-
-                if (i < trainerNames.messages.Count) {
-                    currentTrainerName = trainerNames.messages[i];
-                } else {
-                    currentTrainerName = TrainerFile.NAME_NOT_FOUND;
-                }
-
-                trainerList.Add("[" + i.ToString("D2") + "] " + trainerClasses.messages[classMessageID] + " " + currentTrainerName);
-
-            }
-            return trainerList.ToArray();
         }
 
         private void PaintGameIcon(object sender, PaintEventArgs e) {
@@ -863,43 +867,55 @@ namespace DSPRE {
 
         private void OpenRomFromFolder(string romFolderPath)
         {
+            AppLogger.Info($"Attempting to open ROM from folder: {romFolderPath}");
+
             // Validate path and check for OneDrive
             if (!ValidateFilePath(romFolderPath))
             {
+                AppLogger.Warn("ROM path validation failed. Possibly invalid or on a restricted (OneDrive).");
                 return;
             }
 
             if (!detectAndHandleWSL(romFolderPath))
             {
-                return; // User chose not to create a new work directory
+                AppLogger.Info("ROM path validation failed. Possibly invalid or on a restricted (WSL).");
+                return;
             }
-
-          
 
             try
             {
-                SetupROMLanguage(Directory.GetFiles(romFolderPath).First(x => x.Contains("header.bin")));
+                string headerFile = Directory.GetFiles(romFolderPath).First(x => x.Contains("header.bin"));
+                AppLogger.Debug($"Found header file: {headerFile}");
+                SetupROMLanguage(headerFile);
             }
             catch (InvalidOperationException)
             {
+                AppLogger.Error("No 'header.bin' file found in ROM folder. Cannot initialize ROM.");
                 MessageBox.Show("This folder does not seem to contain any data from a NDS Pokémon ROM.", "No ROM Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            /* Set ROM gameVersion and language */
+
             romInfo = new RomInfo(gameCode, romFolderPath, useSuffix: false);
 
             if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName))
             {
+                AppLogger.Error("ROM ID or filename is empty after initialization. Aborting.");
                 return;
             }
 
+            AppLogger.Info($"ROM loaded successfully: ID = {RomInfo.romID}, Name = {RomInfo.fileName}");
+
             CheckROMLanguage();
+            AppLogger.Debug("ROM language checked and applied.");
 
             iconON = true;
             gameIcon.Refresh();  // Paint game icon
+            AppLogger.Debug("Game icon refreshed.");
 
             ReadROMInitData();
+            AppLogger.Info("ROM initialization data loaded.");
         }
+
 
         private void SetupROMLanguage(string headerPath) {
             using (DSUtils.EasyReader br = new DSUtils.EasyReader(headerPath, 0xC)) {
@@ -1063,11 +1079,11 @@ namespace DSPRE {
                 SetupHeaderEditor();
                 SetupMatrixEditor();
                 SetupMapEditor();
-                SetupNSBTXEditor();
+                nsbtxEditor.SetupNSBTXEditor(this);
                 SetupEventEditor();
                 SetupScriptEditor();
                 textEditor.SetupTextEditor(this);
-                SetupTrainerEditor();
+                trainerEditor.SetupTrainerEditor(this);
 
                 Helpers.statusLabelMessage();
                 Update();
@@ -1120,11 +1136,8 @@ namespace DSPRE {
                     mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
                     mapEditorIsReady = true;
                 }
-            } else if (mainTabControl.SelectedTab == nsbtxEditorTabPage) {
-                if (!nsbtxEditorIsReady) {
-                    SetupNSBTXEditor();
-                    nsbtxEditorIsReady = true;
-                }
+            } else if (mainTabControl.SelectedTab == EditorPanels.nsbtxEditorTabPage) {
+                nsbtxEditor.SetupNSBTXEditor(this);
             } else if (mainTabControl.SelectedTab == eventEditorTabPage) {
                 if (!eventEditorIsReady) {
                     SetupEventEditor();
@@ -1132,15 +1145,12 @@ namespace DSPRE {
                 }
             } else if (mainTabControl.SelectedTab == EditorPanels.textEditorTabPage) {
                 textEditor.SetupTextEditor(this);
-            } else if (mainTabControl.SelectedTab == trainerEditorTabPage) {
-                if (!trainerEditorIsReady) {
-                    SetupTrainerEditor();
-                    trainerEditorIsReady = true;
-                }
-            } else if (mainTabControl.SelectedTab == tableEditorTabPage) {
+            } else if (mainTabControl.SelectedTab == EditorPanels.trainerEditorTabPage) {
+                    trainerEditor.SetupTrainerEditor(this);
+            } else if (mainTabControl.SelectedTab == EditorPanels.tabPageTableEditor) {
                 resetHeaderSearch();
-                //SetupConditionalMusicTable();
-                //SetupBattleEffectsTables();
+                tableEditor.SetupConditionalMusicTable(this);
+                tableEditor.SetupBattleEffectsTables(this);
             } else if (mainTabControl.SelectedTab == EditorPanels.scriptEditorTabPage) {
                 scriptEditor.SetupScriptEditor(this);
             } else if (mainTabControl.SelectedTab == EditorPanels.levelScriptEditorTabPage) {
@@ -1879,18 +1889,18 @@ namespace DSPRE {
         }
         private void openAreaDataButton_Click(object sender, EventArgs e) {
             if (!nsbtxEditorIsReady) {
-                SetupNSBTXEditor();
+                nsbtxEditor.SetupNSBTXEditor(this);
                 nsbtxEditorIsReady = true;
             }
 
-            selectAreaDataListBox.SelectedIndex = (int)areaDataUpDown.Value;
-            texturePacksListBox.SelectedIndex = (mapTilesetRadioButton.Checked ? (int)areaDataMapTilesetUpDown.Value : (int)areaDataBuildingTilesetUpDown.Value);
+            nsbtxEditor.selectAreaDataListBox.SelectedIndex = (int)areaDataUpDown.Value;
+            nsbtxEditor.texturePacksListBox.SelectedIndex = (nsbtxEditor.mapTilesetRadioButton.Checked ? (int)nsbtxEditor.areaDataMapTilesetUpDown.Value : (int)nsbtxEditor.areaDataBuildingTilesetUpDown.Value);
             mainTabControl.SelectedTab = nsbtxEditorTabPage;
 
-            if (texturesListBox.Items.Count > 0)
-                texturesListBox.SelectedIndex = 0;
-            if (palettesListBox.Items.Count > 0)
-                palettesListBox.SelectedIndex = 0;
+            if (nsbtxEditor.texturesListBox.Items.Count > 0)
+                nsbtxEditor.texturesListBox.SelectedIndex = 0;
+            if (nsbtxEditor.palettesListBox.Items.Count > 0)
+                nsbtxEditor.palettesListBox.SelectedIndex = 0;
         }
         private void openEventsButton_Click(object sender, EventArgs e) {
             if (!eventEditorIsReady) {
@@ -7066,1387 +7076,6 @@ namespace DSPRE {
         #endregion
         #endregion
 
-        #region NSBTX Editor
-        public NSBTX_File currentNsbtx;
-        public AreaData currentAreaData;
-
-        public void FillTilesetBox() {
-            texturePacksListBox.Items.Clear();
-
-            int tilesetFileCount;
-            if (mapTilesetRadioButton.Checked) {
-                tilesetFileCount = romInfo.GetMapTexturesCount();
-            } else {
-                tilesetFileCount = romInfo.GetBuildingTexturesCount();
-            }
-
-            for (int i = 0; i < tilesetFileCount; i++) {
-                texturePacksListBox.Items.Add("Texture Pack " + i);
-            }
-        }
-        private void SetupNSBTXEditor() {
-            Helpers.statusLabelMessage("Attempting to unpack Tileset Editor NARCs... Please wait.");
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> {
-                DirNames.buildingTextures,
-                DirNames.mapTextures,
-                DirNames.buildingConfigFiles,
-                DirNames.areaData
-            });
-
-            /* Fill Tileset ListBox */
-            FillTilesetBox();
-
-            /* Fill AreaData ComboBox */
-            selectAreaDataListBox.Items.Clear();
-            int areaDataCount = romInfo.GetAreaDataCount();
-            for (int i = 0; i < areaDataCount; i++) {
-                selectAreaDataListBox.Items.Add("AreaData File " + i);
-            }
-
-            /* Enable gameVersion-specific controls */
-            string[] lightTypes;
-
-            switch (RomInfo.gameFamily) {
-                case GameFamilies.DP:
-                case GameFamilies.Plat:
-                    lightTypes = new string[3] { "Day/Night Light", "Model's light", "Unknown Light" };
-                    break;
-                default:
-                    lightTypes = new string[3] { "Model's light", "Day/Night Light", "Unknown Light" };
-                    areaDataDynamicTexturesNumericUpDown.Enabled = true;
-                    areaTypeGroupbox.Enabled = true;
-                    break;
-            };
-
-            areaDataLightTypeComboBox.Items.Clear();
-            areaDataLightTypeComboBox.Items.AddRange(lightTypes);
-
-            if (selectAreaDataListBox.Items.Count > 0) {
-                selectAreaDataListBox.SelectedIndex = 0;
-            }
-
-            if (texturePacksListBox.Items.Count > 0) {
-                texturePacksListBox.SelectedIndex = 0;
-            }
-
-            if (texturesListBox.Items.Count > 0) {
-                texturesListBox.SelectedIndex = 0;
-            }
-
-            if (palettesListBox.Items.Count > 0) {
-                palettesListBox.SelectedIndex = 0;
-            }
-            Helpers.statusLabelMessage();
-        }
-        private void buildingsTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
-            FillTilesetBox();
-            texturePacksListBox.SelectedIndex = (int)areaDataBuildingTilesetUpDown.Value;
-            if (texturesListBox.Items.Count > 0) {
-                texturesListBox.SelectedIndex = 0;
-            }
-            if (palettesListBox.Items.Count > 0) {
-                palettesListBox.SelectedIndex = 0;
-            }
-        }
-        private void exportNSBTXButton_Click(object sender, EventArgs e) {
-            SaveFileDialog sf = new SaveFileDialog {
-                Filter = "NSBTX File (*.nsbtx)|*.nsbtx",
-                FileName = "Texture Pack " + texturePacksListBox.SelectedIndex
-            };
-            if (sf.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            string tilesetPath = mapTilesetRadioButton.Checked
-                ? RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4")
-                : RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            File.Copy(tilesetPath, sf.FileName);
-
-            MessageBox.Show("NSBTX tileset exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void importNSBTXButton_Click(object sender, EventArgs e) {
-            /* Prompt user to select .nsbtx file */
-            OpenFileDialog ofd = new OpenFileDialog {
-                Filter = "NSBTX File (*.nsbtx)|*.nsbtx",
-                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
-            };
-            if (ofd.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            /* Update nsbtx file */
-            string tilesetPath = mapTilesetRadioButton.Checked
-                ? RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4")
-                : RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-            File.Copy(ofd.FileName, tilesetPath, true);
-
-            /* Update nsbtx object in memory and controls */
-            currentNsbtx = new NSMBe4.NSBMD.NSBTX_File(new FileStream(ofd.FileName, FileMode.Open));
-            texturePacksListBox_SelectedIndexChanged(null, null);
-            MessageBox.Show("NSBTX tileset imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void mapTilesetRadioButton_CheckedChanged(object sender, EventArgs e) {
-            FillTilesetBox();
-
-            try {
-                if (mapTilesetRadioButton.Checked) {
-                    texturePacksListBox.SelectedIndex = (int)areaDataMapTilesetUpDown.Value;
-                } else if (buildingsTilesetRadioButton.Checked) {
-                    texturePacksListBox.SelectedIndex = (int)areaDataBuildingTilesetUpDown.Value;
-                }
-            } catch (ArgumentOutOfRangeException) {
-                texturePacksListBox.SelectedIndex = 0;
-            }
-        }
-        private void palettesListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-
-            palettesLabel.Text = $"Palettes [{palettesListBox.SelectedIndex + 1}/{palettesListBox.Items.Count}]";
-
-            int ctrlCode = NSBTXRender(tex: texturesListBox.SelectedIndex, pal: palettesListBox.SelectedIndex, scale: nsbtxScaleFactor);
-            if (ctrlCode > 0) {
-                Helpers.statusLabelError($"ERROR! The selected palette doesn't have enough colors for this Palette{ctrlCode} texture.");
-            } else {
-                Helpers.statusLabelMessage();
-            }
-        }
-        private void texturePacksListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            Helpers.DisableHandlers();
-
-            /* Clear ListBoxes */
-            texturesListBox.Items.Clear();
-            palettesListBox.Items.Clear();
-
-            /* Load tileset file */
-            string tilesetPath = mapTilesetRadioButton.Checked
-                ? RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4")
-                : RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.SelectedIndex.ToString("D4");
-
-            currentNsbtx = new NSBTX_File(new FileStream(tilesetPath, FileMode.Open));
-            string currentItemName = texturePacksListBox.Items[texturePacksListBox.SelectedIndex].ToString();
-
-            if (currentNsbtx.texInfo.names is null || currentNsbtx.palInfo.names is null) {
-                if (!currentItemName.StartsWith("Error!")) {
-                    texturePacksListBox.Items[texturePacksListBox.SelectedIndex] = "Error! - " + currentItemName;
-                }
-
-                Helpers.EnableHandlers();
-                return;
-            }
-            /* Add textures and palette slot names to ListBoxes */
-            texturesListBox.Items.AddRange(currentNsbtx.texInfo.names.ToArray());
-            palettesListBox.Items.AddRange(currentNsbtx.palInfo.names.ToArray());
-
-            Helpers.EnableHandlers();
-
-            if (texturesListBox.Items.Count > 0) {
-                texturesListBox.SelectedIndex = 0;
-            }
-        }
-        private void texturesListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-
-            Helpers.BackUpDisableHandler();
-            Helpers.DisableHandlers();
-
-            texturesLabel.Text = $"Textures [{texturesListBox.SelectedIndex + 1}/{texturesListBox.Items.Count}]";
-
-            string findThis = texturesListBox.SelectedItem.ToString();
-            string matchingPalette = findAndSelectMatchingPalette(findThis);
-            if (matchingPalette == null) {
-                Helpers.statusLabelError("Couldn't find a palette to match " + '"' + findThis + '"', severe: false);
-            } else {
-                palettesListBox.SelectedItem = matchingPalette;
-                Helpers.statusLabelMessage("Ready");
-            }
-
-            Helpers.RestoreDisableHandler();
-
-            int ctrlCode = NSBTXRender(tex: Math.Max(0, texturesListBox.SelectedIndex), pal: Math.Max(0, palettesListBox.SelectedIndex), scale: nsbtxScaleFactor);
-            if (matchingPalette != null && ctrlCode > 0) {
-                Helpers.statusLabelError($"ERROR! The selected palette doesn't have enough colors for this Palette{ctrlCode} texture.");
-            }
-        }
-        private string findAndSelectMatchingPalette(string findThis) {
-            Helpers.statusLabelMessage("Searching palette...");
-
-            string copy = findThis;
-            while (copy.Length > 0) {
-                if (palettesListBox.Items.Contains(copy + "_pl")) {
-                    return copy + "_pl";
-                }
-                if (palettesListBox.Items.Contains(copy)) {
-                    return copy;
-                }
-                copy = copy.Substring(0, copy.Length - 1);
-            }
-
-            foreach (string palette in palettesListBox.Items) {
-                if (palette.StartsWith(findThis)) {
-                    return palette;
-                }
-            }
-
-            return null;
-        }
-        private void areaDataBuildingTilesetUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentAreaData.buildingsTileset = (ushort)areaDataBuildingTilesetUpDown.Value;
-        }
-        private void areaDataDynamicTexturesUpDown_ValueChanged(object sender, EventArgs e) {
-            if (areaDataDynamicTexturesNumericUpDown.Value == areaDataDynamicTexturesNumericUpDown.Maximum) {
-                areaDataDynamicTexturesNumericUpDown.ForeColor = Color.Red;
-            } else {
-                areaDataDynamicTexturesNumericUpDown.ForeColor = Color.Black;
-            }
-
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentAreaData.dynamicTextureType = (ushort)areaDataDynamicTexturesNumericUpDown.Value;
-        }
-        private void areaDataLightTypeComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentAreaData.lightType = (byte)areaDataLightTypeComboBox.SelectedIndex;
-        }
-        private void areaDataMapTilesetUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentAreaData.mapTileset = (ushort)areaDataMapTilesetUpDown.Value;
-        }
-        private void saveAreaDataButton_Click(object sender, EventArgs e) {
-            currentAreaData.SaveToFileDefaultDir(selectAreaDataListBox.SelectedIndex);
-        }
-        private void selectAreaDataListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            currentAreaData = new AreaData((byte)selectAreaDataListBox.SelectedIndex);
-
-            areaDataBuildingTilesetUpDown.Value = currentAreaData.buildingsTileset;
-            areaDataMapTilesetUpDown.Value = currentAreaData.mapTileset;
-            areaDataLightTypeComboBox.SelectedIndex = currentAreaData.lightType;
-
-            Helpers.DisableHandlers();
-            if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                areaDataDynamicTexturesNumericUpDown.Value = currentAreaData.dynamicTextureType;
-
-                bool interior = currentAreaData.areaType == 0;
-                indoorAreaRadioButton.Checked = interior;
-                outdoorAreaRadioButton.Checked = !interior;
-            }
-            Helpers.EnableHandlers();
-        }
-        private void indoorAreaRadioButton_CheckedChanged(object sender, EventArgs e) {
-            currentAreaData.areaType = indoorAreaRadioButton.Checked ? AreaData.TYPE_INDOOR : AreaData.TYPE_OUTDOOR;
-        }
-        private void addNSBTXButton_Click(object sender, EventArgs e) {
-            /* Add new NSBTX file to the correct folder */
-            if (mapTilesetRadioButton.Checked) {
-                File.Copy(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
-
-                if (mapEditorIsReady) {
-                    mapTextureComboBox.Items.Add("Map Texture Pack [" + mapTextureComboBox.Items.Count.ToString("D2") + "]");
-                }
-            } else {
-                File.Copy(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
-                File.Copy(RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + 0.ToString("D4"), RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + texturePacksListBox.Items.Count.ToString("D4"));
-
-                if (mapEditorIsReady) {
-                    buildTextureComboBox.Items.Add("Building Texture Pack [" + buildTextureComboBox.Items.Count.ToString("D2") + "]");
-                }
-            }
-
-            /* Update ComboBox and select new file */
-            texturePacksListBox.Items.Add("Texture Pack " + texturePacksListBox.Items.Count);
-            texturePacksListBox.SelectedIndex = texturePacksListBox.Items.Count - 1;
-        }
-        private void removeNSBTXButton_Click(object sender, EventArgs e) {
-            if (texturePacksListBox.Items.Count > 1) {
-                /* Delete NSBTX file */
-                DialogResult d = MessageBox.Show("Are you sure you want to delete the last Texture Pack?", "Confirm deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (d.Equals(DialogResult.Yes)) {
-                    if (mapTilesetRadioButton.Checked) {
-                        File.Delete(RomInfo.gameDirs[DirNames.mapTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
-
-                        if (mapEditorIsReady) {
-                            mapTextureComboBox.Items.RemoveAt(mapTextureComboBox.Items.Count - 1);
-                        }
-                    } else {
-                        File.Delete(RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
-                        File.Delete(RomInfo.gameDirs[DirNames.buildingConfigFiles].unpackedDir + "\\" + (texturePacksListBox.Items.Count - 1).ToString("D4"));
-
-                        if (mapEditorIsReady) {
-                            buildTextureComboBox.Items.RemoveAt(buildTextureComboBox.Items.Count - 1);
-                        }
-                    }
-
-                    /* Check if currently selected file is the last one, and in that case select the one before it */
-                    int lastIndex = texturePacksListBox.Items.Count - 1;
-                    if (texturePacksListBox.SelectedIndex == lastIndex) {
-                        texturePacksListBox.SelectedIndex--;
-                    }
-
-                    /* Remove item from ComboBox */
-                    texturePacksListBox.Items.RemoveAt(lastIndex);
-                }
-            } else {
-                MessageBox.Show("At least one tileset must be kept.", "Can't delete tileset", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-        private void addAreaDataButton_Click(object sender, EventArgs e) {
-            /* Add new NSBTX file to the correct folder */
-            string areaDataDirPath = RomInfo.gameDirs[DirNames.areaData].unpackedDir;
-            File.Copy(areaDataDirPath + "\\" + 0.ToString("D4"), areaDataDirPath + "\\" + selectAreaDataListBox.Items.Count.ToString("D4"));
-
-            /* Update ComboBox and select new file */
-            selectAreaDataListBox.Items.Add("AreaData File " + selectAreaDataListBox.Items.Count);
-            selectAreaDataListBox.SelectedIndex = selectAreaDataListBox.Items.Count - 1;
-
-            if (eventEditorIsReady) {
-                eventAreaDataUpDown.Maximum++;
-            }
-        }
-        private void removeAreaDataButton_Click(object sender, EventArgs e) {
-            if (selectAreaDataListBox.Items.Count > 1) {
-                /* Delete AreaData file */
-                File.Delete(RomInfo.gameDirs[DirNames.areaData].unpackedDir + "\\" + (selectAreaDataListBox.Items.Count - 1).ToString("D4"));
-
-                /* Check if currently selected file is the last one, and in that case select the one before it */
-                int lastIndex = selectAreaDataListBox.Items.Count - 1;
-                if (selectAreaDataListBox.SelectedIndex == lastIndex) {
-                    selectAreaDataListBox.SelectedIndex--;
-                }
-
-                /* Remove item from ComboBox */
-                selectAreaDataListBox.Items.RemoveAt(lastIndex);
-
-                if (eventEditorIsReady) {
-                    eventAreaDataUpDown.Maximum--;
-                }
-            } else {
-                MessageBox.Show("At least one AreaData file must be kept.", "Can't delete AreaData", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-        }
-        private void exportAreaDataButton_Click(object sender, EventArgs e) {
-            currentAreaData.SaveToFileExplorePath("Area Data " + selectAreaDataListBox.SelectedIndex);
-        }
-        private void importAreaDataButton_Click(object sender, EventArgs e) {
-            if (selectAreaDataListBox.SelectedIndex < 0) {
-                return;
-            }
-
-            OpenFileDialog of = new OpenFileDialog {
-                Filter = "AreaData File (*.bin)|*.bin"
-            };
-
-            if (of.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            /* Update areadata object in memory */
-            string path = RomInfo.gameDirs[DirNames.areaData].unpackedDir + "\\" + selectAreaDataListBox.SelectedIndex.ToString("D4");
-            File.Copy(of.FileName, path, true);
-
-            /* Refresh controls */
-            selectAreaDataListBox_SelectedIndexChanged(sender, e);
-
-            /* Display success message */
-            MessageBox.Show("AreaData File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        #endregion
-
-        #region Trainer Editor
-        private List<ComboBox> partyPokemonComboboxList = new List<ComboBox>();
-        private List<ComboBox> partyItemsComboboxList = new List<ComboBox>();
-        private List<GroupBox> partyMovesGroupboxList = new List<GroupBox>();
-        private List<NumericUpDown> partyLevelUpdownList = new List<NumericUpDown>();
-        private List<ComboBox> partyGenderComboBoxList = new List<ComboBox>();
-        private List<ComboBox> partyAbilityComboBoxList = new List<ComboBox>();
-        private List<ComboBox> partyFormComboBoxList = new List<ComboBox>();
-        private List<NumericUpDown> partyIVUpdownList = new List<NumericUpDown>();
-        private List<NumericUpDown> partyBallUpdownList = new List<NumericUpDown>();
-        private List<GroupBox> partyGroupboxList = new List<GroupBox>();
-        private List<PictureBox> partyPokemonPictureBoxList = new List<PictureBox>();
-        private List<PictureBox> partyPokemonItemIconList = new List<PictureBox>();
-
-        private const int TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX = 0;
-        private const int TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX = 1;
-        private const int TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX = 2;
-        private const int TRAINER_PARTY_POKEMON_ABILITY_DEFAULT_INDEX = 0;
-        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX = 1;
-        private const int TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX = 2;
-
-
-        string[] abilityNames;
-        SpeciesFile[] pokemonSpecies;
-
-        private (int abi1, int abi2)[] pokemonSpeciesAbilities;
-
-        TrainerFile currentTrainerFile;
-        public PaletteBase trainerPal;
-        public ImageBase trainerTile;
-        public SpriteBase trainerSprite;
-
-        Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)> trainerClassEncounterMusicDict;
-        private void SetupTrainerClassEncounterMusicTable() {
-            RomInfo.SetEncounterMusicTableOffsetToRAMAddress();
-            trainerClassEncounterMusicDict = new Dictionary<byte, (uint entryOffset, ushort musicD, ushort? musicN)>();
-
-            uint encounterMusicTableTableStartAddress = BitConverter.ToUInt32(ARM9.ReadBytes(RomInfo.encounterMusicTableOffsetToRAMAddress, 4), 0) - ARM9.address;
-            uint tableSizeOffset = 10;
-            if (gameFamily == GameFamilies.HGSS) {
-                tableSizeOffset += 2;
-                encounterSSEQAltUpDown.Enabled = true;
-            }
-
-            byte tableEntriesCount = ARM9.ReadByte(RomInfo.encounterMusicTableOffsetToRAMAddress - tableSizeOffset);
-            using (ARM9.Reader ar = new ARM9.Reader(encounterMusicTableTableStartAddress)) {
-                for (int i = 0; i < tableEntriesCount; i++) {
-                    uint entryOffset = (uint)ar.BaseStream.Position;
-                    byte tclass = (byte)ar.ReadUInt16();
-                    ushort musicD = ar.ReadUInt16();
-                    ushort? musicN = gameFamily == GameFamilies.HGSS ? ar.ReadUInt16() : (ushort?)null;
-                    trainerClassEncounterMusicDict[tclass] = (entryOffset, musicD, musicN);
-                }
-            }
-        }
-
-        public void RefreshAbilities(int forPokemon) {
-            DialogResult res = MessageBox.Show("You have modified a Pokemon's ability.\nDo you wish to refresh the Trainer Editor so your changes are available?", "Refresh Trainer Editor", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (res.Equals(DialogResult.Yes)) {
-                int currentIndex = trainerComboBox.SelectedIndex;
-                SetupTrainerEditor();
-                trainerComboBox.SelectedIndex = currentIndex;
-            }
-        }
-
-        private void SetupTrainerEditor() {
-            Helpers.DisableHandlers();
-
-            //SetTrainerNameMaxLen();
-            SetupTrainerClassEncounterMusicTable();
-            /* Extract essential NARCs sub-archives*/
-            Helpers.statusLabelMessage("Setting up Trainer Editor...");
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> {
-                DirNames.trainerProperties,
-                DirNames.trainerParty,
-                DirNames.trainerGraphics,
-                DirNames.textArchives,
-                DirNames.monIcons,
-                DirNames.personalPokeData,
-                DirNames.learnsets
-            });
-
-            int numPokemonSpecies = Directory.GetFiles(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir, "*").Count();
-            pokemonSpeciesAbilities = new (int abi1, int abi2)[numPokemonSpecies];
-            pokemonSpecies = new SpeciesFile[numPokemonSpecies];
-
-            RomInfo.SetMonIconsPalTableAddress();
-            RomInfo.SetAIBackportEnabled();
-
-            partyPokemonComboboxList.Clear();
-            partyPokemonComboboxList.Add(partyPokemon1ComboBox);
-            partyPokemonComboboxList.Add(partyPokemon2ComboBox);
-            partyPokemonComboboxList.Add(partyPokemon3ComboBox);
-            partyPokemonComboboxList.Add(partyPokemon4ComboBox);
-            partyPokemonComboboxList.Add(partyPokemon5ComboBox);
-            partyPokemonComboboxList.Add(partyPokemon6ComboBox);
-
-            partyItemsComboboxList.Clear();
-            partyItemsComboboxList.Add(partyItem1ComboBox);
-            partyItemsComboboxList.Add(partyItem2ComboBox);
-            partyItemsComboboxList.Add(partyItem3ComboBox);
-            partyItemsComboboxList.Add(partyItem4ComboBox);
-            partyItemsComboboxList.Add(partyItem5ComboBox);
-            partyItemsComboboxList.Add(partyItem6ComboBox);
-
-            partyLevelUpdownList.Clear();
-            partyLevelUpdownList.Add(partyLevel1UpDown);
-            partyLevelUpdownList.Add(partyLevel2UpDown);
-            partyLevelUpdownList.Add(partyLevel3UpDown);
-            partyLevelUpdownList.Add(partyLevel4UpDown);
-            partyLevelUpdownList.Add(partyLevel5UpDown);
-            partyLevelUpdownList.Add(partyLevel6UpDown);
-
-            partyGenderComboBoxList.Clear();
-            partyGenderComboBoxList.Add(partyGender1ComboBox);
-            partyGenderComboBoxList.Add(partyGender2ComboBox);
-            partyGenderComboBoxList.Add(partyGender3ComboBox);
-            partyGenderComboBoxList.Add(partyGender4ComboBox);
-            partyGenderComboBoxList.Add(partyGender5ComboBox);
-            partyGenderComboBoxList.Add(partyGender6ComboBox);
-
-            partyAbilityComboBoxList.Clear();
-            partyAbilityComboBoxList.Add(partyAbility1ComboBox);
-            partyAbilityComboBoxList.Add(partyAbility2ComboBox);
-            partyAbilityComboBoxList.Add(partyAbility3ComboBox);
-            partyAbilityComboBoxList.Add(partyAbility4ComboBox);
-            partyAbilityComboBoxList.Add(partyAbility5ComboBox);
-            partyAbilityComboBoxList.Add(partyAbility6ComboBox);
-
-            partyFormComboBoxList.Clear();
-            partyFormComboBoxList.Add(partyForm1ComboBox);
-            partyFormComboBoxList.Add(partyForm2ComboBox);
-            partyFormComboBoxList.Add(partyForm3ComboBox);
-            partyFormComboBoxList.Add(partyForm4ComboBox);
-            partyFormComboBoxList.Add(partyForm5ComboBox);
-            partyFormComboBoxList.Add(partyForm6ComboBox);
-
-            partyIVUpdownList.Clear();
-            partyIVUpdownList.Add(partyIV1UpDown);
-            partyIVUpdownList.Add(partyIV2UpDown);
-            partyIVUpdownList.Add(partyIV3UpDown);
-            partyIVUpdownList.Add(partyIV4UpDown);
-            partyIVUpdownList.Add(partyIV5UpDown);
-            partyIVUpdownList.Add(partyIV6UpDown);
-
-            partyBallUpdownList.Clear();
-            partyBallUpdownList.Add(partyBall1UpDown);
-            partyBallUpdownList.Add(partyBall2UpDown);
-            partyBallUpdownList.Add(partyBall3UpDown);
-            partyBallUpdownList.Add(partyBall4UpDown);
-            partyBallUpdownList.Add(partyBall5UpDown);
-            partyBallUpdownList.Add(partyBall6UpDown);
-
-            partyMovesGroupboxList.Clear();
-            partyMovesGroupboxList.Add(poke1MovesGroupBox);
-            partyMovesGroupboxList.Add(poke2MovesGroupBox);
-            partyMovesGroupboxList.Add(poke3MovesGroupBox);
-            partyMovesGroupboxList.Add(poke4MovesGroupBox);
-            partyMovesGroupboxList.Add(poke5MovesGroupBox);
-            partyMovesGroupboxList.Add(poke6MovesGroupBox);
-
-            partyGroupboxList.Clear();
-            partyGroupboxList.Add(party1GroupBox);
-            partyGroupboxList.Add(party2GroupBox);
-            partyGroupboxList.Add(party3GroupBox);
-            partyGroupboxList.Add(party4GroupBox);
-            partyGroupboxList.Add(party5GroupBox);
-            partyGroupboxList.Add(party6GroupBox);
-
-            partyPokemonPictureBoxList.Clear();
-            partyPokemonPictureBoxList.Add(partyPokemon1PictureBox);
-            partyPokemonPictureBoxList.Add(partyPokemon2PictureBox);
-            partyPokemonPictureBoxList.Add(partyPokemon3PictureBox);
-            partyPokemonPictureBoxList.Add(partyPokemon4PictureBox);
-            partyPokemonPictureBoxList.Add(partyPokemon5PictureBox);
-            partyPokemonPictureBoxList.Add(partyPokemon6PictureBox);
-
-            partyPokemonItemIconList.Clear();
-            partyPokemonItemIconList.Add(partyPokemonItemPictureBox1);
-            partyPokemonItemIconList.Add(partyPokemonItemPictureBox2);
-            partyPokemonItemIconList.Add(partyPokemonItemPictureBox3);
-            partyPokemonItemIconList.Add(partyPokemonItemPictureBox4);
-            partyPokemonItemIconList.Add(partyPokemonItemPictureBox5);
-            partyPokemonItemIconList.Add(partyPokemonItemPictureBox6);
-
-            int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
-            trainerComboBox.Items.Clear();
-            trainerComboBox.Items.AddRange(GetTrainerNames());
-
-            string[] classNames = RomInfo.GetTrainerClassNames();
-            trainerClassListBox.Items.Clear();
-            if (classNames.Length > byte.MaxValue + 1) {
-                MessageBox.Show("There can't be more than 256 trainer classes! [Found " + classNames.Length + "].\nAborting.",
-                    "Too many trainer classes", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            for (int i = 0; i < classNames.Length; i++) {
-                trainerClassListBox.Items.Add("[" + i.ToString("D3") + "]" + " " + classNames[i]);
-            }
-
-            for (int i = 0; i < numPokemonSpecies; i++) {
-                pokemonSpecies[i] = new SpeciesFile(new FileStream(RomInfo.gameDirs[DirNames.personalPokeData].unpackedDir + "\\" + i.ToString("D4"), FileMode.Open));
-            }
-
-            if (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled) {
-                foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList) {
-                    partyGenderComboBox.Visible = true;
-                    partyGenderComboBox.Items.Add("Default Gender");
-                    partyGenderComboBox.Items.Add("Male");
-                    partyGenderComboBox.Items.Add("Female");
-                }
-            } else {
-                foreach (ComboBox partyGenderComboBox in partyGenderComboBoxList) {
-                    partyGenderComboBox.Visible = false;
-                }
-            }
-
-            if (gameFamily == GameFamilies.DP) {
-                foreach (ComboBox partyFormComboBox in partyFormComboBoxList) {
-                    partyFormComboBox.Visible = false;
-                }
-
-                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList) {
-                    partyBallSealUpDown.Enabled = false;
-                }
-            } else {
-                foreach (ComboBox partyFormComboBox in partyFormComboBoxList) {
-                    partyFormComboBox.Visible = true;
-                }
-
-                foreach (NumericUpDown partyBallSealUpDown in partyBallUpdownList) {
-                    partyBallSealUpDown.Enabled = true;
-                }
-            }
-
-            string[] itemNames = RomInfo.GetItemNames();
-            string[] pokeNames = RomInfo.GetPokemonNames();
-            string[] moveNames = RomInfo.GetAttackNames();
-            abilityNames = RomInfo.GetAbilityNames();
-
-            pokemonSpeciesAbilities = getPokemonAbilities(numPokemonSpecies);
-
-            foreach (Control c in trainerItemsGroupBox.Controls) {
-                if (c is ComboBox) {
-                    (c as ComboBox).DataSource = new BindingSource(itemNames, string.Empty);
-                }
-            }
-
-            foreach (ComboBox CB in partyPokemonComboboxList) {
-                CB.DataSource = new BindingSource(pokeNames, string.Empty);
-            }
-
-            foreach (ComboBox CB in partyItemsComboboxList) {
-                CB.DataSource = new BindingSource(itemNames, string.Empty);
-            }
-
-            foreach (GroupBox movesGroup in partyMovesGroupboxList) {
-                foreach (Control c in movesGroup.Controls) {
-                    if (c is ComboBox) {
-                        (c as ComboBox).DataSource = new BindingSource(moveNames, string.Empty);
-                    }
-                }
-            }
-
-            trainerComboBox.SelectedIndex = 0;
-
-            Helpers.EnableHandlers();
-            trainerComboBox_SelectedIndexChanged(null, null);
-            Helpers.statusLabelMessage();
-        }
-        private void trainerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            Helpers.DisableHandlers();
-
-            int currentIndex = trainerComboBox.SelectedIndex;
-            string suffix = "\\" + currentIndex.ToString("D4");
-            string[] trNames = RomInfo.GetSimpleTrainerNames();
-
-            bool error = currentIndex >= trNames.Length;
-            currentTrainerFile = new TrainerFile(
-                new TrainerProperties(
-                    (ushort)trainerComboBox.SelectedIndex,
-                    new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + suffix, FileMode.Open)
-                ),
-                new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + suffix, FileMode.Open),
-                error ? TrainerFile.NAME_NOT_FOUND : trNames[currentIndex]
-            );
-            RefreshTrainerPartyGUI();
-            RefreshTrainerPropertiesGUI();
-
-            Helpers.EnableHandlers();
-
-            if (error) {
-                MessageBox.Show("This Trainer File doesn't have a corresponding name.\n\n" +
-                    "If you edited this ROM's Trainers with another tool before, don't worry.\n" +
-                    "DSPRE will attempt to add the missing line to the Trainer Names Text Archive [" + RomInfo.trainerNamesMessageNumber + "] upon resaving.",
-                    "Trainer name not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        public void RefreshTrainerPropertiesGUI() {
-            trainerNameTextBox.Text = currentTrainerFile.name;
-
-            trainerClassListBox.SelectedIndex = currentTrainerFile.trp.trainerClass;
-            trainerDoubleCheckBox.Checked = currentTrainerFile.trp.doubleBattle;
-            trainerMovesCheckBox.Checked = currentTrainerFile.trp.chooseMoves;
-            trainerItemsCheckBox.Checked = currentTrainerFile.trp.chooseItems;
-            partyCountUpDown.Value = currentTrainerFile.trp.partyCount;
-
-            IList trainerItems = trainerItemsGroupBox.Controls;
-            for (int i = 0; i < trainerItems.Count; i++) {
-                (trainerItems[i] as ComboBox).SelectedIndex = currentTrainerFile.trp.trainerItems[i];
-            }
-
-            IList trainerAI = TrainerAIGroupBox.Controls;
-            for (int i = 0; i < trainerAI.Count; i++) {
-                (trainerAI[i] as CheckBox).Checked = currentTrainerFile.trp.AI[i];
-            }
-        }
-        public void RefreshTrainerPartyGUI() {
-            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                partyPokemonComboboxList[i].SelectedIndex = currentTrainerFile.party[i].pokeID ?? 0;
-                partyItemsComboboxList[i].SelectedIndex = currentTrainerFile.party[i].heldItem ?? 0;
-                partyLevelUpdownList[i].Value = Math.Max((ushort)1, currentTrainerFile.party[i].level);
-                partyIVUpdownList[i].Value = currentTrainerFile.party[i].difficulty;
-                partyBallUpdownList[i].Value = currentTrainerFile.party[i].ballSeals;
-
-                setTrainerPartyPokemonAbilities(i);
-                setTrainerPartyPokemonForm(i);
-                setTrainerPokemonGender(i);
-
-                if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1))
-                {
-                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX;
-                }
-                else if (currentTrainerFile.party[i].genderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2))
-                {
-                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX;
-                }
-                else
-                {
-                    partyAbilityComboBoxList[i].SelectedIndex = TRAINER_PARTY_POKEMON_ABILITY_DEFAULT_INDEX;
-                }
-
-                    partyFormComboBoxList[i].SelectedIndex = currentTrainerFile.party[i].formID;
-
-                if (currentTrainerFile.party[i].moves == null) {
-                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
-                        (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = 0;
-                    }
-                } else {
-                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
-                        (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = currentTrainerFile.party[i].moves[j];
-                    }
-                }
-            }
-        }
-
-        private void ShowPartyPokemonPic(byte partyPos) {
-            ComboBox cb = partyPokemonComboboxList[partyPos];
-            int species = cb.SelectedIndex > 0 ? cb.SelectedIndex : 0;
-
-            PictureBox pb = partyPokemonPictureBoxList[partyPos];
-
-            partyPokemonPictureBoxList[partyPos].Image = DSUtils.GetPokePic(species, pb.Width, pb.Height);
-        }
-
-        private void partyPokemon1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            ShowPartyPokemonPic(0);
-
-            //event handler is called before currentTrainerFile is set, need to null check to avoid null object reference
-            if (currentTrainerFile != null) {
-                setTrainerPartyPokemonAbilities(0);
-                setTrainerPartyPokemonForm(0);
-                setTrainerPokemonGender(0);
-            }
-        }
-        private void partyPokemon2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            ShowPartyPokemonPic(1);
-            if (currentTrainerFile != null) {
-                setTrainerPartyPokemonAbilities(1);
-                setTrainerPartyPokemonForm(1);
-                setTrainerPokemonGender(1);
-            }
-        }
-
-        private void partyPokemon3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            ShowPartyPokemonPic(2);
-            if (currentTrainerFile != null) {
-                setTrainerPartyPokemonAbilities(2);
-                setTrainerPartyPokemonForm(2);
-                setTrainerPokemonGender(2);
-            }
-        }
-
-        private void partyPokemon4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            ShowPartyPokemonPic(3);
-            if (currentTrainerFile != null) {
-                setTrainerPartyPokemonAbilities(3);
-                setTrainerPartyPokemonForm(3);
-                setTrainerPokemonGender(3);
-            }
-        }
-
-        private void partyPokemon5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            ShowPartyPokemonPic(4);
-            if (currentTrainerFile != null) {
-                setTrainerPartyPokemonAbilities(4);
-                setTrainerPartyPokemonForm(4);
-                setTrainerPokemonGender(4);
-            }
-        }
-
-        private void partyPokemon6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            ShowPartyPokemonPic(5);
-            if (currentTrainerFile != null) {
-                setTrainerPartyPokemonAbilities(5);
-                setTrainerPartyPokemonForm(5);
-                setTrainerPokemonGender(5);
-            }
-        }
-
-        private void showTrainerEditorItemPic(byte partyPos) {
-            ComboBox cb = partyItemsComboboxList[partyPos];
-            partyPokemonItemIconList[partyPos].Visible = cb.SelectedIndex > 0;
-        }
-
-        private void partyItem1ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorItemPic(0);
-        }
-
-        private void partyItem2ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorItemPic(1);
-        }
-
-        private void partyItem3ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorItemPic(2);
-        }
-
-        private void partyItem4ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorItemPic(3);
-        }
-
-        private void partyItem5ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorItemPic(4);
-        }
-
-        private void partyItem6ComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            showTrainerEditorItemPic(5);
-        }
-
-        private void DVExplainButton_Click(object sender, EventArgs e) {            
-
-            DVCalc DVCalcForm = new DVCalc(currentTrainerFile);
-            DVCalcForm.ShowDialog();
-
-            currentTrainerFile = DVCalcForm.trainerFile;
-            Helpers.DisableHandlers();
-            RefreshTrainerPartyGUI();
-            Helpers.EnableHandlers();
-
-        }
-
-        private void partyCountUpDown_ValueChanged(object sender, EventArgs e) {
-            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                partyGroupboxList[i].Enabled = (partyCountUpDown.Value > i);
-                partyPokemonPictureBoxList[i].Visible = partyGroupboxList[i].Enabled;
-            }
-            for (int i = Math.Min(currentTrainerFile.trp.partyCount, (int)partyCountUpDown.Value); i < TrainerFile.POKE_IN_PARTY; i++) {
-                currentTrainerFile.party[i] = new PartyPokemon(currentTrainerFile.trp.chooseItems, currentTrainerFile.trp.chooseMoves);
-            }
-        }
-
-        private void trainerMovesCheckBox_CheckedChanged(object sender, EventArgs e) {
-            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
-                    (partyMovesGroupboxList[i].Controls[j] as ComboBox).Enabled = trainerMovesCheckBox.Checked;
-                }
-                if (trainerMovesCheckBox.Checked && i < currentTrainerFile.trp.partyCount && Helpers.HandlersEnabled) {
-                    Helpers.BackUpDisableHandler();
-                    Helpers.DisableHandlers();
-                    LearnsetData learnset = new LearnsetData((int)currentTrainerFile.party[i].pokeID);
-                    int level = currentTrainerFile.party[i].level;
-                    currentTrainerFile.party[i].moves = learnset.GetLearnsetAtLevel(level);
-                    Debug.Print("Changing the moves of Pokemon " + i.ToString() + " which is Pokemon " + currentTrainerFile.party[i].pokeID);
-                    Debug.Print("The new moves will be: " + string.Join(", ", currentTrainerFile.party[i].moves));
-                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
-                        (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = currentTrainerFile.party[i].moves[j];
-                        Debug.Print("Move for dropdwon " + j.ToString() + " is " + currentTrainerFile.party[i].moves[j].ToString());
-                    }
-                    Helpers.RestoreDisableHandler();
-                } else {
-                    //currentTrainerFile.party[i].moves = null;
-                }
-            }
-            RefreshTrainerPartyGUI();
-        }
-        private void trainerItemsCheckBox_CheckedChanged(object sender, EventArgs e) {
-            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                partyItemsComboboxList[i].Enabled = trainerItemsCheckBox.Checked;
-            }
-        }
-        private void partyMoveComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersEnabled) {
-                for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                    ushort[] moves = currentTrainerFile.party[i].moves;
-
-                    if (moves != null) {
-                        for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
-                            moves[j] = (ushort)(partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void trainerSaveCurrentButton_Click(object sender, EventArgs e) {
-            currentTrainerFile.trp.partyCount = (byte)partyCountUpDown.Value;
-            currentTrainerFile.trp.chooseMoves = trainerMovesCheckBox.Checked;
-            currentTrainerFile.trp.chooseItems = trainerItemsCheckBox.Checked;
-            currentTrainerFile.trp.doubleBattle = trainerDoubleCheckBox.Checked;
-
-            IList trainerItems = trainerItemsGroupBox.Controls;
-            for (int i = 0; i < trainerItems.Count; i++) {
-                currentTrainerFile.trp.trainerItems[i] = (ushort)(trainerItems[i] as ComboBox).SelectedIndex;
-            }
-
-            IList trainerAI = TrainerAIGroupBox.Controls;
-            for (int i = 0; i < trainerAI.Count; i++) {
-                currentTrainerFile.trp.AI[i] = (trainerAI[i] as CheckBox).Checked;
-            }
-
-            for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++) {
-                currentTrainerFile.party[i].moves = trainerMovesCheckBox.Checked ? new ushort[4] : null;
-            }
-
-
-            for (int i = 0; i < partyCountUpDown.Value; i++) {
-                currentTrainerFile.party[i].pokeID = (ushort)partyPokemonComboboxList[i].SelectedIndex;
-                currentTrainerFile.party[i].formID = (ushort)partyFormComboBoxList[i].SelectedIndex;
-                currentTrainerFile.party[i].level = (ushort)partyLevelUpdownList[i].Value;
-
-                if (trainerMovesCheckBox.Checked) {
-                    IList movesList = partyMovesGroupboxList[i].Controls;
-                    for (int j = 0; j < Party.MOVES_PER_POKE; j++) {
-                        currentTrainerFile.party[i].moves[j] = (ushort)(movesList[j] as ComboBox).SelectedIndex;
-                    }
-                }
-
-                if (trainerItemsCheckBox.Checked) {
-                    currentTrainerFile.party[i].heldItem = (ushort)partyItemsComboboxList[i].SelectedIndex;
-                }
-
-                currentTrainerFile.party[i].difficulty = (byte)partyIVUpdownList[i].Value;
-
-                if (hasMoreThanOneGender((int)currentTrainerFile.party[i].pokeID, pokemonSpecies) && (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled)) {
-                    switch (partyGenderComboBoxList[i].SelectedIndex) {
-                        case TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX:
-                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
-                            break;
-                        case TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX:
-                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.FORCE_MALE;
-                            break;
-                        case TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX:
-                            currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE;
-                            break;
-                    }
-                } else
-                    currentTrainerFile.party[i].genderAndAbilityFlags = PartyPokemon.GenderAndAbilityFlags.NO_FLAGS;
-
-                if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT1_INDEX)
-                {
-                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT1;
-                }
-                else if (partyAbilityComboBoxList[i].SelectedIndex == TRAINER_PARTY_POKEMON_ABILITY_SLOT2_INDEX)
-                {
-                    currentTrainerFile.party[i].genderAndAbilityFlags |= PartyPokemon.GenderAndAbilityFlags.ABILITY_SLOT2;
-                }
-
-                currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
-            }
-
-            /*Write to File*/
-            string indexStr = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-            File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, currentTrainerFile.trp.ToByteArray());
-            File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, currentTrainerFile.party.ToByteArray());
-
-            UpdateCurrentTrainerName(newName: trainerNameTextBox.Text);
-            UpdateCurrentTrainerShownName();
-
-            if (trainerNameTextBox.Text.Length > RomInfo.trainerNameMaxLen) { //Subtract 1 to account for special end character. 
-                //Expose a smaller limit to the user
-                if (RomInfo.trainerNameLenOffset >= 0) {
-                    MessageBox.Show($"Trainer File saved successfully. However:\nYou attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen} characters.\nThis may lead to issues in game." +
-                        (PatchToolboxDialog.flag_TrainerNamesExpanded ? "\n\nIt's recommended that you use a shorter name." : "\n\nRefer to the Patch Toolbox to extend Trainer names."),
-                        "Saved successfully, but...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                } else {
-                    MessageBox.Show($"Trainer File saved successfully. However:\nThe Trainer name length could not be safely determined for this ROM.\n" +
-                        $"You attempted to save a Trainer whose name exceeds {RomInfo.trainerNameMaxLen} characters.\nThis will most likely lead to issues in game.",
-                        "Saved successfully, but...", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            } else {
-                MessageBox.Show("Trainer saved successfully!", "Saved successfully", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void UpdateCurrentTrainerShownName() {
-            string trClass = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
-
-            string editedTrainer = "[" + currentTrainerFile.trp.trainerID.ToString("D2") + "] " + trClass + " " + currentTrainerFile.name;
-
-            Helpers.DisableHandlers();
-            trainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
-            Helpers.EnableHandlers();
-
-            if (eventEditorIsReady) {
-                owTrainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
-            }
-        }
-
-        private string GetTrainerClassNameFromListbox(object selectedItem) {
-            string lbname = selectedItem.ToString();
-            return lbname.Substring(lbname.IndexOf(" ") + 1);
-        }
-
-        private void UpdateCurrentTrainerName(string newName) {
-            currentTrainerFile.name = newName;
-            TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
-            if (currentTrainerFile.trp.trainerID < trainerNames.messages.Count) {
-                trainerNames.messages[currentTrainerFile.trp.trainerID] = newName;
-            } else {
-                trainerNames.messages.Add(newName);
-            }
-            trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
-        }
-        private void UpdateCurrentTrainerClassName(string newName) {
-            TextArchive trainerClassNames = new TextArchive(RomInfo.trainerClassMessageNumber);
-            trainerClassNames.messages[trainerClassListBox.SelectedIndex] = newName;
-            trainerClassNames.SaveToFileDefaultDir(RomInfo.trainerClassMessageNumber, showSuccessMessage: false);
-        }
-
-        private void trainerClassListBox_SelectedIndexChanged(object sender, EventArgs e) {
-            int selection = trainerClassListBox.SelectedIndex;
-            if (selection < 0) {
-                return;
-            }
-
-            try {
-                int maxFrames = Helpers.LoadTrainerClassPic(selection, trainerPal, trainerTile, trainerSprite);
-                Helpers.UpdateTrainerClassPic(trainerClassPicBox, trainerPal, trainerTile, trainerSprite, trainerClassPicBox.Height, trainerClassPicBox.Width);
-
-                trClassFramePreviewUpDown.Maximum = maxFrames;
-                trainerClassFrameMaxLabel.Text = "/" + maxFrames;
-            } catch {
-                trClassFramePreviewUpDown.Maximum = 0;
-            }
-
-            trainerClassNameTextbox.Text = GetTrainerClassNameFromListbox(trainerClassListBox.SelectedItem);
-
-            if (trainerClassEncounterMusicDict.TryGetValue((byte)selection, out (uint entryOffset, ushort musicD, ushort? musicN) output)) {
-                encounterSSEQMainUpDown.Enabled = eyeContactMusicLabel.Enabled = true;
-                encounterSSEQMainUpDown.Value = output.musicD;
-            } else {
-                encounterSSEQMainUpDown.Enabled = eyeContactMusicLabel.Enabled = false;
-                encounterSSEQMainUpDown.Value = 0;
-            }
-
-            eyeContactMusicAltLabel.Enabled = encounterSSEQAltUpDown.Enabled = (encounterSSEQMainUpDown.Enabled && gameFamily == GameFamilies.HGSS);
-            encounterSSEQAltUpDown.Value = output.musicN != null ? (ushort)output.musicN : 0;
-            currentTrainerFile.trp.trainerClass = (byte)selection;
-        }
-
-        private void addTrainerButton_Click(object sender, EventArgs e) {
-            /* Add new trainer file to 2 folders */
-            string suffix = "\\" + trainerComboBox.Items.Count.ToString("D4");
-
-            string trainerPropertiesPath = gameDirs[DirNames.trainerProperties].unpackedDir + suffix;
-            string partyFilePath = gameDirs[DirNames.trainerParty].unpackedDir + suffix;
-
-            File.WriteAllBytes(trainerPropertiesPath, new TrainerProperties((ushort)trainerComboBox.Items.Count).ToByteArray());
-            File.WriteAllBytes(partyFilePath, new PartyPokemon().ToByteArray());
-
-            TextArchive trainerClasses = new TextArchive(RomInfo.trainerClassMessageNumber);
-            TextArchive trainerNames = new TextArchive(RomInfo.trainerNamesMessageNumber);
-
-            /* Update ComboBox and select new file */
-            trainerComboBox.Items.Add(trainerClasses.messages[0]);
-            trainerNames.messages.Add("");
-            trainerNames.SaveToFileDefaultDir(RomInfo.trainerNamesMessageNumber, showSuccessMessage: false);
-
-            trainerComboBox.SelectedIndex = trainerComboBox.Items.Count - 1;
-            UpdateCurrentTrainerShownName();
-        }
-
-        private void exportTrainerButton_Click(object sender, EventArgs e) {
-            currentTrainerFile.SaveToFileExplorePath("G4 Trainer File " + trainerComboBox.SelectedItem);
-        }
-
-        private void importTrainerButton_Click(object sender, EventArgs e) {
-            OpenFileDialog of = new OpenFileDialog {
-                Filter = "Gen IV Trainer File (*.trf)|*.trf"
-            };
-            if (of.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            /* Update trainer on disk */
-            using (DSUtils.EasyReader reader = new DSUtils.EasyReader(of.FileName)) {
-                string trName = reader.ReadString();
-
-                byte datSize = reader.ReadByte();
-                byte[] trDat = reader.ReadBytes(datSize);
-
-                byte partySize = reader.ReadByte();
-                byte[] pDat = reader.ReadBytes(partySize);
-
-                string pathData = RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-                string pathParty = RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + "\\" + trainerComboBox.SelectedIndex.ToString("D4");
-                File.WriteAllBytes(pathData, trDat);
-                File.WriteAllBytes(pathParty, pDat);
-
-                UpdateCurrentTrainerName(trName);
-            }
-
-            /* Refresh controls and re-read file */
-            trainerComboBox_SelectedIndexChanged(null, null);
-            UpdateCurrentTrainerShownName();
-
-            /* Display success message */
-            MessageBox.Show("Trainer File imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void exportPropertiesButton_Click(object sender, EventArgs e) {
-            currentTrainerFile.trp.SaveToFileExplorePath("G4 Trainer Properties " + trainerComboBox.SelectedItem);
-        }
-
-        private void replacePropertiesButton_Click(object sender, EventArgs e) {
-            OpenFileDialog of = new OpenFileDialog {
-                Filter = "Gen IV Trainer Properties (*.trp)|*.trp"
-            };
-            if (of.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            /* Update trp object in memory */
-            currentTrainerFile.trp = new TrainerProperties((ushort)trainerComboBox.SelectedIndex, new FileStream(of.FileName, FileMode.Open));
-            RefreshTrainerPropertiesGUI();
-
-            /* Display success message */
-            MessageBox.Show("Trainer Properties imported successfully!\nRemember to save the current Trainer File.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void exportPartyButton_Click(object sender, EventArgs e) {
-            currentTrainerFile.party.exportCondensedData = true;
-            currentTrainerFile.party.SaveToFileExplorePath("G4 Party Data " + trainerComboBox.SelectedItem);
-            currentTrainerFile.party.exportCondensedData = false;
-        }
-
-        private void importReplacePartyButton_Click(object sender, EventArgs e) {
-            OpenFileDialog of = new OpenFileDialog {
-                Filter = "Gen IV Party File (*.pdat)|*.pdat"
-            };
-            if (of.ShowDialog(this) != DialogResult.OK) {
-                return;
-            }
-
-            /* Update trp object in memory */
-            currentTrainerFile.party = new Party(readFirstByte: true, TrainerFile.POKE_IN_PARTY, new FileStream(of.FileName, FileMode.Open), currentTrainerFile.trp);
-            RefreshTrainerPropertiesGUI();
-            RefreshTrainerPartyGUI();
-
-            /* Display success message */
-            MessageBox.Show("Trainer Party imported successfully!\nRemember to save the current Trainer File.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void saveTrainerClassButton_Click(object sender, EventArgs e) {
-            Helpers.DisableHandlers();
-
-            int selectedTrClass = trainerClassListBox.SelectedIndex;
-
-            byte b_selectedTrClass = (byte)selectedTrClass;
-            ushort eyeMusicID = (ushort)encounterSSEQMainUpDown.Value;
-            ushort altEyeMusicID = (ushort)encounterSSEQAltUpDown.Value;
-
-            if (trainerClassEncounterMusicDict.TryGetValue(b_selectedTrClass, out var dictEntry)) {
-                ARM9.WriteBytes(BitConverter.GetBytes(eyeMusicID), dictEntry.entryOffset + 2);
-
-                if (gameFamily.Equals(GameFamilies.HGSS)) {
-                    ARM9.WriteBytes(BitConverter.GetBytes(altEyeMusicID), dictEntry.entryOffset + 4);
-                }
-
-                trainerClassEncounterMusicDict[b_selectedTrClass] = (dictEntry.entryOffset, eyeMusicID, altEyeMusicID);
-            }
-
-            string newName = trainerClassNameTextbox.Text;
-            UpdateCurrentTrainerClassName(newName);
-            trainerClassListBox.Items[selectedTrClass] = "[" + selectedTrClass.ToString("D3") + "]" + " " + newName;
-
-            if (currentTrainerFile.trp.trainerClass == trainerClassListBox.SelectedIndex) {
-                UpdateCurrentTrainerShownName();
-            }
-            Helpers.EnableHandlers();
-
-            if (gameFamily.Equals(GameFamilies.HGSS) && EditorPanels.tableEditor.battleTableEditorIsReady && EditorPanels.tableEditor.conditionnalMusicTableEditorIsReady) {
-                EditorPanels.tableEditor.pbEffectsTrainerCombobox.Items[selectedTrClass] = trainerClassListBox.Items[selectedTrClass];
-                for (int i = 0; i < EditorPanels.tableEditor.vsTrainerEffectsList.Count; i++)
-                {
-                    if (EditorPanels.tableEditor.vsTrainerEffectsList[i].trainerClass == selectedTrClass)
-                    {
-                        EditorPanels.tableEditor.pbEffectsVsTrainerListbox.Items[i] = EditorPanels.tableEditor.pbEffectsTrainerCombobox.Items[selectedTrClass] + " uses Combo #" + EditorPanels.tableEditor.vsTrainerEffectsList[i].comboID;
-                    }
-                }
-            }
-            MessageBox.Show("Trainer Class settings saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void trClassFramePreviewUpDown_ValueChanged(object sender, EventArgs e) {
-            Helpers.UpdateTrainerClassPic(trainerClassPicBox, trainerPal, trainerTile, trainerSprite, trainerClassPicBox.Height, trainerClassPicBox.Width, (int)((NumericUpDown)sender).Value);
-        }
-
-        private (int abi1, int abi2)[] getPokemonAbilities(int numPokemonSpecies) {
-            var pokemonSpeciesAbilities = new (int abi1, int abi2)[numPokemonSpecies];
-
-            for (int i = 0; i < numPokemonSpecies; i++) {
-                pokemonSpeciesAbilities[i] = (pokemonSpecies[i].Ability1, pokemonSpecies[i].Ability2);
-            }
-
-            return pokemonSpeciesAbilities;
-        }
-
-        private (string ability1, string ability2) getPokemonAbilityNames(int pokemonID) {
-            return (abilityNames[pokemonSpeciesAbilities[pokemonID].abi1],
-                    abilityNames[pokemonSpeciesAbilities[pokemonID].abi2]);
-        }
-
-        private void setTrainerPartyPokemonAbilities(int partyPokemonPosition) {
-            (string ability1, string ability2) = getPokemonAbilityNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
-            string noFlags = "No Flag";
-
-            partyAbilityComboBoxList[partyPokemonPosition].Items.Clear();
-
-            // In DPPt just show ability 1 and do not allow editing
-            if (RomInfo.gameFamily != GameFamilies.HGSS && !RomInfo.AIBackportEnabled)
-            {
-                partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
-                partyAbilityComboBoxList[partyPokemonPosition].Enabled = false;
-                return;
-            }
-            
-            // In HGSS allow editing of ability flags
-            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(noFlags);
-            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(ability1);
-
-            string stringAbi2 = ability2;
-            if (ability2.Equals(ability1))
-            {
-                stringAbi2 += " (2nd Slot)";
-            }
-            else if (ability2.Equals(" -"))
-            {
-                stringAbi2 = ability1 += " (2nd Slot)";
-            }
-            partyAbilityComboBoxList[partyPokemonPosition].Items.Add(stringAbi2);
-
-                        
-        }
-
-        private void setTrainerPokemonGender(int partyPokemonPosition) {
-            int currentPokemonGenderRatio = pokemonSpecies[partyPokemonComboboxList[partyPokemonPosition].SelectedIndex].GenderRatioMaleToFemale;
-            PartyPokemon.GenderAndAbilityFlags currentPokemonGenderAndAbilityFlags = currentTrainerFile.party[partyPokemonPosition].genderAndAbilityFlags;
-
-            if (gameFamily == GameFamilies.HGSS || RomInfo.AIBackportEnabled) {
-                switch (currentPokemonGenderRatio) {
-                    case GENDER_RATIO_MALE:
-                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
-                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
-                        break;
-                    case GENDER_RATIO_FEMALE:
-                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX;
-                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
-                        break;
-                    case GENDER_RATIO_GENDERLESS:
-                        partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX;
-                        partyGenderComboBoxList[partyPokemonPosition].Enabled = false;
-                        break;
-                    default:
-                        partyGenderComboBoxList[partyPokemonPosition].Enabled = true;
-
-                        if (currentPokemonGenderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_MALE))
-                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_MALE_INDEX;
-                        else if (currentPokemonGenderAndAbilityFlags.HasFlag(PartyPokemon.GenderAndAbilityFlags.FORCE_FEMALE))
-                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_FEMALE_INDEX;
-                        else
-                            partyGenderComboBoxList[partyPokemonPosition].SelectedIndex = TRAINER_PARTY_POKEMON_GENDER_DEFAULT_INDEX;
-                        break;
-                }
-            }
-        }
-
-        private List<string> getPokemonFormNames(int pokemonID) {
-            List<string> pokemonFormNames = new List<string>();
-
-            switch (pokemonID) {
-                case PICHU_ID_NUM:
-                    if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                        pokemonFormNames.Add("Non-Spiky-Eared");
-                        pokemonFormNames.Add("Spiky-Eared");
-                    } else {
-                        pokemonFormNames.Add("No Alt Form");
-                    }
-                    break;
-                case UNOWN_ID_NUM:
-                    for (char c = 'A'; c <= 'Z'; c++)
-                        pokemonFormNames.Add(c + " Form");
-
-                    pokemonFormNames.Add("! Form");
-                    pokemonFormNames.Add("? Form");
-                    break;
-                case CASTFORM_ID_NUM:
-                    pokemonFormNames.Add("Normal Form");
-                    pokemonFormNames.Add("Sunny Form");
-                    pokemonFormNames.Add("Rainy Form");
-                    pokemonFormNames.Add("Snowy Form");
-                    break;
-                case DEOXYS_ID_NUM:
-                    pokemonFormNames.Add("Normal Form");
-                    pokemonFormNames.Add("Attack Form");
-                    pokemonFormNames.Add("Defense Form");
-                    pokemonFormNames.Add("Speed Form");
-                    break;
-                case BURMY_ID_NUM:
-                case WORMADAM_ID_NUM:
-                    pokemonFormNames.Add("Plant Cloak");
-                    pokemonFormNames.Add("Sand Cloak");
-                    pokemonFormNames.Add("Trash Cloak");
-                    break;
-                case SHELLOS_ID_NUM:
-                case GASTRODON_ID_NUM:
-                    pokemonFormNames.Add("West sea");
-                    pokemonFormNames.Add("East sea");
-                    break;
-                case ROTOM_ID_NUM:
-                    pokemonFormNames.Add("Rotom");
-                    pokemonFormNames.Add("Heat Rotom");
-                    pokemonFormNames.Add("Wash Rotom");
-                    pokemonFormNames.Add("Frost Rotom");
-                    pokemonFormNames.Add("Fan Rotom");
-                    pokemonFormNames.Add("Mow Rotom");
-                    break;
-                case SHAYMIN_ID_NUM:
-                    pokemonFormNames.Add("Land Form");
-                    pokemonFormNames.Add("Sky Form");
-                    break;
-                default:
-                    pokemonFormNames.Add("No Alt Form");
-                    break;
-            }
-            return pokemonFormNames;
-
-        }
-
-        private void setTrainerPartyPokemonForm(int partyPokemonPosition) {
-            if (gameFamily != GameFamilies.DP) {
-                partyFormComboBoxList[partyPokemonPosition].Items.Clear();
-                List<string> currentPokemonFormName = getPokemonFormNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
-                foreach (string formName in currentPokemonFormName)
-                    partyFormComboBoxList[partyPokemonPosition].Items.Add(formName);
-
-                partyFormComboBoxList[partyPokemonPosition].Enabled = currentPokemonFormName.Count > 1;
-                partyFormComboBoxList[partyPokemonPosition].SelectedIndex = 0;
-            }
-
-        }
-
-        #endregion
 
         #region Tooltrip Menu
         private void unpackToFolderToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -8869,90 +7498,8 @@ namespace DSPRE {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.maps].unpackedDir, selectMapComboBox.SelectedIndex.ToString("D4")));
         }
 
-        private void locateCurrentNsbtx_Click(object sender, EventArgs e) {
-            if (mapTilesetRadioButton.Checked) {
-                ExplorerSelect(Path.Combine(gameDirs[DirNames.mapTextures].unpackedDir, texturePacksListBox.SelectedIndex.ToString("D4")));
-            } else {
-                ExplorerSelect(Path.Combine(gameDirs[DirNames.buildingTextures].unpackedDir, texturePacksListBox.SelectedIndex.ToString("D4")));
-            }
-        }
-
-        private void locateCurrentAreaData_Click(object sender, EventArgs e) {
-            ExplorerSelect(Path.Combine(gameDirs[DirNames.areaData].unpackedDir, selectAreaDataListBox.SelectedIndex.ToString("D4")));
-        }
         private void locateCurrentEvFile_Click(object sender, EventArgs e) {
             ExplorerSelect(Path.Combine(gameDirs[DirNames.eventFiles].unpackedDir, selectEventComboBox.SelectedIndex.ToString("D4")));
-        }
-        private void locateCurrentScriptFile_Click(object sender, EventArgs e) {
-            ExplorerSelect(Path.Combine(gameDirs[DirNames.scripts].unpackedDir, EditorPanels.scriptEditor.selectScriptFileComboBox.SelectedIndex.ToString("D4")));
-        }
-        private void locateCurrentTextArchive_Click(object sender, EventArgs e) {
-           ExplorerSelect(Path.Combine(gameDirs[DirNames.textArchives].unpackedDir, EditorPanels.textEditor.currentTextArchive.initialKey.ToString("D4")));
-        }
-
-        //////////////////////////////////////////
-        ///NSBTX Visualizer
-
-        private float nsbtxScaleFactor = 1.0f;
-
-        public void PictureBoxDisable(object sender, PaintEventArgs e) {
-            if (sender is PictureBox pict && pict.Image != null && (!pict.Enabled)) {
-                using (var img = new Bitmap(pict.Image, pict.ClientSize)) {
-                    ControlPaint.DrawImageDisabled(e.Graphics, img, 0, 0, pict.BackColor);
-                }
-            }
-        }
-
-        private int NSBTXRender(int tex, int pal, float scale = -1, NSBTX_File file = null) {
-            NSBTX_File toload = file;
-            if (toload is null) {
-                if (currentNsbtx is null) {
-                    return -1;
-                }
-
-                toload = currentNsbtx;
-            }
-
-            (Bitmap bmp, int ctrlCode) ret;
-            if (tex == -1 && pal == -1) {
-                return -1;
-            } else {
-                ret = toload.GetBitmap(tex, pal);
-            }
-
-            if (ret.bmp != null) {
-                try {
-                    texturePictureBox.Image = ret.bmp.Resize(scale);
-                    texturePictureBox.Invalidate();
-                } catch { }
-            }
-            return ret.ctrlCode;
-        }
-
-        private void scalingTrackBar_Scroll(object sender, EventArgs e) {
-            int val = (sender as TrackBar).Value;
-            nsbtxScaleFactor = (float)(val > 0 ? val + 1 : Math.Pow(2, (sender as TrackBar).Value));
-
-            scalingLabel.Text = $"x{nsbtxScaleFactor}";
-            NSBTXRender(texturesListBox.SelectedIndex, palettesListBox.SelectedIndex, scale: nsbtxScaleFactor);
-        }
-
-        private void invertDragCheckbox_CheckedChanged(object sender, EventArgs e) {
-            texturePictureBox.invertDrag = invertDragCheckbox.Checked;
-        }
-
-        private void repositionImageButton_Click(object sender, EventArgs e) {
-            texturePictureBox.RedrawCentered();
-        }
-
-        private void texturedMapRenderCheckBox_CheckedChanged(object sender, EventArgs e) {
-            mapTexturesOn = (sender as CheckBox).Checked;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
-        }
-
-        private void texturedBldRenderCheckBox_CheckedChanged(object sender, EventArgs e) {
-            bldTexturesOn = (sender as CheckBox).Checked;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
 
         private void trainerEditorStatButton_Click(object sender, EventArgs e) {
@@ -9006,36 +7553,7 @@ namespace DSPRE {
                 }
             }
 
-            ExportTrainerUsageToCSV(trainerUsage, "Report.csv");
-        }
-
-        public void ExportTrainerUsageToCSV(Dictionary<string, Dictionary<string, int>> trainerUsage, string csvFilePath) {
-            // Create the StreamWriter to write data to the CSV file
-            var sortedTrainerClasses = trainerUsage.Keys.OrderBy(className => className);
-
-            using (StreamWriter sw = new StreamWriter(csvFilePath)) {
-                // Write the header row
-                sw.WriteLine("Trainer Class;Pokemon Name;Occurrences");
-
-                // Iterate over the sorted trainer class names
-                foreach (string className in sortedTrainerClasses) {
-                    Dictionary<string, int> innerDict = trainerUsage[className];
-
-                    // Sort the Pokemon names alphabetically
-                    var sortedPokemonNames = innerDict.Keys.OrderByDescending(pokeName => innerDict[pokeName]);
-
-                    // Iterate over the sorted mon names
-                    foreach (string pokeName in sortedPokemonNames) {
-                        int occurrences = innerDict[pokeName];
-
-                        // Write the data row
-                        sw.WriteLine($"{className};{pokeName};{occurrences}");
-                    }
-                    sw.WriteLine($"-;-;-");
-                }
-            }
-
-            Console.WriteLine("CSV file exported successfully.");
+            Helpers.ExportTrainerUsageToCSV(trainerUsage, "Report.csv");
         }
 
         private void MainProgram_Load(object sender, EventArgs e)
@@ -9092,6 +7610,18 @@ namespace DSPRE {
             {
                 scriptEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
                 popoutScriptEditorButton.Enabled = true; // Enable popout button
+            });
+        }
+
+        private void popoutTrainerEditorButton_Click(object sender, EventArgs e)
+        {
+            trainerEditorPoppedOutLabel.Visible = true; // Show Editor popped-out label
+            popoutTrainerEditorButton.Enabled = false; // Disable popout button
+
+            Helpers.PopOutEditor(trainerEditor, "Trainer Editor", mainTabImageList.Images[8], ctrl =>
+            {
+                trainerEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
+                popoutTrainerEditorButton.Enabled = true; // Enable popout button
             });
         }
         #endregion
