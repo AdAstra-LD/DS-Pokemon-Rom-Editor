@@ -45,21 +45,51 @@ namespace DSPRE {
 
         public MainProgram() {
             InitializeComponent();
+
             EditorPanels.Initialize(this);
             Helpers.Initialize(this);
+#if DEBUG
+            AppLogger.Initialize(this, minLevel: LogLevel.Debug);
+#else
+            AppLogger.Initialize(this, minLevel: LogLevel.Info);
+#endif
+            CrashReporter.Initialize(this);
+
+            AppLogger.Info("=== Application started. === ");
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
             Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
-            
+
             string romFolder = Properties.Settings.Default.openDefaultRom;
             if (romFolder != string.Empty)
             {
-                if(!Properties.Settings.Default.neverAskForOpening) {
+                AppLogger.Info($"Detected stored ROM folder: {romFolder}");
+
+                if (!Properties.Settings.Default.neverAskForOpening)
+                {
+                    AppLogger.Debug("Prompting user to confirm auto-opening the ROM folder.");
+
                     ReopenProjectConfirmation confirmOpen = new ReopenProjectConfirmation();
-                    if (confirmOpen.ShowDialog() == DialogResult.No) return;
+                    if (confirmOpen.ShowDialog() == DialogResult.No)
+                    {
+                        AppLogger.Info("User declined to reopen the previous ROM project.");
+                        return;
+                    }
+
+                    AppLogger.Info("User confirmed reopening the previous ROM project.");
+                }
+                else
+                {
+                    AppLogger.Info("Auto-opening ROM without asking the user (neverAskForOpening is enabled).");
                 }
 
+                AppLogger.Info("Opening ROM project from saved folder.");
                 OpenRomFromFolder(romFolder);
             }
+            else
+            {
+                AppLogger.Debug("No stored ROM folder found on startup.");
+            }
+
         }
 
         #region Program Window
@@ -837,43 +867,55 @@ namespace DSPRE {
 
         private void OpenRomFromFolder(string romFolderPath)
         {
+            AppLogger.Info($"Attempting to open ROM from folder: {romFolderPath}");
+
             // Validate path and check for OneDrive
             if (!ValidateFilePath(romFolderPath))
             {
+                AppLogger.Warn("ROM path validation failed. Possibly invalid or on a restricted (OneDrive).");
                 return;
             }
 
             if (!detectAndHandleWSL(romFolderPath))
             {
-                return; // User chose not to create a new work directory
+                AppLogger.Info("ROM path validation failed. Possibly invalid or on a restricted (WSL).");
+                return;
             }
-
-          
 
             try
             {
-                SetupROMLanguage(Directory.GetFiles(romFolderPath).First(x => x.Contains("header.bin")));
+                string headerFile = Directory.GetFiles(romFolderPath).First(x => x.Contains("header.bin"));
+                AppLogger.Debug($"Found header file: {headerFile}");
+                SetupROMLanguage(headerFile);
             }
             catch (InvalidOperationException)
             {
+                AppLogger.Error("No 'header.bin' file found in ROM folder. Cannot initialize ROM.");
                 MessageBox.Show("This folder does not seem to contain any data from a NDS Pokémon ROM.", "No ROM Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            /* Set ROM gameVersion and language */
+
             romInfo = new RomInfo(gameCode, romFolderPath, useSuffix: false);
 
             if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName))
             {
+                AppLogger.Error("ROM ID or filename is empty after initialization. Aborting.");
                 return;
             }
 
+            AppLogger.Info($"ROM loaded successfully: ID = {RomInfo.romID}, Name = {RomInfo.fileName}");
+
             CheckROMLanguage();
+            AppLogger.Debug("ROM language checked and applied.");
 
             iconON = true;
             gameIcon.Refresh();  // Paint game icon
+            AppLogger.Debug("Game icon refreshed.");
 
             ReadROMInitData();
+            AppLogger.Info("ROM initialization data loaded.");
         }
+
 
         private void SetupROMLanguage(string headerPath) {
             using (DSUtils.EasyReader br = new DSUtils.EasyReader(headerPath, 0xC)) {
@@ -7511,36 +7553,7 @@ namespace DSPRE {
                 }
             }
 
-            ExportTrainerUsageToCSV(trainerUsage, "Report.csv");
-        }
-
-        public void ExportTrainerUsageToCSV(Dictionary<string, Dictionary<string, int>> trainerUsage, string csvFilePath) {
-            // Create the StreamWriter to write data to the CSV file
-            var sortedTrainerClasses = trainerUsage.Keys.OrderBy(className => className);
-
-            using (StreamWriter sw = new StreamWriter(csvFilePath)) {
-                // Write the header row
-                sw.WriteLine("Trainer Class;Pokemon Name;Occurrences");
-
-                // Iterate over the sorted trainer class names
-                foreach (string className in sortedTrainerClasses) {
-                    Dictionary<string, int> innerDict = trainerUsage[className];
-
-                    // Sort the Pokemon names alphabetically
-                    var sortedPokemonNames = innerDict.Keys.OrderByDescending(pokeName => innerDict[pokeName]);
-
-                    // Iterate over the sorted mon names
-                    foreach (string pokeName in sortedPokemonNames) {
-                        int occurrences = innerDict[pokeName];
-
-                        // Write the data row
-                        sw.WriteLine($"{className};{pokeName};{occurrences}");
-                    }
-                    sw.WriteLine($"-;-;-");
-                }
-            }
-
-            Console.WriteLine("CSV file exported successfully.");
+            Helpers.ExportTrainerUsageToCSV(trainerUsage, "Report.csv");
         }
 
         private void MainProgram_Load(object sender, EventArgs e)
