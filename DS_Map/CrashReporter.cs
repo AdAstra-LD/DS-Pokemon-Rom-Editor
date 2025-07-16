@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing.Text;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -53,7 +54,7 @@ namespace DSPRE
             }
 
             DialogResult result = MessageBox.Show(
-                   $"An unexpected error occurred and the application crashed.\n\nA crash report was saved here:\n{filePath}\n\nClick OK to open the folder.",
+                   $"An unexpected error occurred and the application crashed.\n\nA crash report was saved here:\n\n\nClick OK to open the folder.",
                    "Application Error",
                    MessageBoxButtons.OKCancel,
                    MessageBoxIcon.Error
@@ -67,6 +68,8 @@ namespace DSPRE
 
         private static string BuildCrashReport(Exception ex)
         {
+            string romPath = String.Empty;
+
             var sb = new StringBuilder();
 
             sb.AppendLine("===== Crash Report =====");
@@ -76,7 +79,15 @@ namespace DSPRE
             sb.AppendLine($".NET Version: {Environment.Version}");
             sb.AppendLine($"OS: {Environment.OSVersion}");
             sb.AppendLine($"Is 64-bit OS: {Environment.Is64BitOperatingSystem}");
-            sb.AppendLine($"Opened ROM Path: {_mainProgram.romInfo.GetRomNameFromWorkdir()}");
+            try
+            {
+                romPath = _mainProgram?.romInfo?.GetRomNameFromWorkdir() ?? "Unknown";
+            }
+            catch (Exception romEx)
+            {
+                romPath = $"Failed to retrieve ROM path: {romEx.Message}";
+            }
+            sb.AppendLine($"Opened ROM Path: {romPath}");
             sb.AppendLine();
             sb.AppendLine("===== Recent Logs =====");
             sb.AppendLine(AppLogger.GetRecentLogs());

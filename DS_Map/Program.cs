@@ -16,7 +16,9 @@ namespace DSPRE
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainProgram());
+            MainProgram mainProgram = new MainProgram();
+            CrashReporter.Initialize(mainProgram);
+            Application.Run(mainProgram);
         }
     }
 }

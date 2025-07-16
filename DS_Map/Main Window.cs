@@ -53,7 +53,7 @@ namespace DSPRE {
 #else
             AppLogger.Initialize(this, minLevel: LogLevel.Info);
 #endif
-            CrashReporter.Initialize(this);
+
 
             AppLogger.Info("=== Application started. === ");
             SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
