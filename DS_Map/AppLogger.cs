@@ -22,7 +22,7 @@ namespace DSPRE
     public static class AppLogger
     {
         private static readonly object _fileLock = new object();
-        private static readonly ConcurrentQueue<string> _inMemoryLog = new ConcurrentQueue<string>();
+        private static readonly ConcurrentQueue<string> _recentLogBuffer = new ConcurrentQueue<string>();
         private static string _logFilePath;
         private static MainProgram _mainProgram;
         private const int MaxInMemoryLines = 500;
@@ -51,8 +51,8 @@ namespace DSPRE
                 File.AppendAllText(_logFilePath, timestamped + Environment.NewLine);
             }
 
-            _inMemoryLog.Enqueue(timestamped);
-            while (_inMemoryLog.Count > MaxInMemoryLines && _inMemoryLog.TryDequeue(out _)) { }
+            _recentLogBuffer.Enqueue(timestamped);
+            while (_recentLogBuffer.Count > MaxInMemoryLines && _recentLogBuffer.TryDequeue(out _)) { }
         }
 
         public static void Debug(string message) => Log(LogLevel.Debug, message);
@@ -63,7 +63,7 @@ namespace DSPRE
 
         public static string GetRecentLogs()
         {
-            return string.Join(Environment.NewLine, _inMemoryLog);
+            return string.Join(Environment.NewLine, _recentLogBuffer);
         }
 
     }
