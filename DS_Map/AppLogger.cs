@@ -63,10 +63,8 @@ namespace DSPRE
 
         public static string GetRecentLogs()
         {
-            var sb = new StringBuilder();
-            foreach (var line in _inMemoryLog)
-                sb.AppendLine(line);
-            return sb.ToString();
+            return string.Join(Environment.NewLine, _inMemoryLog);
         }
+
     }
 }
