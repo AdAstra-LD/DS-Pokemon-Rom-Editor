@@ -24,23 +24,7 @@ namespace DSPRE
 
         private static void HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            var exception = e.ExceptionObject as Exception;
-
-            string crashReport = BuildCrashReport(exception);
-            string filePath = GetCrashReportFilePath();
-
-            try
-            {
-                File.WriteAllText(filePath, crashReport, Encoding.UTF8);
-            }
-            catch
-            {
-                try
-                {
-                    EventLog.WriteEntry("Application", crashReport, EventLogEntryType.Error);
-                }
-                catch { }
-            }
+            WriteCrashReport(e.ExceptionObject as Exception);
         }
 
         private static void HandleThreadException(object sender, ThreadExceptionEventArgs e)
@@ -65,33 +49,21 @@ namespace DSPRE
             }
             catch
             {
-                try
-                {
-                    EventLog.WriteEntry("Application", crashReport, EventLogEntryType.Error);
-                }
-                catch { }
+
             }
 
-            try
+            DialogResult result = MessageBox.Show(
+                   $"An unexpected error occurred and the application crashed.\n\nA crash report was saved here:\n{filePath}\n\nClick OK to open the folder.",
+                   "Application Error",
+                   MessageBoxButtons.OKCancel,
+                   MessageBoxIcon.Error
+               );
+
+            if (result == DialogResult.OK)
             {
-                DialogResult result = MessageBox.Show(
-                    $"An unexpected error occurred and the application crashed.\n\nA crash report was saved here:\n{filePath}\n\nClick OK to open the folder.",
-                    "Application Error",
-                    MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Error
-                );
-
-                if (result == DialogResult.OK)
-                {
-                    // Open Explorer and select the crash report
-                    Process.Start("explorer.exe", $"/select,\"{filePath}\"");
-                }
+                Helpers.ExplorerSelect(filePath);
             }
-            catch { }
         }
-
-
-
 
         private static string BuildCrashReport(Exception ex)
         {
