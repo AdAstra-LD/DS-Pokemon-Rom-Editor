@@ -415,7 +415,6 @@ namespace DSPRE
             PartyPokemon.GenderAndAbilityFlags[] monFlags, ref string[] abilityNames,
             ref string[] monGenders, ref string[] abilities, ref string[] natures)
         { 
-            bool wasFlagSet = false;
             bool trainerMale = false;
 
             trainerMale = DVCalculator.TrainerClassGender.GetTrainerClassGender(trainerClassID);
@@ -426,55 +425,34 @@ namespace DSPRE
             {
 
                 byte baseGenderRatio = new PokemonPersonalData((int)partyPokemon[j].pokeID).genderVec;
-                byte genderOverride = 0;
-                byte abilityOverride = 0;
+                byte genderOverride = (byte)((byte) monFlags[j] & 0x0F); // Get the lower 4 bits
+                byte abilityOverride = (byte)((byte)monFlags[j] >> 4); // Get the upper 4 bits
+                
+                uint PID = DVCalculator.generatePID((uint)trainerID, (uint)trainerClassID, (uint)partyPokemon[j].pokeID, (byte)partyPokemon[j].level, baseGenderRatio, genderOverride, abilityOverride, partyPokemon[j].difficulty);
+                natures[j] = DVCalculator.Natures[DVCalculator.getNatureFromPID(PID)].Split(':')[0];
 
-                int genderFlag = (int)monFlags[j] & 0x0F; // Get the lower 4 bits
-                switch (genderFlag)
+                switch (genderOverride)
                 {
                     case 0: // Random
                         monGenders[j] = "random";
-                        abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
-                        genderOverride = 0;
                         break;
                     case 1: // Male
                         monGenders[j] = "M";
-                        abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
-                        genderOverride = 1;
                         break;
                     case 2: // Female
                         monGenders[j] = "F";
-                        abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
-                        genderOverride = 2;
                         break;
                 }
-                int abilityFlag = ((int)monFlags[j] & 0xF0) >> 4; // Get the upper 4 bits
-                switch (abilityFlag)
+
+                switch (PID % 2) // Lowest bit of PID determines the ability
                 {
-                    case 0: // Unset
-                            // If a gender or ability flag was previously set, we need to use the second ability
-                        if (wasFlagSet)
-                        {
-                            abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
-                            abilityOverride = 0;
-                        }
-                        else
-                        {
-                            abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
-                            abilityOverride = 0;
-                        }
-                        break;
-                    case 1: // Ability 1
+                    case 0:
                         abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).firstAbility];
-                        abilityOverride = 1;
                         break;
-                    case 2: // Ability 2
+                    case 1:
                         abilities[j] = abilityNames[new PokemonPersonalData((int)partyPokemon[j].pokeID).secondAbility];
-                        abilityOverride = 2;
                         break;
                 }
-                uint PID = DVCalculator.generatePID((uint)trainerID, (uint)trainerClassID, (uint)partyPokemon[j].pokeID, (byte)partyPokemon[j].level, baseGenderRatio, genderOverride, abilityOverride, partyPokemon[j].difficulty);
-                natures[j] = DVCalculator.Natures[DVCalculator.getNatureFromPID(PID)].Split(':')[0];
             }
         }
     }
