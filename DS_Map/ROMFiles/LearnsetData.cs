@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using DSPRE.ROMFiles;
 using static DSPRE.RomInfo;
 
@@ -12,28 +14,30 @@ namespace DSPRE {
 
         public readonly UniqueList<(byte level, ushort move)> list;
 
-        public ushort[] GetLearnsetAtLevel(int atLevel) {
-            ushort[] learnset = new ushort[4] {0, 0 , 0, 0};
-            foreach ((ushort level, ushort move) in list)
+        public ushort[] GetLearnsetAtLevel(int atLevel)
+        {
+            List<ushort> moves = new List<ushort>();
+            HashSet<ushort> seen = new HashSet<ushort>();
+
+            foreach ((byte level, ushort move) elem in list)
             {
-                if (level <= atLevel) 
+                // If the level is lower than the mon level and the move hasn't been seen yet, add it to the list
+                if (elem.level <= atLevel && seen.Add(elem.move))
                 {
-                    if (learnset[0] == 0) {
-                        learnset[0] = move;
-                    } else if (learnset[1] == 0) {
-                        learnset[1] = move;
-                    } else if (learnset[2] == 0) {
-                        learnset[2] = move;
-                    } else if (learnset[3] == 0) {
-                        learnset[3] = move;
-                    } else {
-                        learnset[0] = learnset[1];
-                        learnset[1] = learnset[2];
-                        learnset[2] = learnset[3];
-                        learnset[3] = move;
-                    }
+                    moves.Add(elem.move);
                 }
             }
+
+            ushort[] learnset = new ushort[4];
+            int start = Math.Max(0, moves.Count - 4);
+
+            // Fill the learnset with the last 4 moves, or 0 if there are not enough moves
+            for (int i = 0; i < 4; i++)
+            {
+                int idx = start + i;
+                learnset[i] = (idx < moves.Count) ? moves[idx] : (ushort)0;
+            }
+
             return learnset;
         }
 

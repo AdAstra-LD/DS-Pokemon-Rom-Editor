@@ -1786,6 +1786,7 @@
             this.partyMove6_1ComboBox.Name = "partyMove6_1ComboBox";
             this.partyMove6_1ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove6_1ComboBox.TabIndex = 3;
+            this.partyMove6_1ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove6_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove6_2ComboBox
@@ -1798,6 +1799,7 @@
             this.partyMove6_2ComboBox.Name = "partyMove6_2ComboBox";
             this.partyMove6_2ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove6_2ComboBox.TabIndex = 6;
+            this.partyMove6_2ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove6_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove6_3ComboBox
@@ -1810,6 +1812,7 @@
             this.partyMove6_3ComboBox.Name = "partyMove6_3ComboBox";
             this.partyMove6_3ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove6_3ComboBox.TabIndex = 5;
+            this.partyMove6_3ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove6_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove6_4ComboBox
@@ -1822,6 +1825,7 @@
             this.partyMove6_4ComboBox.Name = "partyMove6_4ComboBox";
             this.partyMove6_4ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove6_4ComboBox.TabIndex = 7;
+            this.partyMove6_4ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove6_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyItem6ComboBox
@@ -1857,6 +1861,7 @@
             this.partyMove5_1ComboBox.Name = "partyMove5_1ComboBox";
             this.partyMove5_1ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove5_1ComboBox.TabIndex = 3;
+            this.partyMove5_1ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove5_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove5_2ComboBox
@@ -1869,6 +1874,7 @@
             this.partyMove5_2ComboBox.Name = "partyMove5_2ComboBox";
             this.partyMove5_2ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove5_2ComboBox.TabIndex = 6;
+            this.partyMove5_2ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove5_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove5_3ComboBox
@@ -1881,6 +1887,7 @@
             this.partyMove5_3ComboBox.Name = "partyMove5_3ComboBox";
             this.partyMove5_3ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove5_3ComboBox.TabIndex = 5;
+            this.partyMove5_3ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove5_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove5_4ComboBox
@@ -1893,6 +1900,7 @@
             this.partyMove5_4ComboBox.Name = "partyMove5_4ComboBox";
             this.partyMove5_4ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove5_4ComboBox.TabIndex = 7;
+            this.partyMove5_4ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove5_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyItem5ComboBox
@@ -1928,6 +1936,7 @@
             this.partyMove4_1ComboBox.Name = "partyMove4_1ComboBox";
             this.partyMove4_1ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove4_1ComboBox.TabIndex = 3;
+            this.partyMove4_1ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove4_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove4_2ComboBox
@@ -1940,6 +1949,7 @@
             this.partyMove4_2ComboBox.Name = "partyMove4_2ComboBox";
             this.partyMove4_2ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove4_2ComboBox.TabIndex = 6;
+            this.partyMove4_2ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove4_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove4_3ComboBox
@@ -1952,6 +1962,7 @@
             this.partyMove4_3ComboBox.Name = "partyMove4_3ComboBox";
             this.partyMove4_3ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove4_3ComboBox.TabIndex = 5;
+            this.partyMove4_3ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove4_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove4_4ComboBox
@@ -1964,6 +1975,7 @@
             this.partyMove4_4ComboBox.Name = "partyMove4_4ComboBox";
             this.partyMove4_4ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove4_4ComboBox.TabIndex = 7;
+            this.partyMove4_4ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove4_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyItem4ComboBox
@@ -1999,6 +2011,7 @@
             this.partyMove3_1ComboBox.Name = "partyMove3_1ComboBox";
             this.partyMove3_1ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove3_1ComboBox.TabIndex = 3;
+            this.partyMove3_1ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove3_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove3_2ComboBox
@@ -2011,6 +2024,7 @@
             this.partyMove3_2ComboBox.Name = "partyMove3_2ComboBox";
             this.partyMove3_2ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove3_2ComboBox.TabIndex = 6;
+            this.partyMove3_2ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove3_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove3_3ComboBox
@@ -2023,6 +2037,7 @@
             this.partyMove3_3ComboBox.Name = "partyMove3_3ComboBox";
             this.partyMove3_3ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove3_3ComboBox.TabIndex = 5;
+            this.partyMove3_3ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove3_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove3_4ComboBox
@@ -2035,6 +2050,7 @@
             this.partyMove3_4ComboBox.Name = "partyMove3_4ComboBox";
             this.partyMove3_4ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove3_4ComboBox.TabIndex = 7;
+            this.partyMove3_4ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove3_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyItem3ComboBox
@@ -2070,6 +2086,7 @@
             this.partyMove2_1ComboBox.Name = "partyMove2_1ComboBox";
             this.partyMove2_1ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove2_1ComboBox.TabIndex = 3;
+            this.partyMove2_1ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove2_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove2_2ComboBox
@@ -2082,6 +2099,7 @@
             this.partyMove2_2ComboBox.Name = "partyMove2_2ComboBox";
             this.partyMove2_2ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove2_2ComboBox.TabIndex = 6;
+            this.partyMove2_2ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove2_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove2_3ComboBox
@@ -2094,6 +2112,7 @@
             this.partyMove2_3ComboBox.Name = "partyMove2_3ComboBox";
             this.partyMove2_3ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove2_3ComboBox.TabIndex = 5;
+            this.partyMove2_3ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove2_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove2_4ComboBox
@@ -2106,6 +2125,7 @@
             this.partyMove2_4ComboBox.Name = "partyMove2_4ComboBox";
             this.partyMove2_4ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove2_4ComboBox.TabIndex = 7;
+            this.partyMove2_4ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove2_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyItem2ComboBox
@@ -2141,6 +2161,7 @@
             this.partyMove1_1ComboBox.Name = "partyMove1_1ComboBox";
             this.partyMove1_1ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove1_1ComboBox.TabIndex = 3;
+            this.partyMove1_1ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove1_1ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove1_2ComboBox
@@ -2153,6 +2174,7 @@
             this.partyMove1_2ComboBox.Name = "partyMove1_2ComboBox";
             this.partyMove1_2ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove1_2ComboBox.TabIndex = 6;
+            this.partyMove1_2ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove1_2ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove1_3ComboBox
@@ -2165,6 +2187,7 @@
             this.partyMove1_3ComboBox.Name = "partyMove1_3ComboBox";
             this.partyMove1_3ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove1_3ComboBox.TabIndex = 5;
+            this.partyMove1_3ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove1_3ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyMove1_4ComboBox
@@ -2177,6 +2200,7 @@
             this.partyMove1_4ComboBox.Name = "partyMove1_4ComboBox";
             this.partyMove1_4ComboBox.Size = new System.Drawing.Size(100, 21);
             this.partyMove1_4ComboBox.TabIndex = 7;
+            this.partyMove1_4ComboBox.DropDown += new System.EventHandler(this.partyMoveComboBox_DropDown);
             this.partyMove1_4ComboBox.SelectedIndexChanged += new System.EventHandler(this.partyMoveComboBox_SelectedIndexChanged);
             // 
             // partyItem1ComboBox
