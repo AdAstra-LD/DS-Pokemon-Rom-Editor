@@ -531,6 +531,9 @@
     <EmbeddedResource Include="Editors\TextEditor.resx">
       <DependentUpon>TextEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TradeEditor.resx">
+      <DependentUpon>TradeEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\TrainerEditor.resx">
       <DependentUpon>TrainerEditor.cs</DependentUpon>
     </EmbeddedResource>
