@@ -1486,6 +1486,11 @@ namespace DSPRE
                     personal += @"\personal.narc";
                     packedDirsDict[DirNames.personalPokeData] = personal;
 
+                    if (gameLanguage != GameLanguages.Japanese)
+                    {
+                        packedDirsDict[DirNames.tradeData] = $@"data\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
+                    }
+
                     break;
 
                 case GameFamilies.Plat:
@@ -1533,6 +1538,12 @@ namespace DSPRE
 
                         [DirNames.tradeData] = @"data\fielddata\pokemon_trade\fld_trade.narc"
                     };
+
+                    if (gameLanguage != GameLanguages.Japanese)
+                    {
+                        packedDirsDict[DirNames.tradeData] = $@"data\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
+                    }
+
                     break;
 
                 case GameFamilies.HGSS:
@@ -1588,6 +1599,25 @@ namespace DSPRE
             foreach (KeyValuePair<DirNames, string> kvp in packedDirsDict)
             {
                 gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()));
+            }
+        }
+
+        public static string GetLangResFolderName()
+        {
+            switch (gameLanguage)
+            {
+                case GameLanguages.English:
+                    return "eng";
+                case GameLanguages.Italian:
+                    return "ita";
+                case GameLanguages.French:
+                    return "fra";
+                case GameLanguages.German:
+                    return "ger";
+                case GameLanguages.Spanish:
+                    return "spa";
+                default:
+                    return "";
             }
         }
 

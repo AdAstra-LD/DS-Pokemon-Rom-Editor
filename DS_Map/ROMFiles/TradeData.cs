@@ -48,7 +48,7 @@ namespace DSPRE.ROMFiles
                 speedIV = br.ReadInt32();
                 spAtkIV = br.ReadInt32();
                 spDefIV = br.ReadInt32();
-                ability = br.ReadInt32(); // unused
+                ability = br.ReadInt32(); // appears unused
                 otID = br.ReadInt32();
                 cool = br.ReadInt32();
                 beauty = br.ReadInt32();
@@ -61,7 +61,12 @@ namespace DSPRE.ROMFiles
                 sheen = br.ReadInt32();
                 language = br.ReadInt32();
                 requestedSpecies = br.ReadInt32();
-                unknown = br.ReadInt32(); // unused?
+
+                if (RomInfo.gameFamily == GameFamilies.HGSS)
+                {
+                    unknown = br.ReadInt32(); // unused?
+                }
+                    
             }
         }
 
@@ -109,6 +114,11 @@ namespace DSPRE.ROMFiles
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true)
         {
             SaveToFileExplorePath("Gen IV Trade data", "bin", suggestedFileName, showSuccessMessage);
+        }
+
+        public static int GetTradeCount()
+        {
+            return Directory.GetFiles(RomInfo.gameDirs[DirNames.tradeData].unpackedDir, "*.*").Length;
         }
 
     }

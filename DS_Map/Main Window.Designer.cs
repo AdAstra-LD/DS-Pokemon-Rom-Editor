@@ -536,6 +536,7 @@
             this.flyWarpEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overworldEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tradeEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -6735,7 +6736,8 @@
             this.moveDataEditorToolStripMenuItem,
             this.flyWarpEditorToolStripMenuItem,
             this.itemEditorToolStripMenuItem,
-            this.overworldEditorToolStripMenuItem});
+            this.overworldEditorToolStripMenuItem,
+            this.tradeEditorToolStripMenuItem});
             this.otherEditorsToolStripMenuItem.Enabled = false;
             this.otherEditorsToolStripMenuItem.Name = "otherEditorsToolStripMenuItem";
             this.otherEditorsToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
@@ -6789,6 +6791,13 @@
             this.overworldEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.overworldEditorToolStripMenuItem.Text = "Overworld Editor";
             this.overworldEditorToolStripMenuItem.Click += new System.EventHandler(this.overworldEditorToolStripMenuItem_Click);
+            //
+            // tradeEditorToolStripMenuItem
+            //
+            this.tradeEditorToolStripMenuItem.Name = "tradeEditorToolStripMenuItem";
+            this.tradeEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.tradeEditorToolStripMenuItem.Text = "Trade Editor";
+            this.tradeEditorToolStripMenuItem.Click += new System.EventHandler(this.tradeEditorToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
@@ -7946,6 +7955,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem flyWarpEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem itemEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tradeEditorToolStripMenuItem;
         private System.Windows.Forms.Button popoutTextEditorButton;
         private System.Windows.Forms.Label textEditorPoppedOutLabel;
         private System.Windows.Forms.Button popoutLevelScriptEditorButton;
