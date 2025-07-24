@@ -1026,7 +1026,7 @@ namespace DSPRE
             switch (gameFamily)
             {
                 case GameFamilies.DP:
-                    itemNamesTextNumber = 344;
+                    itemNamesTextNumber = gameLanguage == GameLanguages.Japanese ? 341 : 344;
                     itemDescriptionsTextNumber = 0;
                     break;
 

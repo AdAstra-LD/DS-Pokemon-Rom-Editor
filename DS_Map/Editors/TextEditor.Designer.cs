@@ -331,7 +331,6 @@
             this.textSearchResultsListBox.Size = new System.Drawing.Size(267, 244);
             this.textSearchResultsListBox.TabIndex = 38;
             this.textSearchResultsListBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textSearchResultsListBox_KeyDown);
-            this.textSearchResultsListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textSearchResultsListBox_GoToEntryResult);
             // 
             // replaceTextLabel
             // 

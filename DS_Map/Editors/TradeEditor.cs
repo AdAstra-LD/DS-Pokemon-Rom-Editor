@@ -245,7 +245,7 @@ namespace DSPRE.Editors
                     switch (RomInfo.gameLanguage)
                     {
                         case RomInfo.GameLanguages.Japanese:
-                            return 325; // not confirmed to be correct
+                            return 324;
                         default:
                             return 326;
                     }
