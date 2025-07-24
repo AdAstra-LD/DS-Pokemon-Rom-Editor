@@ -30,13 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.mainPanel = new System.Windows.Forms.Panel();
+            this.saveAllButton = new System.Windows.Forms.Button();
             this.saveTextDataButton = new System.Windows.Forms.Button();
             this.saveTradeButton = new System.Windows.Forms.Button();
             this.textDataGroupBox = new System.Windows.Forms.GroupBox();
             this.nicknameTextBox = new System.Windows.Forms.TextBox();
             this.otNameTextBox = new System.Windows.Forms.TextBox();
             this.nicknameLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.otNameLabel = new System.Windows.Forms.Label();
             this.tradeDataGroupBox = new System.Windows.Forms.GroupBox();
             this.requestedComboBox = new System.Windows.Forms.ComboBox();
             this.requestedLabel = new System.Windows.Forms.Label();
@@ -87,6 +88,8 @@
             this.tradeIDNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.tradeIDLabel = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.addFileButton = new System.Windows.Forms.Button();
+            this.removeLastButton = new System.Windows.Forms.Button();
             this.mainPanel.SuspendLayout();
             this.textDataGroupBox.SuspendLayout();
             this.tradeDataGroupBox.SuspendLayout();
@@ -114,6 +117,9 @@
             // 
             // mainPanel
             // 
+            this.mainPanel.Controls.Add(this.removeLastButton);
+            this.mainPanel.Controls.Add(this.saveAllButton);
+            this.mainPanel.Controls.Add(this.addFileButton);
             this.mainPanel.Controls.Add(this.saveTextDataButton);
             this.mainPanel.Controls.Add(this.saveTradeButton);
             this.mainPanel.Controls.Add(this.textDataGroupBox);
@@ -123,28 +129,42 @@
             this.mainPanel.Size = new System.Drawing.Size(624, 444);
             this.mainPanel.TabIndex = 0;
             // 
+            // saveAllButton
+            // 
+            this.saveAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveAllButton.Image = global::DSPRE.Properties.Resources.saveButton;
+            this.saveAllButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.saveAllButton.Location = new System.Drawing.Point(470, 389);
+            this.saveAllButton.Name = "saveAllButton";
+            this.saveAllButton.Size = new System.Drawing.Size(147, 47);
+            this.saveAllButton.TabIndex = 6;
+            this.saveAllButton.Text = "Save All";
+            this.saveAllButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.saveAllButton.UseVisualStyleBackColor = true;
+            this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
+            // 
             // saveTextDataButton
             // 
             this.saveTextDataButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveTextDataButton.Image = global::DSPRE.Properties.Resources.saveButton;
-            this.saveTextDataButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveTextDataButton.Location = new System.Drawing.Point(479, 156);
+            this.saveTextDataButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.saveTextDataButton.Location = new System.Drawing.Point(479, 142);
             this.saveTextDataButton.Name = "saveTextDataButton";
-            this.saveTextDataButton.Size = new System.Drawing.Size(126, 44);
+            this.saveTextDataButton.Size = new System.Drawing.Size(126, 40);
             this.saveTextDataButton.TabIndex = 5;
             this.saveTextDataButton.Text = "Save Text Data";
-            this.saveTextDataButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.saveTextDataButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.saveTextDataButton.UseVisualStyleBackColor = true;
             this.saveTextDataButton.Click += new System.EventHandler(this.saveTextDataButton_Click);
             // 
             // saveTradeButton
             // 
-            this.saveTradeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveTradeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.saveTradeButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveTradeButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.saveTradeButton.Location = new System.Drawing.Point(470, 383);
+            this.saveTradeButton.Location = new System.Drawing.Point(480, 342);
             this.saveTradeButton.Name = "saveTradeButton";
-            this.saveTradeButton.Size = new System.Drawing.Size(147, 47);
+            this.saveTradeButton.Size = new System.Drawing.Size(126, 40);
             this.saveTradeButton.TabIndex = 4;
             this.saveTradeButton.Text = "Save Trade Data";
             this.saveTradeButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -156,11 +176,11 @@
             this.textDataGroupBox.Controls.Add(this.nicknameTextBox);
             this.textDataGroupBox.Controls.Add(this.otNameTextBox);
             this.textDataGroupBox.Controls.Add(this.nicknameLabel);
-            this.textDataGroupBox.Controls.Add(this.label1);
+            this.textDataGroupBox.Controls.Add(this.otNameLabel);
             this.textDataGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textDataGroupBox.Location = new System.Drawing.Point(470, 3);
             this.textDataGroupBox.Name = "textDataGroupBox";
-            this.textDataGroupBox.Size = new System.Drawing.Size(147, 147);
+            this.textDataGroupBox.Size = new System.Drawing.Size(147, 133);
             this.textDataGroupBox.TabIndex = 3;
             this.textDataGroupBox.TabStop = false;
             this.textDataGroupBox.Text = "Text Data";
@@ -189,15 +209,15 @@
             this.nicknameLabel.TabIndex = 15;
             this.nicknameLabel.Text = "Pokémon Nickname";
             // 
-            // label1
+            // otNameLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(6, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(66, 16);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "OT Name";
+            this.otNameLabel.AutoSize = true;
+            this.otNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.otNameLabel.Location = new System.Drawing.Point(6, 25);
+            this.otNameLabel.Name = "otNameLabel";
+            this.otNameLabel.Size = new System.Drawing.Size(66, 16);
+            this.otNameLabel.TabIndex = 13;
+            this.otNameLabel.Text = "OT Name";
             // 
             // tradeDataGroupBox
             // 
@@ -220,6 +240,7 @@
             // 
             // requestedComboBox
             // 
+            this.requestedComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.requestedComboBox.FormattingEnabled = true;
             this.requestedComboBox.Location = new System.Drawing.Point(165, 44);
             this.requestedComboBox.Name = "requestedComboBox";
@@ -305,6 +326,7 @@
             // 
             // abilityComboBox
             // 
+            this.abilityComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.abilityComboBox.FormattingEnabled = true;
             this.abilityComboBox.Location = new System.Drawing.Point(6, 218);
             this.abilityComboBox.Name = "abilityComboBox";
@@ -317,9 +339,9 @@
             this.abilityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.abilityLabel.Location = new System.Drawing.Point(3, 198);
             this.abilityLabel.Name = "abilityLabel";
-            this.abilityLabel.Size = new System.Drawing.Size(43, 16);
+            this.abilityLabel.Size = new System.Drawing.Size(101, 16);
             this.abilityLabel.TabIndex = 27;
-            this.abilityLabel.Text = "Ability";
+            this.abilityLabel.Text = "Ability (Unused)";
             // 
             // unknownNumericUpDown
             // 
@@ -359,6 +381,7 @@
             // 
             // langComboBox
             // 
+            this.langComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.langComboBox.FormattingEnabled = true;
             this.langComboBox.Location = new System.Drawing.Point(6, 166);
             this.langComboBox.Name = "langComboBox";
@@ -377,6 +400,7 @@
             // 
             // heldItemComboBox
             // 
+            this.heldItemComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.heldItemComboBox.FormattingEnabled = true;
             this.heldItemComboBox.Location = new System.Drawing.Point(6, 98);
             this.heldItemComboBox.Name = "heldItemComboBox";
@@ -641,6 +665,7 @@
             // 
             // speciesComboBox
             // 
+            this.speciesComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.speciesComboBox.FormattingEnabled = true;
             this.speciesComboBox.Location = new System.Drawing.Point(6, 30);
             this.speciesComboBox.Name = "speciesComboBox";
@@ -676,6 +701,34 @@
             this.tradeIDLabel.TabIndex = 1;
             this.tradeIDLabel.Text = "Trade ID";
             // 
+            // addFileButton
+            // 
+            this.addFileButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addFileButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.addFileButton.Location = new System.Drawing.Point(480, 242);
+            this.addFileButton.Name = "addFileButton";
+            this.addFileButton.Size = new System.Drawing.Size(126, 40);
+            this.addFileButton.TabIndex = 13;
+            this.addFileButton.Text = "Add File";
+            this.addFileButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.addFileButton.UseVisualStyleBackColor = true;
+            this.addFileButton.Click += new System.EventHandler(this.addFileButton_Click);
+            // 
+            // removeLastButton
+            // 
+            this.removeLastButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.removeLastButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeLastButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.removeLastButton.Location = new System.Drawing.Point(480, 292);
+            this.removeLastButton.Name = "removeLastButton";
+            this.removeLastButton.Size = new System.Drawing.Size(126, 40);
+            this.removeLastButton.TabIndex = 14;
+            this.removeLastButton.Text = "Remove Last";
+            this.removeLastButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.removeLastButton.UseVisualStyleBackColor = true;
+            this.removeLastButton.Click += new System.EventHandler(this.removeLastButton_Click);
+            // 
             // TradeEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -684,6 +737,7 @@
             this.Controls.Add(this.mainPanel);
             this.Name = "TradeEditor";
             this.Text = "TradeEditor";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TradeEditor_FormClosing);
             this.mainPanel.ResumeLayout(false);
             this.textDataGroupBox.ResumeLayout(false);
             this.textDataGroupBox.PerformLayout();
@@ -774,7 +828,10 @@
         private System.Windows.Forms.TextBox nicknameTextBox;
         private System.Windows.Forms.TextBox otNameTextBox;
         private System.Windows.Forms.Label nicknameLabel;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label otNameLabel;
         private System.Windows.Forms.Button saveTextDataButton;
+        private System.Windows.Forms.Button saveAllButton;
+        private System.Windows.Forms.Button addFileButton;
+        private System.Windows.Forms.Button removeLastButton;
     }
 }
