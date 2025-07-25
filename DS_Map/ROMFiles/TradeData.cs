@@ -36,7 +36,7 @@ namespace DSPRE.ROMFiles
         public int requestedSpecies;
         public int unknown; // unused?
 
-        public TradeData(Stream stream, int id)
+        public TradeData(int id, Stream stream)
         {
             this.id = id;
             using (BinaryReader br = new BinaryReader(stream))
@@ -70,7 +70,27 @@ namespace DSPRE.ROMFiles
             }
         }
 
-        public TradeData(int id) : this(new FileStream(RomInfo.gameDirs[DirNames.tradeData].unpackedDir + "\\" + id.ToString("D4"), FileMode.Open), id) { }
+        public TradeData(int id) : this(id, GetStream(id)) { }
+
+        private static Stream GetStream(int id)
+        {
+
+            if (!File.Exists(RomInfo.gameDirs[DirNames.tradeData].unpackedDir + "\\" + id.ToString("D4")))
+            {
+                // If the file does not exist, create it with default values
+                FileStream fileStream = new FileStream(RomInfo.gameDirs[DirNames.tradeData].unpackedDir + "\\" + id.ToString("D4"), FileMode.Create);
+                fileStream.Write(new byte[0x50], 0, 0x50); // create an empty file
+                if (RomInfo.gameFamily == GameFamilies.HGSS)
+                {
+                    fileStream.Write(new byte[0x04], 0, 0x04); // HGSS only
+                }
+                fileStream.Seek(0, SeekOrigin.Begin); // Reset the position to the start of the file
+                return fileStream;
+            }
+            
+            return new FileStream(RomInfo.gameDirs[DirNames.tradeData].unpackedDir + "\\" + id.ToString("D4"), FileMode.Open);
+            
+        }
 
         public override byte[] ToByteArray()
         {

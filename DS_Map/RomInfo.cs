@@ -1539,7 +1539,7 @@ namespace DSPRE
                         [DirNames.tradeData] = @"data\fielddata\pokemon_trade\fld_trade.narc"
                     };
 
-                    if (gameLanguage != GameLanguages.Japanese)
+                    if (gameLanguage != GameLanguages.Japanese && gameLanguage != GameLanguages.English)
                     {
                         packedDirsDict[DirNames.tradeData] = $@"data\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
                     }
