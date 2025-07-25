@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -58,9 +59,11 @@ namespace DSPRE.Editors
                 unknownNumericUpDown.Enabled = false;
             }
 
+            // PLAT: Overlay 6, 0x8050-0x8053: dc f5 f0 fb -> 00 00 00 00 to dummy out ASSERT
+
             // Disable buttons until trade expansion is implemented
-            addFileButton.Enabled = false;
-            removeLastButton.Enabled = false;
+            //addFileButton.Enabled = false;
+            //removeLastButton.Enabled = false;
 
             tradeArchive = new TextArchive(GetTextBankIndex());
             LoadFromFile(0);
@@ -170,6 +173,7 @@ namespace DSPRE.Editors
         {
             Helpers.DisableHandlers();
             curTradeData = new TradeData(tradeID);
+            tradeArchive = new TextArchive(GetTextBankIndex());
             tradeIDNumericUpDown.Value = tradeID;
             speciesComboBox.SelectedIndex = curTradeData.species;
             hpIVNumericUpDown.Value = curTradeData.hpIV;
@@ -466,16 +470,61 @@ namespace DSPRE.Editors
             }
         }
 
-        #endregion
-
         private void addFileButton_Click(object sender, EventArgs e)
         {
+            TradeData newTrade = new TradeData(TradeData.GetTradeCount());
+            newTrade.SaveToFileDefaultDir(newTrade.id, false);
+            tradeIDNumericUpDown.Maximum = TradeData.GetTradeCount() - 1; // Update the maximum value
 
+            // Adjust text archive to accommodate the new trade
+            int lastNicknameIndex = TradeData.GetTradeCount() - 1;
+            tradeArchive.messages.Insert(lastNicknameIndex, "Nickname");
+            tradeArchive.messages.Add("OT Name");
+            tradeArchive.SaveToFileDefaultDir(GetTextBankIndex(), false);
+
+            MessageBox.Show($"Added new trade with id {newTrade.id}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void removeLastButton_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show("Are you sure you want to remove the last trade? This action cannot be undone.", "Confirm Removal", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes)
+            {
+                return; // User cancelled the removal
+            }
+
+            if (TradeData.GetTradeCount() <= 1)
+            {
+                MessageBox.Show("Cannot remove the last trade.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int lastTradeID = TradeData.GetTradeCount() - 1;
+            
+            try
+            {
+                File.Delete(RomInfo.gameDirs[RomInfo.DirNames.tradeData].unpackedDir + "\\" + lastTradeID.ToString("D4"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to delete trade file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AppLogger.Error($"TradeEditor: Failed to delete trade file for ID {lastTradeID}: {ex.Message}");
+                return;
+            }
+
+            tradeIDNumericUpDown.Maximum = lastTradeID - 1; // Update the maximum value
+            // Adjust text archive to remove the last trade's text
+            
+            if (tradeArchive.messages.Count > lastTradeID)
+            {
+                tradeArchive.messages.RemoveAt(lastTradeID); // Remove Nickname
+                tradeArchive.messages.RemoveAt(tradeArchive.messages.Count - 1); // Remove OT Name
+                tradeArchive.SaveToFileDefaultDir(GetTextBankIndex(), false);
+            }
 
         }
+
+        #endregion
+
     }
 }
