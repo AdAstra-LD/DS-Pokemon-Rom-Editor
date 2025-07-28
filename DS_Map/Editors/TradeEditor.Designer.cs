@@ -240,7 +240,6 @@
             // 
             // requestedComboBox
             // 
-            this.requestedComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.requestedComboBox.FormattingEnabled = true;
             this.requestedComboBox.Location = new System.Drawing.Point(165, 44);
             this.requestedComboBox.Name = "requestedComboBox";
