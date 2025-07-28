@@ -230,6 +230,12 @@
     <Compile Include="Editors\TextEditor.Designer.cs">
       <DependentUpon>TextEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\TradeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\TradeEditor.Designer.cs">
+      <DependentUpon>TradeEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\TrainerEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -346,6 +352,7 @@
     <Compile Include="ROMFiles\LevelScriptTrigger.cs" />
     <Compile Include="ROMFiles\MapScreenLoadTrigger.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
+    <Compile Include="ROMFiles\TradeData.cs" />
     <Compile Include="Script\ScriptCommandPosition.cs" />
     <Compile Include="Script\ScriptLabeledSection.cs" />
     <Compile Include="Script\ScriptParameter.cs" />
@@ -523,6 +530,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\TextEditor.resx">
       <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TradeEditor.resx">
+      <DependentUpon>TradeEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\TrainerEditor.resx">
       <DependentUpon>TrainerEditor.cs</DependentUpon>

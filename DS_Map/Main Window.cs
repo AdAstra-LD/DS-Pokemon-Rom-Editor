@@ -7270,6 +7270,14 @@ namespace DSPRE {
             flyEditor.Show();
         }
 
+        private void tradeEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.tradeData });
+
+            TradeEditor tradeEditor = new TradeEditor();
+            tradeEditor.Show();
+        }
+
         private void itemEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Helpers.statusLabelMessage("Setting up Item Data Editor...");

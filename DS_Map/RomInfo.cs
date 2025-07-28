@@ -175,7 +175,9 @@ namespace DSPRE
             evolutions,
 
             itemData,
-            itemIcons
+            itemIcons,
+
+            tradeData
         };
 
         public static Dictionary<DirNames, (string packedDir, string unpackedDir)> gameDirs { get; private set; }
@@ -1024,7 +1026,7 @@ namespace DSPRE
             switch (gameFamily)
             {
                 case GameFamilies.DP:
-                    itemNamesTextNumber = 344;
+                    itemNamesTextNumber = gameLanguage == GameLanguages.Japanese ? 341 : 344;
                     itemDescriptionsTextNumber = 0;
                     break;
 
@@ -1470,7 +1472,9 @@ namespace DSPRE
                         [DirNames.otherPokemonBattleSprites] = @"data\poketool\pokegra\otherpoke.narc",
 
                         [DirNames.itemData] = @"data\itemtool\itemdata\item_data.narc",
-                        [DirNames.itemIcons] = @"data\itemtool\itemdata\item_icon.narc"
+                        [DirNames.itemIcons] = @"data\itemtool\itemdata\item_icon.narc",
+
+                        [DirNames.tradeData] = @"data\fielddata\pokemon_trade\fld_trade.narc"
                     };
 
                     //Personal Data archive is different for Pearl
@@ -1481,6 +1485,11 @@ namespace DSPRE
                     }
                     personal += @"\personal.narc";
                     packedDirsDict[DirNames.personalPokeData] = personal;
+
+                    if (gameLanguage != GameLanguages.Japanese)
+                    {
+                        packedDirsDict[DirNames.tradeData] = $@"data\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
+                    }
 
                     break;
 
@@ -1525,8 +1534,16 @@ namespace DSPRE
                         [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
 
                         [DirNames.itemData] = @"data\itemtool\itemdata\pl_item_data.narc",
-                        [DirNames.itemIcons] = @"data\itemtool\itemdata\item_icon.narc"
+                        [DirNames.itemIcons] = @"data\itemtool\itemdata\item_icon.narc",
+
+                        [DirNames.tradeData] = @"data\fielddata\pokemon_trade\fld_trade.narc"
                     };
+
+                    if (gameLanguage != GameLanguages.Japanese && gameLanguage != GameLanguages.English)
+                    {
+                        packedDirsDict[DirNames.tradeData] = $@"data\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
+                    }
+
                     break;
 
                 case GameFamilies.HGSS:
@@ -1567,6 +1584,7 @@ namespace DSPRE
                         [DirNames.evolutions] = @"data\a\0\3\4",
                         [DirNames.itemData] = @"data\a\0\1\7",
                         [DirNames.itemIcons] = @"data\a\0\1\8",
+                        [DirNames.tradeData] = @"data\a\1\1\2",
 
                         [DirNames.safariZone] = @"data\a\2\3\0",
                         [DirNames.headbutt] = @"data\a\2\5\2", //both versions use the same folder with different data
@@ -1581,6 +1599,25 @@ namespace DSPRE
             foreach (KeyValuePair<DirNames, string> kvp in packedDirsDict)
             {
                 gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()));
+            }
+        }
+
+        public static string GetLangResFolderName()
+        {
+            switch (gameLanguage)
+            {
+                case GameLanguages.English:
+                    return "eng";
+                case GameLanguages.Italian:
+                    return "ita";
+                case GameLanguages.French:
+                    return "fra";
+                case GameLanguages.German:
+                    return "ger";
+                case GameLanguages.Spanish:
+                    return "spa";
+                default:
+                    return "";
             }
         }
 
