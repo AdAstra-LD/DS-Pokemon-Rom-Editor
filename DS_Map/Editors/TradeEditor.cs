@@ -41,6 +41,8 @@ namespace DSPRE.Editors
         {
             Helpers.DisableHandlers();
 
+            AppLogger.Debug("TradeEditor: Initializing Trade Editor.");
+
             InitializeComponent();
             InitLimits();
             InitDataRanges();
@@ -62,8 +64,8 @@ namespace DSPRE.Editors
             // PLAT: Overlay 6, 0x8050-0x8053: dc f5 f0 fb -> 00 00 00 00 to dummy out ASSERT
 
             // Disable buttons until trade expansion is implemented
-            //addFileButton.Enabled = false;
-            //removeLastButton.Enabled = false;
+            addFileButton.Enabled = false;
+            removeLastButton.Enabled = false;
 
             tradeArchive = new TextArchive(GetTextBankIndex());
             LoadFromFile(0);
@@ -126,19 +128,24 @@ namespace DSPRE.Editors
         {
             // Species Names
             speciesComboBox.DataSource = RomInfo.GetPokemonNames();
+            speciesComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
             requestedComboBox.DataSource = RomInfo.GetPokemonNames();
+            requestedComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 
             // Abilities
             abilityComboBox.DataSource = RomInfo.GetAbilityNames();
+            abilityComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 
             // Held Items
             heldItemComboBox.DataSource = RomInfo.GetItemNames();
+            heldItemComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
 
             // OT Gender
             otGenderComboBox.DataSource = new string[] { "Male", "Female" };
 
             // Languages
             langComboBox.DataSource = Enum.GetNames(typeof(OriginLang));
+            langComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
         private void SetToolTips()
@@ -159,6 +166,13 @@ namespace DSPRE.Editors
                 $"The Original Trainer's name.\nStored in text bank {GetTextBankIndex()}.\nAt most {otNameTextBox.MaxLength} characters.");
             SetToolTipsForControls(new Control[] { nicknameTextBox, nicknameLabel }, 
                 $"The nickname of the Pokémon.\nStored in text bank {GetTextBankIndex()}.\nAt most {nicknameTextBox.MaxLength} characters.");
+
+            SetToolTipsForControls(new Control[] { saveTradeButton }, "Save the current trade data to file.");
+            SetToolTipsForControls(new Control[] { saveTextDataButton }, "Save the current text data to file.");
+            SetToolTipsForControls(new Control[] { saveAllButton }, "Save both trade data and text data to file.");
+
+            // ToDo: Remove these tooltips when the features are implemented
+            SetToolTipsForControls(new Control[] { addFileButton, removeLastButton }, "Coming soon!\nThis feature is not yet implemented.\nIt will allow you to add or remove trades from the trade data file.");
         }
 
         private void SetToolTipsForControls(IEnumerable<Control> controls, string text)
@@ -249,6 +263,7 @@ namespace DSPRE.Editors
             {
                 this.Text = "Trade Editor";
             }
+            AppLogger.Debug($"TradeEditor: Saved trade data for ID {curTradeData.id}.");
             Helpers.EnableHandlers();
         }
 
@@ -280,6 +295,7 @@ namespace DSPRE.Editors
             {
                 this.Text = "Trade Editor";
             }
+            AppLogger.Debug($"TradeEditor: Saved trade text data to message bank {GetTextBankIndex()}");
             Helpers.EnableHandlers();
         }
 

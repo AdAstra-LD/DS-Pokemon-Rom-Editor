@@ -240,7 +240,7 @@
             // 
             // requestedComboBox
             // 
-            this.requestedComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.requestedComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.requestedComboBox.FormattingEnabled = true;
             this.requestedComboBox.Location = new System.Drawing.Point(165, 44);
             this.requestedComboBox.Name = "requestedComboBox";
@@ -326,7 +326,7 @@
             // 
             // abilityComboBox
             // 
-            this.abilityComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.abilityComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.abilityComboBox.FormattingEnabled = true;
             this.abilityComboBox.Location = new System.Drawing.Point(6, 218);
             this.abilityComboBox.Name = "abilityComboBox";
@@ -381,7 +381,7 @@
             // 
             // langComboBox
             // 
-            this.langComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.langComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.langComboBox.FormattingEnabled = true;
             this.langComboBox.Location = new System.Drawing.Point(6, 166);
             this.langComboBox.Name = "langComboBox";
@@ -400,7 +400,7 @@
             // 
             // heldItemComboBox
             // 
-            this.heldItemComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.heldItemComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.heldItemComboBox.FormattingEnabled = true;
             this.heldItemComboBox.Location = new System.Drawing.Point(6, 98);
             this.heldItemComboBox.Name = "heldItemComboBox";
@@ -665,7 +665,7 @@
             // 
             // speciesComboBox
             // 
-            this.speciesComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.speciesComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.speciesComboBox.FormattingEnabled = true;
             this.speciesComboBox.Location = new System.Drawing.Point(6, 30);
             this.speciesComboBox.Name = "speciesComboBox";
