@@ -17,25 +17,32 @@ namespace DSPRE {
         public ushort[] GetLearnsetAtLevel(int atLevel)
         {
             List<ushort> moves = new List<ushort>();
-            HashSet<ushort> seen = new HashSet<ushort>();
+            
+            foreach ((byte level, ushort move) elem in list) {
 
-            foreach ((byte level, ushort move) elem in list)
-            {
-                // If the level is lower than the mon level and the move hasn't been seen yet, add it to the list
-                if (elem.level <= atLevel && seen.Add(elem.move))
-                {
-                    moves.Add(elem.move);
+                if (elem.level > atLevel) {
+                    continue; // the moves should be sorted by level so we can probably break here but better safe than sorry
+                }
+
+                if (elem.move == 0) {
+                    continue; // skip empty moves
+                }
+
+                if (!moves.Contains(elem.move)) {
+                    
+                    if (moves.Count >= 4)
+                    {
+                        moves.RemoveAt(0);
+                    }                    
+                    moves.Add(elem.move); // add the new move to the end of the list
                 }
             }
 
-            ushort[] learnset = new ushort[4];
-            int start = Math.Max(0, moves.Count - 4);
+            ushort[] learnset = moves.ToArray();
 
-            // Fill the learnset with the last 4 moves, or 0 if there are not enough moves
-            for (int i = 0; i < 4; i++)
-            {
-                int idx = start + i;
-                learnset[i] = (idx < moves.Count) ? moves[idx] : (ushort)0;
+            // Ensure we have exactly 4 moves, filling with 0 if necessary
+            if (learnset.Length < 4) {
+                Array.Resize(ref learnset, 4);
             }
 
             return learnset;
