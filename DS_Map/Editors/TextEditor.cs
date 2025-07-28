@@ -21,6 +21,7 @@ namespace DSPRE.Editors
         public TextEditor()
         {
             InitializeComponent();
+            this.textSearchResultsListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textSearchResultsListBox_GoToEntryResult);
 
         }
 

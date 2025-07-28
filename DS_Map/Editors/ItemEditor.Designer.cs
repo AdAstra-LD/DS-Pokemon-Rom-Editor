@@ -32,7 +32,6 @@
             this.itemNumberNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.holdEffectComboBox = new System.Windows.Forms.ComboBox();
             this.fieldPocketComboBox = new System.Windows.Forms.ComboBox();
-            this.battlePocketComboBox = new System.Windows.Forms.ComboBox();
             this.itemNameInputComboBox = new System.Windows.Forms.ComboBox();
             this.priceNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -44,6 +43,7 @@
             this.holdEffectLabel = new System.Windows.Forms.Label();
             this.pocketFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.pocketGroupBox = new System.Windows.Forms.GroupBox();
+            this.pokeBallsBattlePocketCheck = new System.Windows.Forms.CheckBox();
             this.fieldPocketLabel = new System.Windows.Forms.Label();
             this.battlePocketLabel = new System.Windows.Forms.Label();
             this.moveRelatedFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
@@ -130,15 +130,19 @@
             this.friendshipMidCheckBox = new System.Windows.Forms.CheckBox();
             this.friendshipLowValueNumeric = new System.Windows.Forms.NumericUpDown();
             this.friendshipLowCheckBox = new System.Windows.Forms.CheckBox();
-            this.itemEditorSelectedPictureBox = new System.Windows.Forms.PictureBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.itemEditorSelectedPictureFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.itemEditorSelectedPictureGroupBox = new System.Windows.Forms.GroupBox();
-            this.imageLabel = new System.Windows.Forms.Label();
-            this.paletteLabel = new System.Windows.Forms.Label();
-            this.imageComboBox = new System.Windows.Forms.ComboBox();
-            this.paletteComboBox = new System.Windows.Forms.ComboBox();
             this.saveIconButton = new System.Windows.Forms.Button();
+            this.paletteComboBox = new System.Windows.Forms.ComboBox();
+            this.imageComboBox = new System.Windows.Forms.ComboBox();
+            this.paletteLabel = new System.Windows.Forms.Label();
+            this.imageLabel = new System.Windows.Forms.Label();
+            this.itemEditorSelectedPictureBox = new System.Windows.Forms.PictureBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.battleItemsBattlePocketCheck = new System.Windows.Forms.CheckBox();
+            this.ppRestoreBattlePocketCheck = new System.Windows.Forms.CheckBox();
+            this.hpRestoreBattlePocketCheck = new System.Windows.Forms.CheckBox();
+            this.statusHealersBattlePocketCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumberNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -184,9 +188,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.friendshipHighValueNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).BeginInit();
             this.itemEditorSelectedPictureFlowLayoutPanel.SuspendLayout();
             this.itemEditorSelectedPictureGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // itemNumberNumericUpDown
@@ -212,21 +216,11 @@
             // 
             this.fieldPocketComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.fieldPocketComboBox.FormattingEnabled = true;
-            this.fieldPocketComboBox.Location = new System.Drawing.Point(107, 35);
+            this.fieldPocketComboBox.Location = new System.Drawing.Point(94, 22);
             this.fieldPocketComboBox.Name = "fieldPocketComboBox";
             this.fieldPocketComboBox.Size = new System.Drawing.Size(121, 21);
             this.fieldPocketComboBox.TabIndex = 2;
             this.fieldPocketComboBox.SelectedIndexChanged += new System.EventHandler(this.fieldPocketComboBox_SelectedIndexChanged);
-            // 
-            // battlePocketComboBox
-            // 
-            this.battlePocketComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.battlePocketComboBox.FormattingEnabled = true;
-            this.battlePocketComboBox.Location = new System.Drawing.Point(107, 78);
-            this.battlePocketComboBox.Name = "battlePocketComboBox";
-            this.battlePocketComboBox.Size = new System.Drawing.Size(121, 21);
-            this.battlePocketComboBox.TabIndex = 3;
-            this.battlePocketComboBox.SelectedIndexChanged += new System.EventHandler(this.battlePocketComboBox_SelectedIndexChanged);
             // 
             // itemNameInputComboBox
             // 
@@ -349,7 +343,11 @@
             // 
             // pocketGroupBox
             // 
-            this.pocketGroupBox.Controls.Add(this.battlePocketComboBox);
+            this.pocketGroupBox.Controls.Add(this.statusHealersBattlePocketCheck);
+            this.pocketGroupBox.Controls.Add(this.hpRestoreBattlePocketCheck);
+            this.pocketGroupBox.Controls.Add(this.ppRestoreBattlePocketCheck);
+            this.pocketGroupBox.Controls.Add(this.battleItemsBattlePocketCheck);
+            this.pocketGroupBox.Controls.Add(this.pokeBallsBattlePocketCheck);
             this.pocketGroupBox.Controls.Add(this.fieldPocketLabel);
             this.pocketGroupBox.Controls.Add(this.fieldPocketComboBox);
             this.pocketGroupBox.Controls.Add(this.battlePocketLabel);
@@ -360,11 +358,22 @@
             this.pocketGroupBox.TabStop = false;
             this.pocketGroupBox.Text = "Pocket Data";
             // 
+            // pokeBallsBattlePocketCheck
+            // 
+            this.pokeBallsBattlePocketCheck.AutoSize = true;
+            this.pokeBallsBattlePocketCheck.Location = new System.Drawing.Point(9, 82);
+            this.pokeBallsBattlePocketCheck.Name = "pokeBallsBattlePocketCheck";
+            this.pokeBallsBattlePocketCheck.Size = new System.Drawing.Size(73, 17);
+            this.pokeBallsBattlePocketCheck.TabIndex = 9;
+            this.pokeBallsBattlePocketCheck.Text = "PokeBalls";
+            this.pokeBallsBattlePocketCheck.UseVisualStyleBackColor = true;
+            this.pokeBallsBattlePocketCheck.CheckedChanged += new System.EventHandler(this.BattlePocketCheckBox_CheckedChanged);
+            // 
             // fieldPocketLabel
             // 
             this.fieldPocketLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.fieldPocketLabel.AutoSize = true;
-            this.fieldPocketLabel.Location = new System.Drawing.Point(21, 38);
+            this.fieldPocketLabel.Location = new System.Drawing.Point(6, 25);
             this.fieldPocketLabel.Name = "fieldPocketLabel";
             this.fieldPocketLabel.Size = new System.Drawing.Size(66, 13);
             this.fieldPocketLabel.TabIndex = 7;
@@ -375,11 +384,11 @@
             // 
             this.battlePocketLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.battlePocketLabel.AutoSize = true;
-            this.battlePocketLabel.Location = new System.Drawing.Point(16, 81);
+            this.battlePocketLabel.Location = new System.Drawing.Point(6, 63);
             this.battlePocketLabel.Name = "battlePocketLabel";
-            this.battlePocketLabel.Size = new System.Drawing.Size(71, 13);
+            this.battlePocketLabel.Size = new System.Drawing.Size(76, 13);
             this.battlePocketLabel.TabIndex = 8;
-            this.battlePocketLabel.Text = "Battle Pocket";
+            this.battlePocketLabel.Text = "Battle Pockets";
             this.battlePocketLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // moveRelatedFlowLayoutPanel
@@ -1233,16 +1242,6 @@
             this.friendshipLowCheckBox.Text = "Low Friendship";
             this.friendshipLowCheckBox.UseVisualStyleBackColor = true;
             // 
-            // itemEditorSelectedPictureBox
-            // 
-            this.itemEditorSelectedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.itemEditorSelectedPictureBox.Image = global::DSPRE.Properties.Resources.IconItem;
-            this.itemEditorSelectedPictureBox.Location = new System.Drawing.Point(180, 54);
-            this.itemEditorSelectedPictureBox.Name = "itemEditorSelectedPictureBox";
-            this.itemEditorSelectedPictureBox.Size = new System.Drawing.Size(47, 47);
-            this.itemEditorSelectedPictureBox.TabIndex = 18;
-            this.itemEditorSelectedPictureBox.TabStop = false;
-            // 
             // itemEditorSelectedPictureFlowLayoutPanel
             // 
             this.itemEditorSelectedPictureFlowLayoutPanel.Controls.Add(this.itemEditorSelectedPictureGroupBox);
@@ -1266,33 +1265,15 @@
             this.itemEditorSelectedPictureGroupBox.TabStop = false;
             this.itemEditorSelectedPictureGroupBox.Text = "Icon";
             // 
-            // imageLabel
+            // saveIconButton
             // 
-            this.imageLabel.AutoSize = true;
-            this.imageLabel.Location = new System.Drawing.Point(11, 21);
-            this.imageLabel.Name = "imageLabel";
-            this.imageLabel.Size = new System.Drawing.Size(36, 13);
-            this.imageLabel.TabIndex = 20;
-            this.imageLabel.Text = "Image";
-            // 
-            // paletteLabel
-            // 
-            this.paletteLabel.AutoSize = true;
-            this.paletteLabel.Location = new System.Drawing.Point(11, 63);
-            this.paletteLabel.Name = "paletteLabel";
-            this.paletteLabel.Size = new System.Drawing.Size(40, 13);
-            this.paletteLabel.TabIndex = 22;
-            this.paletteLabel.Text = "Palette";
-            // 
-            // imageComboBox
-            // 
-            this.imageComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.imageComboBox.FormattingEnabled = true;
-            this.imageComboBox.Location = new System.Drawing.Point(77, 18);
-            this.imageComboBox.Name = "imageComboBox";
-            this.imageComboBox.Size = new System.Drawing.Size(58, 21);
-            this.imageComboBox.TabIndex = 23;
-            this.imageComboBox.SelectedIndexChanged += new System.EventHandler(this.imageComboBox_SelectedIndexChanged);
+            this.saveIconButton.Location = new System.Drawing.Point(14, 102);
+            this.saveIconButton.Name = "saveIconButton";
+            this.saveIconButton.Size = new System.Drawing.Size(121, 23);
+            this.saveIconButton.TabIndex = 25;
+            this.saveIconButton.Text = "Save Icon Changes";
+            this.saveIconButton.UseVisualStyleBackColor = true;
+            this.saveIconButton.Click += new System.EventHandler(this.saveIconButton_Click);
             // 
             // paletteComboBox
             // 
@@ -1304,15 +1285,83 @@
             this.paletteComboBox.TabIndex = 24;
             this.paletteComboBox.SelectedIndexChanged += new System.EventHandler(this.paletteComboBox_SelectedIndexChanged);
             // 
-            // saveIconButton
+            // imageComboBox
             // 
-            this.saveIconButton.Location = new System.Drawing.Point(14, 102);
-            this.saveIconButton.Name = "saveIconButton";
-            this.saveIconButton.Size = new System.Drawing.Size(121, 23);
-            this.saveIconButton.TabIndex = 25;
-            this.saveIconButton.Text = "Save Icon Changes";
-            this.saveIconButton.UseVisualStyleBackColor = true;
-            this.saveIconButton.Click += new System.EventHandler(this.saveIconButton_Click);
+            this.imageComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.imageComboBox.FormattingEnabled = true;
+            this.imageComboBox.Location = new System.Drawing.Point(77, 18);
+            this.imageComboBox.Name = "imageComboBox";
+            this.imageComboBox.Size = new System.Drawing.Size(58, 21);
+            this.imageComboBox.TabIndex = 23;
+            this.imageComboBox.SelectedIndexChanged += new System.EventHandler(this.imageComboBox_SelectedIndexChanged);
+            // 
+            // paletteLabel
+            // 
+            this.paletteLabel.AutoSize = true;
+            this.paletteLabel.Location = new System.Drawing.Point(11, 63);
+            this.paletteLabel.Name = "paletteLabel";
+            this.paletteLabel.Size = new System.Drawing.Size(40, 13);
+            this.paletteLabel.TabIndex = 22;
+            this.paletteLabel.Text = "Palette";
+            // 
+            // imageLabel
+            // 
+            this.imageLabel.AutoSize = true;
+            this.imageLabel.Location = new System.Drawing.Point(11, 21);
+            this.imageLabel.Name = "imageLabel";
+            this.imageLabel.Size = new System.Drawing.Size(36, 13);
+            this.imageLabel.TabIndex = 20;
+            this.imageLabel.Text = "Image";
+            // 
+            // itemEditorSelectedPictureBox
+            // 
+            this.itemEditorSelectedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.itemEditorSelectedPictureBox.Image = global::DSPRE.Properties.Resources.IconItem;
+            this.itemEditorSelectedPictureBox.Location = new System.Drawing.Point(180, 54);
+            this.itemEditorSelectedPictureBox.Name = "itemEditorSelectedPictureBox";
+            this.itemEditorSelectedPictureBox.Size = new System.Drawing.Size(47, 47);
+            this.itemEditorSelectedPictureBox.TabIndex = 18;
+            this.itemEditorSelectedPictureBox.TabStop = false;
+            // 
+            // battleItemsBattlePocketCheck
+            // 
+            this.battleItemsBattlePocketCheck.AutoSize = true;
+            this.battleItemsBattlePocketCheck.Location = new System.Drawing.Point(9, 105);
+            this.battleItemsBattlePocketCheck.Name = "battleItemsBattlePocketCheck";
+            this.battleItemsBattlePocketCheck.Size = new System.Drawing.Size(81, 17);
+            this.battleItemsBattlePocketCheck.TabIndex = 10;
+            this.battleItemsBattlePocketCheck.Text = "Battle Items";
+            this.battleItemsBattlePocketCheck.UseVisualStyleBackColor = true;
+            // 
+            // ppRestoreBattlePocketCheck
+            // 
+            this.ppRestoreBattlePocketCheck.AutoSize = true;
+            this.ppRestoreBattlePocketCheck.Location = new System.Drawing.Point(88, 105);
+            this.ppRestoreBattlePocketCheck.Name = "ppRestoreBattlePocketCheck";
+            this.ppRestoreBattlePocketCheck.Size = new System.Drawing.Size(80, 17);
+            this.ppRestoreBattlePocketCheck.TabIndex = 11;
+            this.ppRestoreBattlePocketCheck.Text = "PP Restore";
+            this.ppRestoreBattlePocketCheck.UseVisualStyleBackColor = true;
+            // 
+            // hpRestoreBattlePocketCheck
+            // 
+            this.hpRestoreBattlePocketCheck.AutoSize = true;
+            this.hpRestoreBattlePocketCheck.Location = new System.Drawing.Point(88, 81);
+            this.hpRestoreBattlePocketCheck.Name = "hpRestoreBattlePocketCheck";
+            this.hpRestoreBattlePocketCheck.Size = new System.Drawing.Size(81, 17);
+            this.hpRestoreBattlePocketCheck.TabIndex = 12;
+            this.hpRestoreBattlePocketCheck.Text = "HP Restore";
+            this.hpRestoreBattlePocketCheck.UseVisualStyleBackColor = true;
+            // 
+            // statusHealersBattlePocketCheck
+            // 
+            this.statusHealersBattlePocketCheck.AutoSize = true;
+            this.statusHealersBattlePocketCheck.Location = new System.Drawing.Point(167, 81);
+            this.statusHealersBattlePocketCheck.Name = "statusHealersBattlePocketCheck";
+            this.statusHealersBattlePocketCheck.Size = new System.Drawing.Size(95, 17);
+            this.statusHealersBattlePocketCheck.TabIndex = 13;
+            this.statusHealersBattlePocketCheck.Text = "Status Healers";
+            this.statusHealersBattlePocketCheck.UseVisualStyleBackColor = true;
             // 
             // ItemEditor
             // 
@@ -1379,10 +1428,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.friendshipHighValueNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).EndInit();
             this.itemEditorSelectedPictureFlowLayoutPanel.ResumeLayout(false);
             this.itemEditorSelectedPictureGroupBox.ResumeLayout(false);
             this.itemEditorSelectedPictureGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1392,7 +1441,6 @@
         private System.Windows.Forms.NumericUpDown itemNumberNumericUpDown;
         private System.Windows.Forms.ComboBox holdEffectComboBox;
         private System.Windows.Forms.ComboBox fieldPocketComboBox;
-        private System.Windows.Forms.ComboBox battlePocketComboBox;
         private System.Windows.Forms.ComboBox itemNameInputComboBox;
         private System.Windows.Forms.NumericUpDown priceNumericUpDown;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -1499,5 +1547,10 @@
         private System.Windows.Forms.ComboBox paletteComboBox;
         private System.Windows.Forms.ComboBox imageComboBox;
         private System.Windows.Forms.Button saveIconButton;
+        private System.Windows.Forms.CheckBox pokeBallsBattlePocketCheck;
+        private System.Windows.Forms.CheckBox statusHealersBattlePocketCheck;
+        private System.Windows.Forms.CheckBox hpRestoreBattlePocketCheck;
+        private System.Windows.Forms.CheckBox ppRestoreBattlePocketCheck;
+        private System.Windows.Forms.CheckBox battleItemsBattlePocketCheck;
     }
 }
