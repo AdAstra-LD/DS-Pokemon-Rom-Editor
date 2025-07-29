@@ -16,7 +16,7 @@ namespace DSPRE {
         private int currentLoadedId = 0;
         private EvolutionFile currentLoadedFile = null;
 
-        private static bool dirty = false;
+        public bool dirty = false;
         private static readonly string formName = "Evolutions Editor";
 
         private (ComboBox m, Label l, NumericUpDown p, ComboBox t)[] evoRows;
@@ -181,6 +181,7 @@ namespace DSPRE {
                 dirty = false;
                 this.Text = formName;
             }
+            _parent.UpdateTabPageNames();
         }
 
         private void evoMethodComboBox1_SelectedIndexChanged(object sender, EventArgs e) {

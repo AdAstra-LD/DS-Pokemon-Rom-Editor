@@ -17,7 +17,7 @@ namespace DSPRE {
         private int currentLoadedId = 0;
         private PokemonPersonalData currentLoadedFile = null;
 
-        private static bool dirty = false;
+        public bool dirty = false;
         private bool modifiedAbilities = false;
         private static readonly string formName = "Personal Data Editor";
 
@@ -87,6 +87,7 @@ namespace DSPRE {
                 dirty = false;
                 this.Text = formName;
             }
+            _parent.UpdateTabPageNames();
         }
         private void baseHpNumericUpDown_ValueChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) {
