@@ -19,7 +19,7 @@ namespace DSPRE
 
         private void dontAskAgainCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.neverAskForOpening = dontAskAgainCheckbox.Checked;
+            SettingsManager.Settings.neverAskForOpening = dontAskAgainCheckbox.Checked;
         }
     }
 }

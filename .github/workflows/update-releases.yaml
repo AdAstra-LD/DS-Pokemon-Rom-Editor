@@ -1,0 +1,79 @@
+permissions:
+  contents: write
+
+name: Deploy to GitHub Releases
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  SOLUTION_FILE_PATH: DS_Map.sln
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  get_latest_tag:
+    name: Get Latest Tag
+    runs-on: ubuntu-latest
+    outputs:
+      latest_tag: ${{ steps.get_latest_tag.outputs.tag }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Latest Tag
+        id: get_latest_tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+
+  deploy_to_github_releases:
+    name: Deploy to GitHub Releases
+    needs: get_latest_tag
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get Version from Project File
+        id: get_version
+        shell: bash
+        run: |
+            version=$(grep -oE '\[assembly: AssemblyVersion\("[0-9\.]+"\)\]' DS_Map/Properties/AssemblyInfo.cs | sed -E 's/.*AssemblyVersion\("([0-9\.]+)"\).*/\1/')
+            echo "version=$version" >> $GITHUB_OUTPUT
+
+
+      - name: Debug Output
+        run: |
+          echo "Latest tag from Linux job: ${{ needs.get_latest_tag.outputs.latest_tag }}"
+          echo "Project version: ${{ steps.get_version.outputs.version }}"
+
+
+      - name: Add MSBuild to PATH
+        uses: microsoft/setup-msbuild@v2
+        if: ${{ needs.get_latest_tag.outputs.latest_tag != format('v{0}', steps.get_version.outputs.version) }}
+
+      - name: Restore NuGet packages
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+        if: ${{ needs.get_latest_tag.outputs.latest_tag != format('v{0}', steps.get_version.outputs.version) }}
+
+      - name: Build DSPRE
+        working-directory: ${{env.GITHUB_WORKSPACE}}
+        run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+        if: ${{ needs.get_latest_tag.outputs.latest_tag != format('v{0}', steps.get_version.outputs.version) }}
+
+      - name: Copy output manually
+        if: ${{ needs.get_latest_tag.outputs.latest_tag != format('v{0}', steps.get_version.outputs.version) }}
+        run: |
+          mkdir -p publish
+          cp -r DS_Map/bin/${{env.BUILD_CONFIGURATION}}/* publish/
+          ls DS_Map/bin/${{env.BUILD_CONFIGURATION}}/
+          ls publish/
+
+      - name: Create Velopack Release
+        if: ${{ needs.get_latest_tag.outputs.latest_tag != format('v{0}', steps.get_version.outputs.version) }}
+        run: |
+          dotnet tool install -g vpk
+          vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GH_TOKEN }}
+          vpk pack -u DSPRE -v ${{ steps.get_version.outputs.version }} -p publish --mainExe DSPRE.exe --channel win
+          vpk upload github --repoUrl https://github.com/${{ github.repository }} --publish --releaseName "DSPRE ${{ steps.get_version.outputs.version }}" --tag v${{ steps.get_version.outputs.version }} --token ${{ secrets.GH_TOKEN }}

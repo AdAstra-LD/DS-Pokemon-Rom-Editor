@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,18 +38,18 @@ namespace DSPRE
 
         private String oldExportPath;
         private String oldMapImportPath;
-        private String oldVscPath;
         private String oldOpenDefaultPath;
 
         private void SettingsWindow_Load(object sender, EventArgs e)
         {
-            romExportPathTextBox.Text = Properties.Settings.Default.exportPath;
-            oldExportPath = Properties.Settings.Default.exportPath;
-            mapImportPathTextBox.Text = Properties.Settings.Default.mapImportStarterPoint;
-            oldMapImportPath = Properties.Settings.Default.mapImportStarterPoint;
-            openDefaultRomTextBox.Text = Properties.Settings.Default.openDefaultRom;
-            oldOpenDefaultPath = Properties.Settings.Default.openDefaultRom;
-            dontAskOpenCheckbox.Checked = Properties.Settings.Default.neverAskForOpening;
+            currentVersionLabel.Text = $"DSPRE Version {Helpers.GetDSPREVersion()}";
+            romExportPathTextBox.Text = SettingsManager.Settings.exportPath;
+            oldExportPath = SettingsManager.Settings.exportPath;
+            mapImportPathTextBox.Text = SettingsManager.Settings.mapImportStarterPoint;
+            oldMapImportPath = SettingsManager.Settings.mapImportStarterPoint;
+            openDefaultRomTextBox.Text = SettingsManager.Settings.openDefaultRom;
+            oldOpenDefaultPath = SettingsManager.Settings.openDefaultRom;
+            dontAskOpenCheckbox.Checked = SettingsManager.Settings.neverAskForOpening;
 
         }
 
@@ -82,12 +83,14 @@ namespace DSPRE
 
         private void saveButton_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.exportPath = romExportPathTextBox.Text;
-            Properties.Settings.Default.mapImportStarterPoint = mapImportPathTextBox.Text;
-            Properties.Settings.Default.openDefaultRom = openDefaultRomTextBox.Text;
-            oldExportPath = Properties.Settings.Default.exportPath;
-            oldMapImportPath = Properties.Settings.Default.mapImportStarterPoint;
-            oldOpenDefaultPath = Properties.Settings.Default.openDefaultRom;
+            SettingsManager.Settings.exportPath = romExportPathTextBox.Text;
+            SettingsManager.Settings.mapImportStarterPoint = mapImportPathTextBox.Text;
+            SettingsManager.Settings.openDefaultRom = openDefaultRomTextBox.Text;
+            oldExportPath = SettingsManager.Settings.exportPath;
+            oldMapImportPath = SettingsManager.Settings.mapImportStarterPoint;
+            oldOpenDefaultPath = SettingsManager.Settings.openDefaultRom;
+
+            SettingsManager.Save();
         }
 
 
@@ -124,7 +127,12 @@ namespace DSPRE
 
         private void dontAskOpenCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.neverAskForOpening = dontAskOpenCheckbox.Checked;
+            SettingsManager.Settings.neverAskForOpening = dontAskOpenCheckbox.Checked;
+        }
+
+        private void checkForUpdatesButton_Click(object sender, EventArgs e)
+        {
+            Helpers.CheckForUpdates(false);
         }
     }
 }

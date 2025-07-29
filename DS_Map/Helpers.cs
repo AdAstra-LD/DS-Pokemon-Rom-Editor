@@ -1,22 +1,25 @@
-﻿using System;
+﻿using DSPRE.ROMFiles;
+using Ekona.Images;
+using Images;
+using LibNDSFormats.NSBMD;
+using LibNDSFormats.NSBTX;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using NSMBe4.DSFileSystem;
+using ScintillaNET;
+using ScintillaNET.Utils;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Tao.OpenGl;
-using LibNDSFormats.NSBMD;
-using LibNDSFormats.NSBTX;
-using DSPRE.ROMFiles;
-using Images;
-using Ekona.Images;
-using ScintillaNET;
-using ScintillaNET.Utils;
 using Tao.Platform.Windows;
-using NSMBe4.DSFileSystem;
-using System.Linq;
-using Microsoft.WindowsAPICodePack.Dialogs;
+using Velopack;
+using Velopack.Sources;
 using static DSPRE.RomInfo;
 
 namespace DSPRE {
@@ -33,6 +36,37 @@ namespace DSPRE {
         public static void Initialize(MainProgram mainProgram) {
             MainProgram = mainProgram;
             mapRenderer = new NSBMDGlRenderer();
+        }
+
+        public static void CheckForUpdates(bool silent = true)
+        {
+            AppLogger.Info("Checking for updates...");
+            var mgr = new UpdateManager(new GithubSource("https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor", "", prerelease: false));
+
+            var newVersion = mgr.CheckForUpdates();
+            if (newVersion == null)
+            {
+                AppLogger.Info("No updates available.");
+                if (!silent)
+                    MessageBox.Show("No update is available.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            else
+            {
+                DialogResult update = MessageBox.Show($"A new DSPRE version is available: {newVersion.TargetFullRelease.Version}.\nDo you want to install it?", "New update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (update == DialogResult.Yes)
+                {
+                    AppLogger.Info($"New version available: {newVersion.TargetFullRelease.Version} (Current: {mgr.CurrentVersion})");
+                    mgr.DownloadUpdates(newVersion);
+
+                    AppLogger.Info($"Installing update {newVersion.TargetFullRelease.Version} and restarting app...");
+                    mgr.ApplyUpdatesAndRestart(newVersion);
+                }
+                else
+                {
+                    AppLogger.Info("User declined to update the application.");
+                }
+            }
         }
 
         static bool disableHandlersOld;
@@ -55,6 +89,12 @@ namespace DSPRE {
 
         public static void EnableHandlers() {
             disableHandlers = false;
+        }
+
+        public static string GetDSPREVersion()
+        {
+            return "" + Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor +
+                "." + Assembly.GetExecutingAssembly().GetName().Version.Build;
         }
 
         public static void statusLabelMessage(string msg = "Ready") {

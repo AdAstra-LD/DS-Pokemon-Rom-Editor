@@ -108,7 +108,7 @@ namespace DSPRE
 
         private static string GetCrashReportFilePath()
         {
-            string crashDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CrashReports");
+            string crashDir = Path.Combine(Program.DspreDataPath, "CrashReports");
             Directory.CreateDirectory(crashDir);
 
             string filename = $"Crash_{DateTime.Now:yyyyMMdd_HHmmss}.txt";

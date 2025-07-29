@@ -157,7 +157,7 @@ namespace DSPRE.Editors
             OpenFileDialog ofd = new OpenFileDialog
             {
                 Filter = "NSBTX File (*.nsbtx)|*.nsbtx",
-                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
+                InitialDirectory = SettingsManager.Settings.mapImportStarterPoint
             };
             if (ofd.ShowDialog(this) != DialogResult.OK)
             {
