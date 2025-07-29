@@ -106,5 +106,37 @@ namespace DSPRE {
             }
             Helpers.RestoreDisableHandler();
         }
+
+        public void UpdateTabPageNames()
+        {
+            if (personalEditor == null || learnsetEditor == null || evoEditor == null)
+            {
+                return;
+            }
+
+            personalPage.Text = personalEditor.Text;
+            learnsetPage.Text = learnsetEditor.Text;
+            evoPage.Text = evoEditor.Text;
+        }
+
+        private void PokemonEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (personalEditor == null || learnsetEditor == null || evoEditor == null)
+            {
+                return;
+            }
+
+            if (personalEditor.dirty || learnsetEditor.dirty || evoEditor.dirty)
+            {
+                DialogResult result = MessageBox.Show("There are unsaved changes. Closing the editor will discard them!", "Unsaved Changes", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                if (result != DialogResult.OK)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+            }
+        }
     }
 }

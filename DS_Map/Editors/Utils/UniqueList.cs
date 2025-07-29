@@ -47,6 +47,22 @@ namespace DSPRE.ROMFiles {
             return false;
         }
 
+        public bool Insert(int index, T item) {
+            if (set.Contains(item)) {
+                //If the item is already in the set, we just move it to the new index
+                int oldIndex = list.FindIndex(x => x.Equals(item));
+                if (oldIndex != index) {
+                    list.Move(oldIndex, index);
+                }
+                return false; //No insertion happened
+            } else {
+                //New item, insert it
+                list.Insert(index, item);
+                set.Add(item);
+                return true; //Insertion happened
+            }
+        }
+
         // Expose some methods from the internal List
         public T Find(Predicate<T> match) {
             return list.Find(match);

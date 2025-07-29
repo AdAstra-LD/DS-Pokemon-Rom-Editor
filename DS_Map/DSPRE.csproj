@@ -403,7 +403,7 @@
     <Compile Include="Editors\SpawnEditor.Designer.cs">
       <DependentUpon>SpawnEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="UniqueList.cs" />
+    <Compile Include="Editors\Utils\UniqueList.cs" />
     <Compile Include="Editors\WildEditorHGSS.cs">
       <SubType>Form</SubType>
     </Compile>
