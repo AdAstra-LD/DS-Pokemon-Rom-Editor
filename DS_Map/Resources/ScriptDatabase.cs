@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DSPRE.Resources {
     public static class ScriptDatabase {  
@@ -33,6 +34,42 @@ namespace DSPRE.Resources {
             [2] = "Left",
             [3] = "Right"
         };
+
+        public static Dictionary<ushort, string> pokemonNames = new Dictionary<ushort, string>()
+        {
+            // Will be populated at runtime from text archive
+        };
+
+        public static void InitializePokemonNames()
+        {
+            string[] names = RomInfo.GetPokemonNames();
+            pokemonNames = names.Select((name, index) => new { name, index })
+                               .ToDictionary(x => (ushort)x.index, x => x.name);
+        }
+
+        public static Dictionary<ushort, string> itemNames = new Dictionary<ushort, string>()
+        {
+            // Will be populated at runtime from text archive
+        };
+
+        public static void InitializeItemNames()
+        {
+            string[] names = RomInfo.GetItemNames();
+            itemNames = names.Select((name, index) => new { name, index })
+                               .ToDictionary(x => (ushort)x.index, x => x.name);
+        }
+
+        public static Dictionary<ushort, string> moveNames = new Dictionary<ushort, string>()
+        {
+            // Will be populated at runtime from text archive
+        };
+
+        public static void InitializeMoveNames()
+        {
+            string[] names = RomInfo.GetAttackNames();
+            moveNames = names.Select((name, index) => new { name, index })
+                               .ToDictionary(x => (ushort)x.index, x => x.name);
+        }
 
         public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>() {
             //commandID, ID of parameter With Jump Address
@@ -1578,7 +1615,7 @@ namespace DSPRE.Resources {
             [0x02E9] = new byte[] { 2, 2, 2 },
             [0x02EA] = new byte[] { 2, 2 },
             [0x02EB] = new byte[] { 2 },
-            [0x02EC] = new byte[] { 2, 2, 2 },
+            [0x02EC] = new byte[] { 1, 1, 2, 2 },
             [0x02ED] = new byte[1] { 0 },
             [0x02EE] = new byte[] { 2, 2, 2, 2 },
             [0x02EF] = new byte[1] { 0 },

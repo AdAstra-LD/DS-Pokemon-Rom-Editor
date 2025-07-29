@@ -116,6 +116,9 @@ namespace DSPRE.Editors
             secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) +
                                 " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) +
                                 " " + String.Join(" ", ScriptDatabase.overworldDirections.Values) +
+                                " " + String.Join(" ", ScriptDatabase.pokemonNames.Values) +
+                                " " + String.Join(" ", ScriptDatabase.itemNames.Values) +
+                                " " + String.Join(" ", ScriptDatabase.moveNames.Values) +
                                 " " + ScriptFile.ContainerTypes.Script.ToString() +
                                 " " + ScriptFile.ContainerTypes.Function.ToString() +
                                 " " + ScriptFile.ContainerTypes.Action.ToString() +

@@ -5,7 +5,10 @@ public class ScriptParameter {
         Integer,
         RelativeJump,
         Byte,
-        Variable
+        Variable,
+        PokemonName,
+        ItemName,
+        MoveName
     }
 
     public ParameterType Type { get; set; } = ParameterType.Integer;
