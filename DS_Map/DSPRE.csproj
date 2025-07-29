@@ -160,6 +160,7 @@
     <Compile Include="Editors\HeadbuttEncounterEditorTab.Designer.cs">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\Utils\IndexedBitmapHandler.cs" />
     <Compile Include="Editors\ItemEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,7 +188,12 @@
     <Compile Include="Editors\NsbtxEditor.Designer.cs">
       <DependentUpon>NsbtxEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\PokemonSpriteEditor.cs" />
+    <Compile Include="Editors\PokemonSpriteEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\PokemonSpriteEditor.Designer.cs">
+      <DependentUpon>PokemonSpriteEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\SafariZoneEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -242,6 +248,8 @@
     <Compile Include="Editors\TrainerEditor.Designer.cs">
       <DependentUpon>TrainerEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\Utils\NarcReader.cs" />
+    <Compile Include="Editors\Utils\SpriteSet.cs" />
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -512,6 +520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\NsbtxEditor.resx">
       <DependentUpon>NsbtxEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\PokemonSpriteEditor.resx">
+      <DependentUpon>PokemonSpriteEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\SafariZoneEditor.resx">
       <DependentUpon>SafariZoneEditor.cs</DependentUpon>
