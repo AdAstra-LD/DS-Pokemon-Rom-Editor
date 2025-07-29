@@ -536,7 +536,7 @@ namespace DSPRE.Editors
         private void hexRadiobutton_CheckedChanged(object sender, EventArgs e)
         {
             updateTextEditorLineNumbers();
-            Properties.Settings.Default.textEditorPreferHex = hexRadiobutton.Checked;
+            SettingsManager.Settings.textEditorPreferHex = hexRadiobutton.Checked;
         }
         private void updateTextEditorLineNumbers()
         {
@@ -581,7 +581,7 @@ namespace DSPRE.Editors
             }
 
             Helpers.DisableHandlers();
-            hexRadiobutton.Checked = Properties.Settings.Default.textEditorPreferHex;
+            hexRadiobutton.Checked = SettingsManager.Settings.textEditorPreferHex;
             Helpers.EnableHandlers();
 
             selectTextFileComboBox.SelectedIndex = 0;

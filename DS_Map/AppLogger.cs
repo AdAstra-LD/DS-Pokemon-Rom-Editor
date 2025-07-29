@@ -32,7 +32,7 @@ namespace DSPRE
         public static void Initialize(MainProgram program, string logFileName = "application.log", LogLevel minLevel = LogLevel.Debug)
         {
             _mainProgram = program;
-            string logDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
+            string logDir = Path.Combine(Program.DspreDataPath, "Logs");
             Directory.CreateDirectory(logDir);
             _logFilePath = Path.Combine(logDir, logFileName);
             MinimumLevel = minLevel;

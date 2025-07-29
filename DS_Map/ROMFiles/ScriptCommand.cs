@@ -380,7 +380,7 @@ namespace DSPRE.ROMFiles {
             string formatOverride;
             string prefix;
 
-            if (Properties.Settings.Default.scriptEditorFormatPreference == (int)NumberStyles.HexNumber) {
+            if (SettingsManager.Settings.scriptEditorFormatPreference == (int)NumberStyles.HexNumber) {
                 formatOverride = "X";
                 prefix = "0x";
             } else { //(Properties.Settings.Default.scriptEditorFormatPreference == NumberStyles.Integer)
@@ -430,7 +430,7 @@ namespace DSPRE.ROMFiles {
                         }
                     }
                 default:
-                    if (Properties.Settings.Default.scriptEditorFormatPreference == (int)NumberStyles.None) {
+                    if (SettingsManager.Settings.scriptEditorFormatPreference == (int)NumberStyles.None) {
                         if (num >= 4000) {
                             formatOverride = "X";
                             prefix = "0x";

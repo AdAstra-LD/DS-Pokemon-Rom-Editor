@@ -38,33 +38,51 @@ using System.ComponentModel;
 using DSPRE.Editors;
 using DSPRE.Editors.BtxEditor;
 using static DSPRE.Helpers;
+using Velopack.Sources;
+using Velopack;
 namespace DSPRE {
 
 
     public partial class MainProgram : Form {
-
         public MainProgram() {
-            InitializeComponent();
 
-            EditorPanels.Initialize(this);
-            Helpers.Initialize(this);
+
 #if DEBUG
             AppLogger.Initialize(this, minLevel: LogLevel.Debug);
 #else
             AppLogger.Initialize(this, minLevel: LogLevel.Info);
 #endif
 
-
             AppLogger.Info("=== Application started. === ");
-            SetMenuLayout(Properties.Settings.Default.menuLayout); //Read user settings for menu layout
+
+            SettingsManager.Load();
+
+            // Updates can't be checked if the application is not installed, hence the !debug
+#if !DEBUG
+            try
+            {
+                Helpers.CheckForUpdates();
+            }
+            catch
+            {
+                AppLogger.Error("Failed to check for updates.");
+                MessageBox.Show("Failed to check for updates.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+#endif
+            InitializeComponent();
+
+            EditorPanels.Initialize(this);
+            Helpers.Initialize(this);
+
+            SetMenuLayout(SettingsManager.Settings.menuLayout); //Read user settings for menu layout
             Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
 
-            string romFolder = Properties.Settings.Default.openDefaultRom;
+            string romFolder = SettingsManager.Settings.openDefaultRom;
             if (romFolder != string.Empty)
             {
                 AppLogger.Info($"Detected stored ROM folder: {romFolder}");
 
-                if (!Properties.Settings.Default.neverAskForOpening)
+                if (!SettingsManager.Settings.neverAskForOpening)
                 {
                     AppLogger.Debug("Prompting user to confirm auto-opening the ROM folder.");
 
@@ -125,7 +143,7 @@ namespace DSPRE {
                 (list[i] as ToolStripMenuItem).Checked = (i == layoutStyle);
             }
 
-            Properties.Settings.Default.menuLayout = layoutStyle;
+            SettingsManager.Settings.menuLayout = layoutStyle;
 
             switch (layoutStyle)
             {
@@ -205,7 +223,7 @@ namespace DSPRE {
             if (e.CloseReason != CloseReason.ApplicationExitCall && MessageBox.Show("Are you sure you want to quit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) {
                 e.Cancel = true;
             }
-            Properties.Settings.Default.Save();
+            SettingsManager.Save();
         }
 
         private void MainProgram_Shown(object sender, EventArgs e) {
@@ -348,7 +366,7 @@ namespace DSPRE {
                 EditorPanels.scriptEditor.selectScriptFileComboBox.Items.Add("Script File " + i);
             }
 
-            EditorPanels.scriptEditor.UpdateScriptNumberCheckBox((NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference);
+            EditorPanels.scriptEditor.UpdateScriptNumberCheckBox((NumberStyles)SettingsManager.Settings.scriptEditorFormatPreference);
             EditorPanels.scriptEditor.selectScriptFileComboBox.SelectedIndex = 0;
             Helpers.statusLabelMessage();
         }
@@ -408,11 +426,6 @@ namespace DSPRE {
             return true;
         }
         #endregion
-
-        public string GetDSPREVersion() {
-            return "" + Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor +
-                "." + Assembly.GetExecutingAssembly().GetName().Version.Build;
-        }
 
         private void romToolBoxToolStripMenuItem_Click(object sender, EventArgs e) {
             using (PatchToolboxDialog window = new PatchToolboxDialog()) {
@@ -977,7 +990,7 @@ namespace DSPRE {
         private void saveRom_Click(object sender, EventArgs e) {
             SaveFileDialog saveRom = new SaveFileDialog {
                 Filter = DSUtils.NDSRomFilter,
-                InitialDirectory = Properties.Settings.Default.exportPath
+                InitialDirectory = SettingsManager.Settings.exportPath
             };
             if (saveRom.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -1045,7 +1058,7 @@ namespace DSPRE {
                 }
             }
 
-            Properties.Settings.Default.Save();
+            SettingsManager.Save();
             Helpers.statusLabelMessage();
             var date = DateTime.Now;
             var StringDate = Helpers.formatTime(date.Hour) + ":" + Helpers.formatTime(date.Minute) + ":" + Helpers.formatTime(date.Second);
@@ -2578,7 +2591,7 @@ namespace DSPRE {
                 selectMatrixComboBox.Items.Add(new GameMatrix(i));
             }
 
-            if (!ReadColorTable(Properties.Settings.Default.lastColorTablePath, silent: true)) {
+            if (!ReadColorTable(SettingsManager.Settings.lastColorTablePath, silent: true)) {
                 romInfo.ResetMapCellsColorDictionary();
             }
             RomInfo.SetupSpawnSettings();
@@ -3223,7 +3236,7 @@ namespace DSPRE {
                 ClearMatrixTables();
                 GenerateMatrixTables();
 
-                Properties.Settings.Default.lastColorTablePath = fileName;
+                SettingsManager.Settings.lastColorTablePath = fileName;
 
                 if (!silent) {
                     MessageBox.Show("Color file has been read." + errorMsg, "Operation completed", MessageBoxButtons.OK, iconType);
@@ -3247,7 +3260,7 @@ namespace DSPRE {
             ClearMatrixTables();
             GenerateMatrixTables();
 
-            Properties.Settings.Default.lastColorTablePath = "";
+            SettingsManager.Settings.lastColorTablePath = "";
         }
 
         /*
@@ -4988,7 +5001,7 @@ namespace DSPRE {
         private void importMapButton_Click(object sender, EventArgs e) {
             OpenFileDialog im = new OpenFileDialog {
                 Filter = MapFile.NSBMDFilter,
-                InitialDirectory = Properties.Settings.Default.mapImportStarterPoint
+                InitialDirectory = SettingsManager.Settings.mapImportStarterPoint
             };
             if (im.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -5740,10 +5753,10 @@ namespace DSPRE {
             /* Draw matrix 0 in matrix navigator */
             eventMatrix = new GameMatrix(0);
 
-            showSpawnablesCheckBox.Checked = Properties.Settings.Default.renderSpawnables;
-            showOwsCheckBox.Checked = Properties.Settings.Default.renderOverworlds;
-            showWarpsCheckBox.Checked = Properties.Settings.Default.renderWarps;
-            showTriggersCheckBox.Checked = Properties.Settings.Default.renderTriggers;
+            showSpawnablesCheckBox.Checked = SettingsManager.Settings.renderSpawnables;
+            showOwsCheckBox.Checked = SettingsManager.Settings.renderOverworlds;
+            showWarpsCheckBox.Checked = SettingsManager.Settings.renderWarps;
+            showTriggersCheckBox.Checked = SettingsManager.Settings.renderTriggers;
 
             if (owOrientationComboBox.SelectedIndex < 0 && overworldsListBox.Items.Count <= 0) {
                 owOrientationComboBox.SelectedIndex = 2;
@@ -6027,10 +6040,10 @@ namespace DSPRE {
             }
 
             DisplayActiveEvents();
-            Properties.Settings.Default.renderSpawnables = showSpawnablesCheckBox.Checked;
-            Properties.Settings.Default.renderOverworlds = showOwsCheckBox.Checked;
-            Properties.Settings.Default.renderWarps = showWarpsCheckBox.Checked;
-            Properties.Settings.Default.renderTriggers = showTriggersCheckBox.Checked;
+            SettingsManager.Settings.renderSpawnables = showSpawnablesCheckBox.Checked;
+            SettingsManager.Settings.renderOverworlds = showOwsCheckBox.Checked;
+            SettingsManager.Settings.renderWarps = showWarpsCheckBox.Checked;
+            SettingsManager.Settings.renderTriggers = showTriggersCheckBox.Checked;
         }
         private void eventAreaDataUpDown_ValueChanged(object sender, EventArgs e) {
             DisplayEventMap(readGraphicsFromHeader: false);

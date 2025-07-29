@@ -390,7 +390,7 @@
     </Compile>
     <Compile Include="ScintillaUtils\SearchManager.cs" />
     <Compile Include="ROMFiles\VariableValueTrigger.cs" />
-    <Compile Include="Settings.cs" />
+    <Compile Include="SettingsManager.cs" />
     <Compile Include="SettingsWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -614,15 +614,6 @@
     <EmbeddedResource Include="SettingsWindow.resx">
       <DependentUpon>SettingsWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
     <None Include="Resources\HGSSCommands.md" />
     <None Include="Resources\ROMToolboxDB\CPUE_cam.bin" />
     <None Include="Resources\ROMToolboxDB\CPUS_cam.bin" />
@@ -887,6 +878,9 @@
     </PackageReference>
     <PackageReference Include="System.Collections.Specialized">
       <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="Velopack">
+      <Version>0.0.1298</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
