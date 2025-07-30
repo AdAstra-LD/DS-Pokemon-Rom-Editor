@@ -19,12 +19,11 @@ jobs:
     outputs:
       latest_tag: ${{ steps.get_latest_tag.outputs.tag }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Get Latest Tag
-        id: get_latest_tag
-        uses: actions-ecosystem/action-get-latest-tag@v1
+         - uses: oprypin/find-latest-tag@v1
+           with:
+            repository: ${{ github.repository }}
+            releases-only: true  # We know that all relevant tags have a GitHub release for them.
+           id: get_latest_tag  # The step ID to refer to later.
 
   deploy_to_github_releases:
     name: Deploy to GitHub Releases
