@@ -1,16 +1,19 @@
-﻿using System.Windows.Forms;
+﻿using MKDS_Course_Editor.Export3DTools;
+using System.Windows.Forms;
 
 namespace DSPRE.Editors
 {
   public partial class EncountersEditor : UserControl
   {
+        public bool encounterEditorIsReady { get; set; } = false;
     public EncountersEditor()
     {
       InitializeComponent();
     }
 
     public void SetupEncountersEditor() {
-      tabPageHeadbuttEditor_Enter(null, null);
+            encounterEditorIsReady = true;
+            tabPageHeadbuttEditor_Enter(null, null);
     }
 
     private void tabPageHeadbuttEditor_Enter(object sender, System.EventArgs e)
