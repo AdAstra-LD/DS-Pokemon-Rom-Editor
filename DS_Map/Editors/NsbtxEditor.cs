@@ -547,7 +547,7 @@ namespace DSPRE.Editors
 
             if (_parent.eventEditorIsReady)
             {
-                _parent.eventAreaDataUpDown.Maximum++;
+                //_parent.eventAreaDataUpDown.Maximum++;
             }
         }
         private void removeAreaDataButton_Click(object sender, EventArgs e)
@@ -569,7 +569,7 @@ namespace DSPRE.Editors
 
                 if (_parent.eventEditorIsReady)
                 {
-                    _parent.eventAreaDataUpDown.Maximum--;
+                    //_parent.eventAreaDataUpDown.Maximum--;
                 }
             }
             else

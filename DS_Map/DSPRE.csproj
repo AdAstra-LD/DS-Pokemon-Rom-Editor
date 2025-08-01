@@ -148,6 +148,12 @@
     <Compile Include="Editors\EncountersEditor.Designer.cs">
       <DependentUpon>EncountersEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\EventEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\EventEditor.Designer.cs">
+      <DependentUpon>EventEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\HeadbuttEncounterEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -487,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\EncountersEditor.resx">
       <DependentUpon>EncountersEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\EventEditor.resx">
+      <DependentUpon>EventEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\HeadbuttEncounterEditor.resx">
       <DependentUpon>HeadbuttEncounterEditor.cs</DependentUpon>

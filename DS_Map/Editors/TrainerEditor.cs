@@ -792,7 +792,7 @@ namespace DSPRE.Editors
 
             if (_parent.eventEditorIsReady)
             {
-                _parent.owTrainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
+                //_parent.owTrainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
             }
         }
 
