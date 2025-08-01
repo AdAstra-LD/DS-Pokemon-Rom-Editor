@@ -790,9 +790,9 @@ namespace DSPRE.Editors
             trainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
             Helpers.EnableHandlers();
 
-            if (_parent.eventEditorIsReady)
+            if (EditorPanels.eventEditor.eventEditorIsReady)
             {
-                //_parent.owTrainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
+                EditorPanels.eventEditor.owTrainerComboBox.Items[trainerComboBox.SelectedIndex] = editedTrainer;
             }
         }
 

@@ -545,9 +545,9 @@ namespace DSPRE.Editors
             selectAreaDataListBox.Items.Add("AreaData File " + selectAreaDataListBox.Items.Count);
             selectAreaDataListBox.SelectedIndex = selectAreaDataListBox.Items.Count - 1;
 
-            if (_parent.eventEditorIsReady)
+            if (EditorPanels.eventEditor.eventEditorIsReady)
             {
-                //_parent.eventAreaDataUpDown.Maximum++;
+                EditorPanels.eventEditor.eventAreaDataUpDown.Maximum++;
             }
         }
         private void removeAreaDataButton_Click(object sender, EventArgs e)
@@ -567,9 +567,9 @@ namespace DSPRE.Editors
                 /* Remove item from ComboBox */
                 selectAreaDataListBox.Items.RemoveAt(lastIndex);
 
-                if (_parent.eventEditorIsReady)
+                if (EditorPanels.eventEditor.eventEditorIsReady)
                 {
-                    //_parent.eventAreaDataUpDown.Maximum--;
+                    EditorPanels.eventEditor.eventAreaDataUpDown.Maximum--;
                 }
             }
             else

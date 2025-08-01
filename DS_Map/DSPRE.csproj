@@ -181,6 +181,12 @@
     <Compile Include="Editors\LoadingForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Editors\MatrixEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\MatrixEditor.Designer.cs">
+      <DependentUpon>MatrixEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\MoveDataEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -508,6 +514,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\LevelScriptEditor.resx">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\MatrixEditor.resx">
+      <DependentUpon>MatrixEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\MoveDataEditor.resx">
       <DependentUpon>MoveDataEditor.cs</DependentUpon>
