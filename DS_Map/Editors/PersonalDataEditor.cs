@@ -3,6 +3,7 @@ using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -72,6 +73,7 @@ namespace DSPRE {
             this.fileNames = fileNames.ToArray();
             monNumberNumericUpDown.Maximum = fileNames.Count - 1;
             pokemonNameInputComboBox.Items.AddRange(this.fileNames);
+            hatchResultComboBox.DataSource = fileNames.ToArray();
             /* ---------------- */
 
             Helpers.EnableHandlers();
@@ -399,6 +401,7 @@ namespace DSPRE {
         }
         private void saveDataButton_Click(object sender, EventArgs e) {
             currentLoadedFile.SaveToFileDefaultDir(currentLoadedId, true);
+            WriteHatchResult(currentLoadedId);
             //if (modifiedAbilities) {
             //    EditorPanels.MainProgram.RefreshAbilities(currentLoadedId);
             //    modifiedAbilities = false;
@@ -453,6 +456,18 @@ namespace DSPRE {
             Helpers.EnableHandlers();
         }
 
+
+        private void hatchResultComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            setDirty(true);
+        }
+
         public void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
             currentLoadedFile = new PokemonPersonalData(currentLoadedId);
@@ -487,6 +502,7 @@ namespace DSPRE {
 
             eggGroup1InputCombobox.SelectedIndex = currentLoadedFile.eggGroup1;
             eggGroup2InputCombobox.SelectedIndex = currentLoadedFile.eggGroup2;
+            hatchResultComboBox.SelectedIndex = GetHatchResult(currentLoadedId);
 
             ability1InputComboBox.SelectedIndex = currentLoadedFile.firstAbility;
             ability2InputComboBox.SelectedIndex = currentLoadedFile.secondAbility;
@@ -552,6 +568,50 @@ namespace DSPRE {
             int addedCount = addedMachinesListBox.Items.Count;
             if (addedCount > 0) {
                 addedMachinesListBox.SelectedItem = addedSel;
+            }
+        }
+
+        private int GetHatchResult(int monID)
+        {
+            if (monID < 0) {
+                return 0;
+            }
+
+            // Open PMS file to find the hatch result
+            // This isn't a narc despite the name, it's a binary file. It's also in the same location for all games and languages.
+            FileStream stream = new FileStream(Path.Combine(RomInfo.dataPath, @"poketool/personal/pms.narc"), FileMode.Open);
+
+            using (BinaryReader reader = new BinaryReader(stream)) 
+            {
+                // Each entry is 2 bytes long
+                int offset = monID * 2;
+                if (offset + 1 > stream.Length) {
+                    return 0; // Out of bounds
+                }
+                stream.Seek(offset, SeekOrigin.Begin);
+                ushort hatchResult = reader.ReadUInt16();
+                stream.Close();
+                return hatchResult;
+            }
+        }
+
+        private void WriteHatchResult(int monID) {
+            if (monID < 0) {
+                return;
+            }
+            // Open PMS file to write the hatch result
+            FileStream stream = new FileStream(Path.Combine(RomInfo.dataPath, @"poketool/personal/pms.narc"), FileMode.Open);
+            using (BinaryWriter writer = new BinaryWriter(stream))
+            {
+                // Each entry is 2 bytes long
+                int offset = monID * 2;
+                if (offset + 1 > stream.Length)
+                {
+                    return; // Out of bounds
+                }
+                stream.Seek(offset, SeekOrigin.Begin);
+                writer.Write((ushort)hatchResultComboBox.SelectedIndex);
+                stream.Close();
             }
         }
 
