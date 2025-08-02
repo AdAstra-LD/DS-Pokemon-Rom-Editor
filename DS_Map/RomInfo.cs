@@ -249,9 +249,6 @@ namespace DSPRE
             ScriptCommandNamesReverseDict = ScriptCommandNamesDict.Reverse();
             ScriptActionNamesReverseDict = ScriptActionNamesDict.Reverse();
             ScriptComparisonOperatorsReverseDict = ScriptComparisonOperatorsDict.Reverse();
-            ScriptDatabase.InitializePokemonNames();
-            ScriptDatabase.InitializeItemNames();
-            ScriptDatabase.InitializeMoveNames();
         }
 
         #endregion Constructors (1)

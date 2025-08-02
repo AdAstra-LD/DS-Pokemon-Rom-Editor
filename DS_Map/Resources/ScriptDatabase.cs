@@ -1886,7 +1886,7 @@ namespace DSPRE.Resources {
             [0x00C0] = "TextCounterpart",
             [0x00C1] = "TextPartyPokemon",
             [0x00C2] = "TextItem",
-            [0x00C2] = "TextPocket",
+            [0x00C3] = "TextPocket",
             [0x00C4] = "TextAttackItem",
             [0x00C5] = "TextMove",
             [0x00C6] = "TextNumber",
