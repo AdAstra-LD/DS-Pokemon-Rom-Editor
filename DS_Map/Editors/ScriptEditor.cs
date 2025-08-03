@@ -98,6 +98,9 @@ namespace DSPRE.Editors
             populate_selectScriptFileComboBox(0);
             UpdateScriptNumberCheckBox((NumberStyles)SettingsManager.Settings.scriptEditorFormatPreference);
             Helpers.statusLabelMessage();
+            ScriptDatabase.InitializePokemonNames();
+            ScriptDatabase.InitializeItemNames();
+            ScriptDatabase.InitializeMoveNames();
         }
         public void OpenScriptEditor(MainProgram parent, int scriptFileID)
         {
