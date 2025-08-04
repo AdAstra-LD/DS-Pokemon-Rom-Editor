@@ -1,6 +1,7 @@
 ﻿using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -55,37 +56,85 @@ namespace DSPRE {
 
             currentFile = new EncounterFileDPPt(selectEncounterComboBox.SelectedIndex);
 
-            /* Once the GUI overhaul is complete - i.e.: once everything is a TableLayoutPanel, 
-             * this can be simplified a lot. */
-            foreach (TabPage page in mainTabControl.TabPages) {
-                foreach (Control g in page.Controls) {
-                    if (g != null && g is GroupBox) {
-                        foreach (Control c in g.Controls) {
-                            if (c != null) {
-                                if (c is InputComboBox) {
-                                    (c as InputComboBox).DataSource = new BindingSource(names, string.Empty);
-                                } else if (c is TableLayoutPanel) {
-                                    TableLayoutPanel tbl = (c as TableLayoutPanel);
-                                   
-                                    foreach (Control tblC in tbl.Controls) {
-                                        if (c != null) {
-                                            if (tblC is InputComboBox) {
-                                                (tblC as InputComboBox).DataSource = new BindingSource(names, string.Empty);
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            AddPokemonNamesBinding(names);            
 
             Helpers.EnableHandlers();
 
             SetupControls();
         }
+
+        // Listing them all like this is more work, but it is easier to read and maintain.
+        private void AddPokemonNamesBinding(string[] names)
+        {
+            /* Walking encounters */
+            walkingTwentyFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingTwentySecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingTenFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingTenSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingTenThirdComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingTenFourthComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingFiveFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingFiveSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingFourFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingFourSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingOneFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            walkingOneSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /* Time dependent encounters */
+            dayFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            daySecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            swarmFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            swarmSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /* Dual Slot encounters */
+            rubyFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            rubySecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            sapphireFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            sapphireSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            emeraldFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            emeraldSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            fireRedFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            fireRedSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            leafGreenFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            leafGreenSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /* PokéRadar encounters */
+            radarFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            radarSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            radarThirdComboBox.DataSource = new BindingSource(names, string.Empty);
+            radarFourthComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /* Water encounters */
+            surfSixtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfThirtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfFiveComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfFourComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfOneComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /* Old rod encounters */
+            oldRodSixtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            oldRodThirtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            oldRodFiveComboBox.DataSource = new BindingSource(names, string.Empty);
+            oldRodFourComboBox.DataSource = new BindingSource(names, string.Empty);
+            oldRodOneComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /* Good rod encounters */
+            goodRodFirstFortyComboBox.DataSource = new BindingSource(names, string.Empty);
+            goodRodSecondFortyComboBox.DataSource = new BindingSource(names, string.Empty);
+            goodRodFifteenComboBox.DataSource = new BindingSource(names, string.Empty);
+            goodRodFourComboBox.DataSource = new BindingSource(names, string.Empty);
+            goodRodOneComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /* Super rod encounters */
+            superRodFirstFortyComboBox.DataSource = new BindingSource(names, string.Empty);
+            superRodSecondFortyComboBox.DataSource = new BindingSource(names, string.Empty);
+            superRodFifteenComboBox.DataSource = new BindingSource(names, string.Empty);
+            superRodFourComboBox.DataSource = new BindingSource(names, string.Empty);
+            superRodOneComboBox.DataSource = new BindingSource(names, string.Empty);
+        }
+
         private void SetupControls() {
             Helpers.DisableHandlers();
 
@@ -123,8 +172,8 @@ namespace DSPRE {
             walkingOneSecondUpDown.Value = currentFile.walkingLevels[11];
 
             /* Time dependent encounters controls setup */
-            morningFirstComboBox.SelectedIndex = (int)currentFile.morningPokemon[0];
-            morningSecondComboBox.SelectedIndex = (int)currentFile.morningPokemon[1];
+            dayFirstComboBox.SelectedIndex = (int)currentFile.morningPokemon[0];
+            daySecondComboBox.SelectedIndex = (int)currentFile.morningPokemon[1];
             nightFirstComboBox.SelectedIndex = (int)currentFile.nightPokemon[0];
             nightSecondComboBox.SelectedIndex = (int)currentFile.nightPokemon[1];
             swarmFirstComboBox.SelectedIndex = currentFile.swarmPokemon[0];
@@ -240,6 +289,56 @@ namespace DSPRE {
                 "." + Assembly.GetExecutingAssembly().GetName().Version.Build;
         }
 
+        private void DrawConnectingLines()
+        {
+            var panel = walkingTableLayoutPanel;
+            using (Graphics g = panel.CreateGraphics())
+            {
+                Pen dashedPen = new Pen(Color.Gray, 1.5f);
+                dashedPen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+                // Loop through all rows
+                for (int row = 0; row < panel.RowCount; row++)
+                {
+                    // The updown is always in column 7
+                    Control updown = panel.GetControlFromPosition(7, row);
+
+                    // The combo box is the rightmost control besides the updown
+                    Control combo = null;
+                    for (int col = 6; col >= 0; col--)
+                    {
+                        Control ctrl = panel.GetControlFromPosition(col, row);
+                        if (ctrl is InputComboBox)
+                        {
+                            combo = ctrl;
+                            break;
+                        }
+                    }
+
+                    if (combo is InputComboBox && updown is NumericUpDown)
+                    {
+                        // Get the location of the controls relative to the panel
+                        Point comboPoint = panel.PointToClient(combo.Parent.PointToScreen(combo.Location));
+                        Point updownPoint = panel.PointToClient(updown.Parent.PointToScreen(updown.Location));
+
+                        // Calculate the Y center of each control
+                        int comboY = comboPoint.Y + combo.Height / 2;
+                        int updownY = updownPoint.Y + updown.Height / 2;
+
+                        // Draw from right edge of ComboBox to left edge of NumericUpDown
+                        int comboX = comboPoint.X + combo.Width + 5;
+                        int updownX = updownPoint.X - 5;
+
+                        if (updownX > comboX)
+                        {
+                            g.DrawLine(dashedPen, comboX, comboY, updownX, updownY);
+                        }
+                        
+                    }
+                }
+            }
+        }
+
         private void exportEncounterFileButton_Click(object sender, EventArgs e) {
             currentFile.SaveToFileExplorePath("Encounter File " + selectEncounterComboBox.SelectedIndex);
         }
@@ -345,13 +444,13 @@ namespace DSPRE {
             if (Helpers.HandlersDisabled) { 
                 return; 
             }
-            currentFile.morningPokemon[0] = (uint)morningFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[0] = (uint)dayFirstComboBox.SelectedIndex;
         }
         private void morningSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) { 
                 return; 
             }
-            currentFile.morningPokemon[1] = (uint)morningSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[1] = (uint)daySecondComboBox.SelectedIndex;
         }
         private void nightFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) { 
@@ -980,6 +1079,15 @@ namespace DSPRE {
 
                 MessageBox.Show("All repairable fields have been fixed.", "Operation completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void walkingTableLayoutPanel_Paint(object sender, PaintEventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+            DrawConnectingLines();
         }
     }
 }
