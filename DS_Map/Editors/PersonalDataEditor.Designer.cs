@@ -81,11 +81,11 @@
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.eggStepsNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
+            this.eggGroup1Label = new System.Windows.Forms.Label();
+            this.eggGroup2Label = new System.Windows.Forms.Label();
             this.eggGroup1InputCombobox = new DSPRE.InputComboBox();
             this.eggGroup2InputCombobox = new DSPRE.InputComboBox();
-            this.label23 = new System.Windows.Forms.Label();
+            this.hatchStepsLabel = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.dexColorInputComboBox = new DSPRE.InputComboBox();
@@ -118,6 +118,8 @@
             this.type2InputComboBox = new DSPRE.InputComboBox();
             this.type1InputComboBox = new DSPRE.InputComboBox();
             this.pokemonNameInputComboBox = new DSPRE.InputComboBox();
+            this.hatchResultLabel = new System.Windows.Forms.Label();
+            this.hatchResultComboBox = new DSPRE.InputComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pokemonPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.monNumberNumericUpDown)).BeginInit();
@@ -922,30 +924,34 @@
             // 
             this.tableLayoutPanel9.ColumnCount = 1;
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel9.Controls.Add(this.hatchResultLabel, 0, 6);
             this.tableLayoutPanel9.Controls.Add(this.eggStepsNumericUpDown, 0, 5);
-            this.tableLayoutPanel9.Controls.Add(this.label21, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.label22, 0, 2);
+            this.tableLayoutPanel9.Controls.Add(this.eggGroup1Label, 0, 0);
+            this.tableLayoutPanel9.Controls.Add(this.eggGroup2Label, 0, 2);
             this.tableLayoutPanel9.Controls.Add(this.eggGroup1InputCombobox, 0, 1);
             this.tableLayoutPanel9.Controls.Add(this.eggGroup2InputCombobox, 0, 3);
-            this.tableLayoutPanel9.Controls.Add(this.label23, 0, 4);
+            this.tableLayoutPanel9.Controls.Add(this.hatchStepsLabel, 0, 4);
+            this.tableLayoutPanel9.Controls.Add(this.hatchResultComboBox, 0, 7);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(3, 16);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
             this.tableLayoutPanel9.Padding = new System.Windows.Forms.Padding(5);
-            this.tableLayoutPanel9.RowCount = 6;
+            this.tableLayoutPanel9.RowCount = 8;
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.06265F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.06265F));
             this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.06265F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.81203F));
             this.tableLayoutPanel9.Size = new System.Drawing.Size(120, 231);
             this.tableLayoutPanel9.TabIndex = 23;
             // 
             // eggStepsNumericUpDown
             // 
             this.eggStepsNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.eggStepsNumericUpDown.Location = new System.Drawing.Point(8, 188);
+            this.eggStepsNumericUpDown.Location = new System.Drawing.Point(8, 142);
             this.eggStepsNumericUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -956,25 +962,25 @@
             this.eggStepsNumericUpDown.TabIndex = 18;
             this.eggStepsNumericUpDown.ValueChanged += new System.EventHandler(this.eggStepsNumericUpDown_ValueChanged);
             // 
-            // label21
+            // eggGroup1Label
             // 
-            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(8, 8);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(104, 13);
-            this.label21.TabIndex = 13;
-            this.label21.Text = "Group 1";
+            this.eggGroup1Label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.eggGroup1Label.AutoSize = true;
+            this.eggGroup1Label.Location = new System.Drawing.Point(8, 8);
+            this.eggGroup1Label.Name = "eggGroup1Label";
+            this.eggGroup1Label.Size = new System.Drawing.Size(104, 13);
+            this.eggGroup1Label.TabIndex = 13;
+            this.eggGroup1Label.Text = "Group 1";
             // 
-            // label22
+            // eggGroup2Label
             // 
-            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(8, 81);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(104, 13);
-            this.label22.TabIndex = 14;
-            this.label22.Text = "Group 2";
+            this.eggGroup2Label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.eggGroup2Label.AutoSize = true;
+            this.eggGroup2Label.Location = new System.Drawing.Point(8, 63);
+            this.eggGroup2Label.Name = "eggGroup2Label";
+            this.eggGroup2Label.Size = new System.Drawing.Size(104, 13);
+            this.eggGroup2Label.TabIndex = 14;
+            this.eggGroup2Label.Text = "Group 2";
             // 
             // eggGroup1InputCombobox
             // 
@@ -982,7 +988,7 @@
             this.eggGroup1InputCombobox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.eggGroup1InputCombobox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.eggGroup1InputCombobox.FormattingEnabled = true;
-            this.eggGroup1InputCombobox.Location = new System.Drawing.Point(8, 41);
+            this.eggGroup1InputCombobox.Location = new System.Drawing.Point(8, 32);
             this.eggGroup1InputCombobox.Name = "eggGroup1InputCombobox";
             this.eggGroup1InputCombobox.Size = new System.Drawing.Size(104, 21);
             this.eggGroup1InputCombobox.TabIndex = 15;
@@ -994,21 +1000,21 @@
             this.eggGroup2InputCombobox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.eggGroup2InputCombobox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.eggGroup2InputCombobox.FormattingEnabled = true;
-            this.eggGroup2InputCombobox.Location = new System.Drawing.Point(8, 114);
+            this.eggGroup2InputCombobox.Location = new System.Drawing.Point(8, 87);
             this.eggGroup2InputCombobox.Name = "eggGroup2InputCombobox";
             this.eggGroup2InputCombobox.Size = new System.Drawing.Size(104, 21);
             this.eggGroup2InputCombobox.TabIndex = 16;
             this.eggGroup2InputCombobox.SelectedIndexChanged += new System.EventHandler(this.eggGroup2InputCombobox_SelectedIndexChanged);
             // 
-            // label23
+            // hatchStepsLabel
             // 
-            this.label23.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(8, 154);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(104, 13);
-            this.label23.TabIndex = 17;
-            this.label23.Text = "Hatch Steps";
+            this.hatchStepsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.hatchStepsLabel.AutoSize = true;
+            this.hatchStepsLabel.Location = new System.Drawing.Point(8, 118);
+            this.hatchStepsLabel.Name = "hatchStepsLabel";
+            this.hatchStepsLabel.Size = new System.Drawing.Size(104, 13);
+            this.hatchStepsLabel.TabIndex = 17;
+            this.hatchStepsLabel.Text = "Hatch Steps";
             // 
             // groupBox7
             // 
@@ -1437,6 +1443,28 @@
             this.pokemonNameInputComboBox.TabIndex = 31;
             this.pokemonNameInputComboBox.SelectedIndexChanged += new System.EventHandler(this.pokemonNameInputComboBox_SelectedIndexChanged);
             // 
+            // hatchResultLabel
+            // 
+            this.hatchResultLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.hatchResultLabel.AutoSize = true;
+            this.hatchResultLabel.Location = new System.Drawing.Point(8, 173);
+            this.hatchResultLabel.Name = "hatchResultLabel";
+            this.hatchResultLabel.Size = new System.Drawing.Size(104, 13);
+            this.hatchResultLabel.TabIndex = 19;
+            this.hatchResultLabel.Text = "Hatch Result";
+            // 
+            // hatchResultComboBox
+            // 
+            this.hatchResultComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.hatchResultComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.hatchResultComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.hatchResultComboBox.FormattingEnabled = true;
+            this.hatchResultComboBox.Location = new System.Drawing.Point(8, 197);
+            this.hatchResultComboBox.Name = "hatchResultComboBox";
+            this.hatchResultComboBox.Size = new System.Drawing.Size(104, 21);
+            this.hatchResultComboBox.TabIndex = 20;
+            this.hatchResultComboBox.SelectedIndexChanged += new System.EventHandler(this.hatchResultComboBox_SelectedIndexChanged);
+            // 
             // PersonalDataEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1560,11 +1588,11 @@
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.NumericUpDown eggStepsNumericUpDown;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label eggGroup1Label;
+        private System.Windows.Forms.Label eggGroup2Label;
         private InputComboBox eggGroup1InputCombobox;
         private InputComboBox eggGroup2InputCombobox;
-        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label hatchStepsLabel;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private InputComboBox dexColorInputComboBox;
@@ -1605,5 +1633,7 @@
         private InputComboBox type1InputComboBox;
         public InputComboBox pokemonNameInputComboBox;
         public System.Windows.Forms.NumericUpDown monNumberNumericUpDown;
+        private System.Windows.Forms.Label hatchResultLabel;
+        private InputComboBox hatchResultComboBox;
     }
 }

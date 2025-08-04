@@ -52,6 +52,7 @@ namespace DSPRE.Editors
         SpeciesFile[] pokemonSpecies;
 
         private (int abi1, int abi2)[] pokemonSpeciesAbilities;
+        private List<(int monIdx, int moveIdx1, int moveIdx2)> duplicateMoves = new List<(int monIdx, int moveIdx1, int moveIdx2)>();
 
         TrainerFile currentTrainerFile;
         public PaletteBase trainerPal;
@@ -398,6 +399,8 @@ namespace DSPRE.Editors
             RefreshTrainerPartyGUI();
             RefreshTrainerPropertiesGUI();
 
+            UpdateDuplicateMovesList();
+
             Helpers.EnableHandlers();
 
             if (error)
@@ -472,9 +475,13 @@ namespace DSPRE.Editors
                     for (int j = 0; j < Party.MOVES_PER_POKE; j++)
                     {
                         (partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex = currentTrainerFile.party[i].moves[j];
+                        (partyMovesGroupboxList[i].Controls[j] as ComboBox).ForeColor = SystemColors.WindowText;
                     }
                 }
             }
+
+            MarkDuplicateMoves();
+
         }
 
         private void ShowPartyPokemonPic(byte partyPos)
@@ -654,19 +661,61 @@ namespace DSPRE.Editors
                 partyItemsComboboxList[i].Enabled = trainerItemsCheckBox.Checked;
             }
         }
+
+        private void partyMoveComboBox_DropDown(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+            ((ComboBox)sender).ForeColor = SystemColors.WindowText;
+        }
+
         private void partyMoveComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Helpers.HandlersEnabled)
+            if (Helpers.HandlersDisabled)
             {
-                for (int i = 0; i < TrainerFile.POKE_IN_PARTY; i++)
-                {
-                    ushort[] moves = currentTrainerFile.party[i].moves;
+                return;
+            }
 
-                    if (moves != null)
+            MarkDuplicateMoves();
+
+        }
+
+        private void MarkDuplicateMoves()
+        {
+            foreach (var cbGroup in partyMovesGroupboxList)
+            {
+                foreach (var cb in cbGroup.Controls)
+                {
+                    ((ComboBox)cb).ForeColor = SystemColors.WindowText;
+                }
+            }
+
+            UpdateDuplicateMovesList();
+
+            foreach (var duplicate in duplicateMoves)
+            {
+                ((ComboBox)partyMovesGroupboxList[duplicate.monIdx].Controls[duplicate.moveIdx1]).ForeColor = Color.Red;
+                ((ComboBox)partyMovesGroupboxList[duplicate.monIdx].Controls[duplicate.moveIdx2]).ForeColor = Color.Red;
+            }
+        }
+
+        private void UpdateDuplicateMovesList()
+        {
+            duplicateMoves.Clear();
+
+            for (int pokemonIndex = 0; pokemonIndex < partyMovesGroupboxList.Count; pokemonIndex++)
+            {
+                for (int i = 0; i < Party.MOVES_PER_POKE - 1; i++)
+                {
+                    for (int j = i + 1; j < Party.MOVES_PER_POKE; j++)
                     {
-                        for (int j = 0; j < Party.MOVES_PER_POKE; j++)
+                        ComboBox cb1 = (ComboBox)partyMovesGroupboxList[pokemonIndex].Controls[i];
+                        ComboBox cb2 = (ComboBox)partyMovesGroupboxList[pokemonIndex].Controls[j];
+                        if (cb1.SelectedIndex != 0 && cb1.SelectedIndex == cb2.SelectedIndex)
                         {
-                            moves[j] = (ushort)(partyMovesGroupboxList[i].Controls[j] as ComboBox).SelectedIndex;
+                            duplicateMoves.Add((pokemonIndex, i, j));
                         }
                     }
                 }
@@ -748,6 +797,21 @@ namespace DSPRE.Editors
                 }
 
                 currentTrainerFile.party[i].ballSeals = (ushort)partyBallUpdownList[i].Value;
+            }
+
+            if (duplicateMoves.Count != 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("Duplicate moves have been found:\n");
+
+                foreach (var duplicate in duplicateMoves)
+                {
+                    string move = partyMovesGroupboxList[duplicate.monIdx].Controls[duplicate.moveIdx1].Text;
+                    sb.Append($"- {partyPokemonComboboxList[duplicate.monIdx].Text} has duplicate move \"{move}\"\n");
+                }
+                sb.Append("This will cause issues in game.");
+
+                MessageBox.Show(sb.ToString(), "Duplicate Moves", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             /*Write to File*/

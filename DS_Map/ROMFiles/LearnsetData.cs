@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using DSPRE.ROMFiles;
 using static DSPRE.RomInfo;
 
@@ -12,28 +14,37 @@ namespace DSPRE {
 
         public readonly UniqueList<(byte level, ushort move)> list;
 
-        public ushort[] GetLearnsetAtLevel(int atLevel) {
-            ushort[] learnset = new ushort[4] {0, 0 , 0, 0};
-            foreach ((ushort level, ushort move) in list)
-            {
-                if (level <= atLevel) 
-                {
-                    if (learnset[0] == 0) {
-                        learnset[0] = move;
-                    } else if (learnset[1] == 0) {
-                        learnset[1] = move;
-                    } else if (learnset[2] == 0) {
-                        learnset[2] = move;
-                    } else if (learnset[3] == 0) {
-                        learnset[3] = move;
-                    } else {
-                        learnset[0] = learnset[1];
-                        learnset[1] = learnset[2];
-                        learnset[2] = learnset[3];
-                        learnset[3] = move;
-                    }
+        public ushort[] GetLearnsetAtLevel(int atLevel)
+        {
+            List<ushort> moves = new List<ushort>();
+            
+            foreach ((byte level, ushort move) elem in list) {
+
+                if (elem.level > atLevel) {
+                    continue; // the moves should be sorted by level so we can probably break here but better safe than sorry
+                }
+
+                if (elem.move == 0) {
+                    continue; // skip empty moves
+                }
+
+                if (!moves.Contains(elem.move)) {
+                    
+                    if (moves.Count >= 4)
+                    {
+                        moves.RemoveAt(0);
+                    }                    
+                    moves.Add(elem.move); // add the new move to the end of the list
                 }
             }
+
+            ushort[] learnset = moves.ToArray();
+
+            // Ensure we have exactly 4 moves, filling with 0 if necessary
+            if (learnset.Length < 4) {
+                Array.Resize(ref learnset, 4);
+            }
+
             return learnset;
         }
 

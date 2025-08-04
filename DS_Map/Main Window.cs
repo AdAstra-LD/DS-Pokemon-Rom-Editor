@@ -73,6 +73,7 @@ namespace DSPRE
             }
 #endif
             InitializeComponent();
+            Program.CloneAndSetupDatabase();
 
             EditorPanels.Initialize(this);
             Helpers.Initialize(this);
@@ -5251,7 +5252,7 @@ namespace DSPRE
         }
         private void exportScriptDatabaseJSONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Not implemented yet");
+            MessageBox.Show("The database JSONs can be found in AppData/Roaming/DSPRE");
         }
 
         private void generateCSVToolStripMenuItem_Click(object sender, EventArgs e)
@@ -5268,6 +5269,14 @@ namespace DSPRE
         {
             var flyEditor = new FlyEditor(gameFamily, headerListBoxNames);
             flyEditor.Show();
+        }
+
+        private void tradeEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.tradeData });
+
+            TradeEditor tradeEditor = new TradeEditor();
+            tradeEditor.Show();
         }
 
         private void itemEditorToolStripMenuItem_Click(object sender, EventArgs e)

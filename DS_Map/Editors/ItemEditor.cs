@@ -91,7 +91,6 @@ namespace DSPRE.Editors
             itemNameInputComboBox.Items.AddRange(this.itemFileNames);
             holdEffectComboBox.Items.AddRange(Enum.GetNames(typeof(HoldEffect)));
             fieldPocketComboBox.Items.AddRange(Enum.GetNames(typeof(FieldPocket)));
-            battlePocketComboBox.Items.AddRange(Enum.GetNames(typeof(BattlePocket)));
             naturalGiftTypeComboBox.Items.AddRange(Enum.GetNames(typeof(NaturalGiftType)));
             fieldFunctionComboBox.Items.AddRange(Enum.GetNames(typeof(FieldUseFunc)));
             battleFunctionComboBox.Items.AddRange(Enum.GetNames(typeof(BattleUseFunc)));
@@ -122,6 +121,17 @@ namespace DSPRE.Editors
 
             imageComboBox.EndUpdate();
             paletteComboBox.EndUpdate();
+        }
+
+        public void UpdateBattlePocketCheckBoxes()
+        {
+            BattlePocket battlePocket = currentLoadedFile.battlePocket;
+
+            pokeBallsBattlePocketCheck.Checked = (battlePocket & BattlePocket.PokeBalls) != 0;
+            battleItemsBattlePocketCheck.Checked = (battlePocket & BattlePocket.BattleItems) != 0;
+            hpRestoreBattlePocketCheck.Checked = (battlePocket & BattlePocket.HpRestore) != 0;
+            statusHealersBattlePocketCheck.Checked = (battlePocket & BattlePocket.StatusHealers) != 0;
+            ppRestoreBattlePocketCheck.Checked = (battlePocket & BattlePocket.PpRestore) != 0;
         }
 
 
@@ -287,9 +297,7 @@ namespace DSPRE.Editors
             // Pockets
             fieldPocketComboBox.SelectedIndex = (int)currentLoadedFile.fieldPocket;
             // Set the selected value for non sequential enums
-            BattlePocket battlePocket = (BattlePocket)currentLoadedFile.battlePocket;
-            string battlePocketEnum = Enum.GetName(typeof(BattlePocket), battlePocket);
-            battlePocketComboBox.SelectedItem = battlePocketEnum;
+            UpdateBattlePocketCheckBoxes();
 
             // Move Related
             // Set the selected value for non sequential enums
@@ -555,17 +563,6 @@ namespace DSPRE.Editors
             setDirty(true);
         }
 
-        private void battlePocketComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (Helpers.HandlersDisabled)
-            {
-                return;
-            }
-
-            currentLoadedFile.battlePocket = (BattlePocket)Enum.Parse(typeof(BattlePocket), (string)battlePocketComboBox.SelectedItem);
-            setDirty(true);
-
-        }
 
         private void priceNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
@@ -821,6 +818,30 @@ namespace DSPRE.Editors
                 itemNarcTableEntry.itemAGB = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 6));
             }
             setDirty(false);
+        }
+
+        private void BattlePocketCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
+            // Build battlePocket from checkbox states
+            BattlePocket battlePocket = BattlePocket.None;
+            if (pokeBallsBattlePocketCheck.Checked)
+                battlePocket |= BattlePocket.PokeBalls;
+            if (battleItemsBattlePocketCheck.Checked)
+                battlePocket |= BattlePocket.BattleItems;
+            if (hpRestoreBattlePocketCheck.Checked)
+                battlePocket |= BattlePocket.HpRestore;
+            if (statusHealersBattlePocketCheck.Checked)
+                battlePocket |= BattlePocket.StatusHealers;
+            if (ppRestoreBattlePocketCheck.Checked)
+                battlePocket |= BattlePocket.PpRestore;
+
+            currentLoadedFile.battlePocket = battlePocket;
+            setDirty(true);
         }
     }
 }

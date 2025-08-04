@@ -17,7 +17,10 @@ namespace DSPRE.ROMFiles {
             OW_DIRECTION,
             FUNCTION_ID,
             ACTION_ID,
-            CMD_NUMBER
+            CMD_NUMBER,
+            POKEMON_NAME,
+            ITEM_NAME,
+            MOVE_NAME
         };
 
         public ushort? id;
@@ -64,19 +67,39 @@ namespace DSPRE.ROMFiles {
                         break;
                     }
                 case 0x005E: // Movement
-                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
+                        name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
                     break;
                 case 0x006A: // GetOverworldPosition
-                    name += FormatCmd_Overworld_TwoParams(parametersList);
+                        name += FormatCmd_Overworld_TwoParams(parametersList);
                     break;
                 case 0x0062: // Lock
                 case 0x0063: // Release
                 case 0x0064: // AddOW
                 case 0x0065: // RemoveOW
-                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)}";
+                        name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)}";
                     break;
                 case 0x006D: // SetOverworldMovement
-                    name += FormatCmd_Overworld_Move(parametersList);
+                        name += FormatCmd_Overworld_Move(parametersList);
+                    break;
+
+                case 0x004C: // PlayCry
+                        name += FormatCmd_par0Pokemonpar1Generic(parametersList);
+                    break;
+
+                case 0x0083: // SetStarter [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += $" {FormatNumber(parametersList[0], ParamTypeEnum.POKEMON_NAME)}";
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x0089: // GivePokemon [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_GivePokemonHGSS(parametersList);
+                    } else {
+                        goto default;
+                    }
                     break;
 
                 case 0x00B0: // Warp [HGSS]
@@ -85,47 +108,215 @@ namespace DSPRE.ROMFiles {
                     } else {
                         goto default;
                     }
-
                     break;
+
+                
+                case 0x008A: // GivePokemonEgg [HGSS]
+                case 0x00F9: // WildBattle [HGSS]
+                case 0x00FA: // WildBattleNoButtons [HGSS]
+                case 0x01C4: // ShowPokemonPic [HGSS]
+                case 0x0205: // CheckPokemonInParty [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_par0Pokemonpar1Generic(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x0081: // CheckItemIsMachine [HGSS]
+                case 0x0082: // GetItemPocket [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_par0Itempar1Generic(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x008B: // ReplaceMove [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_ReplaceMove(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x008C: // CheckPokemonHasMove [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_CheckPokemonHasMove(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x008D: // CheckMoveInParty [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_CheckMoveInParty(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x00C2: // TextItem [HGSS]
+                case 0x00C4: // TextMachineMove [HGSS]
+                case 0x01B0: // CheckFossilPokemon [HGSS]
+                case 0x034B: // TextItemLowercase [HGSS]
+                case 0x034C: // TextItemPlural [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_par0Genericpar1Item(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x00CA: // TextPokemon [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_TextPokemon(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x0185: // CheckBornPokemonInParty [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_par0Genericpar1Pokemon(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
                 case 0x0152: // SetOverworldDefaultPosition [HGSS]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
                         name += FormatCmd_Overworld_TwoParams(parametersList);
                     } else {
                         goto default;
                     }
-
                     break;
+
                 case 0x0153: // SetOverworldPosition [HGSS]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
                         name += FormatCmd_Overworld_3Coords_Dir(parametersList);
                     } else {
                         goto default;
                     }
-
                     break;
+
                 case 0x0154: // SetOverworldDefaultMovement [HGSS]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
                         name += FormatCmd_Overworld_Move(parametersList);
                     } else {
                         goto default;
                     }
-
                     break;
-                case 0x0155: // SetOverworldDefaultDirection [DPPt]
+
+                case 0x01B1: // CheckFossil [HGSS]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
-                        name += FormatCmd_Overworld_Dir(parametersList);
+                        name += FormatCmd_CheckFossil(parametersList);
                     } else {
                         goto default;
                     }
-
                     break;
+
+                case 0x024D: // WildBattleSp [HGSS]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_par0Pokemonpar1Genericpar2Generic(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x007E: // TakeItem [HGSS] or CheckItem [DPPt]
+                case 0x007D: // GiveItem [HGSS] or CheckItemSpace [DPPt]
+                    name += FormatCmd_TakeItem(parametersList);
+                    break;
+
+                case 0x007F: // CheckItemSpace [HGSS] or CheckItemIsMachine [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_TakeItem(parametersList);
+                    } else if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_par0Itempar1Generic(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x0080: // CheckItem [HGSS] or GetItemPocket [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_TakeItem(parametersList);
+                    } else if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_par0Itempar1Generic(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x00D3: // GetSwarmInfo [HGSS] or TextMachineMove [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += FormatCmd_par0Genericpar1Pokemon(parametersList);
+                    } else if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_par0Genericpar1Item(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x007B: // GiveItem [DPPt]
+                case 0x007C: // TakeItem [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_TakeItem(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x0155: // SetOverworldDefaultDirection [DPPt]
                 case 0x0158: // SetOverworldDirection [DPPt]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
                         name += FormatCmd_Overworld_Dir(parametersList);
                     } else {
                         goto default;
                     }
+                    break;
 
+                case 0x0097: // GivePokemonEgg  [DPPt]
+                case 0x0124: // WildBattle  [DPPt]
+                case 0x0208: // ShowPokemonPic  [DPPt]
+                case 0x0262: // CheckPokemonInParty [DPPt]
+                case 0x02BD: // WildBattleSp [DPPt]
+                case 0x02DD: // GetBornPokemonPartyPos [DPPt]
+                case 0x0319: // GiratinaBattle [DPPt]
+                case 0x0337: // CheckPokemonIsSeen [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_par0Pokemonpar1Generic(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x0096: // GivePokemon [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_GivePokemonDPPt(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x0099: // CheckMove [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_CheckMove(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x009A: // CheckMoveInParty [DPPt]
+                case 0x00D4: // TextMove [DPPt]
+                case 0x0224: // TeachMoveScreen [DPPt]
+                case 0x02E7: // LearnMoveScreen [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_par0Genericpar1Move(parametersList);
+                    } else {
+                        goto default;
+                    }
                     break;
 
                 case 0x00BE: // Warp [DPPt]
@@ -134,54 +325,132 @@ namespace DSPRE.ROMFiles {
                     } else {
                         goto default;
                     }
-
                     break;
+
+                case 0x00DA: // TextPokemon [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_TextPokemon(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x00E3: // GetSwarmInfo [DPPt]
+                case 0x01C0: // CheckBornPokemonInParty [DPPt]
+                case 0x0217: // GetAmitySquareAccessory [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_par0Genericpar1Pokemon(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x00D1: // TextItem [DPPt]
+                case 0x01F4: // CheckFossilPokemon [DPPt]
+                case 0x033C: // TextItemLowercase [DPPt]
+                case 0x033D: // TextItemPlural [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_par0Genericpar1Item(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x017B: // TextBerry [DPPt]
+                case 0x01F5: // CheckFossil [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_CheckFossil(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x0182: // SetBerryMulch [DPPt]
+                case 0x0183: // SetBerrySpecies [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.HGSS)) {
+                        name += $" {FormatNumber(parametersList[0], ParamTypeEnum.ITEM_NAME)}";
+                    } else {
+                        goto default;
+                    }
+                    break;
+
                 case 0x0186: // SetOverworldDefaultPosition [DPPt]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
                         name += FormatCmd_Overworld_TwoParams(parametersList);
                     } else {
                         goto default;
                     }
-
                     break;
+
                 case 0x0187: // SetOverworldPosition [DPPt]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
                         name += FormatCmd_Overworld_3Coords_Dir(parametersList);
                     } else {
                         goto default;
                     }
-
                     break;
+
                 case 0x0188: // SetOverworldDefaultMovement [DPPt]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
                         name += FormatCmd_Overworld_Move(parametersList);
                     } else {
                         goto default;
                     }
-
                     break;
+
                 case 0x0189: // SetOverworldDefaultDirection [DPPt]
-                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
-                        name += FormatCmd_Overworld_Dir(parametersList);
-                    } else {
-                        goto default;
-                    }
-
-                    break;
                 case 0x018C: // SetOverworldDirection [DPPt]
                     if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
                         name += FormatCmd_Overworld_Dir(parametersList);
                     } else {
                         goto default;
                     }
+                    break;
 
+                case 0x02E9: // ChangePartyPokemonMove [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_ChangePartyPokemonMove(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x02EA: // CheckAffordMove [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += $" {FormatNumber(parametersList[0], ParamTypeEnum.MOVE_NAME)} {FormatNumber(parametersList[1], ParamTypeEnum.MOVE_NAME)}";
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x02EB: // PayTutorShards [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += $" {FormatNumber(parametersList[0], ParamTypeEnum.MOVE_NAME)}";
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x02EC: // ShowMovePriceBoard [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += FormatCmd_ShowMovePriceBoard(parametersList);
+                    } else {
+                        goto default;
+                    }
+                    break;
+
+                case 0x031A: // RegisterSeenPokemon [DPPt]
+                    if (RomInfo.gameFamily.Equals(RomInfo.GameFamilies.DP) || RomInfo.gameFamily.Equals(RomInfo.GameFamilies.Plat)) {
+                        name += $" {FormatNumber(parametersList[0], ParamTypeEnum.POKEMON_NAME)}";
+                    } else {
+                        goto default;
+                    }
                     break;
 
                 default:
                     for (int i = 0; i < parametersList.Count; i++) {
                         name += $" {FormatNumber(parametersList[i])}";
                     }
-
                     break;
             }
 
@@ -208,11 +477,73 @@ namespace DSPRE.ROMFiles {
         private string FormatCmd_Overworld_Dir(List<byte[]> parametersList) {
             return $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1], ParamTypeEnum.OW_DIRECTION)}";
         }
+        // generic formatting command for playcry, showpokemonpic etc, first param is species, second param is a generic integer
+        private string FormatCmd_par0Pokemonpar1Generic(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.POKEMON_NAME)} {FormatNumber(parametersList[1])}";
+        }
+        private string FormatCmd_par0Itempar1Generic(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.ITEM_NAME)} {FormatNumber(parametersList[1])}";
+        }
+        private string FormatCmd_par0Genericpar1Item(List<byte[]> parametersList)
+        {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.ITEM_NAME)}";
+        }
+        private string FormatCmd_par0Genericpar1Pokemon(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.POKEMON_NAME)}";
+        }
+        private string FormatCmd_par0Pokemonpar1Genericpar2Generic(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.POKEMON_NAME)} {FormatNumber(parametersList[1])}  {FormatNumber(parametersList[2])}";
+        }
+        private string FormatCmd_TakeItem(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.ITEM_NAME)} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2])}";
+        }
+        private string FormatCmd_ReplaceMove(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2], ParamTypeEnum.MOVE_NAME)}";
+        }
+        private string FormatCmd_CheckPokemonHasMove(List<byte[]> parametersList)
+        {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.MOVE_NAME)} {FormatNumber(parametersList[2])}";
+        }
+        private string FormatCmd_CheckMoveInParty(List<byte[]> parametersList)
+        {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.MOVE_NAME)}";
+        }
+        private string FormatCmd_TextPokemon(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.POKEMON_NAME)} {FormatNumber(parametersList[2])} {FormatNumber(parametersList[3])}";
+        }
+        private string FormatCmd_GivePokemonHGSS(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.POKEMON_NAME)} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2], ParamTypeEnum.ITEM_NAME)} {FormatNumber(parametersList[3])} {FormatNumber(parametersList[4])} {FormatNumber(parametersList[5])}";
+        }
+        private string FormatCmd_GivePokemonDPPt(List<byte[]> parametersList) {
+            return $" {FormatNumber(parametersList[0], ParamTypeEnum.POKEMON_NAME)} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2], ParamTypeEnum.ITEM_NAME)} {FormatNumber(parametersList[3])}";
+        }
+        private string FormatCmd_CheckFossil(List<byte[]> parametersList)
+        {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.ITEM_NAME)} {FormatNumber(parametersList[2])}";
+        }
+        private string FormatCmd_CheckMove(List<byte[]> parametersList)
+        {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.MOVE_NAME)} {FormatNumber(parametersList[2])}";
+        }
+        private string FormatCmd_par0Genericpar1Move(List<byte[]> parametersList)
+        {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1], ParamTypeEnum.MOVE_NAME)}";
+        }
+        private string FormatCmd_ChangePartyPokemonMove(List<byte[]> parametersList)
+        {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2], ParamTypeEnum.MOVE_NAME)}";
+        }
+        private string FormatCmd_ShowMovePriceBoard(List<byte[]> parametersList)
+        {
+            return $" {FormatNumber(parametersList[0])} {FormatNumber(parametersList[1])} {FormatNumber(parametersList[2], ParamTypeEnum.MOVE_NAME)} {FormatNumber(parametersList[3])}";
+        }
+
         public ScriptCommand(string wholeLine, int lineNumber = 0) {
             name = wholeLine;
             cmdParams = new List<byte[]>();
 
-            string[] nameParts = wholeLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
+            var processedLine = ProcessBracketedItems(wholeLine);
+            string[] nameParts = processedLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
             if (RomInfo.ScriptCommandNamesReverseDict.TryGetValue(nameParts[0].ToLower(), out ushort cmdID)) {
@@ -241,7 +572,7 @@ namespace DSPRE.ROMFiles {
             int paramLength = 0;
             int paramsProcessed = 0;
 
-            if (parametersSizeArr.First() == 0xFF) {
+            if (parametersSizeArr.Length > 0 && parametersSizeArr.First() == 0xFF) {
                 int firstParamValue = int.Parse(nameParts[1].PurgeSpecial(ScriptFile.specialChars), nameParts[1].GetNumberStyle());
                 byte firstParamSize = parametersSizeArr[1];
 
@@ -315,35 +646,75 @@ namespace DSPRE.ROMFiles {
 
                         int result = 0;
 
-                        try {
+                        try
+                        {
                             result = int.Parse(nameParts[i + 1], numStyle);
-                        } catch {
-                            if (string.IsNullOrWhiteSpace(nameParts[i + 1])) {
-                                MessageBox.Show($"You must specify an Overworld ID, Script, Function or Action number.\n\n" +
-                                                $"Line {lineNumber}: {wholeLine}", "Unspecified identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                id = null;
-                            } else {
-                                var first = ScriptDatabase.specialOverworlds.FirstOrDefault(x => x.Value.IgnoreCaseEquals(nameParts[i + 1]));
-
-                                if (string.IsNullOrWhiteSpace(first.Value)) {
-                                    var res = ScriptDatabase.overworldDirections.FirstOrDefault(x => x.Value.IgnoreCaseEquals(nameParts[i + 1]));
-
-                                    if (string.IsNullOrWhiteSpace(res.Value)) {
-                                        MessageBox.Show($"Argument {nameParts[i + 1]} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Script, Function or Action number.\n\n" +
-                                                        $"Line {lineNumber}: {wholeLine}", "Invalid identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                        id = null;
-                                    } else {
-                                        result = res.Key;
-                                    }
-                                } else {
+                        }
+                        catch (FormatException)
+                        {
+                            try
+                            {
+                                string paramToCheck = RestoreSpaces(nameParts[i + 1]);
+                                var first = ScriptDatabase.specialOverworlds.FirstOrDefault(x => x.Value.IgnoreCaseEquals(paramToCheck));
+                                if (!string.IsNullOrWhiteSpace(first.Value))
+                                {
                                     result = first.Key;
                                 }
+                                else
+                                {
+                                    var direction = ScriptDatabase.overworldDirections.FirstOrDefault(x => x.Value.IgnoreCaseEquals(paramToCheck));
+                                    if (!string.IsNullOrWhiteSpace(direction.Value))
+                                    {
+                                        result = direction.Key;
+                                    }
+                                    else
+                                    {
+                                        var pokemon = ScriptDatabase.pokemonNames.FirstOrDefault(x => x.Value.IgnoreCaseEquals(paramToCheck));
+                                        if (!string.IsNullOrWhiteSpace(pokemon.Value))
+                                        {
+                                            result = pokemon.Key;
+                                        }
+                                        else
+                                        {
+                                            var item = ScriptDatabase.itemNames.FirstOrDefault(x => x.Value.IgnoreCaseEquals(paramToCheck));
+                                            if (!string.IsNullOrWhiteSpace(item.Value))
+                                            {
+                                                result = item.Key;
+                                            }
+                                            else
+                                            {
+                                                var move = ScriptDatabase.moveNames.FirstOrDefault(x => x.Value.IgnoreCaseEquals(paramToCheck));
+                                                if (!string.IsNullOrWhiteSpace(move.Value))
+                                                {
+                                                    result = move.Key;
+                                                }
+                                                else
+                                                {
+                                                    MessageBox.Show($"Argument {paramToCheck} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Pokemon ID, Item ID, Move ID, Script, Function or Action number.\n\n" +
+                                                                $"Line {lineNumber}: {wholeLine}", "Invalid identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                    id = null;
+                                                    return;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            catch (ArgumentException ex)
+                            {
+                                MessageBox.Show($"{ex.Message}\n\nLine {lineNumber}: {wholeLine}",
+                                    "Invalid syntax", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                id = null;
+                                return;
                             }
                         }
 
-                        try {
+                        try
+                        {
                             cmdParams.Add(result.ToByteArrayChooseSize(parametersSizeArr[i]));
-                        } catch (OverflowException) {
+                        }
+                        catch (OverflowException)
+                        {
                             MessageBox.Show($"Argument {nameParts[i + 1]} at line {lineNumber} is not in the range [0, {Math.Pow(2, 8 * parametersSizeArr[i]) - 1}].", "Argument error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         }
@@ -356,6 +727,155 @@ namespace DSPRE.ROMFiles {
                 id = null;
             }
         }
+
+        private string ProcessBracketedItems(string line)
+        {
+            // Early exit if no brackets
+            if (!line.Contains('[')) return line;
+
+            StringBuilder result = new StringBuilder(line);
+            int currentPos = 0;
+
+            while (true)
+            {
+                int start = result.ToString().IndexOf('[', currentPos);
+                if (start == -1) break;
+
+                int end = result.ToString().IndexOf(']', start);
+                if (end == -1) break;
+
+                // Process only the current bracket pair
+                for (int i = start + 1; i < end; i++)
+                {
+                    if (result[i] == ' ')
+                    {
+                        result[i] = '§';
+                    }
+                }
+
+                currentPos = end + 1;
+            }
+
+            return result.ToString();
+        }
+
+        private int LevenshteinDistance(string s1, string s2)
+        {
+            int[,] d = new int[s1.Length + 1, s2.Length + 1];
+
+            for (int i = 0; i <= s1.Length; i++)
+                d[i, 0] = i;
+            for (int j = 0; j <= s2.Length; j++)
+                d[0, j] = j;
+
+            for (int i = 1; i <= s1.Length; i++)
+            {
+                for (int j = 1; j <= s2.Length; j++)
+                {
+                    int cost = (s2[j - 1] == s1[i - 1]) ? 0 : 1;
+                    d[i, j] = Math.Min(Math.Min(
+                        d[i - 1, j] + 1,
+                        d[i, j - 1] + 1),
+                        d[i - 1, j - 1] + cost);
+                }
+            }
+            return d[s1.Length, s2.Length];
+        }
+
+        private string FindClosestMatch(string input, IEnumerable<string> possibilities, int threshold = 3)
+        {
+            // Remove brackets and spaces for comparison
+            input = input.Trim('[', ']').Replace(" ", "").ToLower();
+
+            var closest = possibilities
+                .Select(x => new {
+                    Name = x,
+                    Distance = LevenshteinDistance(
+                        input,
+                        x.Replace(" ", "").ToLower()
+                    )
+                })
+                .Where(x => x.Distance <= threshold)
+                .OrderBy(x => x.Distance)
+                .FirstOrDefault();
+
+            return closest?.Name;
+        }
+
+        private string RestoreSpaces(string parameter)
+        {
+            if (!parameter.StartsWith("[") || !parameter.EndsWith("]"))
+                return parameter;
+
+            string content = parameter.Substring(1, parameter.Length - 2);
+
+            // First restore any § back to spaces for comparison
+            string contentWithSpaces = content.Replace("§", " ");
+
+            // Check for Pokemon names first
+            var pokemon = ScriptDatabase.pokemonNames.FirstOrDefault(x =>
+                x.Value.IgnoreCaseEquals(contentWithSpaces));
+            if (!string.IsNullOrWhiteSpace(pokemon.Value))
+            {
+                return pokemon.Value;
+            }
+
+            // Then check for Item names
+            var item = ScriptDatabase.itemNames.FirstOrDefault(x =>
+                x.Value.IgnoreCaseEquals(contentWithSpaces));
+            if (!string.IsNullOrWhiteSpace(item.Value))
+            {
+                return item.Value;
+            }
+
+            // Then check for Move names
+            var move = ScriptDatabase.moveNames.FirstOrDefault(x =>
+                x.Value.IgnoreCaseEquals(contentWithSpaces));
+            if (!string.IsNullOrWhiteSpace(move.Value))
+            {
+                return move.Value;
+            }
+
+            // If it's a number in brackets, provide suggestions
+            if (int.TryParse(content, out int numericValue))
+            {
+                string suggestion = "";
+                if (ScriptDatabase.itemNames.TryGetValue((ushort)numericValue, out string itemName))
+                {
+                    suggestion = $"\nDid you mean [{itemName}]?";
+                }
+                else if (ScriptDatabase.pokemonNames.TryGetValue((ushort)numericValue, out string pokemonName))
+                {
+                    suggestion = $"\nDid you mean [{pokemonName}]?";
+                }
+                else if (ScriptDatabase.moveNames.TryGetValue((ushort)numericValue, out string moveName))
+                {
+                    suggestion = $"\nDid you mean [{moveName}]?";
+                }
+                throw new ArgumentException($"Invalid syntax: Numbers should not be wrapped in brackets: '{parameter}'{suggestion}");
+            }
+
+            string closestItem = FindClosestMatch(contentWithSpaces, ScriptDatabase.itemNames.Values);
+            if (!string.IsNullOrWhiteSpace(closestItem))
+            {
+                throw new ArgumentException($"'{parameter}' is not a valid Item name.\nDid you mean [{closestItem}]?");
+            }
+
+            string closestPokemon = FindClosestMatch(contentWithSpaces, ScriptDatabase.pokemonNames.Values);
+            if (!string.IsNullOrWhiteSpace(closestPokemon))
+            {
+                throw new ArgumentException($"'{parameter}' is not a valid Pokemon name.\nDid you mean [{closestPokemon}]?");
+            }
+
+            string closestMove = FindClosestMatch(contentWithSpaces, ScriptDatabase.moveNames.Values);
+            if (!string.IsNullOrWhiteSpace(closestMove))
+            {
+                throw new ArgumentException($"'{parameter}' is not a valid Move name.\nDid you mean [{closestMove}]?");
+            }
+
+            return contentWithSpaces;
+        }
+        
 
         private string FormatNumber(byte[] par, ParamTypeEnum paramType = ParamTypeEnum.INTEGER) {
             //number acquisition
@@ -424,6 +944,53 @@ namespace DSPRE.ROMFiles {
                         } else {
                             if (num < 4000) {
                                 outp += $"Direction.";
+                            }
+
+                            goto default;
+                        }
+                    }
+                case ParamTypeEnum.POKEMON_NAME:
+                    {
+                        if (ScriptDatabase.pokemonNames.TryGetValue((ushort)num, out string output))
+                        {
+                            return $"[{output}]";  // Return the already-bracketed name directly
+                        }
+                        else
+                        {
+                            if (num < 4000)
+                            {
+                                outp += $"Pokemon.";
+                            }
+                            goto default;
+                        }
+                    }
+                case ParamTypeEnum.ITEM_NAME:
+                    {
+                        if (ScriptDatabase.itemNames.TryGetValue((ushort)num, out string output))
+                        {
+                            return $"[{output}]";
+                        }
+                        else
+                        {
+                            if (num < 4000)
+                            {
+                                outp += $"Item.";
+                            }
+
+                            goto default;
+                        }
+                    }
+                case ParamTypeEnum.MOVE_NAME:
+                    {
+                        if (ScriptDatabase.moveNames.TryGetValue((ushort)num, out string output))
+                        {
+                            return $"[{output}]";
+                        }
+                        else
+                        {
+                            if (num < 4000)
+                            {
+                                outp += $"Move.";
                             }
 
                             goto default;

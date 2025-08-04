@@ -1,12 +1,12 @@
-﻿
+﻿using DSPRE.Editors.Utils;
+using System;
 using System.Drawing;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-using System;
+using System.Windows.Forms;
 using static DSPRE.RomInfo;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ScrollBar;
 
 namespace DSPRE.Editors
 {
@@ -16,225 +16,62 @@ namespace DSPRE.Editors
         public int Size;
     }
 
-    public class NarcReader
-    {
-        public int Entrys;
-
-        public FileEntry[] fe;
-
-        public FileStream fs;
-
-        string m_sFileName;
-
-        public long size;
-
-        public NarcReader(string strFileName)
-        {
-            m_sFileName = strFileName;
-            fs = new FileStream(strFileName, FileMode.Open, FileAccess.ReadWrite);
-            BinaryReader binaryReader = new BinaryReader(fs);
-            byte[] array = new byte[16];
-            binaryReader.Read(array, 0, 16);
-            size = BitConverter.ToUInt32(array, 8);
-            int num = BitConverter.ToInt16(array, 12);
-            fs.Seek(num, SeekOrigin.Begin);
-            array = new byte[12];
-            binaryReader.Read(array, 0, 12);
-            int num2 = BitConverter.ToInt32(array, 4);
-            Entrys = BitConverter.ToInt32(array, 8);
-            fe = new FileEntry[Entrys];
-            for (int i = 0; i < Entrys; i++)
-            {
-                fe[i].Ofs = binaryReader.ReadInt32();
-                fe[i].Size = binaryReader.ReadInt32() - fe[i].Ofs;
-            }
-            fs.Seek(num + num2, SeekOrigin.Begin);
-            array = new byte[16];
-            binaryReader.Read(array, 0, 16);
-            int num3 = BitConverter.ToInt32(array, 4);
-            num3 = num + num3 + num2 + 8;
-            for (int j = 0; j < Entrys; j++)
-            {
-                fe[j].Ofs += num3;
-            }
-            fs.Close();
-        }
-
-        public void Close()
-        {
-            fs.Close();
-        }
-
-        public int OpenEntry(int id)
-        {
-            fs = new FileStream(m_sFileName, FileMode.Open, FileAccess.ReadWrite);
-            fs.Seek(fe[id].Ofs, SeekOrigin.Begin);
-            return 0;
-        }
-    }
-    public class SpriteSet
-    {
-        public Bitmap[] Sprites;
-        public ColorPalette Normal;
-        public ColorPalette Shiny;
-
-        public SpriteSet()
-        {
-            Sprites = new Bitmap[4];
-            for (int i = 0; i < 4; i++)
-            {
-                Sprites[i] = null;
-            }
-            Normal = null;
-            Shiny = null;
-        }
-    }
-
     public partial class PokemonSpriteEditor : Form
     {
-        System.ComponentModel.IContainer components = null;
-
-        ComboBox IndexBox;
-        ComboBox SaveBox;
-        ComboBox BasePalette;
-        ComboBox ShinyPalette;
-        Button OpenPngs;
-        Button LoadSheet;
-        Button SaveSingle;
-        Button MakeShiny;
-        Button OpenOther;
-        Button SaveChanges;
-
-        NarcReader nr;
-        PictureBox[,] Display;
-
-        Label lblMale;
-        Label lblFemale;
-        Label BackN;
-        Label BackS;
-        Label FrontN;
-        Label FrontS;
-        Label lblNormal;
-        Label lblShiny;
-
-        bool[] used;
-        Rectangle rect;
-        IndexedBitmapHandler Handler;
-
-        SpriteSet CurrentSprites;
         private readonly string[] pokenames;
-
         private readonly int[] formPalettes = new int[]
         {
-            // Deoxys forms (Base, Attack, Defence, Speed)
-            158, 158, 158, 158, 
-
-            // Unown forms (A-Z, !, ?)
+            158, 158, 158, 158,
             160, 160, 160, 160, 160, 160, 160, 160, 160, 160,
             160, 160, 160, 160, 160, 160, 160, 160, 160, 160,
             160, 160, 160, 160, 160, 160, 160, 160, 160, 160,
-
-            // Castform (Base, Sunny, Rainy, Snowy)
-            162, 162, 162, 162, 
-
-            // Burmy (Plant, Sandy, Trash)
-            164, 164, 164, 
-
-            // Wormadam (Plant, Sandy, Trash)
-            166, 166, 166, 
-
-            // Shellos (West, East)
+            162, 162, 162, 162,
+            164, 164, 164,
+            166, 166, 166,
             168, 168, 168, 168,
-
-            // Gastrodon (West, East)
             170, 170, 170, 170,
-
-            // Cherrim (Overcast, Sunny)
             172, 172, 172, 172,
-
-            // Arceus (various forms)
             174, 174, 174, 174, 174, 174, 174, 174,
             174, 174, 174, 174, 174, 174, 174, 174,
             174, 174, 174, 174, 174, 174, 174, 174,
             174, 174, 174, 174, 174, 174, 174, 174,
             174, 174, 174, 174, 174, 174, 174, 174,
-
-            // Egg (Global, Manaphy)
             176, 176,
-
-            // Shaymin (Land, Sky)
             178, 178, 178, 178,
-
-            // Rotom (Normal, Heat, Wash, Frost, Fan, Mow)
             180, 180, 180, 180, 180, 180, 180, 180,
             180, 180, 180, 180, 180, 180, 180, 180,
-
-            // Giratina (Altered, Origin)
             182, 182, 182, 182,
-
-            // Substitute (Sprites)
             184, 184, 184,
-
-            // Shadows
             186, 186
         };
 
         private readonly int[] shinyPalettes = new int[]
         {
-            // Deoxys forms (Base, Attack, Defence, Speed)
             159, 159, 159, 159,
-
-            // Unown forms (A-Z, !, ?)
             161, 161, 161, 161, 161, 161, 161, 161, 161, 161,
             161, 161, 161, 161, 161, 161, 161, 161, 161, 161,
             161, 161, 161, 161, 161, 161, 161, 161, 161, 161,
-
-            // Castform (Base, Sunny, Rainy, Snowy)
-            163, 163, 163, 163, 
-
-            // Burmy (Plant, Sandy, Trash)
-            165, 165, 165, 
-
-            // Wormadam (Plant, Sandy, Trash)
-            167, 167, 167, 
-
-            // Shellos (West, East)
+            163, 163, 163, 163,
+            165, 165, 165,
+            167, 167, 167,
             169, 169, 169, 169,
-
-            // Gastrodon (West, East)
             171, 171, 171, 171,
-
-            // Cherrim (Overcast, Sunny)
             173, 173, 173, 173,
-
-            // Arceus (various forms)
             175, 175, 175, 175, 175, 175, 175, 175,
             175, 175, 175, 175, 175, 175, 175, 175,
             175, 175, 175, 175, 175, 175, 175, 175,
             175, 175, 175, 175, 175, 175, 175, 175,
             175, 175, 175, 175, 175, 175, 175, 175,
-
-            // Egg (Global, Manaphy)
             177, 177,
-
-            // Shaymin (Land, Sky)
             179, 179, 179, 179,
-
-            // Rotom (Normal, Heat, Wash, Frost, Fan, Mow)
             181, 181, 181, 181, 181, 181, 181, 181,
             181, 181, 181, 181, 181, 181, 181, 181,
-
-            // Giratina (Altered, Origin)
             183, 183, 183, 183,
-
-            // Substitute (Sprites)
             185, 185, 185,
-
-            // Shadows
             187, 187
         };
 
-        private readonly int[] validPalettesHGSS = new int[] 
+        private readonly int[] validPalettesHGSS = new int[]
         {
             158, 159, 160, 161, 162, 163, 164, 165, 166, 167,
             168, 169, 170, 171, 172, 173, 174, 175, 176, 177,
@@ -265,13 +102,13 @@ namespace DSPRE.Editors
         private readonly int[] validPalettesDP = new int[]
         {
             134, 135, 136, 137, 138, 139, 140, 141, 142, 145,
-            146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 
-            156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 
-            166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 
-            176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 
-            186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 
-            196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 
-            206, 207, 210, 212, 
+            146, 147, 148, 149, 150, 151, 152, 153, 154, 155,
+            156, 157, 158, 159, 160, 161, 162, 163, 164, 165,
+            166, 167, 168, 169, 170, 171, 172, 173, 174, 175,
+            176, 177, 178, 179, 180, 181, 182, 183, 184, 185,
+            186, 187, 188, 189, 190, 191, 192, 193, 194, 195,
+            196, 197, 198, 199, 200, 201, 202, 203, 204, 205,
+            206, 207, 210, 212
         };
 
         private readonly string[] otherPokenames = new string[]
@@ -282,12 +119,12 @@ namespace DSPRE.Editors
             "Unown - M", "Unown - N", "Unown - O", "Unown - P", "Unown - Q", "Unown - R",
             "Unown - S", "Unown - T", "Unown - U", "Unown - V", "Unown - W", "Unown - X",
             "Unown - Y", "Unown - Z", "Unown - !", "Unown - ?",
-            "Castform - Base", "Castform - Sunny", "Castform - Rainy", "Castform - Snow", 
-            "Burmy - Plant", "Burmy - Sandy", "Burmy - Trash", 
-            "Wormadam - Plant", "Wormadam - Sandy", "Wormadam - Trash", 
-            "Shellos", "Shellos", 
-            "Gastrodon", "Gastrodon", 
-            "Cherrim", "Cherrim", 
+            "Castform - Base", "Castform - Sunny", "Castform - Rainy", "Castform - Snow",
+            "Burmy - Plant", "Burmy - Sandy", "Burmy - Trash",
+            "Wormadam - Plant", "Wormadam - Sandy", "Wormadam - Trash",
+            "Shellos", "Shellos",
+            "Gastrodon", "Gastrodon",
+            "Cherrim", "Cherrim",
             "Arceus - Type 1", "Arceus - Type 2", "Arceus - Type 3", "Arceus - Type 4",
             "Arceus - Type 5", "Arceus - Type 6", "Arceus - Type 7", "Arceus - Type 8",
             "Arceus - Type 9", "Arceus - Type 10", "Arceus - Type 11", "Arceus - Type 12",
@@ -319,195 +156,43 @@ namespace DSPRE.Editors
             "Shadows", "Shadows"
         };
 
-        static string[] names = { "Female backsprite", "Male backsprite", "Female frontsprite", "Male frontsprite", "Shiny" };
-
+        private static string[] names = { "Female backsprite", "Male backsprite", "Female frontsprite", "Male frontsprite", "Shiny" };
         private bool loadingOther = false;
         private PokemonEditor _parent;
-
         private static bool dirty = false;
         private static readonly string formName = "Sprite Editor";
+        private NarcReader nr;
+        private PictureBox[,] Display;
+        private bool[] used;
+        private Rectangle rect;
+        private IndexedBitmapHandler Handler;
+        private SpriteSet CurrentSprites;
+
         public PokemonSpriteEditor(Control parent, PokemonEditor pokeEditor)
         {
             this._parent = pokeEditor;
-            InitializeComponent();            
+            InitializeComponent();
+            SetupPictureBoxes();
+            int[] source = RomInfo.gameFamily == GameFamilies.Plat ? validPalettesPt : RomInfo.gameFamily == GameFamilies.DP ? validPalettesDP : validPalettesHGSS;
+            foreach (var item in source)
+            {
+                BasePalette.Items.Add(item);
+                ShinyPalette.Items.Add(item);
+            }
+            
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Size = parent.Size;
             this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             this.pokenames = RomInfo.GetPokemonNames();
             Helpers.DisableHandlers();
-            LoadSprites();           
+            LoadSprites();
             Helpers.EnableHandlers();
-        }
-
-        void InitializeComponent()
-        {
-            used = null;
-            Handler = new IndexedBitmapHandler();
-            CurrentSprites = new SpriteSet();
-            BuildPictureBoxes(96, 56);
-            
-            OpenPngs = new Button();
-            LoadSheet = new Button();
-            SaveSingle = new Button();
-            MakeShiny = new Button();
-            OpenOther = new Button();
-            SaveChanges = new Button();
-
-            lblMale = new Label();
-            lblFemale = new Label();
-            BackN = new Label();
-            BackS = new Label();
-            FrontN = new Label();
-            FrontS = new Label();
-            lblNormal = new Label();
-            lblShiny = new Label();
-            SuspendLayout();           
-
-            IndexBox = new ComboBox();
-            IndexBox.DropDownWidth = 160;
-            IndexBox.Location = new Point(340, 8);
-            IndexBox.MaxDropDownItems = 16;
-            IndexBox.Name = "IndexBox";
-            IndexBox.Size = new Size(160, 21);
-            IndexBox.TabIndex = 6;
-            IndexBox.SelectedIndexChanged += (IndexBox_SelectedIndexChanged);
-
-            int[] source = RomInfo.gameFamily == GameFamilies.Plat ? validPalettesPt : RomInfo.gameFamily == GameFamilies.DP ? validPalettesDP : validPalettesHGSS;
-
-            BasePalette = new ComboBox();
-            BasePalette.DropDownWidth = 160;
-            BasePalette.Location = new Point(220, 728);
-            BasePalette.MaxDropDownItems = 16;
-            BasePalette.Name = "BasePalette";
-            BasePalette.Size = new Size(160, 21);
-            BasePalette.TabIndex = 6;
-            BasePalette.SelectedIndexChanged += (BasePalette_SelectedIndexChanged);
-            
-            ShinyPalette = new ComboBox();  
-            ShinyPalette.DropDownWidth = 160;
-            ShinyPalette.Location = new Point(400, 728);
-            ShinyPalette.MaxDropDownItems = 16;
-            ShinyPalette.Name = "ShinyPalette";
-            ShinyPalette.Size = new Size(160, 21);
-            ShinyPalette.TabIndex = 6;
-            ShinyPalette.SelectedIndexChanged += (ShinyPalette_SelectedIndexChanged);
-
-            foreach ( var item in source )
-            {
-                BasePalette.Items.Add( item );
-                ShinyPalette.Items.Add( item );
-            }
-
-            BasePalette.Enabled = false;
-            BasePalette.Visible = false;
-            ShinyPalette.Enabled = false;
-            ShinyPalette.Visible = false;
-
-            OpenPngs.Location = new Point(646, 8);
-            OpenPngs.Name = "OpenPng";
-            OpenPngs.Size = new Size(100, 25);
-            OpenPngs.TabIndex = 3;
-            OpenPngs.Text = "Load Sprite Set";
-            OpenPngs.Click += (OpenPng_Click);
-
-            LoadSheet.Location = new Point(538, 8);
-            LoadSheet.Name = "LoadSheet";
-            LoadSheet.Size = new Size(100, 25);
-            LoadSheet.Text = "Load Sprite Sheet";
-            LoadSheet.Click += (btnLoadSheet_Click);
-
-            OpenOther.Location = new Point(130, 8);
-            OpenOther.Name = "OpenForms";
-            OpenOther.Size = new Size(100, 25);
-            OpenOther.Text = "Open Forms";
-            OpenOther.Click += (btnOpenOther_Click);
-
-            SaveBox = new ComboBox();
-            SaveBox.DropDownWidth = 160;
-            SaveBox.Location = new Point(512, 728);
-            SaveBox.MaxDropDownItems = 8;
-            SaveBox.Name = "SaveBox";
-            SaveBox.Size = new Size(160, 21);
-
-            SaveBox.Items.Add("Normal Female Backsprite");
-            SaveBox.Items.Add("Normal Male Backsprite");
-            SaveBox.Items.Add("Normal Female Frontsprite");
-            SaveBox.Items.Add("Normal Male Frontprite");
-            SaveBox.Items.Add("Shiny Female Backsprite");
-            SaveBox.Items.Add("Shiny Male Backsprite");
-            SaveBox.Items.Add("Shiny Female Frontsprite");
-            SaveBox.Items.Add("Shiny Male Frontprite");
-            SaveBox.SelectedIndex = 0;
-
-            SaveSingle.Location = new Point(674, 728);
-            SaveSingle.Name = "SaveSingle";
-            SaveSingle.Size = new Size(70, 21);
-            SaveSingle.Text = "Save PNG";
-            SaveSingle.Click += (SaveSingle_Click);
-
-            MakeShiny.Location = new Point(96, 728);
-            MakeShiny.Name = "MakeShiny";
-            MakeShiny.Size = new Size(120, 21);
-            MakeShiny.Text = "Create Shiny Palette";
-            MakeShiny.Click += (MakeShiny_Click);
-
-            SaveChanges.Location = new Point(754, 8);
-            SaveChanges.Name = "SaveChanges";
-            SaveChanges.Size = new Size(70, 21);
-            SaveChanges.Text = "Save Changes";
-            SaveChanges.Click += (SaveChanges_Click);
-
-            lblFemale.Text = "Female";
-            lblFemale.Location = new Point(232, 36);
-            Controls.Add(lblFemale);
-            lblMale.Text = "Male";
-            lblMale.Location = new Point(564, 36);
-            Controls.Add(lblMale);
-            BackN.Text = "Back";
-            BackN.Location = new Point(52, 126);
-            Controls.Add(BackN);
-            BackS.Text = "Back";
-            BackS.Location = new Point(52, 462);
-            Controls.Add(BackS);
-            FrontN.Text = "Front";
-            FrontN.Location = new Point(52, 294);
-            Controls.Add(FrontN);
-            FrontS.Text = "Front";
-            FrontS.Location = new Point(52, 630);
-            Controls.Add(FrontS);
-            lblNormal.Text = "Normal";
-            lblNormal.Location = new Point(8, 210);
-            Controls.Add(lblNormal);
-            lblShiny.Text = "Shiny";
-            lblShiny.Location = new Point(8, 546);
-            Controls.Add(lblShiny);
-
-            ResumeLayout(false);
-
-            Controls.Add(IndexBox);
-            Controls.Add(BasePalette);
-            Controls.Add(ShinyPalette);
-            Controls.Add(SaveBox);
-            Controls.Add(OpenPngs);
-            Controls.Add(LoadSheet);
-            Controls.Add(SaveSingle);
-            Controls.Add(MakeShiny);
-            Controls.Add(OpenOther);
-            Controls.Add(SaveChanges);
-            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            Width = 760;
-            Height = 808;
-            AutoScaleBaseSize = new Size(5, 13);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            OpenPngs.Enabled = false;
-            OpenOther.Visible = false;
         }
 
         void IndexBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             CurrentSprites = new SpriteSet();
-            if ( !this.loadingOther )
+            if (!this.loadingOther)
             {
                 int num = (IndexBox.Items.IndexOf(IndexBox.Text) * 6);
                 for (int i = 0; i < 4; i++)
@@ -531,7 +216,8 @@ namespace DSPRE.Editors
                     CurrentSprites.Shiny = SetPal(nr.fs);
                     nr.Close();
                 }
-            } else
+            }
+            else
             {
                 int num = (IndexBox.Items.IndexOf(IndexBox.Text) * 2);
                 for (int i = 0; i < 2; i++)
@@ -539,7 +225,7 @@ namespace DSPRE.Editors
                     if (nr.fe[num + i].Size == 6448)
                     {
                         nr.OpenEntry(num + i);
-                        CurrentSprites.Sprites[i*2 + 1] = MakeImage(nr.fs);
+                        CurrentSprites.Sprites[i * 2 + 1] = MakeImage(nr.fs);
                         nr.Close();
                     }
                 }
@@ -556,7 +242,6 @@ namespace DSPRE.Editors
                     nr.Close();
                 }
             }
-            
             LoadImages();
             OpenPngs.Enabled = true;
         }
@@ -569,8 +254,7 @@ namespace DSPRE.Editors
                 nr.OpenEntry((int)BasePalette.SelectedItem);
                 CurrentSprites.Normal = SetPal(nr.fs);
                 nr.Close();
-            }         
-
+            }
             LoadImages();
         }
 
@@ -583,25 +267,36 @@ namespace DSPRE.Editors
                 CurrentSprites.Shiny = SetPal(nr.fs);
                 nr.Close();
             }
-
             LoadImages();
         }
 
-        void BuildPictureBoxes(int x_start, int y_start)
+        void SetupPictureBoxes()
         {
             Display = new PictureBox[2, 4];
-            for (int i = 0; i < Display.GetLength(0); i++)
-            {
-                for (int j = 0; j < Display.GetLength(1); j++)
-                {
-                    Display[i, j] = new PictureBox();
-                    Display[i, j].Size = new Size(320, 160);
-                    Display[i, j].Location = new Point((x_start + 328 * i), (y_start + 168 * j));
-                    Display[i, j].Name = "" + (2 * j + i);
-                    Display[i, j].Click += (Picturebox_Click);
-                    Controls.Add(Display[i, j]);
-                }
-            }
+
+            femaleBackNormalPic.Name = "0";
+            Display[0, 0] = femaleBackNormalPic;
+
+            maleBackNormalPic.Name = "1";
+            Display[1, 0] = maleBackNormalPic;
+
+            femaleFrontNormalPic.Name = "2";
+            Display[0, 1] = femaleFrontNormalPic;
+
+            maleFrontNormalPic.Name = "3";
+            Display[1, 1] = maleFrontNormalPic;
+
+            femaleBackShinyPic.Name = "4";
+            Display[0, 2] = femaleBackShinyPic;
+
+            maleBackShinyPic.Name = "5";
+            Display[1, 2] = maleBackShinyPic;
+
+            femaleFrontShinyPic.Name = "6";
+            Display[0, 3] = femaleFrontShinyPic;
+
+            maleFrontShinyPic.Name = "7";
+            Display[1, 3] = maleFrontShinyPic;
         }
 
         void LoadImages()
@@ -636,7 +331,7 @@ namespace DSPRE.Editors
             IndexedBitmapHandler Handler = new IndexedBitmapHandler();
             if (image.PixelFormat != PixelFormat.Format8bppIndexed)
             {
-                yesno = MessageBox.Show(filename + " is not 8bpp Indexed!  Attempt conversion?", "Incompatible image format", MessageBoxButtons.YesNo);
+                yesno = MessageBox.Show(filename + " is not 8bpp Indexed! Attempt conversion?", "Incompatible image format", MessageBoxButtons.YesNo);
                 if (yesno != DialogResult.Yes)
                     return null;
                 image = Handler.Convert(image, PixelFormat.Format8bppIndexed);
@@ -651,7 +346,6 @@ namespace DSPRE.Editors
             if (((image.Height != 64) && (image.Height != 80)) || ((image.Width != 64) && (image.Width != 80) && (image.Width != 160)))
             {
                 int imagescale = 0;
-
                 if ((image.Width / 64 == image.Height / 64) && (image.Width % 64 == 0) && (image.Height % 64 == 0))
                     imagescale = image.Width / 64;
                 if ((image.Width / 80 == image.Height / 80) && (image.Width % 80 == 0) && (image.Height % 80 == 0))
@@ -660,13 +354,12 @@ namespace DSPRE.Editors
                     imagescale = image.Width / 160;
                 if (imagescale > 1)
                 {
-                    yesno = MessageBox.Show(filename + " is too large.  Attempt to shrink?", "Too large", MessageBoxButtons.YesNo);
+                    yesno = MessageBox.Show(filename + " is too large. Attempt to shrink?", "Too large", MessageBoxButtons.YesNo);
                     if (yesno == DialogResult.Yes)
                         image = Handler.ShrinkImage(image, imagescale, imagescale);
                     else
                         imagescale = 0;
                 }
-                
                 if (imagescale == 0)
                 {
                     yesno = MessageBox.Show(filename + " size not recognized. Use Canvas Splitter?", "Unrecognized size", MessageBoxButtons.YesNo);
@@ -701,18 +394,16 @@ namespace DSPRE.Editors
                     Cropper.Dispose();
                 }
             }
-            
-            //image.Palette = StandardizeColors(image);
             byte check = Handler.PaletteSize(image);
             if (check > 16)
             {
-                yesno = MessageBox.Show("Image's palette contains more than sixteen colors.  Attempt to shrink?", "Improper palette size", MessageBoxButtons.YesNo);
+                yesno = MessageBox.Show("Image's palette contains more than sixteen colors. Attempt to shrink?", "Improper palette size", MessageBoxButtons.YesNo);
                 if (yesno == DialogResult.Yes)
                 {
                     image = Handler.ShrinkPalette(image);
                     check = Handler.PaletteSize(image);
                     if (check > 16)
-                        MessageBox.Show("Palette still too large.  Image will not save correctly.", "Failed");
+                        MessageBox.Show("Palette still too large. Image will not save correctly.", "Failed");
                 }
             }
             if (image.Height == 64 && image.Width == 64)
@@ -768,7 +459,6 @@ namespace DSPRE.Editors
                     }
                 }
             }
-
             Bitmap r_bitmap = new Bitmap(160, 80, PixelFormat.Format8bppIndexed);
             rect = new Rectangle(0, 0, 160, 80);
             byte[] array3 = new byte[12800];
@@ -790,7 +480,6 @@ namespace DSPRE.Editors
                 palette.Entries[l] = Color.FromArgb(l << 4, l << 4, l << 4);
             }
             r_bitmap.Palette = palette;
-
             if (r_bitmap == null)
             {
                 MessageBox.Show("MakeImage Failed");
@@ -821,7 +510,6 @@ namespace DSPRE.Editors
         {
             OpenPngs.Enabled = false;
             IndexBox.Items.Clear();
-            int tot6448 = 0, tot72 = 0;
             if (!this.loadingOther)
             {
                 nr = new NarcReader(RomInfo.gameDirs[DirNames.pokemonBattleSprites].packedDir);
@@ -830,19 +518,16 @@ namespace DSPRE.Editors
                     IndexBox.Items.Add(this.pokenames[i / 6] + " (" + nr.fe[i].Size + ")");
                 }
                 IndexBox.SelectedIndex = 1;
-            } else
+            }
+            else
             {
                 nr = new NarcReader(RomInfo.gameDirs[DirNames.otherPokemonBattleSprites].packedDir);
                 for (int i = 0; i < nr.Entrys; i += 2)
                 {
-                    IndexBox.Items.Add(this.otherPokenames[i/2] + " (" + nr.fe[i].Size + ")");
+                    IndexBox.Items.Add(this.otherPokenames[i / 2] + " (" + nr.fe[i].Size + ")");
                 }
-
                 IndexBox.SelectedIndex = 0;
-            }           
-
-            
-            
+            }
         }
 
         void Picturebox_Click(object sender, EventArgs e)
@@ -890,7 +575,7 @@ namespace DSPRE.Editors
                 bool match = Handler.PaletteEquals(CurrentSprites.Normal, image);
                 if (!match)
                 {
-                    DialogResult yesno = MessageBox.Show("Image's palette does not match the current palette.  Use PaletteMatch?", "Palette mismatch", MessageBoxButtons.YesNo);
+                    DialogResult yesno = MessageBox.Show("Image's palette does not match the current palette. Use PaletteMatch?", "Palette mismatch", MessageBoxButtons.YesNo);
                     if (yesno == DialogResult.Yes)
                     {
                         image = Handler.PaletteMatch(CurrentSprites.Normal, image, used);
@@ -968,7 +653,6 @@ namespace DSPRE.Editors
                 else
                     temp.Shiny = image.Palette;
             }
-
             if (Autofill)
             {
                 if (temp.Sprites[0] == null)
@@ -982,7 +666,6 @@ namespace DSPRE.Editors
                 if (filenames[4] == "")
                     temp.Shiny = temp.Normal;
             }
-
             for (int i = 0; i < 4; i++)
             {
                 if (temp.Sprites[i] != null)
@@ -992,7 +675,6 @@ namespace DSPRE.Editors
                 CurrentSprites.Normal = temp.Normal;
             if (temp.Shiny != null)
                 CurrentSprites.Shiny = temp.Shiny;
-
             LoadImages();
             OpenPngs.Enabled = true;
         }
@@ -1025,10 +707,9 @@ namespace DSPRE.Editors
             }
         }
 
-        void menuItem13_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Credit to loadingNOW and SCV for the original PokeDsPic and PokeDsPicPlatinum, without which this would never have happened.", "Credits");
-        }
+        // Credit to loadingNOW and SCV for the original PokeDsPic and PokeDsPicPlatinum, without which this would never have happened.
+        // In addition to G4SpriteEditor
+
 
         protected void btnSaveAs_Click(object sender, EventArgs e)
         {
@@ -1217,12 +898,6 @@ namespace DSPRE.Editors
             LoadImages();
         }
 
-        void menuCheck_Click(object sender, EventArgs e)
-        {
-            MenuItem item = sender as MenuItem;
-            item.Checked = !item.Checked;
-        }
-
         ColorPalette StandardizeColors(Bitmap image)
         {
             ColorPalette pal = image.Palette;
@@ -1234,9 +909,6 @@ namespace DSPRE.Editors
             }
             if (OffColor)
             {
-                //				yesno = MessageBox.Show("Colors are not appropriately formatted for storage.  Fix?", "Incompatible colors", MessageBoxButtons.YesNo);
-                //				if(yesno != DialogResult.Yes)
-                //					MessageBox.Show("Colors will not store correctly.  Image may look different in-game.", "Failed");
                 for (int i = 0; i < pal.Entries.Length; i++)
                 {
                     byte r = (byte)(pal.Entries[i].R - (pal.Entries[i].R % 8));
@@ -1307,7 +979,11 @@ namespace DSPRE.Editors
                 }
             }
             byte[] array4 = new byte[48]
-            {82, 71, 67, 78, 255, 254, 0, 1, 48, 25, 0, 0, 16, 0, 1, 0, 82, 65, 72, 67, 32, 25, 0, 0, 10, 0, 20, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 25, 0, 0, 24, 0, 0, 0};
+            {
+                82, 71, 67, 78, 255, 254, 0, 1, 48, 25, 0, 0, 16, 0, 1, 0,
+                82, 65, 72, 67, 32, 25, 0, 0, 10, 0, 20, 0, 3, 0, 0, 0,
+                0, 0, 0, 0, 1, 0, 0, 0, 0, 25, 0, 0, 24, 0, 0, 0
+            };
             for (int k = 0; k < 48; k++)
             {
                 binaryWriter.Write(array4[k]);
@@ -1321,7 +997,11 @@ namespace DSPRE.Editors
         void SavePal(FileStream fs, ColorPalette palette)
         {
             byte[] buffer = new byte[40]
-            {82, 76, 67, 78, 255, 254, 0, 1, 72, 0, 0, 0, 16, 0, 1, 0, 84, 84, 76, 80, 56, 0, 0, 0, 4, 0, 10, 0, 0, 0, 0, 0, 32, 0, 0, 0, 16, 0, 0, 0};
+            {
+                82, 76, 67, 78, 255, 254, 0, 1, 72, 0, 0, 0, 16, 0, 1, 0,
+                84, 84, 76, 80, 56, 0, 0, 0, 4, 0, 10, 0, 0, 0, 0, 0,
+                32, 0, 0, 0, 16, 0, 0, 0
+            };
             BinaryWriter binaryWriter = new BinaryWriter(fs);
             binaryWriter.Write(buffer, 0, 40);
             ushort[] array = new ushort[16];
@@ -1333,447 +1013,6 @@ namespace DSPRE.Editors
             {
                 binaryWriter.Write(array[j]);
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (components != null)
-                {
-                    components.Dispose();
-                }
-            }
-            base.Dispose(disposing);
-        }
-    }
-
-    public class IndexedBitmapHandler
-    {
-        public IndexedBitmapHandler()
-        {
-        }
-
-        public Bitmap Convert(Bitmap source, PixelFormat target)
-        {
-            if ((source.PixelFormat == target) || (target == PixelFormat.DontCare))
-                return source;
-            Bitmap image = new Bitmap(source.Width, source.Height, target);
-            if ((source.PixelFormat == PixelFormat.Format4bppIndexed) && (target == PixelFormat.Format8bppIndexed))
-            {
-                byte[] array = GetArray(source);
-                byte[] array2 = new byte[(array.Length * 2)];
-                byte current;
-                for (int i = 0; i < array.Length; i++)
-                {
-                    current = array[i];
-                    array2[2 * i] = (byte)((current & 0xF0) >> 4);
-                    array2[2 * i + 1] = (byte)((current & 0x0F));
-                }
-                image = MakeImage(source.Width, source.Height, array2, target);
-                image.Palette = source.Palette;
-            }
-            if (((source.PixelFormat == PixelFormat.Format24bppRgb) || (source.PixelFormat == PixelFormat.Format32bppArgb)) && (target == PixelFormat.Format8bppIndexed))
-            {
-                int skip = 3;
-                if (source.PixelFormat == PixelFormat.Format32bppArgb)
-                    skip = 4;
-                Color[] newPalette = new Color[256];
-                byte[] array = new byte[source.Width * source.Height];
-                byte[] sourceArray = GetArray(source);
-                Color Pixel = Color.FromArgb(sourceArray[2], sourceArray[1], sourceArray[0]);
-                newPalette[0] = Pixel;
-                int index = 1;
-                array[0] = 0;
-                byte r = 0;
-                byte g = 0;
-                byte b = 0;
-                bool match = false;
-                for (int i = 1; i < (source.Width * source.Height); i++)
-                {
-                    b = sourceArray[(i * skip)];
-                    g = sourceArray[(i * skip + 1)];
-                    r = sourceArray[(i * skip + 2)];
-                    Pixel = Color.FromArgb(r, g, b);
-                    for (int j = 0; j < index; j++)
-                    {
-                        if (Pixel == newPalette[j])
-                        {
-                            array[i] = (byte)j;
-                            match = true;
-                            break;
-                        }
-                    }
-                    if (!match)
-                    {
-                        if (index >= 256)
-                        {
-                            MessageBox.Show("Conversion failed");
-                            return null;
-                        }
-                        newPalette[index] = Pixel;
-                        array[i] = (byte)index;
-                        index++;
-                    }
-                    match = false;
-                }
-                image = MakeImage(source.Width, source.Height, array, target);
-                ColorPalette oldPalette = image.Palette;
-                for (int i = 0; i < index; i++)
-                {
-                    oldPalette.Entries[i] = newPalette[i];
-                }
-                image.Palette = oldPalette;
-            }
-            return image;
-        }
-
-        public Bitmap Resize(Bitmap source, int top, int bottom, int left, int right)
-        {
-            int newWidth = source.Width + left + right;
-            int newHeight = source.Height + top + bottom;
-            int arraysize = newWidth * newHeight;
-            ColorPalette palette = source.Palette;
-
-            byte[] source_array = GetArray(source);
-
-            byte[] byte_array = new byte[arraysize];
-            byte background = source_array[0];
-
-            int source_index = 0;
-            int index = 0;
-            for (int j = 0; j < newHeight; j++)
-            {
-                for (int i = 0; i < newWidth; i++)
-                {
-                    if (i < left || i >= (left + source.Width) || j < top || j >= (top + source.Height))
-                        byte_array[index] = background;
-                    else
-                    {
-                        source_index = ((j - top) * source.Width) + i - left;
-                        byte_array[index] = source_array[source_index];
-                    }
-                    index++;
-                }
-            }
-            Bitmap newImage = MakeImage(newWidth, newHeight, byte_array, PixelFormat.Format8bppIndexed);
-            newImage.Palette = palette;
-            return newImage;
-        }
-
-        public Bitmap Concat(Bitmap first, Bitmap second)
-        {
-            int newWidth = first.Width + second.Width;
-            int newHeight = first.Height;
-            if (first.Height < second.Height)
-                newHeight = second.Height;
-            int arraysize = newWidth * newHeight;
-            ColorPalette palette = first.Palette;
-
-            byte[] first_array = GetArray(first);
-            byte[] second_array = GetArray(second);
-
-            byte[] byte_array = new byte[arraysize];
-            byte background = first_array[0];
-
-            int source_index = 0;
-            int index = 0;
-            for (int j = 0; j < newHeight; j++)
-            {
-                for (int i = 0; i < first.Width; i++)
-                {
-                    if (j > first.Height)
-                        byte_array[index] = background;
-                    else
-                    {
-                        source_index = ((j * first.Width) + i);
-                        byte_array[index] = first_array[source_index];
-                    }
-                    index++;
-                }
-                for (int i = 0; i < second.Width; i++)
-                {
-                    if (j > second.Height)
-                        byte_array[index] = background;
-                    else
-                    {
-                        source_index = ((j * second.Width) + i);
-                        byte_array[index] = second_array[source_index];
-                    }
-                    index++;
-                }
-            }
-            Bitmap newImage = MakeImage(newWidth, newHeight, byte_array, PixelFormat.Format8bppIndexed);
-            newImage.Palette = palette;
-            return newImage;
-        }
-
-        public Bitmap[] Split(Bitmap source, int tilewidth, int tileheight)
-        {
-            int maxTiles = (source.Width / tilewidth) * (source.Height / tileheight);
-            Bitmap[] tiles = new Bitmap[maxTiles];
-            int index = 0;
-            int x_index = 0;
-            int y_index = 0;
-            while (y_index + tileheight <= source.Height)
-            {
-                if (x_index + tilewidth <= source.Width)
-                {
-                    tiles[index] = Resize(source, (y_index * -1), ((source.Height - y_index - tileheight) * -1), (x_index * -1), ((source.Width - x_index - tilewidth) * -1));
-                    index++;
-                }
-                x_index += tilewidth;
-                if (x_index + tilewidth > source.Width)
-                {
-                    y_index += tileheight;
-                    x_index = 0;
-                }
-            }
-            return tiles;
-        }
-
-        public Bitmap ShrinkImage(Bitmap image, int x_scale, int y_scale)
-        {
-            byte[] array = GetArray(image);
-            ColorPalette palette = image.Palette;
-            int new_width = image.Width / x_scale;
-            int new_height = image.Height / y_scale;
-            byte[] array2 = new byte[new_width * new_height];
-            for (int j = 0; j < new_height; j++)
-            {
-                for (int i = 0; i < new_width; i++)
-                {
-                    array2[j * new_width + i] = array[y_scale * j * image.Width + i * x_scale];
-                }
-            }
-            Bitmap temp = MakeImage(new_width, new_height, array2, image.PixelFormat);
-            temp.Palette = palette;
-            return temp;
-        }
-
-        public ColorPalette AlternatePalette(Bitmap parent, Bitmap child)
-        {
-            Bitmap temp = new Bitmap(1, 1, parent.PixelFormat);
-            ColorPalette newPalette = temp.Palette;
-            ColorPalette ChildPalette = child.Palette;
-            byte[] ParentArray = GetArray(parent);
-            byte[] ChildArray = GetArray(child);
-            if (ParentArray.Length != ChildArray.Length)
-                return null;
-            for (int i = 0; i < ChildPalette.Entries.Length; i++)
-            {
-                for (int j = 0; j < ParentArray.Length; j++)
-                {
-                    if (ParentArray[j] == i)
-                    {
-                        newPalette.Entries[i] = ChildPalette.Entries[ChildArray[j]];
-                        break;
-                    }
-                }
-            }
-            return newPalette;
-        }
-
-        public Bitmap PaletteMatch(ColorPalette parent, Bitmap child, bool[] used = null)
-        {
-            if (parent.Entries == child.Palette.Entries)
-                return child;
-            if (used == null)
-            {
-                used = new bool[parent.Entries.Length];
-                for (int i = 0; i < parent.Entries.Length; i++)
-                    used[i] = true;
-            }
-            Bitmap image = ShrinkPalette(child);
-            Bitmap temp = new Bitmap(1, 1, child.PixelFormat);
-            ColorPalette childPalette = image.Palette;
-            ColorPalette newPalette = temp.Palette;
-            int size = PaletteSize(image);
-            byte[] array = GetArray(image);
-            byte[] indexof = new byte[size];
-            bool[] NotFound = new bool[size];
-            for (int i = 0; i < size; i++)
-                NotFound[i] = true;
-            for (int i = 0; i < size; i++)
-            {
-                for (int j = 0; j < parent.Entries.Length; j++)
-                {
-                    if (parent.Entries[j] == childPalette.Entries[i])
-                    {
-                        indexof[i] = (byte)j;
-                        NotFound[i] = false;
-                        break;
-                    }
-                }
-            }
-            int maxsize = 0;
-            for (int i = 0; i < parent.Entries.Length; i++)
-            {
-                if (used[i])
-                {
-                    newPalette.Entries[i] = parent.Entries[i];
-                    maxsize++;
-                }
-            }
-            for (int i = 0; i < size; i++)
-            {
-                if (NotFound[i])
-                    maxsize++;
-            }
-            for (int i = 0; i < maxsize; i++)
-            {
-                if ((i < used.Length) && (used[i]))
-                    continue;
-                for (int j = 0; j < size; j++)
-                {
-                    if (NotFound[j])
-                    {
-                        indexof[j] = (byte)i;
-                        newPalette.Entries[i] = childPalette.Entries[j];
-                        NotFound[j] = false;
-                        break;
-                    }
-                }
-            }
-            byte[] newArray = new byte[array.Length];
-            for (int i = 0; i < array.Length; i++)
-            {
-                newArray[i] = indexof[array[i]];
-            }
-            image = MakeImage(child.Width, child.Height, newArray, child.PixelFormat);
-            image.Palette = newPalette;
-            return image;
-        }
-
-        public Bitmap ShrinkPalette(Bitmap image, bool[] used = null)
-        {
-            used = IsUsed(image, used);
-            byte[] array = GetArray(image);
-            ColorPalette oldPalette = image.Palette;
-            Bitmap temp = new Bitmap(image.Width, image.Height, image.PixelFormat);
-            ColorPalette newPalette = temp.Palette;
-            int size = oldPalette.Entries.Length;
-            int index = 0;
-            int unused = 0;
-            byte[] indexof = new byte[size];
-            for (int i = 0; i < size; i++)
-            {
-                if (used[i])
-                {
-                    newPalette.Entries[index] = oldPalette.Entries[i];
-                    indexof[i] = (byte)index;
-                    index++;
-                }
-                else
-                    unused++;
-            }
-            if (unused == 0 || unused == size)
-                return image;
-            byte[] newArray = new byte[array.Length];
-            for (int i = 0; i < array.Length; i++)
-            {
-                newArray[i] = indexof[array[i]];
-            }
-            image = MakeImage(image.Width, image.Height, newArray, image.PixelFormat);
-            image.Palette = newPalette;
-            return image;
-        }
-
-        public bool[] IsUsed(Bitmap image, bool[] used = null)
-        {
-            byte[] array = GetArray(image);
-            int size = image.Palette.Entries.Length;
-            if (used == null)
-            {
-                used = new bool[size];
-                for (int i = 0; i < size; i++)
-                {
-                    used[i] = false;
-                }
-            }
-            if (size > used.Length)
-            {
-                bool[] temp = new bool[size];
-                for (int i = 0; i < size; i++)
-                {
-                    if (i < used.Length)
-                        temp[i] = used[i];
-                    else
-                        temp[i] = false;
-                }
-                used = temp;
-            }
-            for (int i = 0; i < array.Length; i++)
-            {
-                used[array[i]] = true;
-            }
-            return used;
-        }
-
-        public byte PaletteSize(Bitmap image)
-        {
-            byte[] array = GetArray(image);
-            byte max = 0;
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i] > max)
-                    max = array[i];
-            }
-            return (byte)(max + 1);
-        }
-
-        public bool PaletteEquals(ColorPalette parent, Bitmap child)
-        {
-            bool Match = true;
-            int max = PaletteSize(child);
-            for (int i = 0; i < max; i++)
-            {
-                if (parent.Entries[i] != child.Palette.Entries[i])
-                    Match = false;
-            }
-            return Match;
-        }
-
-        public ColorPalette CleanPalette(Bitmap image)
-        {
-            int used = PaletteSize(image);
-            ColorPalette temp = image.Palette;
-            for (int i = used; i < image.Palette.Entries.Length; i++)
-                temp.Entries[i] = Color.FromArgb(0, 0, 0);
-            return temp;
-        }
-
-        public byte[] GetArray(Bitmap target)
-        {
-            int Width = target.Width;
-            if (target.PixelFormat == PixelFormat.Format1bppIndexed)
-                Width = Width / 8;
-            if (target.PixelFormat == PixelFormat.Format4bppIndexed)
-                Width = Width / 2;
-            if ((target.PixelFormat == PixelFormat.Format16bppArgb1555) || (target.PixelFormat == PixelFormat.Format16bppGrayScale) || (target.PixelFormat == PixelFormat.Format16bppRgb555) || (target.PixelFormat == PixelFormat.Format16bppRgb565))
-                Width = Width * 2;
-            if (target.PixelFormat == PixelFormat.Format24bppRgb)
-                Width = Width * 3;
-            if ((target.PixelFormat == PixelFormat.Format32bppRgb) || (target.PixelFormat == PixelFormat.Format32bppArgb) || (target.PixelFormat == PixelFormat.Format32bppPArgb))
-                Width = Width * 4;
-            byte[] array = new byte[Width * target.Height];
-            Rectangle rect = new Rectangle(0, 0, target.Width, target.Height);
-            BitmapData sourceData = target.LockBits(rect, ImageLockMode.ReadOnly, target.PixelFormat);
-            IntPtr scan = sourceData.Scan0;
-            Marshal.Copy(scan, array, 0, Width * target.Height);
-            target.UnlockBits(sourceData);
-            return array;
-        }
-
-        public Bitmap MakeImage(int width, int height, byte[] array, PixelFormat format)
-        {
-            Bitmap image = new Bitmap(width, height, format);
-            Rectangle rect = new Rectangle(0, 0, width, height);
-            BitmapData imageData = image.LockBits(rect, ImageLockMode.WriteOnly, image.PixelFormat);
-            IntPtr scan = imageData.Scan0;
-            Marshal.Copy(array, 0, scan, (width * height));
-            image.UnlockBits(imageData);
-            return image;
         }
     }
 }

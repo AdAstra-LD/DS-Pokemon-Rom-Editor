@@ -98,6 +98,9 @@ namespace DSPRE.Editors
             populate_selectScriptFileComboBox(0);
             UpdateScriptNumberCheckBox((NumberStyles)SettingsManager.Settings.scriptEditorFormatPreference);
             Helpers.statusLabelMessage();
+            ScriptDatabase.InitializePokemonNames();
+            ScriptDatabase.InitializeItemNames();
+            ScriptDatabase.InitializeMoveNames();
         }
         public void OpenScriptEditor(MainProgram parent, int scriptFileID)
         {
@@ -116,6 +119,9 @@ namespace DSPRE.Editors
             secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) +
                                 " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) +
                                 " " + String.Join(" ", ScriptDatabase.overworldDirections.Values) +
+                                " " + String.Join(" ", ScriptDatabase.pokemonNames.Values) +
+                                " " + String.Join(" ", ScriptDatabase.itemNames.Values) +
+                                " " + String.Join(" ", ScriptDatabase.moveNames.Values) +
                                 " " + ScriptFile.ContainerTypes.Script.ToString() +
                                 " " + ScriptFile.ContainerTypes.Function.ToString() +
                                 " " + ScriptFile.ContainerTypes.Action.ToString() +

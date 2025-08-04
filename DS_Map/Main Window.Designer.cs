@@ -284,6 +284,7 @@
             this.tableEditorTabPage = new System.Windows.Forms.TabPage();
             this.tableEditor = new DSPRE.Editors.TableEditor();
             this.tabPageEncountersEditor = new System.Windows.Forms.TabPage();
+            this.encountersEditor = new DSPRE.Editors.EncountersEditor();
             this.mainTabImageList = new System.Windows.Forms.ImageList(this.components);
             this.gameIcon = new System.Windows.Forms.PictureBox();
             this.languageLabel = new System.Windows.Forms.Label();
@@ -329,6 +330,7 @@
             this.flyWarpEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overworldEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tradeEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -441,6 +443,7 @@
             this.cameraEditorTabPage.SuspendLayout();
             this.trainerEditorTabPage.SuspendLayout();
             this.tableEditorTabPage.SuspendLayout();
+            this.tabPageEncountersEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gameIcon)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -3548,6 +3551,7 @@
             // 
             // tabPageEncountersEditor
             // 
+            this.tabPageEncountersEditor.Controls.Add(this.encountersEditor);
             this.tabPageEncountersEditor.Location = new System.Drawing.Point(4, 23);
             this.tabPageEncountersEditor.Name = "tabPageEncountersEditor";
             this.tabPageEncountersEditor.Padding = new System.Windows.Forms.Padding(3);
@@ -3555,6 +3559,14 @@
             this.tabPageEncountersEditor.TabIndex = 12;
             this.tabPageEncountersEditor.Text = "Encounters";
             this.tabPageEncountersEditor.UseVisualStyleBackColor = true;
+            // 
+            // encountersEditor
+            // 
+            this.encountersEditor.encounterEditorIsReady = false;
+            this.encountersEditor.Location = new System.Drawing.Point(0, 0);
+            this.encountersEditor.Name = "encountersEditor";
+            this.encountersEditor.Size = new System.Drawing.Size(1189, 675);
+            this.encountersEditor.TabIndex = 0;
             // 
             // mainTabImageList
             // 
@@ -3920,7 +3932,8 @@
             this.moveDataEditorToolStripMenuItem,
             this.flyWarpEditorToolStripMenuItem,
             this.itemEditorToolStripMenuItem,
-            this.overworldEditorToolStripMenuItem});
+            this.overworldEditorToolStripMenuItem,
+            this.tradeEditorToolStripMenuItem});
             this.otherEditorsToolStripMenuItem.Enabled = false;
             this.otherEditorsToolStripMenuItem.Name = "otherEditorsToolStripMenuItem";
             this.otherEditorsToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
@@ -3974,6 +3987,13 @@
             this.overworldEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
             this.overworldEditorToolStripMenuItem.Text = "Overworld Editor";
             this.overworldEditorToolStripMenuItem.Click += new System.EventHandler(this.overworldEditorToolStripMenuItem_Click);
+            // 
+            // tradeEditorToolStripMenuItem
+            // 
+            this.tradeEditorToolStripMenuItem.Name = "tradeEditorToolStripMenuItem";
+            this.tradeEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.tradeEditorToolStripMenuItem.Text = "Trade Editor";
+            this.tradeEditorToolStripMenuItem.Click += new System.EventHandler(this.tradeEditorToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem1
             // 
@@ -4476,6 +4496,7 @@
             this.trainerEditorTabPage.ResumeLayout(false);
             this.trainerEditorTabPage.PerformLayout();
             this.tableEditorTabPage.ResumeLayout(false);
+            this.tabPageEncountersEditor.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gameIcon)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -4819,7 +4840,6 @@
         public System.Windows.Forms.TabControl mainTabControl;
         public System.Windows.Forms.NumericUpDown scriptFileUpDown;
         public System.Windows.Forms.TabPage tabPageEncountersEditor;
-        public Editors.EncountersEditor encountersEditor;
         private System.Windows.Forms.Button scanUnusedCollisionTypesButton;
         private System.Windows.Forms.ToolStripMenuItem overlayEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
@@ -4834,6 +4854,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.ToolStripMenuItem flyWarpEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem itemEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tradeEditorToolStripMenuItem;
         private System.Windows.Forms.Button popoutTextEditorButton;
         private System.Windows.Forms.Label textEditorPoppedOutLabel;
         private System.Windows.Forms.Button popoutLevelScriptEditorButton;

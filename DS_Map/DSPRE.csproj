@@ -166,6 +166,7 @@
     <Compile Include="Editors\HeadbuttEncounterEditorTab.Designer.cs">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\Utils\IndexedBitmapHandler.cs" />
     <Compile Include="Editors\ItemEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -199,7 +200,12 @@
     <Compile Include="Editors\NsbtxEditor.Designer.cs">
       <DependentUpon>NsbtxEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\PokemonSpriteEditor.cs" />
+    <Compile Include="Editors\PokemonSpriteEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\PokemonSpriteEditor.Designer.cs">
+      <DependentUpon>PokemonSpriteEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\SafariZoneEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -242,12 +248,20 @@
     <Compile Include="Editors\TextEditor.Designer.cs">
       <DependentUpon>TextEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\TradeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\TradeEditor.Designer.cs">
+      <DependentUpon>TradeEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\TrainerEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Editors\TrainerEditor.Designer.cs">
       <DependentUpon>TrainerEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\Utils\NarcReader.cs" />
+    <Compile Include="Editors\Utils\SpriteSet.cs" />
     <Compile Include="EventFileImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -358,6 +372,7 @@
     <Compile Include="ROMFiles\LevelScriptTrigger.cs" />
     <Compile Include="ROMFiles\MapScreenLoadTrigger.cs" />
     <Compile Include="ROMFiles\ScriptAction.cs" />
+    <Compile Include="ROMFiles\TradeData.cs" />
     <Compile Include="Script\ScriptCommandPosition.cs" />
     <Compile Include="Script\ScriptLabeledSection.cs" />
     <Compile Include="Script\ScriptParameter.cs" />
@@ -400,7 +415,7 @@
     <Compile Include="Editors\SpawnEditor.Designer.cs">
       <DependentUpon>SpawnEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="UniqueList.cs" />
+    <Compile Include="Editors\Utils\UniqueList.cs" />
     <Compile Include="Editors\WildEditorHGSS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -524,6 +539,9 @@
     <EmbeddedResource Include="Editors\NsbtxEditor.resx">
       <DependentUpon>NsbtxEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\PokemonSpriteEditor.resx">
+      <DependentUpon>PokemonSpriteEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\SafariZoneEditor.resx">
       <DependentUpon>SafariZoneEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -541,6 +559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\TextEditor.resx">
       <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\TradeEditor.resx">
+      <DependentUpon>TradeEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\TrainerEditor.resx">
       <DependentUpon>TrainerEditor.cs</DependentUpon>
@@ -878,6 +899,12 @@
     </PackageReference>
     <PackageReference Include="Velopack">
       <Version>0.0.1298</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>9.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="LibGit2Sharp">
+      <Version>0.31.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net.Sockets;
 using System.Windows.Controls.Primitives;
 using static DSPRE.RomInfo;
 using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.System;
@@ -82,14 +83,15 @@ namespace DSPRE.ROMFiles
         KeyItems = 7
     }
 
+    [Flags]
     public enum BattlePocket
     {
         None = 0,
-        PokeBalls = 1,
-        BattleItems = 2,
-        HpRestore = 4,
-        StatusHealers = 8,
-        PpRestore = 16
+        PokeBalls = 1 << 0,      // 0b00001
+        BattleItems = 1 << 1,    // 0b00010
+        HpRestore = 1 << 2,      // 0b00100
+        StatusHealers = 1 << 3,  // 0b01000
+        PpRestore = 1 << 4      // 0b10000
     }
 
     public enum HoldEffect
@@ -394,7 +396,7 @@ namespace DSPRE.ROMFiles
                 if (PreventToss) bitfield |= (1 << 5);
                 if (Selectable) bitfield |= (1 << 6);
                 bitfield |= (ushort)(((byte)fieldPocket & 0b1111) << 7);
-                bitfield |= (ushort)(((byte)battlePocket & 0b11111) << 11);
+                bitfield |= (ushort)((bitfield & ~(0b11111 << 11)) | (((byte)battlePocket & 0b11111) << 11));
                 writer.Write(bitfield);
 
                 writer.Write((byte)fieldUseFunc);
