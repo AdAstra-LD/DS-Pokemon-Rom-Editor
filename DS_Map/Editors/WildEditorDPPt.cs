@@ -339,6 +339,23 @@ namespace DSPRE {
             }
         }
 
+        private void CalculateLabelWidths()
+        {
+            Label[] imageLabels = { pokeRadarLabel1, pokeRadarLabel2, rubyLabel, sapphireLabel, emeraldLabel, fireRedLabel, leafGreenLabel };
+
+            foreach (Label label in imageLabels)
+            {
+                if (label.Text.Length > 0)
+                {
+                    // Measure the width of the text
+                    SizeF size = TextRenderer.MeasureText(label.Text, label.Font);
+                    int imageWidth = label.Image != null ? label.Image.Width : 0;
+                    // Set the width of the label to fit the text
+                    label.Width = (int)size.Width + imageWidth + 5; // Add image width and some padding
+                }
+            }
+        }
+
         private void exportEncounterFileButton_Click(object sender, EventArgs e) {
             currentFile.SaveToFileExplorePath("Encounter File " + selectEncounterComboBox.SelectedIndex);
         }
@@ -1088,6 +1105,7 @@ namespace DSPRE {
                 return;
             }
             DrawConnectingLines();
+            CalculateLabelWidths();
         }
     }
 }
