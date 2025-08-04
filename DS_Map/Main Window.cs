@@ -909,6 +909,7 @@ namespace DSPRE {
             }
 
             romInfo = new RomInfo(gameCode, romFolderPath, useSuffix: false);
+            Helpers.romInfo = new RomInfo(gameCode, romFolderPath, useSuffix: false);
 
             if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName))
             {
