@@ -779,7 +779,6 @@ namespace DSPRE
             SetupROMLanguage(openRom.FileName);
             /* Set ROM gameVersion and language */
             romInfo = new RomInfo(gameCode, openRom.FileName, useSuffix: true);
-            Helpers.romInfo = new RomInfo(gameCode, openRom.FileName, useSuffix: true);
 
             if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName))
             {
