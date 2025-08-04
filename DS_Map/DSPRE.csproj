@@ -882,6 +882,12 @@
     <PackageReference Include="Velopack">
       <Version>0.0.1298</Version>
     </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>9.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="LibGit2Sharp">
+      <Version>0.31.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
