@@ -284,7 +284,6 @@
             this.tableEditorTabPage = new System.Windows.Forms.TabPage();
             this.tableEditor = new DSPRE.Editors.TableEditor();
             this.tabPageEncountersEditor = new System.Windows.Forms.TabPage();
-            this.encountersEditor = new DSPRE.Editors.EncountersEditor();
             this.mainTabImageList = new System.Windows.Forms.ImageList(this.components);
             this.gameIcon = new System.Windows.Forms.PictureBox();
             this.languageLabel = new System.Windows.Forms.Label();
@@ -366,6 +365,7 @@
             this.weatherMapEditor = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.encountersEditor = new DSPRE.Editors.EncountersEditor();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.worldmapCoordsGroupBox.SuspendLayout();
@@ -3560,14 +3560,6 @@
             this.tabPageEncountersEditor.Text = "Encounters";
             this.tabPageEncountersEditor.UseVisualStyleBackColor = true;
             // 
-            // encountersEditor
-            // 
-            this.encountersEditor.encounterEditorIsReady = false;
-            this.encountersEditor.Location = new System.Drawing.Point(0, 0);
-            this.encountersEditor.Name = "encountersEditor";
-            this.encountersEditor.Size = new System.Drawing.Size(1189, 675);
-            this.encountersEditor.TabIndex = 0;
-            // 
             // mainTabImageList
             // 
             this.mainTabImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("mainTabImageList.ImageStream")));
@@ -4374,6 +4366,15 @@
             this.versionLabel.Text = "ROM:";
             this.versionLabel.Visible = false;
             // 
+            // encountersEditor
+            // 
+            this.encountersEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.encountersEditor.encounterEditorIsReady = false;
+            this.encountersEditor.Location = new System.Drawing.Point(3, 3);
+            this.encountersEditor.Name = "encountersEditor";
+            this.encountersEditor.Size = new System.Drawing.Size(1179, 669);
+            this.encountersEditor.TabIndex = 0;
+            // 
             // MainProgram
             // 
             this.AllowDrop = true;
@@ -4887,6 +4888,7 @@
         public System.Windows.Forms.RadioButton exteriorbldRadioButton;
         public Editors.MatrixEditor matrixEditor;
         public System.Windows.Forms.TabPage matrixEditorTabPage;
+        public Editors.EncountersEditor encountersEditor;
     }
 }
 
