@@ -239,6 +239,14 @@ namespace DSPRE
             SetMoveTextNumbers();
             SetTypesTextNumber();
 
+            if (gameVersion == GameVersions.Platinum) {
+                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "platinum_scrcmd_database.json"), gameVersion);
+            } else if (gameFamily == GameFamilies.HGSS) {
+                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "hgss_scrcmd_database.json"), gameVersion);
+            } else if (gameFamily == GameFamilies.DP) {
+                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "diamond_pearl_scrcmd_database.json"), gameVersion);
+            }
+
             /* System */
             ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
 
@@ -250,13 +258,6 @@ namespace DSPRE
             ScriptActionNamesReverseDict = ScriptActionNamesDict.Reverse();
             ScriptComparisonOperatorsReverseDict = ScriptComparisonOperatorsDict.Reverse();
 
-            if (gameVersion == GameVersions.Platinum) {
-                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "platinum_scrcmd_database.json"), gameVersion);
-            } else if (gameVersion == GameVersions.HeartGold || gameVersion == GameVersions.SoulSilver) {
-                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "hgss_scrcmd_database.json"), gameVersion);
-            } else if (gameVersion == GameVersions.Diamond || gameVersion == GameVersions.Pearl) {
-                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "diamond_pearl_scrcmd_database.json"), gameVersion);
-            }
         }
 
         #endregion Constructors (1)
