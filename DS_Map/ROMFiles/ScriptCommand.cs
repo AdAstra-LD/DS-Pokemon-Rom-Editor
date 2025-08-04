@@ -572,7 +572,7 @@ namespace DSPRE.ROMFiles {
             int paramLength = 0;
             int paramsProcessed = 0;
 
-            if (parametersSizeArr.First() == 0xFF) {
+            if (parametersSizeArr.Length > 0 && parametersSizeArr.First() == 0xFF) {
                 int firstParamValue = int.Parse(nameParts[1].PurgeSpecial(ScriptFile.specialChars), nameParts[1].GetNumberStyle());
                 byte firstParamSize = parametersSizeArr[1];
 
