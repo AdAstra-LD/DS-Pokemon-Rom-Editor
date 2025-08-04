@@ -249,6 +249,14 @@ namespace DSPRE
             ScriptCommandNamesReverseDict = ScriptCommandNamesDict.Reverse();
             ScriptActionNamesReverseDict = ScriptActionNamesDict.Reverse();
             ScriptComparisonOperatorsReverseDict = ScriptComparisonOperatorsDict.Reverse();
+
+            if (gameVersion == GameVersions.Platinum) {
+                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "platinum_scrcmd_database.json"), gameVersion);
+            } else if (gameVersion == GameVersions.HeartGold || gameVersion == GameVersions.SoulSilver) {
+                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "hgss_scrcmd_database.json"), gameVersion);
+            } else if (gameVersion == GameVersions.Diamond || gameVersion == GameVersions.Pearl) {
+                ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "diamond_pearl_scrcmd_database.json"), gameVersion);
+            }
         }
 
         #endregion Constructors (1)
@@ -263,13 +271,14 @@ namespace DSPRE
             switch (gameFam)
             {
                 case GameFamilies.DP:
-                    commonDictionaryNames = ScriptDatabase.DPPtScrCmdNames;
-                    specificDictionaryNames = ScriptDatabase.DPScrCmdNames;
+                    commonDictionaryNames = ScriptDatabase.DPScrCmdNames;
+                    specificDictionaryNames = new Dictionary<ushort, string>();
                     break;
 
                 case GameFamilies.Plat:
-                    commonDictionaryNames = ScriptDatabase.DPPtScrCmdNames;
-                    specificDictionaryNames = ScriptDatabase.PlatScrCmdNames;
+                    //commonDictionaryNames = ScriptDatabase.DPPtScrCmdNames;
+                    commonDictionaryNames = ScriptDatabase.PlatScrCmdNames;
+                    specificDictionaryNames = new Dictionary<ushort, string>();
                     break;
 
                 default:
@@ -292,13 +301,13 @@ namespace DSPRE
             switch (gameFam)
             {
                 case GameFamilies.DP:
-                    commonDictionaryParams = ScriptDatabase.DPPtScrCmdParameters;
-                    specificDictionaryParams = ScriptDatabase.DPScrCmdParameters;
+                    commonDictionaryParams = ScriptDatabase.DPScrCmdParameters;
+                    specificDictionaryParams = new Dictionary<ushort, byte[]>();
                     break;
 
                 case GameFamilies.Plat:
-                    commonDictionaryParams = ScriptDatabase.DPPtScrCmdParameters;
-                    specificDictionaryParams = ScriptDatabase.PlatScrCmdParameters;
+                    commonDictionaryParams = ScriptDatabase.PlatScrCmdParameters;
+                    specificDictionaryParams = new Dictionary<ushort, byte[]>();
                     break;
 
                 default:
