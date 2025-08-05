@@ -62,15 +62,19 @@ namespace DSPRE
 
             // Updates can't be checked if the application is not installed, hence the !debug
 #if !DEBUG
-            try
+            if(SettingsManager.Settings.automaticallyCheckForUpdates)
             {
-                Helpers.CheckForUpdates();
+                try
+                {
+                    Helpers.CheckForUpdates();
+                }
+                catch
+                {
+                    AppLogger.Error("Failed to check for updates.");
+                    MessageBox.Show("Failed to check for updates.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch
-            {
-                AppLogger.Error("Failed to check for updates.");
-                MessageBox.Show("Failed to check for updates.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
 #endif
             InitializeComponent();
             Program.CloneAndSetupDatabase();
