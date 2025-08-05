@@ -166,6 +166,12 @@
     <Compile Include="Editors\HeadbuttEncounterEditorTab.Designer.cs">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\MapEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\MapEditor.Designer.cs">
+      <DependentUpon>MapEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\Utils\IndexedBitmapHandler.cs" />
     <Compile Include="Editors\ItemEditor.cs">
       <SubType>Form</SubType>
@@ -529,6 +535,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\LevelScriptEditor.resx">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\MapEditor.resx">
+      <DependentUpon>MapEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\MatrixEditor.resx">
       <DependentUpon>MatrixEditor.cs</DependentUpon>
