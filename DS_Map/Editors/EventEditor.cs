@@ -425,7 +425,7 @@ namespace DSPRE.Editors
                     Helpers.MW_LoadModelTextures(eventMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, areaData.buildingsTileset); // Load building textures                
                 }
 
-                _parent.RenderMap(ref eventMapRenderer, ref eventBuildingsRenderer, ref eventMapFile, 0f, 115.0f, 90f, 4f, eventOpenGlControl.Width, eventOpenGlControl.Height, true, true);
+                    EditorPanels.mapEditor.RenderMap(ref eventMapRenderer, ref eventBuildingsRenderer, ref eventMapFile, 0f, 115.0f, 90f, 4f, eventOpenGlControl.Width, eventOpenGlControl.Height, true, true);
                 eventPictureBox.BackgroundImage = Helpers.GrabMapScreenshot(eventOpenGlControl.Width, eventOpenGlControl.Height);
             }
             eventPictureBox.Invalidate();
@@ -659,6 +659,7 @@ namespace DSPRE.Editors
             eventEditorIsReady = true;
             this._parent = parent;
             /* Extract essential NARCs sub-archives*/
+
 
             Helpers.statusLabelMessage("Attempting to unpack Event Editor NARCs... Please wait. This might take a while");
             _parent.toolStripProgressBar.Visible = true;
@@ -1507,7 +1508,16 @@ namespace DSPRE.Editors
             {
                 return;
             }
-            currentEvFile.overworlds.Add(new Overworld(selectedEvent as Overworld));
+           
+            // Find the smallest unused ID
+            int newID = 0;
+            while (currentEvFile.overworlds.Any(ow => ow.owID == newID))
+            {
+                newID++;
+            }
+            var newOvw = new Overworld(selectedEvent as Overworld);
+            newOvw.owID = (ushort)newID;
+            currentEvFile.overworlds.Add(newOvw);
 
             overworldsListBox.Items.Add("");
             overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
@@ -2439,8 +2449,12 @@ namespace DSPRE.Editors
             DisplayActiveEvents();
         }
         #endregion
+
         #endregion
 
-
+        private void eventOpenGlControl_Load(object sender, EventArgs e)
+        {
+            eventOpenGlControl.InitializeContexts();
+        }
     }
 }

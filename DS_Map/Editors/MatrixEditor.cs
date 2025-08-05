@@ -485,6 +485,7 @@ namespace DSPRE.Editors
             ushort colorValue = GameMatrix.EMPTY;
             try
             {
+                if (mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null) return;
                 colorValue = ushort.Parse(mapFilesGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
             }
             catch { }
@@ -839,13 +840,7 @@ namespace DSPRE.Editors
                     return;
                 }
 
-                if (!_parent.mapEditorIsReady)
-                {
-                    // TODO: Replace once it's externalized
-                    _parent.SetupMapEditor();
-                    _parent.mapOpenGlControl.MouseWheel += new MouseEventHandler(_parent.mapOpenGlControl_MouseWheel);
-                    _parent.mapEditorIsReady = true;
-                }
+                EditorPanels.mapEditor.SetupMapEditor(_parent);
 
                 int mapCount = _parent.romInfo.GetMapCount();
                 if (currentMatrix.maps[e.RowIndex, e.ColumnIndex] >= mapCount)
@@ -975,22 +970,22 @@ namespace DSPRE.Editors
                 Helpers.DisableHandlers();
 
                 AreaData areaData = new AreaData(h.areaDataID);
-                _parent.selectMapComboBox.SelectedIndex = currentMatrix.maps[e.RowIndex, e.ColumnIndex];
-                _parent.mapTextureComboBox.SelectedIndex = areaData.mapTileset + 1;
-                _parent.buildTextureComboBox.SelectedIndex = areaData.buildingsTileset + 1;
+                EditorPanels.mapEditor.selectMapComboBox.SelectedIndex = currentMatrix.maps[e.RowIndex, e.ColumnIndex];
+                EditorPanels.mapEditor.mapTextureComboBox.SelectedIndex = areaData.mapTileset + 1;
+                EditorPanels.mapEditor.buildTextureComboBox.SelectedIndex = areaData.buildingsTileset + 1;
                 _parent.mainTabControl.SelectedTab = EditorPanels.mapEditorTabPage;
 
                 if (areaData.areaType == AreaData.TYPE_INDOOR)
                 {
-                    _parent.interiorbldRadioButton.Checked = true;
+                    EditorPanels.mapEditor.interiorbldRadioButton.Checked = true;
                 }
                 else
                 {
-                    _parent.exteriorbldRadioButton.Checked = true;
+                    EditorPanels.mapEditor.exteriorbldRadioButton.Checked = true;
                 }
 
                 Helpers.EnableHandlers();
-                _parent.selectMapComboBox_SelectedIndexChanged(null, null);
+                EditorPanels.mapEditor.selectMapComboBox_SelectedIndexChanged(null, null);
             }
         }
     }

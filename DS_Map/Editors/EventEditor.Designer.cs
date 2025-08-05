@@ -2129,6 +2129,7 @@
             this.eventOpenGlControl.Size = new System.Drawing.Size(544, 544);
             this.eventOpenGlControl.StencilBits = ((byte)(0));
             this.eventOpenGlControl.TabIndex = 2;
+            this.eventOpenGlControl.Load += new System.EventHandler(this.eventOpenGlControl_Load);
             // 
             // rightClickPicture
             // 
