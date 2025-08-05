@@ -50,6 +50,7 @@ namespace DSPRE
             openDefaultRomTextBox.Text = SettingsManager.Settings.openDefaultRom;
             oldOpenDefaultPath = SettingsManager.Settings.openDefaultRom;
             dontAskOpenCheckbox.Checked = SettingsManager.Settings.neverAskForOpening;
+            automaticCheckUpdateCheckbox.Checked = SettingsManager.Settings.automaticallyCheckForUpdates;
 
         }
 
@@ -86,9 +87,14 @@ namespace DSPRE
             SettingsManager.Settings.exportPath = romExportPathTextBox.Text;
             SettingsManager.Settings.mapImportStarterPoint = mapImportPathTextBox.Text;
             SettingsManager.Settings.openDefaultRom = openDefaultRomTextBox.Text;
+
+            SettingsManager.Settings.neverAskForOpening = dontAskOpenCheckbox.Checked;
+            SettingsManager.Settings.automaticallyCheckForUpdates = automaticCheckUpdateCheckbox.Checked;
+
             oldExportPath = SettingsManager.Settings.exportPath;
             oldMapImportPath = SettingsManager.Settings.mapImportStarterPoint;
             oldOpenDefaultPath = SettingsManager.Settings.openDefaultRom;
+
 
             SettingsManager.Save();
         }
@@ -115,19 +121,9 @@ namespace DSPRE
         {
             mapImportPathTextBox.Text = "";
         }
-
-        private void mapImportBasePathLabel_Click(object sender, EventArgs e)
-        {
-
-        }
         private void clearButtonOpenDefault_Click(object sender, EventArgs e)
         {
             openDefaultRomTextBox.Text = "";
-        }
-
-        private void dontAskOpenCheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            SettingsManager.Settings.neverAskForOpening = dontAskOpenCheckbox.Checked;
         }
 
         private void checkForUpdatesButton_Click(object sender, EventArgs e)

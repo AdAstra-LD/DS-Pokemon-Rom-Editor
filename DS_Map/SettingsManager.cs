@@ -24,6 +24,7 @@ namespace DSPRE
         public string openDefaultRom { get; set; } = "";
         public bool neverAskForOpening { get; set; } = false;
         public bool databasesPulled { get; set; } = false;
+        public bool automaticallyCheckForUpdates { get; set; } = true;
     }
 
     public static class SettingsManager

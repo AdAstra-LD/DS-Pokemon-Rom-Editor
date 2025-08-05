@@ -44,6 +44,7 @@
             this.dontAskOpenCheckbox = new System.Windows.Forms.CheckBox();
             this.checkForUpdatesButton = new System.Windows.Forms.Button();
             this.currentVersionLabel = new System.Windows.Forms.Label();
+            this.automaticCheckUpdateCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // romExportPathLabel
@@ -71,7 +72,6 @@
             this.mapImportBasePathLabel.Size = new System.Drawing.Size(112, 13);
             this.mapImportBasePathLabel.TabIndex = 2;
             this.mapImportBasePathLabel.Text = "Initial Map Import Path";
-            this.mapImportBasePathLabel.Click += new System.EventHandler(this.mapImportBasePathLabel_Click);
             // 
             // mapImportPathTextBox
             // 
@@ -187,7 +187,6 @@
             this.dontAskOpenCheckbox.TabIndex = 17;
             this.dontAskOpenCheckbox.Text = "Open without asking";
             this.dontAskOpenCheckbox.UseVisualStyleBackColor = true;
-            this.dontAskOpenCheckbox.CheckedChanged += new System.EventHandler(this.dontAskOpenCheckbox_CheckedChanged);
             // 
             // checkForUpdatesButton
             // 
@@ -208,11 +207,22 @@
             this.currentVersionLabel.TabIndex = 19;
             this.currentVersionLabel.Text = "currentVersion";
             // 
+            // automaticCheckUpdateCheckbox
+            // 
+            this.automaticCheckUpdateCheckbox.AutoSize = true;
+            this.automaticCheckUpdateCheckbox.Location = new System.Drawing.Point(333, 37);
+            this.automaticCheckUpdateCheckbox.Name = "automaticCheckUpdateCheckbox";
+            this.automaticCheckUpdateCheckbox.Size = new System.Drawing.Size(165, 17);
+            this.automaticCheckUpdateCheckbox.TabIndex = 20;
+            this.automaticCheckUpdateCheckbox.Text = "Check Updates Automatically";
+            this.automaticCheckUpdateCheckbox.UseVisualStyleBackColor = true;
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(653, 341);
+            this.Controls.Add(this.automaticCheckUpdateCheckbox);
             this.Controls.Add(this.currentVersionLabel);
             this.Controls.Add(this.checkForUpdatesButton);
             this.Controls.Add(this.dontAskOpenCheckbox);
@@ -257,5 +267,6 @@
         private System.Windows.Forms.CheckBox dontAskOpenCheckbox;
         private System.Windows.Forms.Button checkForUpdatesButton;
         private System.Windows.Forms.Label currentVersionLabel;
+        private System.Windows.Forms.CheckBox automaticCheckUpdateCheckbox;
     }
 }
