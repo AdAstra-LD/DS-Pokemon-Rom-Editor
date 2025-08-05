@@ -1508,7 +1508,16 @@ namespace DSPRE.Editors
             {
                 return;
             }
-            currentEvFile.overworlds.Add(new Overworld(selectedEvent as Overworld));
+           
+            // Find the smallest unused ID
+            int newID = 0;
+            while (currentEvFile.overworlds.Any(ow => ow.owID == newID))
+            {
+                newID++;
+            }
+            var newOvw = new Overworld(selectedEvent as Overworld);
+            newOvw.owID = (ushort)newID;
+            currentEvFile.overworlds.Add(newOvw);
 
             overworldsListBox.Items.Add("");
             overworldsListBox.SelectedIndex = currentEvFile.overworlds.Count - 1;
