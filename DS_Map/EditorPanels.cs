@@ -12,6 +12,9 @@ namespace DSPRE {
         #region Editors
         public static TabControl mainTabControl { get { return MainProgram.mainTabControl; } }
 
+        public static MatrixEditor matrixEditor { get { return MainProgram.matrixEditor; } }
+        public static EventEditor eventEditor { get { return MainProgram.eventEditor; } }
+
         public static ScriptEditor scriptEditor { get { return MainProgram.scriptEditor; } }
         public static LevelScriptEditor levelScriptEditor { get { return MainProgram.levelScriptEditor; } }
 
@@ -32,6 +35,10 @@ namespace DSPRE {
         #region Tabs
         public static TabPage scriptEditorTabPage { get { return MainProgram.tabPageScriptEditor; } }
 
+        public static TabPage headerEditorTabPage { get { return MainProgram.headerEditorTabPage; } }
+        
+        public static TabPage matrixEditorTabPage { get { return MainProgram.matrixEditorTabPage; } }
+        public static TabPage eventEditorTabPage { get { return MainProgram.eventEditorTabPage; } }
         public static TabPage cameraEditorTabPage { get { return MainProgram.cameraEditorTabPage; } }
         public static TabPage levelScriptEditorTabPage { get { return MainProgram.tabPageLevelScriptEditor; } }
 
@@ -42,6 +49,8 @@ namespace DSPRE {
         public static TabPage trainerEditorTabPage { get { return MainProgram.trainerEditorTabPage; } }
 
         public static TabPage nsbtxEditorTabPage { get { return MainProgram.nsbtxEditorTabPage; } }
+
+        public static TabPage mapEditorTabPage { get { return MainProgram.mapEditorTabPage; } }
 
         #endregion
 
