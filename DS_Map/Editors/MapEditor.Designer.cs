@@ -187,7 +187,7 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(1145, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(48, 646);
-            this.flowLayoutPanel1.TabIndex = 52;
+            this.flowLayoutPanel1.TabIndex = 42;
             // 
             // mapScreenshotButton
             // 
@@ -199,6 +199,7 @@
             this.mapScreenshotButton.TabIndex = 39;
             this.mapScreenshotButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.mapScreenshotButton.UseVisualStyleBackColor = true;
+            this.mapScreenshotButton.Click += new System.EventHandler(this.mapScreenshotButton_Click);
             // 
             // wireframeCheckBox
             // 
@@ -212,6 +213,7 @@
             this.wireframeCheckBox.TabIndex = 27;
             this.wireframeCheckBox.Text = " W";
             this.wireframeCheckBox.UseVisualStyleBackColor = true;
+            this.wireframeCheckBox.CheckedChanged += new System.EventHandler(this.wireframeCheckBox_CheckedChanged);
             // 
             // radio3D
             // 
@@ -242,6 +244,7 @@
             this.radio2D.Text = "2D";
             this.radio2D.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.radio2D.UseVisualStyleBackColor = true;
+            this.radio2D.CheckedChanged += new System.EventHandler(this.radio2D_CheckedChanged);
             // 
             // tableLayoutPanel3
             // 
@@ -256,14 +259,14 @@
             this.tableLayoutPanel3.Controls.Add(this.replaceMapBinButton, 0, 1);
             this.tableLayoutPanel3.Controls.Add(this.exportCurrentMapBinButton, 2, 1);
             this.tableLayoutPanel3.Controls.Add(this.saveMapButton, 0, 2);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(263, 486);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(271, 486);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 3;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(199, 129);
-            this.tableLayoutPanel3.TabIndex = 51;
+            this.tableLayoutPanel3.TabIndex = 41;
             // 
             // addMapFileButton
             // 
@@ -278,6 +281,7 @@
             this.addMapFileButton.Text = "Add \r\nMap File";
             this.addMapFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addMapFileButton.UseVisualStyleBackColor = true;
+            this.addMapFileButton.Click += new System.EventHandler(this.addMapFileButton_Click);
             // 
             // locateCurrentMapBin
             // 
@@ -289,6 +293,7 @@
             this.locateCurrentMapBin.TabIndex = 40;
             this.locateCurrentMapBin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.locateCurrentMapBin.UseVisualStyleBackColor = true;
+            this.locateCurrentMapBin.Click += new System.EventHandler(this.locateCurrentMapBin_Click);
             // 
             // removeMapFileButton
             // 
@@ -303,6 +308,7 @@
             this.removeMapFileButton.Text = "Remove \r\nLast Map";
             this.removeMapFileButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeMapFileButton.UseVisualStyleBackColor = true;
+            this.removeMapFileButton.Click += new System.EventHandler(this.removeLastMapFileButton_Click);
             // 
             // replaceMapBinButton
             // 
@@ -317,6 +323,7 @@
             this.replaceMapBinButton.Text = "Replace \r\nMap BIN";
             this.replaceMapBinButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.replaceMapBinButton.UseVisualStyleBackColor = true;
+            this.replaceMapBinButton.Click += new System.EventHandler(this.replaceMapBinButton_Click);
             // 
             // exportCurrentMapBinButton
             // 
@@ -331,6 +338,7 @@
             this.exportCurrentMapBinButton.Text = "Export \r\nMap BIN";
             this.exportCurrentMapBinButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportCurrentMapBinButton.UseVisualStyleBackColor = true;
+            this.exportCurrentMapBinButton.Click += new System.EventHandler(this.exportCurrentMapBinButton_Click);
             // 
             // saveMapButton
             // 
@@ -345,16 +353,17 @@
             this.saveMapButton.Text = "Save This\r\nMap BIN\r\n";
             this.saveMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveMapButton.UseVisualStyleBackColor = true;
+            this.saveMapButton.Click += new System.EventHandler(this.saveMapButton_Click);
             // 
             // mapRenderPanel
             // 
             this.mapRenderPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.mapRenderPanel.Controls.Add(this.mapOpenGlControl);
             this.mapRenderPanel.Controls.Add(this.movPictureBox);
-            this.mapRenderPanel.Location = new System.Drawing.Point(511, 3);
+            this.mapRenderPanel.Location = new System.Drawing.Point(519, 3);
             this.mapRenderPanel.Name = "mapRenderPanel";
             this.mapRenderPanel.Size = new System.Drawing.Size(610, 610);
-            this.mapRenderPanel.TabIndex = 43;
+            this.mapRenderPanel.TabIndex = 23;
             // 
             // mapOpenGlControl
             // 
@@ -373,6 +382,10 @@
             this.mapOpenGlControl.Size = new System.Drawing.Size(608, 608);
             this.mapOpenGlControl.StencilBits = ((byte)(0));
             this.mapOpenGlControl.TabIndex = 2;
+            this.mapOpenGlControl.Load += new System.EventHandler(this.mapOpenGlControl_Load);
+            this.mapOpenGlControl.Click += new System.EventHandler(this.mapOpenGlControl_Click);
+            this.mapOpenGlControl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.mapOpenGlControl_KeyUp);
+            this.mapOpenGlControl.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.mapOpenGlControl_PreviewKeyDown);
             // 
             // movPictureBox
             // 
@@ -382,60 +395,65 @@
             this.movPictureBox.Size = new System.Drawing.Size(608, 608);
             this.movPictureBox.TabIndex = 3;
             this.movPictureBox.TabStop = false;
+            this.movPictureBox.Click += new System.EventHandler(this.movPictureBox_Click);
+            this.movPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.movPictureBox_MouseMove);
             // 
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(8, 574);
+            this.label26.Location = new System.Drawing.Point(16, 574);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(84, 13);
-            this.label26.TabIndex = 50;
+            this.label26.TabIndex = 33;
             this.label26.Text = "Buildings texture";
             // 
             // buildTextureComboBox
             // 
             this.buildTextureComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.buildTextureComboBox.FormattingEnabled = true;
-            this.buildTextureComboBox.Location = new System.Drawing.Point(11, 588);
+            this.buildTextureComboBox.Location = new System.Drawing.Point(19, 588);
             this.buildTextureComboBox.Name = "buildTextureComboBox";
             this.buildTextureComboBox.Size = new System.Drawing.Size(233, 21);
-            this.buildTextureComboBox.TabIndex = 49;
+            this.buildTextureComboBox.TabIndex = 32;
+            this.buildTextureComboBox.SelectedIndexChanged += new System.EventHandler(this.buildTextureComboBox_SelectedIndexChanged);
             // 
             // mapFileLabel
             // 
             this.mapFileLabel.AutoSize = true;
-            this.mapFileLabel.Location = new System.Drawing.Point(8, 486);
+            this.mapFileLabel.Location = new System.Drawing.Point(16, 486);
             this.mapFileLabel.Name = "mapFileLabel";
             this.mapFileLabel.Size = new System.Drawing.Size(44, 13);
-            this.mapFileLabel.TabIndex = 48;
+            this.mapFileLabel.TabIndex = 31;
             this.mapFileLabel.Text = "Map file";
             // 
             // mapTextureComboBox
             // 
             this.mapTextureComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.mapTextureComboBox.FormattingEnabled = true;
-            this.mapTextureComboBox.Location = new System.Drawing.Point(11, 544);
+            this.mapTextureComboBox.Location = new System.Drawing.Point(19, 544);
             this.mapTextureComboBox.Name = "mapTextureComboBox";
             this.mapTextureComboBox.Size = new System.Drawing.Size(233, 21);
-            this.mapTextureComboBox.TabIndex = 47;
+            this.mapTextureComboBox.TabIndex = 30;
+            this.mapTextureComboBox.SelectedIndexChanged += new System.EventHandler(this.mapTextureComboBox_SelectedIndexChanged);
             // 
             // mapTextureLabel
             // 
             this.mapTextureLabel.AutoSize = true;
-            this.mapTextureLabel.Location = new System.Drawing.Point(8, 530);
+            this.mapTextureLabel.Location = new System.Drawing.Point(16, 530);
             this.mapTextureLabel.Name = "mapTextureLabel";
             this.mapTextureLabel.Size = new System.Drawing.Size(63, 13);
-            this.mapTextureLabel.TabIndex = 46;
+            this.mapTextureLabel.TabIndex = 29;
             this.mapTextureLabel.Text = "Map texture";
             // 
             // selectMapComboBox
             // 
             this.selectMapComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.selectMapComboBox.FormattingEnabled = true;
-            this.selectMapComboBox.Location = new System.Drawing.Point(11, 500);
+            this.selectMapComboBox.Location = new System.Drawing.Point(19, 500);
             this.selectMapComboBox.Name = "selectMapComboBox";
             this.selectMapComboBox.Size = new System.Drawing.Size(233, 21);
-            this.selectMapComboBox.TabIndex = 45;
+            this.selectMapComboBox.TabIndex = 28;
+            this.selectMapComboBox.SelectedIndexChanged += new System.EventHandler(this.selectMapComboBox_SelectedIndexChanged);
             // 
             // mapPartsTabControl
             // 
@@ -444,11 +462,12 @@
             this.mapPartsTabControl.Controls.Add(this.modelTabPage);
             this.mapPartsTabControl.Controls.Add(this.terrainTabPage);
             this.mapPartsTabControl.Controls.Add(this.bgsTabPage);
-            this.mapPartsTabControl.Location = new System.Drawing.Point(7, 6);
+            this.mapPartsTabControl.Location = new System.Drawing.Point(15, 6);
             this.mapPartsTabControl.Name = "mapPartsTabControl";
             this.mapPartsTabControl.SelectedIndex = 0;
             this.mapPartsTabControl.Size = new System.Drawing.Size(489, 476);
-            this.mapPartsTabControl.TabIndex = 44;
+            this.mapPartsTabControl.TabIndex = 24;
+            this.mapPartsTabControl.SelectedIndexChanged += new System.EventHandler(this.mapPartsTabControl_SelectedIndexChanged);
             // 
             // buildingsTabPage
             // 
@@ -504,6 +523,7 @@
             this.yRotDegBldUpDown.Name = "yRotDegBldUpDown";
             this.yRotDegBldUpDown.Size = new System.Drawing.Size(58, 20);
             this.yRotDegBldUpDown.TabIndex = 27;
+            this.yRotDegBldUpDown.ValueChanged += new System.EventHandler(this.yRotDegBldUpDown_ValueChanged);
             // 
             // xRotDegBldUpDown
             // 
@@ -517,6 +537,7 @@
             this.xRotDegBldUpDown.Name = "xRotDegBldUpDown";
             this.xRotDegBldUpDown.Size = new System.Drawing.Size(58, 20);
             this.xRotDegBldUpDown.TabIndex = 25;
+            this.xRotDegBldUpDown.ValueChanged += new System.EventHandler(this.xRotDegBldUpDown_ValueChanged);
             // 
             // zRotDegBldUpDown
             // 
@@ -530,6 +551,7 @@
             this.zRotDegBldUpDown.Name = "zRotDegBldUpDown";
             this.zRotDegBldUpDown.Size = new System.Drawing.Size(58, 20);
             this.zRotDegBldUpDown.TabIndex = 26;
+            this.zRotDegBldUpDown.ValueChanged += new System.EventHandler(this.zRotDegBldUpDown_ValueChanged);
             // 
             // yRotBuildUpDown
             // 
@@ -542,6 +564,7 @@
             this.yRotBuildUpDown.Name = "yRotBuildUpDown";
             this.yRotBuildUpDown.Size = new System.Drawing.Size(56, 20);
             this.yRotBuildUpDown.TabIndex = 24;
+            this.yRotBuildUpDown.ValueChanged += new System.EventHandler(this.yRotBuildUpDown_ValueChanged);
             // 
             // xRotBuildUpDown
             // 
@@ -554,6 +577,7 @@
             this.xRotBuildUpDown.Name = "xRotBuildUpDown";
             this.xRotBuildUpDown.Size = new System.Drawing.Size(56, 20);
             this.xRotBuildUpDown.TabIndex = 22;
+            this.xRotBuildUpDown.ValueChanged += new System.EventHandler(this.xRotBuildUpDown_ValueChanged);
             // 
             // zRotBuildUpDown
             // 
@@ -566,6 +590,7 @@
             this.zRotBuildUpDown.Name = "zRotBuildUpDown";
             this.zRotBuildUpDown.Size = new System.Drawing.Size(56, 20);
             this.zRotBuildUpDown.TabIndex = 23;
+            this.zRotBuildUpDown.ValueChanged += new System.EventHandler(this.zRotBuildUpDown_ValueChanged);
             // 
             // yLabel
             // 
@@ -602,6 +627,7 @@
             this.bldPlaceLockXcheckbox.TabIndex = 41;
             this.bldPlaceLockXcheckbox.Text = "Lock X";
             this.bldPlaceLockXcheckbox.UseVisualStyleBackColor = true;
+            this.bldPlaceLockXcheckbox.CheckedChanged += new System.EventHandler(this.bldPlaceLockXcheckbox_CheckedChanged);
             // 
             // bldPlaceLockZcheckbox
             // 
@@ -616,6 +642,7 @@
             this.bldPlaceLockZcheckbox.TabIndex = 42;
             this.bldPlaceLockZcheckbox.Text = "Lock Z";
             this.bldPlaceLockZcheckbox.UseVisualStyleBackColor = true;
+            this.bldPlaceLockZcheckbox.CheckedChanged += new System.EventHandler(this.bldPlaceLockZcheckbox_CheckedChanged);
             // 
             // zLabel
             // 
@@ -682,6 +709,7 @@
             this.bldRoundDecmil.Text = ".0001";
             this.bldRoundDecmil.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.bldRoundDecmil.UseVisualStyleBackColor = true;
+            this.bldRoundDecmil.CheckedChanged += new System.EventHandler(this.bldRoundDecmil_CheckedChanged);
             // 
             // bldRoundCentMil
             // 
@@ -694,6 +722,7 @@
             this.bldRoundCentMil.Text = ".00001";
             this.bldRoundCentMil.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.bldRoundCentMil.UseVisualStyleBackColor = true;
+            this.bldRoundCentMil.CheckedChanged += new System.EventHandler(this.bldRoundCentMil_CheckedChanged);
             // 
             // bldRoundWhole
             // 
@@ -706,6 +735,7 @@
             this.bldRoundWhole.Text = "Whole";
             this.bldRoundWhole.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.bldRoundWhole.UseVisualStyleBackColor = true;
+            this.bldRoundWhole.CheckedChanged += new System.EventHandler(this.bldRoundWhole_CheckedChanged);
             // 
             // bldRoundDec
             // 
@@ -720,6 +750,7 @@
             this.bldRoundDec.Text = ".1";
             this.bldRoundDec.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.bldRoundDec.UseVisualStyleBackColor = true;
+            this.bldRoundDec.CheckedChanged += new System.EventHandler(this.bldRoundDec_CheckedChanged);
             // 
             // bldRoundCent
             // 
@@ -732,6 +763,7 @@
             this.bldRoundCent.Text = ".01";
             this.bldRoundCent.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.bldRoundCent.UseVisualStyleBackColor = true;
+            this.bldRoundCent.CheckedChanged += new System.EventHandler(this.bldRoundCent_CheckedChanged);
             // 
             // bldRoundMil
             // 
@@ -744,6 +776,7 @@
             this.bldRoundMil.Text = ".001";
             this.bldRoundMil.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.bldRoundMil.UseVisualStyleBackColor = true;
+            this.bldRoundMil.CheckedChanged += new System.EventHandler(this.bldRoundMil_CheckedChanged);
             // 
             // bldPlaceWithMouseCheckbox
             // 
@@ -755,6 +788,7 @@
             this.bldPlaceWithMouseCheckbox.Size = new System.Drawing.Size(39, 40);
             this.bldPlaceWithMouseCheckbox.TabIndex = 40;
             this.bldPlaceWithMouseCheckbox.UseVisualStyleBackColor = true;
+            this.bldPlaceWithMouseCheckbox.CheckedChanged += new System.EventHandler(this.bldPlaceWithMouseCheckbox_CheckedChanged);
             // 
             // importBuildingsButton
             // 
@@ -767,6 +801,7 @@
             this.importBuildingsButton.Text = "Import\r\nBuildings";
             this.importBuildingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importBuildingsButton.UseVisualStyleBackColor = true;
+            this.importBuildingsButton.Click += new System.EventHandler(this.importBuildingsButton_Click);
             // 
             // groupBox20
             // 
@@ -791,6 +826,7 @@
             this.interiorbldRadioButton.TabIndex = 3;
             this.interiorbldRadioButton.Text = "Interior List";
             this.interiorbldRadioButton.UseVisualStyleBackColor = true;
+            this.interiorbldRadioButton.CheckedChanged += new System.EventHandler(this.interiorRadioButton_CheckedChanged);
             // 
             // exteriorbldRadioButton
             // 
@@ -814,6 +850,7 @@
             this.buildIndexComboBox.Name = "buildIndexComboBox";
             this.buildIndexComboBox.Size = new System.Drawing.Size(264, 21);
             this.buildIndexComboBox.TabIndex = 1;
+            this.buildIndexComboBox.SelectedIndexChanged += new System.EventHandler(this.buildIndexComboBox_SelectedIndexChanged);
             // 
             // groupBox19
             // 
@@ -833,6 +870,7 @@
             this.buildingHeightUpDown.Name = "buildingHeightUpDown";
             this.buildingHeightUpDown.Size = new System.Drawing.Size(43, 20);
             this.buildingHeightUpDown.TabIndex = 24;
+            this.buildingHeightUpDown.ValueChanged += new System.EventHandler(this.buildingHeightUpDown_ValueChanged);
             // 
             // buildingWidthUpDown
             // 
@@ -840,6 +878,7 @@
             this.buildingWidthUpDown.Name = "buildingWidthUpDown";
             this.buildingWidthUpDown.Size = new System.Drawing.Size(43, 20);
             this.buildingWidthUpDown.TabIndex = 22;
+            this.buildingWidthUpDown.ValueChanged += new System.EventHandler(this.buildingWidthUpDown_ValueChanged);
             // 
             // buildingLengthUpDown
             // 
@@ -847,6 +886,7 @@
             this.buildingLengthUpDown.Name = "buildingLengthUpDown";
             this.buildingLengthUpDown.Size = new System.Drawing.Size(43, 20);
             this.buildingLengthUpDown.TabIndex = 23;
+            this.buildingLengthUpDown.ValueChanged += new System.EventHandler(this.buildingLengthUpDown_ValueChanged);
             // 
             // duplicateBuildingButton
             // 
@@ -859,6 +899,7 @@
             this.duplicateBuildingButton.Text = "Duplicate";
             this.duplicateBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.duplicateBuildingButton.UseVisualStyleBackColor = true;
+            this.duplicateBuildingButton.Click += new System.EventHandler(this.duplicateBuildingButton_Click);
             // 
             // exportBuildingsButton
             // 
@@ -871,6 +912,7 @@
             this.exportBuildingsButton.Text = "Export\r\nBuildings";
             this.exportBuildingsButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportBuildingsButton.UseVisualStyleBackColor = true;
+            this.exportBuildingsButton.Click += new System.EventHandler(this.exportBuildingsButton_Click);
             // 
             // removeBuildingButton
             // 
@@ -883,6 +925,7 @@
             this.removeBuildingButton.Text = "Delete";
             this.removeBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.removeBuildingButton.UseVisualStyleBackColor = true;
+            this.removeBuildingButton.Click += new System.EventHandler(this.removeBuildingButton_Click);
             // 
             // addBuildingButton
             // 
@@ -895,6 +938,7 @@
             this.addBuildingButton.Text = "Add";
             this.addBuildingButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.addBuildingButton.UseVisualStyleBackColor = true;
+            this.addBuildingButton.Click += new System.EventHandler(this.addBuildingButton_Click);
             // 
             // buildPositionGroupBox
             // 
@@ -925,6 +969,7 @@
             this.yBuildUpDown.Name = "yBuildUpDown";
             this.yBuildUpDown.Size = new System.Drawing.Size(69, 20);
             this.yBuildUpDown.TabIndex = 7;
+            this.yBuildUpDown.ValueChanged += new System.EventHandler(this.yBuildUpDown_ValueChanged);
             // 
             // xBuildUpDown
             // 
@@ -943,6 +988,7 @@
             this.xBuildUpDown.Name = "xBuildUpDown";
             this.xBuildUpDown.Size = new System.Drawing.Size(69, 20);
             this.xBuildUpDown.TabIndex = 5;
+            this.xBuildUpDown.ValueChanged += new System.EventHandler(this.xBuildUpDown_ValueChanged);
             // 
             // zBuildUpDown
             // 
@@ -961,6 +1007,7 @@
             this.zBuildUpDown.Name = "zBuildUpDown";
             this.zBuildUpDown.Size = new System.Drawing.Size(69, 20);
             this.zBuildUpDown.TabIndex = 6;
+            this.zBuildUpDown.ValueChanged += new System.EventHandler(this.zBuildUpDown_ValueChanged);
             // 
             // buildingsListBox
             // 
@@ -969,6 +1016,7 @@
             this.buildingsListBox.Name = "buildingsListBox";
             this.buildingsListBox.Size = new System.Drawing.Size(168, 433);
             this.buildingsListBox.TabIndex = 0;
+            this.buildingsListBox.SelectedIndexChanged += new System.EventHandler(this.buildingsListBox_SelectedIndexChanged);
             // 
             // permissionsTabPage
             // 
@@ -1002,6 +1050,7 @@
             this.transparencyBar.TabIndex = 42;
             this.transparencyBar.TickFrequency = 255;
             this.transparencyBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.transparencyBar.Scroll += new System.EventHandler(this.transparencyBar_Scroll);
             // 
             // scanUnusedCollisionTypesButton
             // 
@@ -1014,6 +1063,7 @@
             this.scanUnusedCollisionTypesButton.Text = "Scan used types";
             this.scanUnusedCollisionTypesButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.scanUnusedCollisionTypesButton.UseVisualStyleBackColor = true;
+            this.scanUnusedCollisionTypesButton.Click += new System.EventHandler(this.scanUsedCollisionTypesButton_Click);
             // 
             // clearCurrentButton
             // 
@@ -1023,6 +1073,7 @@
             this.clearCurrentButton.TabIndex = 32;
             this.clearCurrentButton.Text = "Clear current";
             this.clearCurrentButton.UseVisualStyleBackColor = true;
+            this.clearCurrentButton.Click += new System.EventHandler(this.clearCurrentButton_Click);
             // 
             // typeLabel
             // 
@@ -1070,6 +1121,7 @@
             this.knownTypesRadioButton.TabStop = true;
             this.knownTypesRadioButton.Text = "Known Types";
             this.knownTypesRadioButton.UseVisualStyleBackColor = true;
+            this.knownTypesRadioButton.CheckedChanged += new System.EventHandler(this.typesRadioButton_CheckedChanged);
             // 
             // valueTypeRadioButton
             // 
@@ -1080,6 +1132,7 @@
             this.valueTypeRadioButton.TabIndex = 4;
             this.valueTypeRadioButton.Text = "Value";
             this.valueTypeRadioButton.UseVisualStyleBackColor = true;
+            this.valueTypeRadioButton.CheckedChanged += new System.EventHandler(this.valueTypeRadioButton_CheckedChanged);
             // 
             // typePainterUpDown
             // 
@@ -1094,6 +1147,7 @@
             this.typePainterUpDown.Name = "typePainterUpDown";
             this.typePainterUpDown.Size = new System.Drawing.Size(78, 20);
             this.typePainterUpDown.TabIndex = 3;
+            this.typePainterUpDown.ValueChanged += new System.EventHandler(this.typePainterUpDown_ValueChanged);
             // 
             // collisionTypePainterComboBox
             // 
@@ -1105,6 +1159,7 @@
             this.collisionTypePainterComboBox.Name = "collisionTypePainterComboBox";
             this.collisionTypePainterComboBox.Size = new System.Drawing.Size(200, 21);
             this.collisionTypePainterComboBox.TabIndex = 2;
+            this.collisionTypePainterComboBox.SelectedIndexChanged += new System.EventHandler(this.typePainterComboBox_SelectedIndexChanged);
             // 
             // typePainterPictureBox
             // 
@@ -1135,6 +1190,7 @@
             this.collisionPainterComboBox.Name = "collisionPainterComboBox";
             this.collisionPainterComboBox.Size = new System.Drawing.Size(284, 21);
             this.collisionPainterComboBox.TabIndex = 1;
+            this.collisionPainterComboBox.SelectedIndexChanged += new System.EventHandler(this.collisionPainterComboBox_SelectedIndexChange);
             // 
             // collisionPainterPictureBox
             // 
@@ -1163,6 +1219,7 @@
             this.collisionPictureBox.Size = new System.Drawing.Size(96, 96);
             this.collisionPictureBox.TabIndex = 26;
             this.collisionPictureBox.TabStop = false;
+            this.collisionPictureBox.Click += new System.EventHandler(this.collisionPictureBox_Click);
             // 
             // selectTypePanel
             // 
@@ -1181,6 +1238,7 @@
             this.typePictureBox.Size = new System.Drawing.Size(96, 96);
             this.typePictureBox.TabIndex = 27;
             this.typePictureBox.TabStop = false;
+            this.typePictureBox.Click += new System.EventHandler(this.typePictureBox_Click);
             // 
             // ImportMovButton
             // 
@@ -1193,6 +1251,7 @@
             this.ImportMovButton.Text = "Import Permissions";
             this.ImportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ImportMovButton.UseVisualStyleBackColor = true;
+            this.ImportMovButton.Click += new System.EventHandler(this.importMovButton_Click);
             // 
             // exportMovButton
             // 
@@ -1205,6 +1264,7 @@
             this.exportMovButton.Text = "Export Permissions";
             this.exportMovButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportMovButton.UseVisualStyleBackColor = true;
+            this.exportMovButton.Click += new System.EventHandler(this.exportMovButton_Click);
             // 
             // modelTabPage
             // 
@@ -1236,6 +1296,7 @@
             this.glbExportButton.Text = "Export GLB";
             this.glbExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.glbExportButton.UseVisualStyleBackColor = true;
+            this.glbExportButton.Click += new System.EventHandler(this.glbExportButton_Click);
             // 
             // daeExportButton
             // 
@@ -1248,6 +1309,7 @@
             this.daeExportButton.Text = "Export DAE";
             this.daeExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.daeExportButton.UseVisualStyleBackColor = true;
+            this.daeExportButton.Click += new System.EventHandler(this.daeExportButton_Click);
             // 
             // embedTexturesInMapModelCheckBox
             // 
@@ -1308,6 +1370,7 @@
             this.importMapButton.Text = "Import NSBMD";
             this.importMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.importMapButton.UseVisualStyleBackColor = true;
+            this.importMapButton.Click += new System.EventHandler(this.importMapButton_Click);
             // 
             // exportMapButton
             // 
@@ -1320,6 +1383,7 @@
             this.exportMapButton.Text = "Export NSBMD";
             this.exportMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportMapButton.UseVisualStyleBackColor = true;
+            this.exportMapButton.Click += new System.EventHandler(this.exportMapButton_Click);
             // 
             // terrainTabPage
             // 
@@ -1379,6 +1443,7 @@
             this.bdhcImportButton.Text = "Import BDHC";
             this.bdhcImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bdhcImportButton.UseVisualStyleBackColor = true;
+            this.bdhcImportButton.Click += new System.EventHandler(this.bdhcImportButton_Click);
             // 
             // bdhcExportButton
             // 
@@ -1391,6 +1456,7 @@
             this.bdhcExportButton.Text = "Export BDHC";
             this.bdhcExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bdhcExportButton.UseVisualStyleBackColor = true;
+            this.bdhcExportButton.Click += new System.EventHandler(this.bdhcExportButton_Click);
             // 
             // bgsTabPage
             // 
@@ -1418,6 +1484,7 @@
             this.blankBGSButton.Text = "Blank BGS";
             this.blankBGSButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.blankBGSButton.UseVisualStyleBackColor = true;
+            this.blankBGSButton.Click += new System.EventHandler(this.soundPlatesBlankButton_Click);
             // 
             // BGSSizeLBL
             // 
@@ -1464,6 +1531,7 @@
             this.soundPlatesImportButton.Text = "Import BGS";
             this.soundPlatesImportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.soundPlatesImportButton.UseVisualStyleBackColor = true;
+            this.soundPlatesImportButton.Click += new System.EventHandler(this.soundPlatesImportButton_Click);
             // 
             // soundPlatesExportButton
             // 
@@ -1476,6 +1544,7 @@
             this.soundPlatesExportButton.Text = "Export BGS";
             this.soundPlatesExportButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.soundPlatesExportButton.UseVisualStyleBackColor = true;
+            this.soundPlatesExportButton.Click += new System.EventHandler(this.soundPlatesExportButton_Click);
             // 
             // MapEditor
             // 
@@ -1654,5 +1723,6 @@
         private System.Windows.Forms.Label unsupportedBGSEditLBL;
         private System.Windows.Forms.Button soundPlatesImportButton;
         private System.Windows.Forms.Button soundPlatesExportButton;
+
     }
 }

@@ -235,9 +235,18 @@ namespace DSPRE.Editors
         #endregion
         public void SetupMapEditor(MainProgram parent, bool force=false)
         {
+            mapOpenGlControl.InitializeContexts();
+            mapOpenGlControl.MakeCurrent();
+            mapOpenGlControl.MouseWheel += new MouseEventHandler(mapOpenGlControl_MouseWheel);
+
             if (mapEditorIsReady && !force) { return; }
             mapEditorIsReady = true;
             this._parent = parent;
+
+            if (selectMapComboBox.SelectedIndex > -1)
+                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+
+
 
             /* Extract essential NARCs sub-archives*/
             _parent.toolStripProgressBar.Visible = true;
@@ -310,7 +319,7 @@ namespace DSPRE.Editors
             _parent.toolStripProgressBar.Value++;
 
             /* Fill building models list */
-            _parent.updateBuildingListComboBox(false);
+            updateBuildingListComboBox(false);
 
             /*  Fill map textures list */
             mapTextureComboBox.Items.Clear();
@@ -516,12 +525,7 @@ namespace DSPRE.Editors
             }
             RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
-        private void mapEditorTabPage_Enter(object sender, EventArgs e)
-        {
-            mapOpenGlControl.MakeCurrent();
-            if (selectMapComboBox.SelectedIndex > -1)
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
-        }
+
         public void mapOpenGlControl_MouseWheel(object sender, MouseEventArgs e)
         {
             if (mapPartsTabControl.SelectedTab == buildingsTabPage && bldPlaceWithMouseCheckbox.Checked)
@@ -1172,7 +1176,7 @@ namespace DSPRE.Editors
             buildIndexComboBox.Items.Clear();
 
             /* Fill building models list */
-            _parent.updateBuildingListComboBox(interiorbldRadioButton.Checked);
+            updateBuildingListComboBox(interiorbldRadioButton.Checked);
             FillBuildingsBox();
 
             try
@@ -1835,6 +1839,42 @@ namespace DSPRE.Editors
             RestorePainter();
         }
 
+        public string[] GetBuildingsList(bool interior)
+        {
+            List<string> names = new List<string>();
+            string path = _parent.romInfo.GetBuildingModelsDirPath(interior);
+            int buildModelsCount = Directory.GetFiles(path).Length;
+
+            for (int i = 0; i < buildModelsCount; i++)
+            {
+                using (DSUtils.EasyReader reader = new DSUtils.EasyReader(path + "\\" + i.ToString("D4"), 0x38))
+                {
+                    string nsbmdName = Encoding.UTF8.GetString(reader.ReadBytes(16)).TrimEnd();
+                    names.Add(nsbmdName);
+                }
+            }
+            return names.ToArray();
+        }
+
+
+        public void updateBuildingListComboBox(bool interior)
+        {
+            string[] bldList = GetBuildingsList(interior);
+
+            buildIndexComboBox.Items.Clear();
+            for (int i = 0; i < bldList.Length; i++)
+            {
+                buildIndexComboBox.Items.Add("[" + i + "] " + bldList[i]);
+            }
+            _parent.toolStripProgressBar.Value++;
+        }
+
+
+        private void locateCurrentMapBin_Click(object sender, EventArgs e)
+        {
+            Helpers.ExplorerSelect(Path.Combine(gameDirs[DirNames.maps].unpackedDir, selectMapComboBox.SelectedIndex.ToString("D4")));
+        }
+
         private void collisionPictureBox_Click(object sender, EventArgs e)
         {
             selectTypePanel.BackColor = Color.Transparent;
@@ -2222,8 +2262,12 @@ namespace DSPRE.Editors
             MessageBox.Show("BackGround Sound data successfull blanked.\nRemember to save the current map file.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
+
         #endregion
 
-
+        private void mapOpenGlControl_Load(object sender, EventArgs e)
+        {
+            mapOpenGlControl.InitializeContexts();
+        }
     }
 }
