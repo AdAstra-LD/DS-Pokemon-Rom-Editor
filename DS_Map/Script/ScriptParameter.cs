@@ -4,11 +4,11 @@ public class ScriptParameter {
     public enum ParameterType {
         Integer,
         RelativeJump,
-        Byte,
+        Flex,
         Variable,
-        PokemonName,
-        ItemName,
-        MoveName
+        Pokemon,
+        Item,
+        Move
     }
 
     public ParameterType Type { get; set; } = ParameterType.Integer;
