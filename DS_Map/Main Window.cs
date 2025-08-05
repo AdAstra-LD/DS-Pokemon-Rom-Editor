@@ -71,7 +71,7 @@ namespace DSPRE
                 catch
                 {
                     AppLogger.Error("Failed to check for updates.");
-                    MessageBox.Show("Failed to check for updates.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to check for updates.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
