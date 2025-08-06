@@ -90,6 +90,9 @@ namespace DSPRE.Editors
             if (scriptEditorIsReady && !force) { return; }
             scriptEditorIsReady = true;
             this._parent = parent;
+            ScriptDatabase.InitializePokemonNames();
+            ScriptDatabase.InitializeItemNames();
+            ScriptDatabase.InitializeMoveNames();
             SetupScriptEditorTextAreas();
             /* Extract essential NARCs sub-archives*/
             Helpers.statusLabelMessage("Setting up Script Editor...");
@@ -98,9 +101,6 @@ namespace DSPRE.Editors
             populate_selectScriptFileComboBox(0);
             UpdateScriptNumberCheckBox((NumberStyles)SettingsManager.Settings.scriptEditorFormatPreference);
             Helpers.statusLabelMessage();
-            ScriptDatabase.InitializePokemonNames();
-            ScriptDatabase.InitializeItemNames();
-            ScriptDatabase.InitializeMoveNames();
         }
         public void OpenScriptEditor(MainProgram parent, int scriptFileID)
         {
@@ -122,6 +122,7 @@ namespace DSPRE.Editors
                                 " " + String.Join(" ", ScriptDatabase.pokemonNames.Values) +
                                 " " + String.Join(" ", ScriptDatabase.itemNames.Values) +
                                 " " + String.Join(" ", ScriptDatabase.moveNames.Values) +
+                                " " + String.Join(" ", ScriptDatabase.soundNames.Values) +
                                 " " + ScriptFile.ContainerTypes.Script.ToString() +
                                 " " + ScriptFile.ContainerTypes.Function.ToString() +
                                 " " + ScriptFile.ContainerTypes.Action.ToString() +
