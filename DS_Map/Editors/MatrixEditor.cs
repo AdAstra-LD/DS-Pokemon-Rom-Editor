@@ -208,16 +208,16 @@ namespace DSPRE.Editors
         }
         private void headersGridView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (_parent.headerListBox.Items.Count < _parent.internalNames.Count)
+            if (EditorPanels.headerEditor.headerListBox.Items.Count < EditorPanels.headerEditor.internalNames.Count)
             {
-                HeaderSearch.ResetResults(_parent.headerListBox, _parent.headerListBoxNames, prependNumbers: false);
+                HeaderSearch.ResetResults(EditorPanels.headerEditor.headerListBox, EditorPanels.headerEditor.headerListBoxNames, prependNumbers: false);
             }
 
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 int headerNumber = Convert.ToInt32(headersGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
-                _parent.headerListBox.SelectedIndex = headerNumber;
-                _parent.mainTabControl.SelectedTab = EditorPanels.headerEditorTabPage;
+                EditorPanels.headerEditor.headerListBox.SelectedIndex = headerNumber;
+                EditorPanels.mainTabControl.SelectedTab = EditorPanels.headerEditorTabPage;
             }
         }
         private void headersGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -582,11 +582,11 @@ namespace DSPRE.Editors
                     Environment.NewLine + "\nChoosing 'No' will pick the last selected Header.", "Couldn't find Header Tab", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (d == DialogResult.Yes)
                 {
-                    result = HeaderSearch.AdvancedSearch(0, (ushort)_parent.internalNames.Count, _parent.internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString());
+                    result = HeaderSearch.AdvancedSearch(0, (ushort)EditorPanels.headerEditor.internalNames.Count, EditorPanels.headerEditor.internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString());
                     if (result.Count < 1)
                     {
                         MessageBox.Show("The current Matrix isn't assigned to any Header.\nThe default choice has been set to the last selected Header.", "No result", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        headerNumber = _parent.currentHeader.ID;
+                        headerNumber = EditorPanels.headerEditor.currentHeader.ID;
                     }
                     else if (result.Count == 1)
                     {
@@ -599,14 +599,14 @@ namespace DSPRE.Editors
                 }
                 else
                 {
-                    headerNumber = _parent.currentHeader.ID;
+                    headerNumber = EditorPanels.headerEditor.currentHeader.ID;
                 }
             }
 
             int matrixX = selectedCell.ColumnIndex;
             int matrixY = selectedCell.RowIndex;
 
-            using (SpawnEditor ed = new SpawnEditor(result, _parent.headerListBoxNames, headerNumber, matrixX, matrixY))
+            using (SpawnEditor ed = new SpawnEditor(result, EditorPanels.headerEditor.headerListBoxNames, headerNumber, matrixX, matrixY))
             {
                 ed.ShowDialog();
             }
@@ -858,22 +858,22 @@ namespace DSPRE.Editors
                 }
                 else
                 {
-                    ushort[] result = HeaderSearch.AdvancedSearch(0, (ushort)_parent.internalNames.Count, _parent.internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString())
+                    ushort[] result = HeaderSearch.AdvancedSearch(0, (ushort)EditorPanels.headerEditor.internalNames.Count, EditorPanels.headerEditor.internalNames, (int)MapHeader.SearchableFields.MatrixID, (int)HeaderSearch.NumOperators.Equal, selectMatrixComboBox.SelectedIndex.ToString())
                         .Select(x => ushort.Parse(x.Split()[0]))
                         .ToArray();
 
                     if (result.Length < 1)
                     {
-                        headerID = _parent.currentHeader.ID;
+                        headerID = EditorPanels.headerEditor.currentHeader.ID;
                         Helpers.statusLabelMessage("This Matrix is not linked to any Header. DSPRE can't determine the most appropriate AreaData (and textures) to use.\nDisplaying Textures from the last selected Header (" + headerID + ")'s AreaData...");
                     }
                     else
                     {
                         if (result.Length > 1)
                         {
-                            if (result.Contains(_parent.currentHeader.ID))
+                            if (result.Contains(EditorPanels.headerEditor.currentHeader.ID))
                             {
-                                headerID = _parent.currentHeader.ID;
+                                headerID = EditorPanels.headerEditor.currentHeader.ID;
 
                                 Helpers.statusLabelMessage("Multiple Headers are associated to this Matrix, including the last selected one [Header " + headerID + "]. Now using its textures.");
                             }
@@ -948,7 +948,7 @@ namespace DSPRE.Editors
                 }
                 Update();
 
-                if (headerID > _parent.internalNames.Count)
+                if (headerID > EditorPanels.headerEditor.internalNames.Count)
                 {
                     MessageBox.Show("This map is associated to a non-existent header.\nThis will lead to unpredictable behaviour and, possibily, problems, if you attempt to load it in game.",
                         "Invalid header", MessageBoxButtons.OK, MessageBoxIcon.Information);

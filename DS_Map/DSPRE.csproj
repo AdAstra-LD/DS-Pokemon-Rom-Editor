@@ -166,6 +166,12 @@
     <Compile Include="Editors\HeadbuttEncounterEditorTab.Designer.cs">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\HeaderEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\HeaderEditor.Designer.cs">
+      <DependentUpon>HeaderEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\MapEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -529,6 +535,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\HeadbuttEncounterEditorTab.resx">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\HeaderEditor.resx">
+      <DependentUpon>HeaderEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\ItemEditor.resx">
       <DependentUpon>ItemEditor.cs</DependentUpon>

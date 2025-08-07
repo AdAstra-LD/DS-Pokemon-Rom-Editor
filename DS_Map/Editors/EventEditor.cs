@@ -112,7 +112,7 @@ namespace DSPRE.Editors
 
                     if (main.Equals(DialogResult.Yes))
                     {
-                        ushort[] result = HeaderSearch.AdvancedSearch(0, (ushort)_parent.internalNames.Count, _parent.internalNames, (int)MapHeader.SearchableFields.EventFileID, (int)HeaderSearch.NumOperators.Equal, selectEventComboBox.SelectedIndex.ToString())
+                        ushort[] result = HeaderSearch.AdvancedSearch(0, (ushort)EditorPanels.headerEditor.internalNames.Count, EditorPanels.headerEditor.internalNames, (int)MapHeader.SearchableFields.EventFileID, (int)HeaderSearch.NumOperators.Equal, selectEventComboBox.SelectedIndex.ToString())
                             .Select(x => ushort.Parse(x.Split()[0]))
                             .ToArray();
 
@@ -162,15 +162,15 @@ namespace DSPRE.Editors
                         {
                             if (dict.Count > 1)
                             {
-                                if (dict.Keys.Contains(_parent.currentHeader.ID))
+                                if (dict.Keys.Contains(EditorPanels.headerEditor.currentHeader.ID))
                                 {
                                     DialogResult yn = MessageBox.Show("DSPRE found multiple Headers referencing the same Event File and a different Matrix.\n" +
-                                        $"The last selected Header ({_parent.currentHeader.ID}) is one of those.\n" +
-                                        $"Do you want to load its matrix (#{_parent.currentHeader.matrixID}?)", "Potential solution found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                        $"The last selected Header ({EditorPanels.headerEditor.currentHeader.ID}) is one of those.\n" +
+                                        $"Do you want to load its matrix (#{EditorPanels.headerEditor.currentHeader.matrixID}?)", "Potential solution found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                                     if (yn.Equals(DialogResult.Yes))
                                     {
-                                        eventMatrixUpDown.Value = _parent.currentHeader.matrixID;
+                                        eventMatrixUpDown.Value = EditorPanels.headerEditor.currentHeader.matrixID;
                                     }
                                 }
                                 else
@@ -724,7 +724,7 @@ namespace DSPRE.Editors
             RomInfo.ReadOWTable();
 
             eventEditorWarpHeaderListBox.Items.Clear();
-            eventEditorWarpHeaderListBox.Items.AddRange(_parent.headerListBoxNames.ToArray());
+            eventEditorWarpHeaderListBox.Items.AddRange(EditorPanels.headerEditor.headerListBoxNames.ToArray());
             eventEditorHeaderLocationNameLabel.Text = "";
 
             string[] trainerNames = Helpers.GetTrainerNames();
@@ -804,7 +804,7 @@ namespace DSPRE.Editors
             // Creating a dictionary linking events to headers to fetch header data for Event Editor
             if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
             {
-                for (ushort i = 0; i < _parent.internalNames.Count; i++)
+                for (ushort i = 0; i < EditorPanels.headerEditor.internalNames.Count; i++)
                 {
                     MapHeader h = MapHeader.LoadFromFile(RomInfo.gameDirs[DirNames.dynamicHeaders].unpackedDir + "\\" + i.ToString("D4"), i, 0);
                     _parent.eventToHeader[h.eventFileID] = i;
@@ -812,7 +812,7 @@ namespace DSPRE.Editors
             }
             else
             {
-                for (ushort i = 0; i < _parent.internalNames.Count; i++)
+                for (ushort i = 0; i < EditorPanels.headerEditor.internalNames.Count; i++)
                 {
                     MapHeader h = MapHeader.LoadFromARM9(i);
                     _parent.eventToHeader[h.eventFileID] = i;
@@ -2080,7 +2080,7 @@ namespace DSPRE.Editors
                     }
             }
 
-            eventEditorHeaderLocationNameLabel.Text = (string)_parent.locationNameComboBox.Items[locNum];
+            eventEditorHeaderLocationNameLabel.Text = (string)EditorPanels.headerEditor.locationNameComboBox.Items[locNum];
 
             int warpSel = warpsListBox.SelectedIndex;
             if (Helpers.HandlersDisabled || warpSel < 0)
