@@ -6,8 +6,6 @@ using System.Linq;
 using DSPRE.Resources;
 using System;
 using DSPRE.ROMFiles;
-using static DSPRE.RomInfo;
-using System.Windows.Shapes;
 using Path = System.IO.Path;
 
 namespace DSPRE
@@ -241,10 +239,13 @@ namespace DSPRE
 
             if (gameVersion == GameVersions.Platinum) {
                 ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "platinum_scrcmd_database.json"), gameVersion);
+                ScriptDatabaseJsonLoader.LoadParameterTypes(Path.Combine(Program.DatabasePath, "platinum_scrcmd_database.json"), gameVersion);
             } else if (gameFamily == GameFamilies.HGSS) {
                 ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "hgss_scrcmd_database.json"), gameVersion);
+                ScriptDatabaseJsonLoader.LoadParameterTypes(Path.Combine(Program.DatabasePath, "hgss_scrcmd_database.json"), gameVersion);
             } else if (gameFamily == GameFamilies.DP) {
                 ScriptDatabaseJsonLoader.InitializeFromJson(Path.Combine(Program.DatabasePath, "diamond_pearl_scrcmd_database.json"), gameVersion);
+                ScriptDatabaseJsonLoader.LoadParameterTypes(Path.Combine(Program.DatabasePath, "diamond_pearl_scrcmd_database.json"), gameVersion);
             }
 
             /* System */

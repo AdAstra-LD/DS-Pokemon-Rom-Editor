@@ -1,14 +1,10 @@
 ﻿using DSPRE;
 using DSPRE.Resources;
-using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using static DSPRE.RomInfo;
 
 public static class ScriptDatabaseJsonLoader
@@ -59,6 +55,7 @@ public static class ScriptDatabaseJsonLoader
 
             Dictionary<ushort, string> namesDict;
             Dictionary<ushort, byte[]> paramsDict;
+            Dictionary<ushort, string> soundsDict = ScriptDatabase.soundNames;
 
             switch (gameVersion)
             {
@@ -66,26 +63,23 @@ public static class ScriptDatabaseJsonLoader
                     namesDict = ScriptDatabase.PlatScrCmdNames;
                     paramsDict = ScriptDatabase.PlatScrCmdParameters;
                     break;
-
                 case GameVersions.Diamond:
                 case GameVersions.Pearl:
                     namesDict = ScriptDatabase.DPScrCmdNames;
                     paramsDict = ScriptDatabase.DPScrCmdParameters;
                     break;
-
                 case GameVersions.HeartGold:
                 case GameVersions.SoulSilver:
                     namesDict = ScriptDatabase.HGSSScrCmdNames;
                     paramsDict = ScriptDatabase.HGSSScrCmdParameters;
                     break;
-
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gameVersion), gameVersion, "Unsupported game");
             }
 
             JsonElement scrRoot;
-                if (!root.TryGetProperty("scrcmd", out scrRoot))
-                    throw new InvalidOperationException("JSON is missing the \"scrcmd\" key");
+            if (!root.TryGetProperty("scrcmd", out scrRoot))
+                throw new InvalidOperationException("JSON is missing the \"scrcmd\" key");
 
             Console.WriteLine("About to load scrcmd entries:");
             foreach (JsonProperty prop in scrRoot.EnumerateObject())
@@ -103,6 +97,91 @@ public static class ScriptDatabaseJsonLoader
                     .ToArray();
                 paramsDict[code] = bytes;
             }
+
+            JsonElement soundsRoot;
+            if (!root.TryGetProperty("sounds", out soundsRoot))
+                throw new InvalidOperationException("JSON is missing the \"sounds\" key");
+
+            foreach (JsonProperty prop in soundsRoot.EnumerateObject())
+            {
+                if (ushort.TryParse(prop.Name, out ushort id))
+                {
+                    JsonElement entry = prop.Value;
+                    if (entry.TryGetProperty("name", out JsonElement nameElement))
+                    {
+                        string name = nameElement.GetString();
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            soundsDict[id] = name;
+                        }
+                    }
+                }
+            }
+
+        }
+        finally
+        {
+            doc.Dispose();
+        }
+    }
+
+    public static void LoadParameterTypes(string jsonPath, GameVersions gameVersion)
+    {
+        Dictionary<ushort, List<ScriptParameter.ParameterType>> paramtypesDict;
+        switch (gameVersion)
+        {
+            case GameVersions.Platinum:
+                paramtypesDict = ScriptDatabase.PlatScrCmdParameterTypes;
+                break;
+            case GameVersions.Diamond:
+            case GameVersions.Pearl:
+                paramtypesDict = ScriptDatabase.DPScrCmdParameterTypes;
+                break;
+            case GameVersions.HeartGold:
+            case GameVersions.SoulSilver:
+                paramtypesDict = ScriptDatabase.HGSSScrCmdParameterTypes;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(gameVersion));
+        }
+
+        string text = File.ReadAllText(jsonPath);
+        JsonDocument doc = JsonDocument.Parse(text);
+
+        try
+        {
+            JsonElement root = doc.RootElement;
+            if (!root.TryGetProperty("scrcmd", out JsonElement scrRoot))
+            {
+                throw new InvalidOperationException("JSON is missing the \"scrcmd\" key");
+            }
+
+            foreach (JsonProperty prop in scrRoot.EnumerateObject())
+            {
+                ushort code = Convert.ToUInt16(prop.Name.Substring(2), 16);
+                JsonElement entry = prop.Value;
+
+                if (entry.TryGetProperty("parameter_types", out JsonElement paramTypesElement))
+                {
+                    List<ScriptParameter.ParameterType> paramTypes = new List<ScriptParameter.ParameterType>();
+                    foreach (JsonElement typeElement in paramTypesElement.EnumerateArray())
+                    {
+                        string typeStr = typeElement.GetString();
+                        if (!string.IsNullOrEmpty(typeStr))
+                        {
+                            // Debug output to see what types we're getting
+                            Console.WriteLine($"Command 0x{code:X3} parameter type: {typeStr}");
+                            var paramType = ScriptParameter.ParseTypeString(typeStr);
+                            paramTypes.Add(paramType);
+                        }
+                    }
+
+                    if (paramTypes.Count > 0)
+                    {
+                        paramtypesDict[code] = paramTypes;
+                    }
+                }
+            }
         }
         finally
         {
@@ -113,55 +192,34 @@ public static class ScriptDatabaseJsonLoader
 
 namespace DSPRE.Resources {
     public static class ScriptDatabase {  
-        public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>() {
-            // Will be populated at runtime from json
-        };
         public static Dictionary<ushort, string> comparisonOperatorsGenVappendix = new Dictionary<ushort, string>() {
             /* GEN V ONLY */
             [6] = "OR",
             [7] = "AND",
             [0xFF] = "TRUEUP"
         };
-        public static Dictionary<ushort, string> specialOverworlds = new Dictionary<ushort, string>() {
-            // will be populated at runtime from json
-        };
-        public static Dictionary<byte, string> overworldDirections = new Dictionary<byte, string>() {
-            // Will be populated at runtime from json
-        };
-        public static Dictionary<ushort, string> pokemonNames = new Dictionary<ushort, string>()
-        {
-            // Will be populated at runtime from text archive
-        };
-        public static void InitializePokemonNames()
-        {
-            string[] names = RomInfo.GetPokemonNames();
-            pokemonNames = names.Select((name, index) => new { name, index })
-                               .ToDictionary(x => (ushort)x.index, x => x.name);
-        }
 
-        public static Dictionary<ushort, string> itemNames = new Dictionary<ushort, string>()
-        {
-            // Will be populated at runtime from text archive
-        };
-        public static void InitializeItemNames()
-        {
-            string[] names = RomInfo.GetItemNames();
-            itemNames = names.Select((name, index) => new { name, index })
-                               .ToDictionary(x => (ushort)x.index, x => x.name);
-        }
+        // will all be populated from json at runtime
+        public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, string> specialOverworlds = new Dictionary<ushort, string>();
+        public static Dictionary<byte, string> overworldDirections = new Dictionary<byte, string>();
+        public static Dictionary<ushort, string> DPScrCmdNames = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, byte[]> DPScrCmdParameters = new Dictionary<ushort, byte[]>();
+        public static Dictionary<ushort, List<ScriptParameter.ParameterType>> DPScrCmdParameterTypes = new Dictionary<ushort, List<ScriptParameter.ParameterType>>();
+        public static Dictionary<ushort, string> PlatScrCmdNames = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, byte[]> PlatScrCmdParameters = new Dictionary<ushort, byte[]>();
+        public static Dictionary<ushort, List<ScriptParameter.ParameterType>> PlatScrCmdParameterTypes = new Dictionary<ushort, List<ScriptParameter.ParameterType>>();
+        public static Dictionary<ushort, string> HGSSScrCmdNames = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>();
+        public static Dictionary<ushort, List<ScriptParameter.ParameterType>> HGSSScrCmdParameterTypes = new Dictionary<ushort, List<ScriptParameter.ParameterType>>();
+        public static Dictionary<ushort, string> pokemonNames = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, string> itemNames = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, string> moveNames = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, string> soundNames = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, string> movementsDictIDName = new Dictionary<ushort, string>();
 
-        public static Dictionary<ushort, string> moveNames = new Dictionary<ushort, string>()
+        public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>()
         {
-            // Will be populated at runtime from text archive
-        };
-        public static void InitializeMoveNames()
-        {
-            string[] names = RomInfo.GetAttackNames();
-            moveNames = names.Select((name, index) => new { name, index })
-                               .ToDictionary(x => (ushort)x.index, x => x.name);
-        }
-
-        public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>() {
             //commandID, ID of parameter With Jump Address
 
             [0x0016] = 0,   //Jump
@@ -180,36 +238,28 @@ namespace DSPRE.Resources {
             0x1B
         };
 
-        public static Dictionary<ushort, string> movementsDictIDName = new Dictionary<ushort, string>() {
-            // Will be populated at runtime from json
-        };
-
         public static HashSet<ushort?> movementEndCodes = new HashSet<ushort?>() {
             0x00FE,
         };
 
-        public static Dictionary<ushort, string> DPScrCmdNames = new Dictionary<ushort, string>() {
-            // will be populated at runtime from json
-        };
+        public static void InitializePokemonNames()
+        {
+            string[] names = RomInfo.GetPokemonNames();
+            pokemonNames = names.Select((name, index) => new { name, index })
+                               .ToDictionary(x => (ushort)x.index, x => x.name);
+        }
+        public static void InitializeItemNames()
+        {
+            string[] names = RomInfo.GetItemNames();
+            itemNames = names.Select((name, index) => new { name, index })
+                               .ToDictionary(x => (ushort)x.index, x => x.name);
+        }
+        public static void InitializeMoveNames()
+        {
+            string[] names = RomInfo.GetAttackNames();
+            moveNames = names.Select((name, index) => new { name, index })
+                               .ToDictionary(x => (ushort)x.index, x => x.name);
+        }
 
-        public static Dictionary<ushort, byte[]> DPScrCmdParameters = new Dictionary<ushort, byte[]>() {
-            // will be populated at runtime from json
-        };
-
-        public static Dictionary<ushort, string> PlatScrCmdNames = new Dictionary<ushort, string>() {
-            // will be populated at runtime from json
-        };
-
-        public static Dictionary<ushort, byte[]> PlatScrCmdParameters = new Dictionary<ushort, byte[]>() {
-            // will be populated at runtime from json
-        };
-
-        public static Dictionary<ushort, string> HGSSScrCmdNames = new Dictionary<ushort, string>() {
-            // will be populated from json at runtime
-        };
-
-        public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>() {
-            // will be populated from json at runtime
-        };
     }
 }
