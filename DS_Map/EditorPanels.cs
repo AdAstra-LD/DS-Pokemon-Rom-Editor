@@ -10,8 +10,7 @@ namespace DSPRE {
     }
 
         #region Editors
-        public static TabControl mainTabControl { get { return MainProgram.mainTabControl; } }
-
+        public static HeaderEditor headerEditor { get { return MainProgram.headerEditor; } }
         public static MapEditor mapEditor { get { return MainProgram.mapEditor; } }
 
         public static MatrixEditor matrixEditor { get { return MainProgram.matrixEditor; } }
@@ -36,6 +35,7 @@ namespace DSPRE {
         #endregion
 
         #region Tabs
+        public static TabControl mainTabControl { get { return MainProgram.mainTabControl; } }
         public static TabPage scriptEditorTabPage { get { return MainProgram.tabPageScriptEditor; } }
 
         public static TabPage headerEditorTabPage { get { return MainProgram.headerEditorTabPage; } }

@@ -73,12 +73,12 @@ namespace DSPRE.Editors
                             ushort musicID = ar.ReadUInt16();
 
                             conditionalMusicTable.Add((header, flag, musicID));
-                            conditionalMusicTableListBox.Items.Add(_parent.headerListBox.Items[header]);
+                            conditionalMusicTableListBox.Items.Add(EditorPanels.headerEditor.headerListBox.Items[header]);
                         }
                     }
 
                     headerConditionalMusicComboBox.Items.Clear();
-                    foreach (string location in _parent.headerListBox.Items)
+                    foreach (string location in EditorPanels.headerEditor.headerListBox.Items)
                     {
                         headerConditionalMusicComboBox.Items.Add(location);
                     }

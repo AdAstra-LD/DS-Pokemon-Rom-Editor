@@ -226,17 +226,17 @@ namespace DSPRE.Editors {
 
         private void buttonOpenHeaderScript_Click(object sender, EventArgs e) {
             HashSet<string> result;
-            result = HeaderSearch.AdvancedSearch(0, (ushort)_parent.internalNames.Count, _parent.internalNames, (int)MapHeader.SearchableFields.LevelScriptID, (int)HeaderSearch.NumOperators.Equal, EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex.ToString());
+            result = HeaderSearch.AdvancedSearch(0, (ushort)EditorPanels.headerEditor.internalNames.Count, EditorPanels.headerEditor.internalNames, (int)MapHeader.SearchableFields.LevelScriptID, (int)HeaderSearch.NumOperators.Equal, EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex.ToString());
             //Console.WriteLine($"Found {result.Count} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex}");
             //Console.WriteLine($"Searching for script file {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in headers: {string.Join(", ", result)}");
-            string[] arr = new string[result.Count];            
+            string[] arr = new string[result.Count];
             result.CopyTo(arr);
             for (int i = 0; i < arr.Length; i++)
             {
-                arr[i] = arr[i].Remove(0,3).Replace(MapHeader.nameSeparator, "");
+                arr[i] = arr[i].Remove(0, 3).Replace(MapHeader.nameSeparator, "");
             }
-            //Console.WriteLine($"Found {arr.Length} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in internal names: {string.Join(", ", arr)}");
-            ushort index = (ushort)_parent.internalNames.IndexOf(arr[0]);
+            Console.WriteLine($"Found {arr.Length} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in internal names: {string.Join(", ", arr)}");
+            ushort index = (ushort)EditorPanels.headerEditor.internalNames.IndexOf(arr[0]);
             MapHeader h;
             if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
             {
