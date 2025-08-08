@@ -14,7 +14,7 @@ namespace DSPRE {
         public bool walkingDirty { get; private set; } = false;
         public bool waterDirty { get; private set; } = false;
 
-        private int loadedEncounterFileIndex = -1;
+        private int loadedEncounterFileIndex = 0;
 
         EncounterFileDPPt currentFile;
        
@@ -739,6 +739,8 @@ namespace DSPRE {
         }
 
         private void exportEncounterFileButton_Click(object sender, EventArgs e) {
+            SaveWalking();
+            SaveWater();
             currentFile.SaveToFileExplorePath("Encounter File " + selectEncounterComboBox.SelectedIndex);
         }
         private void importEncounterFileButton_Click(object sender, EventArgs e) {

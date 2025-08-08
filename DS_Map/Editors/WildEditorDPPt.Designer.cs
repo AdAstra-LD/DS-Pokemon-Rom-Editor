@@ -123,23 +123,18 @@
             this.label61 = new System.Windows.Forms.Label();
             this.surfOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label62 = new System.Windows.Forms.Label();
             this.surfOneComboBox = new DSPRE.InputComboBox();
             this.surfFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label63 = new System.Windows.Forms.Label();
             this.surfFourComboBox = new DSPRE.InputComboBox();
             this.surfFiveMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfFiveMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label64 = new System.Windows.Forms.Label();
             this.surfFiveComboBox = new DSPRE.InputComboBox();
             this.surfThirtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfThirtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label65 = new System.Windows.Forms.Label();
             this.surfThirtyComboBox = new DSPRE.InputComboBox();
             this.surfSixtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfSixtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new DSPRE.InputComboBox();
             this.superRodPanel = new System.Windows.Forms.Panel();
             this.superRodPictureBox = new System.Windows.Forms.PictureBox();
@@ -150,23 +145,18 @@
             this.label69 = new System.Windows.Forms.Label();
             this.superRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label70 = new System.Windows.Forms.Label();
             this.superRodOneComboBox = new DSPRE.InputComboBox();
             this.superRodFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label71 = new System.Windows.Forms.Label();
             this.superRodFourComboBox = new DSPRE.InputComboBox();
             this.superRodFifteenMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodFifteenMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label72 = new System.Windows.Forms.Label();
             this.superRodFifteenComboBox = new DSPRE.InputComboBox();
             this.superRodSecondFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodSecondFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label73 = new System.Windows.Forms.Label();
             this.superRodSecondFortyComboBox = new DSPRE.InputComboBox();
             this.superRodFirstFortyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodFirstFortyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label74 = new System.Windows.Forms.Label();
             this.superRodFirstFortyComboBox = new DSPRE.InputComboBox();
             this.goodRodPanel = new System.Windows.Forms.Panel();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
@@ -204,25 +194,35 @@
             this.label45 = new System.Windows.Forms.Label();
             this.oldRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label46 = new System.Windows.Forms.Label();
             this.oldRodOneComboBox = new DSPRE.InputComboBox();
             this.oldRodFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label47 = new System.Windows.Forms.Label();
             this.oldRodFourComboBox = new DSPRE.InputComboBox();
             this.oldRodFiveMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodFiveMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label48 = new System.Windows.Forms.Label();
             this.oldRodFiveComboBox = new DSPRE.InputComboBox();
             this.oldRodThirtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodThirtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label49 = new System.Windows.Forms.Label();
             this.oldRodThirtyComboBox = new DSPRE.InputComboBox();
             this.oldRodSixtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodSixtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label50 = new System.Windows.Forms.Label();
             this.oldRodSixtyComboBox = new DSPRE.InputComboBox();
             this.repairAllButton = new System.Windows.Forms.Button();
+            this.label66 = new System.Windows.Forms.Label();
+            this.label65 = new System.Windows.Forms.Label();
+            this.label64 = new System.Windows.Forms.Label();
+            this.label63 = new System.Windows.Forms.Label();
+            this.label62 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -1414,16 +1414,6 @@
             this.surfOneMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfOneMinLevelUpDown.TabIndex = 21;
             // 
-            // label62
-            // 
-            this.label62.AutoSize = true;
-            this.label62.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label62.Location = new System.Drawing.Point(18, 188);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(21, 13);
-            this.label62.TabIndex = 20;
-            this.label62.Text = "1%";
-            // 
             // surfOneComboBox
             // 
             this.surfOneComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1447,16 +1437,6 @@
             this.surfFourMinLevelUpDown.Name = "surfFourMinLevelUpDown";
             this.surfFourMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfFourMinLevelUpDown.TabIndex = 17;
-            // 
-            // label63
-            // 
-            this.label63.AutoSize = true;
-            this.label63.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label63.Location = new System.Drawing.Point(18, 161);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(21, 13);
-            this.label63.TabIndex = 16;
-            this.label63.Text = "4%";
             // 
             // surfFourComboBox
             // 
@@ -1482,16 +1462,6 @@
             this.surfFiveMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfFiveMinLevelUpDown.TabIndex = 13;
             // 
-            // label64
-            // 
-            this.label64.AutoSize = true;
-            this.label64.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label64.Location = new System.Drawing.Point(18, 134);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(21, 13);
-            this.label64.TabIndex = 12;
-            this.label64.Text = "5%";
-            // 
             // surfFiveComboBox
             // 
             this.surfFiveComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1516,16 +1486,6 @@
             this.surfThirtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfThirtyMinLevelUpDown.TabIndex = 9;
             // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label65.Location = new System.Drawing.Point(12, 107);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(27, 13);
-            this.label65.TabIndex = 8;
-            this.label65.Text = "30%";
-            // 
             // surfThirtyComboBox
             // 
             this.surfThirtyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1549,16 +1509,6 @@
             this.surfSixtyMinLevelUpDown.Name = "surfSixtyMinLevelUpDown";
             this.surfSixtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfSixtyMinLevelUpDown.TabIndex = 5;
-            // 
-            // label66
-            // 
-            this.label66.AutoSize = true;
-            this.label66.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label66.Location = new System.Drawing.Point(12, 80);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(27, 13);
-            this.label66.TabIndex = 4;
-            this.label66.Text = "60%";
             // 
             // surfSixtyComboBox
             // 
@@ -1593,29 +1543,29 @@
             // 
             // superRodGroupBox
             // 
+            this.superRodGroupBox.Controls.Add(this.label15);
             this.superRodGroupBox.Controls.Add(this.label59);
+            this.superRodGroupBox.Controls.Add(this.label16);
             this.superRodGroupBox.Controls.Add(this.label60);
+            this.superRodGroupBox.Controls.Add(this.label17);
             this.superRodGroupBox.Controls.Add(this.superRodRateUpDown);
+            this.superRodGroupBox.Controls.Add(this.label18);
             this.superRodGroupBox.Controls.Add(this.label69);
+            this.superRodGroupBox.Controls.Add(this.label19);
             this.superRodGroupBox.Controls.Add(this.superRodOneMaxLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.superRodOneMinLevelUpDown);
-            this.superRodGroupBox.Controls.Add(this.label70);
             this.superRodGroupBox.Controls.Add(this.superRodOneComboBox);
             this.superRodGroupBox.Controls.Add(this.superRodFourMaxLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.superRodFourMinLevelUpDown);
-            this.superRodGroupBox.Controls.Add(this.label71);
             this.superRodGroupBox.Controls.Add(this.superRodFourComboBox);
             this.superRodGroupBox.Controls.Add(this.superRodFifteenMaxLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.superRodFifteenMinLevelUpDown);
-            this.superRodGroupBox.Controls.Add(this.label72);
             this.superRodGroupBox.Controls.Add(this.superRodFifteenComboBox);
             this.superRodGroupBox.Controls.Add(this.superRodSecondFortyMaxLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.superRodSecondFortyMinLevelUpDown);
-            this.superRodGroupBox.Controls.Add(this.label73);
             this.superRodGroupBox.Controls.Add(this.superRodSecondFortyComboBox);
             this.superRodGroupBox.Controls.Add(this.superRodFirstFortyMaxLevelUpDown);
             this.superRodGroupBox.Controls.Add(this.superRodFirstFortyMinLevelUpDown);
-            this.superRodGroupBox.Controls.Add(this.label74);
             this.superRodGroupBox.Controls.Add(this.superRodFirstFortyComboBox);
             this.superRodGroupBox.Location = new System.Drawing.Point(51, 29);
             this.superRodGroupBox.Name = "superRodGroupBox";
@@ -1678,16 +1628,6 @@
             this.superRodOneMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.superRodOneMinLevelUpDown.TabIndex = 21;
             // 
-            // label70
-            // 
-            this.label70.AutoSize = true;
-            this.label70.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label70.Location = new System.Drawing.Point(18, 188);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(21, 13);
-            this.label70.TabIndex = 20;
-            this.label70.Text = "5%";
-            // 
             // superRodOneComboBox
             // 
             this.superRodOneComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1711,16 +1651,6 @@
             this.superRodFourMinLevelUpDown.Name = "superRodFourMinLevelUpDown";
             this.superRodFourMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.superRodFourMinLevelUpDown.TabIndex = 17;
-            // 
-            // label71
-            // 
-            this.label71.AutoSize = true;
-            this.label71.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label71.Location = new System.Drawing.Point(12, 161);
-            this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(27, 13);
-            this.label71.TabIndex = 16;
-            this.label71.Text = "10%";
             // 
             // superRodFourComboBox
             // 
@@ -1746,16 +1676,6 @@
             this.superRodFifteenMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.superRodFifteenMinLevelUpDown.TabIndex = 13;
             // 
-            // label72
-            // 
-            this.label72.AutoSize = true;
-            this.label72.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label72.Location = new System.Drawing.Point(11, 134);
-            this.label72.Name = "label72";
-            this.label72.Size = new System.Drawing.Size(27, 13);
-            this.label72.TabIndex = 12;
-            this.label72.Text = "15%";
-            // 
             // superRodFifteenComboBox
             // 
             this.superRodFifteenComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1780,16 +1700,6 @@
             this.superRodSecondFortyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.superRodSecondFortyMinLevelUpDown.TabIndex = 9;
             // 
-            // label73
-            // 
-            this.label73.AutoSize = true;
-            this.label73.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label73.Location = new System.Drawing.Point(12, 107);
-            this.label73.Name = "label73";
-            this.label73.Size = new System.Drawing.Size(27, 13);
-            this.label73.TabIndex = 8;
-            this.label73.Text = "30%";
-            // 
             // superRodSecondFortyComboBox
             // 
             this.superRodSecondFortyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1813,16 +1723,6 @@
             this.superRodFirstFortyMinLevelUpDown.Name = "superRodFirstFortyMinLevelUpDown";
             this.superRodFirstFortyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.superRodFirstFortyMinLevelUpDown.TabIndex = 5;
-            // 
-            // label74
-            // 
-            this.label74.AutoSize = true;
-            this.label74.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label74.Location = new System.Drawing.Point(12, 80);
-            this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(27, 13);
-            this.label74.TabIndex = 4;
-            this.label74.Text = "40%";
             // 
             // superRodFirstFortyComboBox
             // 
@@ -1950,7 +1850,7 @@
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(21, 13);
             this.label54.TabIndex = 20;
-            this.label54.Text = "5%";
+            this.label54.Text = "1%";
             // 
             // goodRodOneComboBox
             // 
@@ -1980,11 +1880,11 @@
             // 
             this.label55.AutoSize = true;
             this.label55.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label55.Location = new System.Drawing.Point(12, 161);
+            this.label55.Location = new System.Drawing.Point(18, 161);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(27, 13);
+            this.label55.Size = new System.Drawing.Size(21, 13);
             this.label55.TabIndex = 16;
-            this.label55.Text = "10%";
+            this.label55.Text = "4%";
             // 
             // goodRodFourComboBox
             // 
@@ -2014,7 +1914,7 @@
             // 
             this.label56.AutoSize = true;
             this.label56.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label56.Location = new System.Drawing.Point(11, 134);
+            this.label56.Location = new System.Drawing.Point(12, 134);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(27, 13);
             this.label56.TabIndex = 12;
@@ -2052,7 +1952,7 @@
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(27, 13);
             this.label57.TabIndex = 8;
-            this.label57.Text = "30%";
+            this.label57.Text = "40%";
             // 
             // goodRodSecondFortyComboBox
             // 
@@ -2121,29 +2021,29 @@
             // 
             // oldRodGroupBox
             // 
+            this.oldRodGroupBox.Controls.Add(this.label1);
+            this.oldRodGroupBox.Controls.Add(this.label2);
+            this.oldRodGroupBox.Controls.Add(this.label3);
+            this.oldRodGroupBox.Controls.Add(this.label4);
+            this.oldRodGroupBox.Controls.Add(this.label5);
             this.oldRodGroupBox.Controls.Add(this.label43);
             this.oldRodGroupBox.Controls.Add(this.label44);
             this.oldRodGroupBox.Controls.Add(this.oldRodRateUpDown);
             this.oldRodGroupBox.Controls.Add(this.label45);
             this.oldRodGroupBox.Controls.Add(this.oldRodOneMaxLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.oldRodOneMinLevelUpDown);
-            this.oldRodGroupBox.Controls.Add(this.label46);
             this.oldRodGroupBox.Controls.Add(this.oldRodOneComboBox);
             this.oldRodGroupBox.Controls.Add(this.oldRodFourMaxLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.oldRodFourMinLevelUpDown);
-            this.oldRodGroupBox.Controls.Add(this.label47);
             this.oldRodGroupBox.Controls.Add(this.oldRodFourComboBox);
             this.oldRodGroupBox.Controls.Add(this.oldRodFiveMaxLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.oldRodFiveMinLevelUpDown);
-            this.oldRodGroupBox.Controls.Add(this.label48);
             this.oldRodGroupBox.Controls.Add(this.oldRodFiveComboBox);
             this.oldRodGroupBox.Controls.Add(this.oldRodThirtyMaxLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.oldRodThirtyMinLevelUpDown);
-            this.oldRodGroupBox.Controls.Add(this.label49);
             this.oldRodGroupBox.Controls.Add(this.oldRodThirtyComboBox);
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMaxLevelUpDown);
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyMinLevelUpDown);
-            this.oldRodGroupBox.Controls.Add(this.label50);
             this.oldRodGroupBox.Controls.Add(this.oldRodSixtyComboBox);
             this.oldRodGroupBox.Location = new System.Drawing.Point(51, 29);
             this.oldRodGroupBox.Name = "oldRodGroupBox";
@@ -2206,16 +2106,6 @@
             this.oldRodOneMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.oldRodOneMinLevelUpDown.TabIndex = 21;
             // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label46.Location = new System.Drawing.Point(18, 188);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(21, 13);
-            this.label46.TabIndex = 20;
-            this.label46.Text = "5%";
-            // 
             // oldRodOneComboBox
             // 
             this.oldRodOneComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -2239,16 +2129,6 @@
             this.oldRodFourMinLevelUpDown.Name = "oldRodFourMinLevelUpDown";
             this.oldRodFourMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.oldRodFourMinLevelUpDown.TabIndex = 17;
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label47.Location = new System.Drawing.Point(11, 161);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(27, 13);
-            this.label47.TabIndex = 16;
-            this.label47.Text = "10%";
             // 
             // oldRodFourComboBox
             // 
@@ -2274,16 +2154,6 @@
             this.oldRodFiveMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.oldRodFiveMinLevelUpDown.TabIndex = 13;
             // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label48.Location = new System.Drawing.Point(11, 134);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(27, 13);
-            this.label48.TabIndex = 12;
-            this.label48.Text = "15%";
-            // 
             // oldRodFiveComboBox
             // 
             this.oldRodFiveComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -2307,16 +2177,6 @@
             this.oldRodThirtyMinLevelUpDown.Name = "oldRodThirtyMinLevelUpDown";
             this.oldRodThirtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.oldRodThirtyMinLevelUpDown.TabIndex = 9;
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label49.Location = new System.Drawing.Point(12, 107);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(27, 13);
-            this.label49.TabIndex = 8;
-            this.label49.Text = "30%";
             // 
             // oldRodThirtyComboBox
             // 
@@ -2342,16 +2202,6 @@
             this.oldRodSixtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.oldRodSixtyMinLevelUpDown.TabIndex = 5;
             // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label50.Location = new System.Drawing.Point(12, 80);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(27, 13);
-            this.label50.TabIndex = 4;
-            this.label50.Text = "40%";
-            // 
             // oldRodSixtyComboBox
             // 
             this.oldRodSixtyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -2371,6 +2221,156 @@
             this.repairAllButton.TabIndex = 61;
             this.repairAllButton.UseVisualStyleBackColor = true;
             this.repairAllButton.Click += new System.EventHandler(this.repairAllButton_Click);
+            // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label66.Location = new System.Drawing.Point(12, 80);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(27, 13);
+            this.label66.TabIndex = 4;
+            this.label66.Text = "60%";
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label65.Location = new System.Drawing.Point(12, 107);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(27, 13);
+            this.label65.TabIndex = 8;
+            this.label65.Text = "30%";
+            // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label64.Location = new System.Drawing.Point(18, 134);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(21, 13);
+            this.label64.TabIndex = 12;
+            this.label64.Text = "5%";
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label63.Location = new System.Drawing.Point(18, 161);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(21, 13);
+            this.label63.TabIndex = 16;
+            this.label63.Text = "4%";
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label62.Location = new System.Drawing.Point(18, 188);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(21, 13);
+            this.label62.TabIndex = 20;
+            this.label62.Text = "1%";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label1.Location = new System.Drawing.Point(18, 188);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(21, 13);
+            this.label1.TabIndex = 46;
+            this.label1.Text = "1%";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label2.Location = new System.Drawing.Point(18, 161);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(21, 13);
+            this.label2.TabIndex = 45;
+            this.label2.Text = "4%";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label3.Location = new System.Drawing.Point(18, 134);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(21, 13);
+            this.label3.TabIndex = 44;
+            this.label3.Text = "5%";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label4.Location = new System.Drawing.Point(12, 107);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 13);
+            this.label4.TabIndex = 43;
+            this.label4.Text = "30%";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label5.Location = new System.Drawing.Point(12, 80);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(27, 13);
+            this.label5.TabIndex = 42;
+            this.label5.Text = "60%";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label15.Location = new System.Drawing.Point(18, 188);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(21, 13);
+            this.label15.TabIndex = 46;
+            this.label15.Text = "1%";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label16.Location = new System.Drawing.Point(18, 161);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(21, 13);
+            this.label16.TabIndex = 45;
+            this.label16.Text = "4%";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label17.Location = new System.Drawing.Point(12, 134);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(27, 13);
+            this.label17.TabIndex = 44;
+            this.label17.Text = "15%";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label18.Location = new System.Drawing.Point(12, 107);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(27, 13);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "40%";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label19.Location = new System.Drawing.Point(12, 80);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(27, 13);
+            this.label19.TabIndex = 42;
+            this.label19.Text = "40%";
             // 
             // WildEditorDPPt
             // 
@@ -2560,23 +2560,18 @@
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.NumericUpDown surfOneMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfOneMinLevelUpDown;
-        private System.Windows.Forms.Label label62;
         private DSPRE.InputComboBox surfOneComboBox;
         private System.Windows.Forms.NumericUpDown surfFourMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfFourMinLevelUpDown;
-        private System.Windows.Forms.Label label63;
         private DSPRE.InputComboBox surfFourComboBox;
         private System.Windows.Forms.NumericUpDown surfFiveMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfFiveMinLevelUpDown;
-        private System.Windows.Forms.Label label64;
         private DSPRE.InputComboBox surfFiveComboBox;
         private System.Windows.Forms.NumericUpDown surfThirtyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfThirtyMinLevelUpDown;
-        private System.Windows.Forms.Label label65;
         private DSPRE.InputComboBox surfThirtyComboBox;
         private System.Windows.Forms.NumericUpDown surfSixtyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown surfSixtyMinLevelUpDown;
-        private System.Windows.Forms.Label label66;
         private DSPRE.InputComboBox surfSixtyComboBox;
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.Label label67;
@@ -2587,23 +2582,18 @@
         private System.Windows.Forms.Label label69;
         private System.Windows.Forms.NumericUpDown superRodOneMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodOneMinLevelUpDown;
-        private System.Windows.Forms.Label label70;
         private DSPRE.InputComboBox superRodOneComboBox;
         private System.Windows.Forms.NumericUpDown superRodFourMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodFourMinLevelUpDown;
-        private System.Windows.Forms.Label label71;
         private DSPRE.InputComboBox superRodFourComboBox;
         private System.Windows.Forms.NumericUpDown superRodFifteenMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodFifteenMinLevelUpDown;
-        private System.Windows.Forms.Label label72;
         private DSPRE.InputComboBox superRodFifteenComboBox;
         private System.Windows.Forms.NumericUpDown superRodSecondFortyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodSecondFortyMinLevelUpDown;
-        private System.Windows.Forms.Label label73;
         private DSPRE.InputComboBox superRodSecondFortyComboBox;
         private System.Windows.Forms.NumericUpDown superRodFirstFortyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown superRodFirstFortyMinLevelUpDown;
-        private System.Windows.Forms.Label label74;
         private DSPRE.InputComboBox superRodFirstFortyComboBox;
         private System.Windows.Forms.GroupBox goodRodGroupBox;
         private System.Windows.Forms.Label label51;
@@ -2637,23 +2627,18 @@
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.NumericUpDown oldRodOneMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodOneMinLevelUpDown;
-        private System.Windows.Forms.Label label46;
         private DSPRE.InputComboBox oldRodOneComboBox;
         private System.Windows.Forms.NumericUpDown oldRodFourMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodFourMinLevelUpDown;
-        private System.Windows.Forms.Label label47;
         private DSPRE.InputComboBox oldRodFourComboBox;
         private System.Windows.Forms.NumericUpDown oldRodFiveMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodFiveMinLevelUpDown;
-        private System.Windows.Forms.Label label48;
         private DSPRE.InputComboBox oldRodFiveComboBox;
         private System.Windows.Forms.NumericUpDown oldRodThirtyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodThirtyMinLevelUpDown;
-        private System.Windows.Forms.Label label49;
         private DSPRE.InputComboBox oldRodThirtyComboBox;
         private System.Windows.Forms.NumericUpDown oldRodSixtyMaxLevelUpDown;
         private System.Windows.Forms.NumericUpDown oldRodSixtyMinLevelUpDown;
-        private System.Windows.Forms.Label label50;
         private DSPRE.InputComboBox oldRodSixtyComboBox;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox superRodPictureBox;
@@ -2672,5 +2657,20 @@
         private System.Windows.Forms.Panel goodRodPanel;
         private System.Windows.Forms.Panel surfPanel;
         private System.Windows.Forms.TableLayoutPanel waterTableLayoutPanel;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.Label label63;
+        private System.Windows.Forms.Label label64;
+        private System.Windows.Forms.Label label65;
+        private System.Windows.Forms.Label label66;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
     }
 }
