@@ -1,5 +1,6 @@
 ﻿using DSPRE.Resources;
 using DSPRE.ROMFiles;
+using Ekona.Images.Formats;
 using LibNDSFormats.NSBMD;
 using NSMBe4.NSBMD;
 using System;
@@ -7,10 +8,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
 using static Tao.Platform.Windows.Winmm;
@@ -2455,6 +2458,36 @@ namespace DSPRE.Editors
         private void eventOpenGlControl_Load(object sender, EventArgs e)
         {
             eventOpenGlControl.InitializeContexts();
+        }
+
+        private void screenshotButton_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Choose where to save the map screenshot.", "Choose destination path", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            SaveFileDialog imageSFD = new SaveFileDialog
+            {
+                Filter = "PNG File(*.png)|*.png",
+            };
+            if (imageSFD.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+
+            EditorPanels.mapEditor.RenderMap(ref eventMapRenderer, ref eventBuildingsRenderer, ref eventMapFile, 0f, 115.0f, 90f, 4f, eventOpenGlControl.Width, eventOpenGlControl.Height, true, true);
+            eventPictureBox.BackgroundImage = Helpers.GrabMapScreenshot(eventOpenGlControl.Width, eventOpenGlControl.Height);
+
+            int newW = 512, newH = 512;
+            Bitmap newImage = new Bitmap(newW, newH);
+            using (var graphCtr = Graphics.FromImage(newImage))
+            {
+                graphCtr.SmoothingMode = SmoothingMode.HighQuality;
+                graphCtr.InterpolationMode = InterpolationMode.NearestNeighbor;
+                graphCtr.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                graphCtr.DrawImage(eventPictureBox.BackgroundImage, 0, 0, newW, newH);
+                graphCtr.DrawImage(eventPictureBox.Image, 0, 0, newW, newH);
+            }
+            newImage.Save(imageSFD.FileName);
+            MessageBox.Show("Screenshot saved.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
