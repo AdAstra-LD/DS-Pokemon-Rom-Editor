@@ -196,6 +196,7 @@
             this.exportEventFileButton = new System.Windows.Forms.Button();
             this.importEventFileButton = new System.Windows.Forms.Button();
             this.saveEventsButton = new System.Windows.Forms.Button();
+            this.screenshotButton = new System.Windows.Forms.Button();
             this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.eventMatrixYUpDown)).BeginInit();
@@ -2137,9 +2138,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rightClickPicture.Image = global::DSPRE.Properties.Resources.RightClick;
             this.rightClickPicture.ImageLocation = "";
-            this.rightClickPicture.Location = new System.Drawing.Point(468, 420);
+            this.rightClickPicture.Location = new System.Drawing.Point(476, 417);
             this.rightClickPicture.Name = "rightClickPicture";
-            this.rightClickPicture.Size = new System.Drawing.Size(0, 38);
+            this.rightClickPicture.Size = new System.Drawing.Size(38, 38);
             this.rightClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.rightClickPicture.TabIndex = 59;
             this.rightClickPicture.TabStop = false;
@@ -2150,9 +2151,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.wheelClickPicture.Image = global::DSPRE.Properties.Resources.WheelClick;
             this.wheelClickPicture.ImageLocation = "";
-            this.wheelClickPicture.Location = new System.Drawing.Point(552, 420);
+            this.wheelClickPicture.Location = new System.Drawing.Point(561, 417);
             this.wheelClickPicture.Name = "wheelClickPicture";
-            this.wheelClickPicture.Size = new System.Drawing.Size(0, 38);
+            this.wheelClickPicture.Size = new System.Drawing.Size(38, 38);
             this.wheelClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.wheelClickPicture.TabIndex = 56;
             this.wheelClickPicture.TabStop = false;
@@ -2163,9 +2164,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LeftClickPicture.Image = global::DSPRE.Properties.Resources.LeftClick;
             this.LeftClickPicture.ImageLocation = "";
-            this.LeftClickPicture.Location = new System.Drawing.Point(510, 420);
+            this.LeftClickPicture.Location = new System.Drawing.Point(521, 417);
             this.LeftClickPicture.Name = "LeftClickPicture";
-            this.LeftClickPicture.Size = new System.Drawing.Size(0, 38);
+            this.LeftClickPicture.Size = new System.Drawing.Size(38, 38);
             this.LeftClickPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.LeftClickPicture.TabIndex = 55;
             this.LeftClickPicture.TabStop = false;
@@ -2280,11 +2281,26 @@
             this.saveEventsButton.UseVisualStyleBackColor = true;
             this.saveEventsButton.Click += new System.EventHandler(this.saveEventsButton_Click);
             // 
+            // screenshotButton
+            // 
+            this.screenshotButton.Image = global::DSPRE.Properties.Resources.cameraIcon;
+            this.screenshotButton.Location = new System.Drawing.Point(555, 39);
+            this.screenshotButton.Name = "screenshotButton";
+            this.screenshotButton.Size = new System.Drawing.Size(41, 41);
+            this.screenshotButton.TabIndex = 63;
+            this.screenshotButton.Text = "S";
+            this.screenshotButton.UseVisualStyleBackColor = true;
+            this.screenshotButton.Click += new System.EventHandler(this.screenshotButton_Click);
+            // 
             // EventEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
+            this.Controls.Add(this.rightClickPicture);
+            this.Controls.Add(this.wheelClickPicture);
+            this.Controls.Add(this.LeftClickPicture);
+            this.Controls.Add(this.screenshotButton);
             this.Controls.Add(this.locateCurrentEvFile);
             this.Controls.Add(this.groupBox21);
             this.Controls.Add(this.RightClickLabel);
@@ -2301,9 +2317,6 @@
             this.Controls.Add(this.eventMatrixUpDown);
             this.Controls.Add(this.eventsTabControl);
             this.Controls.Add(this.eventPanel);
-            this.Controls.Add(this.rightClickPicture);
-            this.Controls.Add(this.wheelClickPicture);
-            this.Controls.Add(this.LeftClickPicture);
             this.Controls.Add(this.removeEventFileButton);
             this.Controls.Add(this.addEventFileButton);
             this.Controls.Add(this.eventShiftRightButton);
@@ -2575,5 +2588,6 @@
         public System.Windows.Forms.ComboBox owItemComboBox;
         public System.Windows.Forms.NumericUpDown eventMatrixUpDown;
         public System.Windows.Forms.ListBox eventEditorWarpHeaderListBox;
+        private System.Windows.Forms.Button screenshotButton;
     }
 }
