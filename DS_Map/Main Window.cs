@@ -1,45 +1,22 @@
 ﻿using DSPRE.Editors;
+using DSPRE.Editors.BtxEditor;
 using DSPRE.Resources;
 using DSPRE.ROMFiles;
-using Ekona.Images;
-using Images;
-using LibNDSFormats.NSBMD;
-using LibNDSFormats.NSBTX;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using NarcAPI;
-using NSMBe4.NSBMD;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using NarcAPI;
-using Tao.OpenGl;
-using LibNDSFormats.NSBMD;
-using LibNDSFormats.NSBTX;
-using DSPRE.Resources;
-using DSPRE.ROMFiles;
-using static DSPRE.RomInfo;
-using Images;
-using Ekona.Images;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using ScintillaNET;
-using ScintillaNET.Utils;
-using System.Globalization;
-using static DSPRE.ROMFiles.Event;
-using NSMBe4.NSBMD;
-using System.Reflection;
-using System.ComponentModel;
-using DSPRE.Editors;
-using DSPRE.Editors.BtxEditor;
+using static DSPRE.EditorPanels;
 using static DSPRE.Helpers;
-using Velopack.Sources;
-using Velopack;
+using static DSPRE.RomInfo;
 namespace DSPRE
 {
 
@@ -81,6 +58,7 @@ namespace DSPRE
 
             EditorPanels.Initialize(this);
             Helpers.Initialize(this);
+            WireEditorsPopout();
 
             SetMenuLayout(SettingsManager.Settings.menuLayout); //Read user settings for menu layout
             Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
@@ -1256,13 +1234,15 @@ namespace DSPRE
             using (CustomScrcmdManager editor = new CustomScrcmdManager())
                 editor.ShowDialog();
         }
-        private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) {
-            if (mainTabControl.SelectedTab == headerEditorTabPage) {
-                //
+        private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) 
+        {
+            if (mainTabControl.SelectedTab == headerEditorTabPage) 
+            {
+                headerEditor.SetupHeaderEditor(this);
             }
             else if (mainTabControl.SelectedTab == EditorPanels.matrixEditorTabPage)
             {
-                    matrixEditor.SetupMatrixEditor(this);
+                matrixEditor.SetupMatrixEditor(this);
             }
             else if (mainTabControl.SelectedTab == mapEditorTabPage)
             {
@@ -1307,21 +1287,6 @@ namespace DSPRE
             {
                 cameraEditor.SetupCameraEditor(this);
             }
-        }
-
-        private void tabPageScriptEditor_Enter(object sender, EventArgs e)
-        {
-            scriptEditor.SetupScriptEditor(this);
-        }
-
-        private void tabPageLevelScriptEditor_Enter(object sender, EventArgs e)
-        {
-            levelScriptEditor.SetUpLevelScriptEditor(this);
-        }
-
-        private void tabPageEncountersEditor_Enter(object sender, EventArgs e)
-        {
-            encountersEditor.SetupEncountersEditor();
         }
 
         private void spawnEditorToolStripButton_Click(object sender, EventArgs e)
@@ -1911,55 +1876,28 @@ namespace DSPRE
             Helpers.ExportTrainerUsageToCSV(trainerUsage, "Report.csv");
         }
 
-
         #region Poppout Buttons
-
-        private void popoutTextEditorButton_Click(object sender, EventArgs e)
+        private readonly Dictionary<Button, EditorPopoutConfig> _popouts = new Dictionary<Button, EditorPopoutConfig>();
+        void WireEditorsPopout()
         {
-            textEditorPoppedOutLabel.Visible = true; // Show Editor popped-out label
-            popoutTextEditorButton.Enabled = false; // Disable popout button
-
-            Helpers.PopOutEditor(textEditor, "Text Editor", mainTabImageList.Images[4], ctrl =>
-            {
-                textEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
-                popoutTextEditorButton.Enabled = true; // Enable popout button
-            });
+            Register(EditorPanels.scriptEditor, scriptEditorPoppedOutLabel, popoutScriptEditorButton);
+            Register(EditorPanels.levelScriptEditor, LSEditorPoppedOutLabel, popoutLevelScriptEditorButton);
+            Register(EditorPanels.textEditor, textEditorPoppedOutLabel, popoutTextEditorButton);
+            Register(EditorPanels.trainerEditor, trainerEditorPoppedOutLabel, popoutTrainerEditorButton);
         }
 
-        private void popoutLevelScriptEditorButton_Click(object sender, EventArgs e)
+        void Register(Control control, Label lbl, Button btn)
         {
-            LSEditorPoppedOutLabel.Visible = true; // Show Editor popped-out label
-            popoutLevelScriptEditorButton.Enabled = false; // Disable popout button
-
-            Helpers.PopOutEditor(levelScriptEditor, "Level Script Editor", mainTabImageList.Images[3], ctrl =>
-            {
-                LSEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
-                popoutLevelScriptEditorButton.Enabled = true; // Enable popout button
-            });
+            var cfg = new EditorPopoutConfig(control, lbl, btn);
+            _popouts[btn] = cfg;
+            btn.Click += popoutEditorClickHandler;
         }
 
-        private void popoutScriptEditorButton_Click(object sender, EventArgs e)
+        private void popoutEditorClickHandler(object sender, EventArgs e)
         {
-            scriptEditorPoppedOutLabel.Visible = true; // Show Editor popped-out label
-            popoutScriptEditorButton.Enabled = false; // Disable popout button
-
-            Helpers.PopOutEditor(scriptEditor, "Script Editor", mainTabImageList.Images[3], ctrl =>
-            {
-                scriptEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
-                popoutScriptEditorButton.Enabled = true; // Enable popout button
-            });
-        }
-
-        private void popoutTrainerEditorButton_Click(object sender, EventArgs e)
-        {
-            trainerEditorPoppedOutLabel.Visible = true; // Show Editor popped-out label
-            popoutTrainerEditorButton.Enabled = false; // Disable popout button
-
-            Helpers.PopOutEditor(trainerEditor, "Trainer Editor", mainTabImageList.Images[8], ctrl =>
-            {
-                trainerEditorPoppedOutLabel.Visible = false; // Hide Editor popped-out label
-                popoutTrainerEditorButton.Enabled = true; // Enable popout button
-            });
+            var currentTabInfos = EditorPanels.mainTabControl.SelectedTab;
+            if (sender is Button btn && _popouts.TryGetValue(btn, out var cfg))
+                Helpers.PopOutEditor(cfg.Control, currentTabInfos.Text, cfg.PlaceholderLabel, cfg.PopoutButton, mainTabImageList.Images[currentTabInfos.ImageIndex]);
         }
         #endregion
     }

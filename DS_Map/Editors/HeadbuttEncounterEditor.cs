@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DSPRE.ROMFiles;
+using LibNDSFormats.NSBMD;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
-using DSPRE.ROMFiles;
 
 namespace DSPRE.Editors {
     public partial class HeadbuttEncounterEditor : UserControl {
@@ -36,6 +37,10 @@ namespace DSPRE.Editors {
         private static float ang;
         private static float dist;
         private static float elev;
+        /* Renderers */
+        public static NSBMDGlRenderer mapRenderer = new NSBMDGlRenderer();
+        public static NSBMDGlRenderer buildingsRenderer = new NSBMDGlRenderer();
+
 
         public HeadbuttEncounterEditor() {
             InitializeComponent();
@@ -335,7 +340,7 @@ namespace DSPRE.Editors {
                 Helpers.MW_LoadModelTextures(building, areaData.buildingsTileset); // Load building textures                
             }
 
-            Helpers.RenderMap(ref currentMapFile, openGlControl.Width, openGlControl.Height, ang, dist, elev, perspective);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer,ref currentMapFile, ang, dist, elev, perspective, openGlControl.Width, openGlControl.Height);
             return Helpers.GrabMapScreenshot(width, height);
         }
 
