@@ -94,15 +94,15 @@ public class ScriptParameter {
         {
             case ParameterType.Pokemon:
                 if (ScriptDatabase.pokemonNames.TryGetValue((ushort)value, out string pokeName))
-                    return $"[{pokeName}]";
+                    return $"{pokeName}";
                 break;
             case ParameterType.Item:
                 if (ScriptDatabase.itemNames.TryGetValue((ushort)value, out string itemName))
-                    return $"[{itemName}]";
+                    return $"{itemName}";
                 break;
             case ParameterType.Move:
                 if (ScriptDatabase.moveNames.TryGetValue((ushort)value, out string moveName))
-                    return $"[{moveName}]";
+                    return $"{moveName}";
                 break;
             case ParameterType.Function:
                 return $"Function#{value}";
@@ -117,7 +117,7 @@ public class ScriptParameter {
                     return owName;
                 return value < 4000 ? $"{Event.EventType.Overworld}.{value}" : FormatHexNumber(value);
             case ParameterType.OwMovementType:
-                return value < 4000 ? $"Move.{value}" : FormatHexNumber(value);
+                return value < 4000 ? $"Movement.{value}" : FormatHexNumber(value);
             case ParameterType.OwMovementDirection:
                 if (ScriptDatabase.overworldDirections.TryGetValue((byte)value, out string dirName))
                     return dirName;
@@ -127,8 +127,8 @@ public class ScriptParameter {
                     return compName;
                 break;
             case ParameterType.Sound:
-                if (ScriptDatabase.soundNames.TryGetValue((ushort)value, out string PtsoundName))
-                    return PtsoundName;
+                if (ScriptDatabase.soundNames.TryGetValue((ushort)value, out string soundName))
+                    return soundName;
                 break;
         }
 

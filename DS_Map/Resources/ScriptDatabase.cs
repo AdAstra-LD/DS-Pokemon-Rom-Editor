@@ -246,19 +246,28 @@ namespace DSPRE.Resources {
         {
             string[] names = RomInfo.GetPokemonNames();
             pokemonNames = names.Select((name, index) => new { name, index })
-                               .ToDictionary(x => (ushort)x.index, x => x.name);
+                             .ToDictionary(
+                                 x => (ushort)x.index, 
+                                 x => "SPECIES_" + x.name.ToUpper().Replace(' ', '_')
+                             );
         }
         public static void InitializeItemNames()
         {
             string[] names = RomInfo.GetItemNames();
             itemNames = names.Select((name, index) => new { name, index })
-                               .ToDictionary(x => (ushort)x.index, x => x.name);
+                             .ToDictionary(
+                                 x => (ushort)x.index,
+                                 x => "ITEM_" + x.name.ToUpper().Replace(' ', '_').Replace('É', 'E')
+                             );
         }
         public static void InitializeMoveNames()
         {
             string[] names = RomInfo.GetAttackNames();
             moveNames = names.Select((name, index) => new { name, index })
-                               .ToDictionary(x => (ushort)x.index, x => x.name);
+                             .ToDictionary(
+                                 x => (ushort)x.index,
+                                 x => "MOVE_" + x.name.ToUpper().Replace(' ', '_')
+                             );
         }
 
     }

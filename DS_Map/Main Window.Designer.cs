@@ -509,6 +509,7 @@
             this.diamondAndPearlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.platinumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.heartGoldAndSoulSilverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageDatabasesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NarcUtilityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildFomFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.unpackToFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -522,7 +523,6 @@
             this.texturizeNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.untexturizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.extractNSBTXFromNSBMDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exportScriptDatabaseJSONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.essentialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -6498,7 +6498,6 @@
             this.listBasedBatchRenameToolStripMenuItem,
             this.listBuilderToolStripMenuItem,
             this.nSBMDUtilityToolStripMenuItem,
-            this.exportScriptDatabaseJSONToolStripMenuItem,
             this.generateCSVToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
@@ -6533,7 +6532,8 @@
             this.scriptCommandsDatabaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.diamondAndPearlToolStripMenuItem,
             this.platinumToolStripMenuItem,
-            this.heartGoldAndSoulSilverToolStripMenuItem});
+            this.heartGoldAndSoulSilverToolStripMenuItem,
+            this.manageDatabasesToolStripMenuItem});
             this.scriptCommandsDatabaseToolStripMenuItem.Name = "scriptCommandsDatabaseToolStripMenuItem";
             this.scriptCommandsDatabaseToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.scriptCommandsDatabaseToolStripMenuItem.Text = "Script Commands Database";
@@ -6564,6 +6564,15 @@
             this.heartGoldAndSoulSilverToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
             this.heartGoldAndSoulSilverToolStripMenuItem.Text = "HeartGold && SoulSilver";
             this.heartGoldAndSoulSilverToolStripMenuItem.Click += new System.EventHandler(this.heartGoldAndSoulSilverToolStripMenuItem_Click);
+            // 
+            // manageDatabasesToolStripMenuItem
+            // 
+            this.manageDatabasesToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIcon;
+            this.manageDatabasesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageDatabasesToolStripMenuItem.Name = "manageDatabasesToolStripMenuItem";
+            this.manageDatabasesToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.manageDatabasesToolStripMenuItem.Text = "Manage Script Databases";
+            this.manageDatabasesToolStripMenuItem.Click += new System.EventHandler(this.manageDatabasesToolStripMenuItem_Click);
             // 
             // NarcUtilityToolStripMenuItem
             // 
@@ -6682,13 +6691,6 @@
             this.extractNSBTXFromNSBMDToolStripMenuItem.Size = new System.Drawing.Size(250, 38);
             this.extractNSBTXFromNSBMDToolStripMenuItem.Text = "Save textures from NSBMD";
             this.extractNSBTXFromNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
-            // 
-            // exportScriptDatabaseJSONToolStripMenuItem
-            // 
-            this.exportScriptDatabaseJSONToolStripMenuItem.Name = "exportScriptDatabaseJSONToolStripMenuItem";
-            this.exportScriptDatabaseJSONToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.exportScriptDatabaseJSONToolStripMenuItem.Text = "Export ScriptDatabase JSON";
-            this.exportScriptDatabaseJSONToolStripMenuItem.Click += new System.EventHandler(this.exportScriptDatabaseJSONToolStripMenuItem_Click);
             // 
             // generateCSVToolStripMenuItem
             // 
@@ -7818,6 +7820,7 @@
         private System.Windows.Forms.ToolStripMenuItem diamondAndPearlToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem platinumToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem heartGoldAndSoulSilverToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageDatabasesToolStripMenuItem;
         private System.Windows.Forms.Label spriteIDlabel;
         private System.Windows.Forms.ToolStripButton spawnEditorToolStripButton;
         private System.Windows.Forms.GroupBox groupBox22;
@@ -7959,7 +7962,6 @@
         private System.Windows.Forms.ToolStripButton weatherMapEditor;
         private System.Windows.Forms.TrackBar transparencyBar;
         private System.Windows.Forms.ToolStripMenuItem addressHelperToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportScriptDatabaseJSONToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem overworldEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generateCSVToolStripMenuItem;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
