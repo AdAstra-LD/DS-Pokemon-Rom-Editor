@@ -204,56 +204,62 @@ namespace DSPRE {
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
         }
 
-        public static void RenderMap(ref MapFile mapFile, int width, int height, float ang, float dist, float elev, float perspective, bool mapTexturesON = true, bool buildingTexturesON = true) {
+        public static void RenderMap(ref NSBMDGlRenderer mapRenderer, ref NSBMDGlRenderer buildingsRenderer, ref MapFile mapFile, float ang, float dist, float elev, float perspective, int width, int height, bool mapTexturesON = true, bool buildingTexturesON = true)
+        {
             #region Useless variables that the rendering API still needs
-
             MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File ani = new MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File();
             MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File tp = new MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File();
             MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca = new MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File();
             int[] aniframeS = new int[0];
-
             #endregion
+
+            /* Invalidate drawing surfaces */
+            EditorPanels.mapEditor.mapOpenGlControl.Invalidate();
+            EditorPanels.eventEditor.eventOpenGlControl.Invalidate();
 
             /* Adjust rendering settings */
             SetupRenderer(ang, dist, elev, perspective, width, height);
 
             /* Render the map model */
-            NSBMD model = mapFile.mapModel;
-            mapRenderer.Model = model.models[0];
-
-            // int scale = 64;
-            float scale = 0.015625f;
-            Gl.glScalef(mapRenderer.Model.modelScale * scale, mapRenderer.Model.modelScale * scale, mapRenderer.Model.modelScale * scale);
+            mapRenderer.Model = mapFile.mapModel.models[0];
+            Gl.glScalef(mapFile.mapModel.models[0].modelScale / 64, mapFile.mapModel.models[0].modelScale / 64, mapFile.mapModel.models[0].modelScale / 64);
 
             /* Determine if map textures must be rendered */
-            if (mapTexturesON) {
-                Gl.glEnable(Gl.GL_TEXTURE_2D);
-            } else {
+            if (!mapTexturesON)
+            {
                 Gl.glDisable(Gl.GL_TEXTURE_2D);
             }
-
-            // Render map model
-            mapRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, model);
-
-            if (hideBuildings) {
-                return;
-            }
-
-            if (buildingTexturesON) {
+            else
+            {
                 Gl.glEnable(Gl.GL_TEXTURE_2D);
-            } else {
-                Gl.glDisable(Gl.GL_TEXTURE_2D);
             }
 
-            for (int i = 0; i < mapFile.buildings.Count; i++) {
-                Building building = mapFile.buildings[i];
-                model = building.NSBMDFile;
-                if (model is null) {
-                    Console.WriteLine("Null building can't be rendered");
-                } else {
-                    mapRenderer.Model = model.models[0];
-                    ScaleTranslateRotateBuilding(building);
-                    mapRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, model);
+            mapRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, mapFile.mapModel); // Render map model
+
+            if (!hideBuildings)
+            {
+                if (buildingTexturesON)
+                {
+                    Gl.glEnable(Gl.GL_TEXTURE_2D);
+                }
+                else
+                {
+                    Gl.glDisable(Gl.GL_TEXTURE_2D);
+                }
+
+                for (int i = 0; i < mapFile.buildings.Count; i++)
+                {
+                    NSBMD file = mapFile.buildings[i].NSBMDFile;
+                    if (file is null)
+                    {
+                        Console.WriteLine("Null building can't be rendered");
+                    }
+                    else
+                    {
+                        buildingsRenderer.Model = file.models[0];
+                        ScaleTranslateRotateBuilding(mapFile.buildings[i]);
+                        buildingsRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, file);
+                    }
                 }
             }
         }
@@ -452,7 +458,7 @@ namespace DSPRE {
         extern static bool DestroyIcon(IntPtr handle);
 
 
-        public static void PopOutEditor<T>(T control, string title, Image icon, Action<T> onClose = null) where T : Control
+        public static void PopOutEditorHandler<T>(T control, string title, Image icon, Action<T> onClose = null) where T : Control
         {
             var originalParent = control.Parent;
             var originalIndex = originalParent?.Controls.IndexOf(control) ?? -1;
@@ -502,6 +508,25 @@ namespace DSPRE {
             };
 
             form.Show();
+        }
+
+
+        public static void PopOutEditor(Control control, string editorName, Label label, Button button, Image icon)
+        {
+            if (control == null)
+            {
+                MessageBox.Show("The editor control is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            label.Visible = true; // Show Editor popped-out label
+            button.Enabled = false; // Disable popout button
+
+            Helpers.PopOutEditorHandler(control, editorName, icon, onClose =>
+            {
+                label.Visible = false; // Hide Editor popped-out label
+                button.Enabled = true; // Enable popout button
+            });
         }
 
         public static void ExclusiveCBInvert(CheckBox cb)

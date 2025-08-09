@@ -119,65 +119,7 @@ namespace DSPRE.Editors
             }
             catch { }
         }
-        public void RenderMap(ref NSBMDGlRenderer mapRenderer, ref NSBMDGlRenderer buildingsRenderer, ref MapFile mapFile, float ang, float dist, float elev, float perspective, int width, int height, bool mapTexturesON = true, bool buildingTexturesON = true)
-        {
-            #region Useless variables that the rendering API still needs
-            MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File ani = new MKDS_Course_Editor.NSBTA.NSBTA.NSBTA_File();
-            MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File tp = new MKDS_Course_Editor.NSBTP.NSBTP.NSBTP_File();
-            MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File ca = new MKDS_Course_Editor.NSBCA.NSBCA.NSBCA_File();
-            int[] aniframeS = new int[0];
-            #endregion
-
-            /* Invalidate drawing surfaces */
-            mapOpenGlControl.Invalidate();
-            EditorPanels.eventEditor.eventOpenGlControl.Invalidate();
-
-            /* Adjust rendering settings */
-            SetupRenderer(ang, dist, elev, perspective, width, height);
-
-            /* Render the map model */
-            mapRenderer.Model = mapFile.mapModel.models[0];
-            Gl.glScalef(mapFile.mapModel.models[0].modelScale / 64, mapFile.mapModel.models[0].modelScale / 64, mapFile.mapModel.models[0].modelScale / 64);
-
-            /* Determine if map textures must be rendered */
-            if (!mapTexturesON)
-            {
-                Gl.glDisable(Gl.GL_TEXTURE_2D);
-            }
-            else
-            {
-                Gl.glEnable(Gl.GL_TEXTURE_2D);
-            }
-
-            mapRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, mapFile.mapModel); // Render map model
-
-            if (!hideBuildings)
-            {
-                if (buildingTexturesON)
-                {
-                    Gl.glEnable(Gl.GL_TEXTURE_2D);
-                }
-                else
-                {
-                    Gl.glDisable(Gl.GL_TEXTURE_2D);
-                }
-
-                for (int i = 0; i < mapFile.buildings.Count; i++)
-                {
-                    NSBMD file = mapFile.buildings[i].NSBMDFile;
-                    if (file is null)
-                    {
-                        Console.WriteLine("Null building can't be rendered");
-                    }
-                    else
-                    {
-                        buildingsRenderer.Model = file.models[0];
-                        ScaleTranslateRotateBuilding(mapFile.buildings[i]);
-                        buildingsRenderer.RenderModel("", ani, aniframeS, aniframeS, aniframeS, aniframeS, aniframeS, ca, false, -1, 0.0f, 0.0f, dist, elev, ang, true, tp, file);
-                    }
-                }
-            }
-        }
+        
         private void ScaleTranslateRotateBuilding(Building building)
         {
             float fullXcoord = building.xPosition + building.xFraction / 65536f;
@@ -244,7 +186,7 @@ namespace DSPRE.Editors
             this._parent = parent;
 
             if (selectMapComboBox.SelectedIndex > -1)
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
 
 
@@ -500,7 +442,7 @@ namespace DSPRE.Editors
                 //buildTextureComboBox.Items[buildTextureComboBox.SelectedIndex] = "Error - Building Texture Pack too small [" + (buildTextureComboBox.SelectedIndex - 1).ToString("D2") + "]";
             }
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapTextureComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -523,7 +465,7 @@ namespace DSPRE.Editors
                 }
                 catch { }
             }
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
 
         public void mapOpenGlControl_MouseWheel(object sender, MouseEventArgs e)
@@ -533,7 +475,7 @@ namespace DSPRE.Editors
                 return;
             }
             dist -= (float)e.Delta / 200;
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapOpenGlControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
@@ -592,7 +534,7 @@ namespace DSPRE.Editors
             }
 
             mapOpenGlControl.Invalidate();
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         private void mapOpenGlControl_KeyUp(object sender, KeyEventArgs e)
         {
@@ -687,7 +629,7 @@ namespace DSPRE.Editors
 
                 mapOpenGlControl.BringToFront();
 
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
@@ -701,7 +643,7 @@ namespace DSPRE.Editors
                 wireframeCheckBox.Enabled = false;
 
                 SetCam2D();
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
@@ -719,7 +661,7 @@ namespace DSPRE.Editors
 
                 mapOpenGlControl.BringToFront();
 
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
@@ -734,7 +676,7 @@ namespace DSPRE.Editors
 
                 mapOpenGlControl.BringToFront();
 
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
@@ -764,7 +706,7 @@ namespace DSPRE.Editors
             dist = 115.2f;
             elev = 90f;
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
@@ -775,7 +717,7 @@ namespace DSPRE.Editors
             dist = 12.8f;
             elev = 50.0f;
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
                 ang, dist, elev, perspective,
                 mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
@@ -791,7 +733,7 @@ namespace DSPRE.Editors
                 return;
             }
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile,
             ang, dist, elev, perspective,
             mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
@@ -859,7 +801,7 @@ namespace DSPRE.Editors
             }
 
             /* Render the map */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             /* Draw permissions in the small selection boxes */
             DrawSmallCollision();
@@ -905,7 +847,7 @@ namespace DSPRE.Editors
                 Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_FILL);
             }
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
 
         private void transparencyBar_Scroll(object sender, EventArgs e)
@@ -950,7 +892,7 @@ namespace DSPRE.Editors
             buildingsListBox.SelectedIndex = buildingsListBox.Items.Count - 1;
 
             /* Redraw scene with new building */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
 
         private void buildIndexComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -968,7 +910,7 @@ namespace DSPRE.Editors
             currentMapFile.buildings[buildingsListBox.SelectedIndex].LoadModelData(_parent.romInfo.GetBuildingModelsDirPath(interiorbldRadioButton.Checked));
             MW_LoadModelTextures(currentMapFile.buildings[buildingsListBox.SelectedIndex].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1);
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
 
         private void buildingsListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -1017,7 +959,7 @@ namespace DSPRE.Editors
             Helpers.DisableHandlers();
             currentMapFile.buildings[selection].xRotation = (ushort)((int)xRotBuildUpDown.Value & ushort.MaxValue);
             xRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].xRotation);
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             Helpers.EnableHandlers();
             Console.WriteLine("X Rot " + currentMapFile.buildings[selection].xRotation.ToString());
@@ -1034,7 +976,7 @@ namespace DSPRE.Editors
             Helpers.DisableHandlers();
 
             yRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].yRotation = (ushort)((int)yRotBuildUpDown.Value & ushort.MaxValue));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             Helpers.EnableHandlers();
         }
@@ -1050,7 +992,7 @@ namespace DSPRE.Editors
             Helpers.DisableHandlers();
 
             zRotDegBldUpDown.Value = (decimal)Building.U16ToDeg(currentMapFile.buildings[selection].zRotation = (ushort)((int)zRotBuildUpDown.Value & ushort.MaxValue));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             Helpers.EnableHandlers();
         }
@@ -1065,7 +1007,7 @@ namespace DSPRE.Editors
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xRotation = (ushort)(xRotBuildUpDown.Value =
                 Building.DegToU16((float)xRotDegBldUpDown.Value));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             Helpers.EnableHandlers();
         }
@@ -1080,7 +1022,7 @@ namespace DSPRE.Editors
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yRotation = (ushort)(yRotBuildUpDown.Value =
                 Building.DegToU16((float)yRotDegBldUpDown.Value));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             Helpers.EnableHandlers();
         }
@@ -1095,7 +1037,7 @@ namespace DSPRE.Editors
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zRotation = (ushort)(zRotBuildUpDown.Value =
                 Building.DegToU16((float)zRotDegBldUpDown.Value));
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             Helpers.EnableHandlers();
         }
@@ -1105,7 +1047,7 @@ namespace DSPRE.Editors
             if (buildingsListBox.SelectedIndex > -1)
             {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].height = (uint)buildingHeightUpDown.Value;
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
 
@@ -1114,7 +1056,7 @@ namespace DSPRE.Editors
             if (buildingsListBox.SelectedIndex > -1)
             {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].length = (uint)buildingLengthUpDown.Value;
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
 
@@ -1123,7 +1065,7 @@ namespace DSPRE.Editors
             if (buildingsListBox.SelectedIndex > -1)
             {
                 currentMapFile.buildings[buildingsListBox.SelectedIndex].width = (uint)buildingWidthUpDown.Value;
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             }
         }
 
@@ -1165,7 +1107,7 @@ namespace DSPRE.Editors
                 MW_LoadModelTextures(currentMapFile.buildings[i].NSBMDFile, RomInfo.gameDirs[DirNames.buildingTextures].unpackedDir, buildTextureComboBox.SelectedIndex - 1); // Load building textures                
             }
 
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             MessageBox.Show("Buildings imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
@@ -1197,7 +1139,7 @@ namespace DSPRE.Editors
             }
 
             /* Render the map */
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
             Helpers.EnableHandlers();
         }
 
@@ -1214,7 +1156,7 @@ namespace DSPRE.Editors
                 buildingsListBox.Items.RemoveAt(toRemoveListBoxID);
 
                 FillBuildingsBox(); // Update ListBox
-                RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+                Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
                 Helpers.EnableHandlers();
 
@@ -1250,7 +1192,7 @@ namespace DSPRE.Editors
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].xFraction = (ushort)(decPart * 65535);
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
 
         private void zBuildUpDown_ValueChanged(object sender, EventArgs e)
@@ -1269,7 +1211,7 @@ namespace DSPRE.Editors
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].zFraction = (ushort)(decPart * 65535);
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
 
         private void yBuildUpDown_ValueChanged(object sender, EventArgs e)
@@ -1288,7 +1230,7 @@ namespace DSPRE.Editors
 
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yPosition = (short)wholePart;
             currentMapFile.buildings[buildingsListBox.SelectedIndex].yFraction = (ushort)(decPart * 65535);
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
         }
         #endregion
 
@@ -2108,7 +2050,7 @@ namespace DSPRE.Editors
             {
                 MW_LoadModelTextures(currentMapFile.mapModel, RomInfo.gameDirs[DirNames.mapTextures].unpackedDir, mapTextureComboBox.SelectedIndex - 1);
             }
-            RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
+            Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             modelSizeLBL.Text = currentMapFile.mapModelData.Length.ToString() + " B";
 

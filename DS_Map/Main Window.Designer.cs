@@ -315,7 +315,6 @@
             this.popoutScriptEditorButton.Size = new System.Drawing.Size(35, 35);
             this.popoutScriptEditorButton.TabIndex = 2;
             this.popoutScriptEditorButton.UseVisualStyleBackColor = true;
-            this.popoutScriptEditorButton.Click += new System.EventHandler(this.popoutScriptEditorButton_Click);
             // 
             // scriptEditor
             // 
@@ -362,7 +361,6 @@
             this.popoutLevelScriptEditorButton.Size = new System.Drawing.Size(35, 35);
             this.popoutLevelScriptEditorButton.TabIndex = 2;
             this.popoutLevelScriptEditorButton.UseVisualStyleBackColor = true;
-            this.popoutLevelScriptEditorButton.Click += new System.EventHandler(this.popoutLevelScriptEditorButton_Click);
             // 
             // levelScriptEditor
             // 
@@ -410,7 +408,6 @@
             this.popoutTextEditorButton.Size = new System.Drawing.Size(35, 35);
             this.popoutTextEditorButton.TabIndex = 1;
             this.popoutTextEditorButton.UseVisualStyleBackColor = true;
-            this.popoutTextEditorButton.Click += new System.EventHandler(this.popoutTextEditorButton_Click);
             // 
             // textEditor
             // 
@@ -476,7 +473,6 @@
             this.popoutTrainerEditorButton.Size = new System.Drawing.Size(35, 35);
             this.popoutTrainerEditorButton.TabIndex = 2;
             this.popoutTrainerEditorButton.UseVisualStyleBackColor = true;
-            this.popoutTrainerEditorButton.Click += new System.EventHandler(this.popoutTrainerEditorButton_Click);
             // 
             // trainerEditor
             // 
