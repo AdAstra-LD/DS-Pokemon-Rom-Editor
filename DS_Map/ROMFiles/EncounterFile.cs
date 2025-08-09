@@ -139,7 +139,7 @@ namespace DSPRE.ROMFiles {
         public uint[] walkingPokemon = new uint[12];
 
         /* Time-specific encounters */
-        public uint[] morningPokemon = new uint[2];
+        public uint[] dayPokemon = new uint[2];
         public uint[] nightPokemon = new uint[2];
 
         /* Dual slot exclusives */
@@ -180,9 +180,9 @@ namespace DSPRE.ROMFiles {
                 /* Time-specific encounters */
                 for (int i = 0; i < 2; i++) {
                     try {
-                        morningPokemon[i] = reader.ReadUInt32();
+                        dayPokemon[i] = reader.ReadUInt32();
                     } catch {
-                        morningPokemon[i] = 0x00;
+                        dayPokemon[i] = 0x00;
                         fieldsWithErrors.Add("Morning encounters" + ' ' + '[' + i + ']' + msgFixed);
                     }
                 }
@@ -342,7 +342,7 @@ namespace DSPRE.ROMFiles {
 
                 /* Time-specific encounters */
                 for (int i = 0; i < 2; i++) {
-                    writer.Write(morningPokemon[i]);
+                    writer.Write(dayPokemon[i]);
                 }
 
                 for (int i = 0; i < 2; i++) {

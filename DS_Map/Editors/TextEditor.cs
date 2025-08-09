@@ -35,7 +35,7 @@ namespace DSPRE.Editors
         private void addTextArchiveButton_Click(object sender, EventArgs e)
         {
             /* Add copy of message 0 to text archives folder */
-            new TextArchive(0, new List<string>() { "Your text here." }, discardLines: true).SaveToFileDefaultDir(selectTextFileComboBox.Items.Count);
+            new TextArchive(0, new List<string>() { "Your text here." }, discardLines: true).SaveToFileDefaultDir(selectTextFileComboBox.Items.Count, false);
 
             /* Update ComboBox and select new file */
             selectTextFileComboBox.Items.Add("Text Archive " + selectTextFileComboBox.Items.Count);
@@ -167,10 +167,10 @@ namespace DSPRE.Editors
         public void ReloadHeaderEditorLocationsList(IEnumerable<string> contents, MainProgram parent=null)
         {
             if(parent != null) _parent = parent;
-            int selection =  _parent.locationNameComboBox.SelectedIndex;
-             _parent.locationNameComboBox.Items.Clear();
-             _parent.locationNameComboBox.Items.AddRange(contents.ToArray());
-             _parent.locationNameComboBox.SelectedIndex = selection;
+            int selection = EditorPanels.headerEditor.locationNameComboBox.SelectedIndex;
+            EditorPanels.headerEditor.locationNameComboBox.Items.Clear();
+            EditorPanels.headerEditor.locationNameComboBox.Items.AddRange(contents.ToArray());
+            EditorPanels.headerEditor.locationNameComboBox.SelectedIndex = selection;
         }
         private void importTextFileButton_Click(object sender, EventArgs e)
         {
@@ -566,8 +566,6 @@ namespace DSPRE.Editors
             if (textEditorIsReady && !force) { return; }
             textEditorIsReady = true;
             this._parent = parent;
-
-             _parent.locationNameComboBox = _parent.locationNameComboBox;
 
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.textArchives });
             Helpers.statusLabelMessage("Setting up Text Editor...");
