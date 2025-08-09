@@ -19,7 +19,8 @@ public class ScriptParameter {
         Pokemon,
         Item,
         Move,
-        Sound
+        Sound,
+        Trainer
     }
 
     public static ParameterType ParseTypeString(string typeStr)
@@ -103,6 +104,10 @@ public class ScriptParameter {
             case ParameterType.Move:
                 if (ScriptDatabase.moveNames.TryGetValue((ushort)value, out string moveName))
                     return $"{moveName}";
+                break;
+            case ParameterType.Trainer:
+                if (ScriptDatabase.trainerNames.TryGetValue((ushort)value, out string trainerName))
+                    return $"{trainerName}";
                 break;
             case ParameterType.Function:
                 return $"Function#{value}";

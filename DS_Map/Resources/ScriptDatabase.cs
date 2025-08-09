@@ -1,5 +1,6 @@
 ﻿using DSPRE;
 using DSPRE.Resources;
+using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -216,6 +217,7 @@ namespace DSPRE.Resources {
         public static Dictionary<ushort, string> itemNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> moveNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> soundNames = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, string> trainerNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> movementsDictIDName = new Dictionary<ushort, string>();
 
         public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>()
@@ -244,7 +246,7 @@ namespace DSPRE.Resources {
 
         public static void InitializePokemonNames()
         {
-            string[] names = RomInfo.GetPokemonNames();
+            string[] names = GetPokemonNames();
             pokemonNames = names.Select((name, index) => new { name, index })
                              .ToDictionary(
                                  x => (ushort)x.index, 
@@ -253,7 +255,7 @@ namespace DSPRE.Resources {
         }
         public static void InitializeItemNames()
         {
-            string[] names = RomInfo.GetItemNames();
+            string[] names = GetItemNames();
             itemNames = names.Select((name, index) => new { name, index })
                              .ToDictionary(
                                  x => (ushort)x.index,
@@ -262,13 +264,27 @@ namespace DSPRE.Resources {
         }
         public static void InitializeMoveNames()
         {
-            string[] names = RomInfo.GetAttackNames();
+            string[] names = GetAttackNames();
             moveNames = names.Select((name, index) => new { name, index })
                              .ToDictionary(
                                  x => (ushort)x.index,
                                  x => "MOVE_" + x.name.ToUpper().Replace(' ', '_')
                              );
         }
+        public static void InitializeTrainerNames()
+        {
+            string[] names = GetSimpleTrainerNames();
 
+            trainerNames = Enumerable.Range(0, names.Length)
+                .ToDictionary(
+                    index => (ushort)index,
+                    index => index == 0
+                        ? "TRAINER_NONE"
+                        : $"TRAINER_{names[index]}_{index:D3}"
+                            .ToUpper()
+                            .Replace(' ', '_')
+                            .Replace("&", "AND")
+            );
+        }
     }
 }

@@ -164,7 +164,8 @@ namespace DSPRE.ROMFiles {
                         if (!nameParts[i + 1].StartsWith("SEQ_") 
                             && !nameParts[i + 1].StartsWith("SPECIES_") 
                             && !nameParts[i + 1].StartsWith("ITEM_")
-                            && !nameParts[i + 1].StartsWith("MOVE_")) {
+                            && !nameParts[i + 1].StartsWith("MOVE_")
+                            && !nameParts[i + 1].StartsWith("TRAINER_")) {
                             nameParts[i + 1] = nameParts[i + 1].PurgeSpecial(ScriptFile.specialChars);
                         }
 
@@ -221,10 +222,18 @@ namespace DSPRE.ROMFiles {
                                                     }
                                                     else
                                                     {
-                                                        MessageBox.Show($"Argument {paramToCheck} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Pokemon, Item, Move, Sound, Script, Function or Action number.\n\n" +
+                                                        var trainer = ScriptDatabase.trainerNames.FirstOrDefault(x => x.Value.IgnoreCaseEquals(paramToCheck));
+                                                        if (!string.IsNullOrWhiteSpace(trainer.Value))
+                                                        {
+                                                            result = trainer.Key;
+                                                        }
+                                                        else
+                                                        {
+                                                            MessageBox.Show($"Argument {paramToCheck} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Pokemon, Item, Move, Sound, Trainer, Script, Function or Action number.\n\n" +
                                                                 $"Line {lineNumber}: {wholeLine}", "Invalid identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                                        id = null;
-                                                        return;
+                                                            id = null;
+                                                            return;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -362,26 +371,37 @@ namespace DSPRE.ROMFiles {
             {
                 return sound.Value;
             }
+            var trainer = ScriptDatabase.trainerNames.FirstOrDefault(x =>
+                x.Value.IgnoreCaseEquals(parameter));
+            if (!string.IsNullOrWhiteSpace(trainer.Value))
+            {
+                return trainer.Value;
+            }
 
             string closestItem = FindClosestMatch(parameter, ScriptDatabase.itemNames.Values);
             if (!string.IsNullOrWhiteSpace(closestItem))
             {
-                throw new ArgumentException($"'{parameter}' is not a valid Item name.\nDid you mean {closestItem}?");
+                throw new ArgumentException($"'{parameter}' is not a valid Item.\nDid you mean {closestItem}?");
             }
             string closestPokemon = FindClosestMatch(parameter, ScriptDatabase.pokemonNames.Values);
             if (!string.IsNullOrWhiteSpace(closestPokemon))
             {
-                throw new ArgumentException($"'{parameter}' is not a valid Pokemon name.\nDid you mean {closestPokemon}?");
+                throw new ArgumentException($"'{parameter}' is not a valid Pokemon.\nDid you mean {closestPokemon}?");
             }
             string closestMove = FindClosestMatch(parameter, ScriptDatabase.moveNames.Values);
             if (!string.IsNullOrWhiteSpace(closestMove))
             {
-                throw new ArgumentException($"'{parameter}' is not a valid Move name.\nDid you mean {closestMove}?");
+                throw new ArgumentException($"'{parameter}' is not a valid Move.\nDid you mean {closestMove}?");
             }
             string closestSound = FindClosestMatch(parameter, ScriptDatabase.soundNames.Values);
             if (!string.IsNullOrWhiteSpace(closestSound))
             {
                 throw new ArgumentException($"'{parameter}' is not a valid Sound name.\nDid you mean {closestSound}?");
+            }
+            string closestTrainer = FindClosestMatch(parameter, ScriptDatabase.trainerNames.Values);
+            if (!string.IsNullOrWhiteSpace(closestTrainer))
+            {
+                throw new ArgumentException($"'{parameter}' is not a valid Trainer.\nDid you mean {closestTrainer}?");
             }
 
             return parameter;
