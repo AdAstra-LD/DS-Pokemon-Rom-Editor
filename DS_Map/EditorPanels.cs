@@ -9,6 +9,22 @@ namespace DSPRE {
       MainProgram = mainProgram;
     }
 
+        public sealed class EditorPopoutConfig
+        {
+            public Control Control { get; }
+            public Label PlaceholderLabel { get; }
+            public Button PopoutButton { get; }
+
+            public EditorPopoutConfig(Control control, Label placeholderLabel, Button popoutButton)
+            {
+                Control = control;
+                PlaceholderLabel = placeholderLabel;
+                PopoutButton = popoutButton;
+            }
+
+        }
+
+
         #region Editors
         public static HeaderEditor headerEditor { get { return MainProgram.headerEditor; } }
         public static MapEditor mapEditor { get { return MainProgram.mapEditor; } }
