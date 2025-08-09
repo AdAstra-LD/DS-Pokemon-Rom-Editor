@@ -9,9 +9,15 @@ using static DSPRE.RomInfo;
 namespace DSPRE {
     public partial class WildEditorHGSS : Form {
         public string encounterFileFolder { get; private set; }
+        public bool walkingDirty { get; private set; } = false;
+        public bool waterDirty { get; private set; } = false;
+
+        private int loadedEncounterFileIndex = 0;
+
         EncounterFileHGSS currentFile;
 
-        public WildEditorHGSS(string dirPath, string[] names, int encToOpen, int totalNumHeaderFiles) {
+        public WildEditorHGSS(string dirPath, string[] names, int encToOpen, int totalNumHeaderFiles) 
+        {
             InitializeComponent();
             encounterFileFolder = dirPath;
 
@@ -58,45 +64,26 @@ namespace DSPRE {
 
             currentFile = new EncounterFileHGSS(selectEncounterComboBox.SelectedIndex);
 
-            /* Once the GUI overhaul is complete - i.e.: once everything is a TableLayoutPanel, 
-             * this can be simplified a lot. */
-            foreach (TabPage page in mainTabControl.TabPages) {
-                foreach (Control g in page.Controls) {
-                    if (g != null && g is GroupBox) {
-                        foreach (Control c in g.Controls) {
-                            if (c != null) {
-                                if (c is InputComboBox) {
-                                    (c as InputComboBox).DataSource = new BindingSource(names, string.Empty);
-                                } else if (c is TableLayoutPanel) {
-                                    TableLayoutPanel tbl = (c as TableLayoutPanel);
-
-                                    foreach (Control tblC in tbl.Controls) {
-                                        if (c != null) {
-                                            if (tblC is InputComboBox) {
-                                                (tblC as InputComboBox).DataSource = new BindingSource(names, string.Empty);
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            Helpers.EnableHandlers();
-
+            AddPokemonNamesBinding(names);
+            RegisterMarkDirtyHandlers();
+            AddTooltips();
             SetupControls();
+            
+
+            Helpers.EnableHandlers();            
         }
 
-        public string GetDSPREVersion() {
+        public string GetDSPREVersion() 
+        {
             return "" + Assembly.GetExecutingAssembly().GetName().Version.Major + "." + Assembly.GetExecutingAssembly().GetName().Version.Minor +
                 "." + Assembly.GetExecutingAssembly().GetName().Version.Build;
         }
 
-        public void SetupControls() {
+        public void SetupControls() 
+        {
             Helpers.DisableHandlers();
+
+            loadedEncounterFileIndex = selectEncounterComboBox.SelectedIndex;
 
             /* Setup encounter rates controls */
             walkingRateUpDown.Value = currentFile.walkingRate;
@@ -177,8 +164,8 @@ namespace DSPRE {
             /* Setup swarm encounters controls */
             grassSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[0];
             surfSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[1];
-            goodRodSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[2];
-            superRodSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[3];
+            nightFishingComboBox.SelectedIndex = currentFile.swarmPokemon[2];
+            rodSwarmComboBox.SelectedIndex = currentFile.swarmPokemon[3];
 
             /* Water encounters controls setup */
             surfSixtyComboBox.SelectedIndex = currentFile.surfPokemon[0];
@@ -202,71 +189,656 @@ namespace DSPRE {
             surfOneMaxLevelUpDown.Value = currentFile.surfMaxLevels[4];
 
             /* Old rod encounters controls setup */
-            oldRodSixtyComboBox.SelectedIndex = currentFile.oldRodPokemon[0];
-            oldRodSixtyMinLevelUpDown.Value = currentFile.oldRodMinLevels[0];
-            oldRodSixtyMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[0];
+            oldRodFortyComboBox.SelectedIndex = currentFile.oldRodPokemon[0];
+            oldRodFortyMinLevelUpDown.Value = currentFile.oldRodMinLevels[0];
+            oldRodFortyMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[0];
 
             oldRodThirtyComboBox.SelectedIndex = currentFile.oldRodPokemon[1];
             oldRodThirtyMinLevelUpDown.Value = currentFile.oldRodMinLevels[1];
             oldRodThirtyMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[1];
 
-            oldRodFiveComboBox.SelectedIndex = currentFile.oldRodPokemon[2];
-            oldRodFiveMinLevelUpDown.Value = currentFile.oldRodMinLevels[2];
-            oldRodFiveMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[2];
+            oldRodFifteenComboBox.SelectedIndex = currentFile.oldRodPokemon[2];
+            oldRodFifteenMinLevelUpDown.Value = currentFile.oldRodMinLevels[2];
+            oldRodFifteenMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[2];
 
-            oldRodFourComboBox.SelectedIndex = currentFile.oldRodPokemon[3];
-            oldRodFourMinLevelUpDown.Value = currentFile.oldRodMinLevels[3];
-            oldRodFourMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[3];
+            oldRodTenComboBox.SelectedIndex = currentFile.oldRodPokemon[3];
+            oldRodTenMinLevelUpDown.Value = currentFile.oldRodMinLevels[3];
+            oldRodTenMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[3];
 
-            oldRodOneComboBox.SelectedIndex = currentFile.oldRodPokemon[4];
-            oldRodOneMinLevelUpDown.Value = currentFile.oldRodMinLevels[4];
-            oldRodOneMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[4];
+            oldRodFiveComboBox.SelectedIndex = currentFile.oldRodPokemon[4];
+            oldRodFiveMinLevelUpDown.Value = currentFile.oldRodMinLevels[4];
+            oldRodFiveMaxLevelUpDown.Value = currentFile.oldRodMaxLevels[4];
 
             /* Good rod encounters controls setup */
-            goodRodFirstFortyComboBox.SelectedIndex = currentFile.goodRodPokemon[0];
-            goodRodFirstFortyMinLevelUpDown.Value = currentFile.goodRodMinLevels[0];
-            goodRodFirstFortyMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[0];
+            goodRodFortyComboBox.SelectedIndex = currentFile.goodRodPokemon[0];
+            goodRodFortyMinLevelUpDown.Value = currentFile.goodRodMinLevels[0];
+            goodRodFortyMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[0];
 
-            goodRodSecondFortyComboBox.SelectedIndex = currentFile.goodRodPokemon[1];
-            goodRodSecondFortyMinLevelUpDown.Value = currentFile.goodRodMinLevels[1];
-            goodRodSecondFortyMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[1];
+            goodRodThirtyComboBox.SelectedIndex = currentFile.goodRodPokemon[1];
+            goodRodThirtyMinLevelUpDown.Value = currentFile.goodRodMinLevels[1];
+            goodRodThirtyMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[1];
 
             goodRodFifteenComboBox.SelectedIndex = currentFile.goodRodPokemon[2];
             goodRodFifteenMinLevelUpDown.Value = currentFile.goodRodMinLevels[2];
             goodRodFifteenMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[2];
 
-            goodRodFourComboBox.SelectedIndex = currentFile.goodRodPokemon[3];
-            goodRodFourMinLevelUpDown.Value = currentFile.goodRodMinLevels[3];
-            goodRodFourMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[3];
+            goodRodTenComboBox.SelectedIndex = currentFile.goodRodPokemon[3];
+            goodRodTenMinLevelUpDown.Value = currentFile.goodRodMinLevels[3];
+            goodRodTenMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[3];
 
-            goodRodOneComboBox.SelectedIndex = currentFile.goodRodPokemon[4];
-            goodRodOneMinLevelUpDown.Value = currentFile.goodRodMinLevels[4];
-            goodRodOneMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[4];
+            goodRodFiveComboBox.SelectedIndex = currentFile.goodRodPokemon[4];
+            goodRodFiveMinLevelUpDown.Value = currentFile.goodRodMinLevels[4];
+            goodRodFiveMaxLevelUpDown.Value = currentFile.goodRodMaxLevels[4];
 
             /* Super rod encounters controls setup */
-            superRodFirstFortyComboBox.SelectedIndex = currentFile.superRodPokemon[0];
-            superRodFirstFortyMinLevelUpDown.Value = currentFile.superRodMinLevels[0];
-            superRodFirstFortyMaxLevelUpDown.Value = currentFile.superRodMaxLevels[0];
+            superRodFortyComboBox.SelectedIndex = currentFile.superRodPokemon[0];
+            superRodFortyMinLevelUpDown.Value = currentFile.superRodMinLevels[0];
+            superRodFortyMaxLevelUpDown.Value = currentFile.superRodMaxLevels[0];
 
-            superRodSecondFortyComboBox.SelectedIndex = currentFile.superRodPokemon[1];
-            superRodSecondFortyMinLevelUpDown.Value = currentFile.superRodMinLevels[1];
-            superRodSecondFortyMaxLevelUpDown.Value = currentFile.superRodMaxLevels[1];
+            superRodThirtyComboBox.SelectedIndex = currentFile.superRodPokemon[1];
+            superRodThirtyMinLevelUpDown.Value = currentFile.superRodMinLevels[1];
+            superRodThirtyMaxLevelUpDown.Value = currentFile.superRodMaxLevels[1];
 
             superRodFifteenComboBox.SelectedIndex = currentFile.superRodPokemon[2];
             superRodFifteenMinLevelUpDown.Value = currentFile.superRodMinLevels[2];
             superRodFifteenMaxLevelUpDown.Value = currentFile.superRodMaxLevels[2];
 
-            superRodFourComboBox.SelectedIndex = currentFile.superRodPokemon[3];
-            superRodFourMinLevelUpDown.Value = currentFile.superRodMinLevels[3];
-            superRodFourMaxLevelUpDown.Value = currentFile.superRodMaxLevels[3];
+            superRodTenComboBox.SelectedIndex = currentFile.superRodPokemon[3];
+            superRodTenMinLevelUpDown.Value = currentFile.superRodMinLevels[3];
+            superRodTenMaxLevelUpDown.Value = currentFile.superRodMaxLevels[3];
 
-            superRodOneComboBox.SelectedIndex = currentFile.superRodPokemon[4];
-            superRodOneMinLevelUpDown.Value = currentFile.superRodMinLevels[4];
-            superRodOneMaxLevelUpDown.Value = currentFile.superRodMaxLevels[4];
+            superRodFiveComboBox.SelectedIndex = currentFile.superRodPokemon[4];
+            superRodFiveMinLevelUpDown.Value = currentFile.superRodMinLevels[4];
+            superRodFiveMaxLevelUpDown.Value = currentFile.superRodMaxLevels[4];
+
+            SetDirtyWalking(false);
+            SetDirtyWater(false);
 
             Helpers.EnableHandlers();
         }
+
+        private void AddPokemonNamesBinding(string[] names)
+        {
+            /*Grass encounters*/
+            morningTwentyFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningTwentySecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningTenFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningTenSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningTenThirdComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningTenFourthComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningFiveFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningFiveSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningFourFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningFourSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningOneFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            morningOneSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            dayTwentyFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayTwentySecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayTenFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayTenSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayTenThirdComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayTenFourthComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayFiveFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayFiveSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayFourFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayFourSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayOneFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            dayOneSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            nightTwentyFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightTwentySecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightTenFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightTenSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightTenThirdComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightTenFourthComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightFiveFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightFiveSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightFourFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightFourSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightOneFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            nightOneSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /*Radio sound encounters*/
+            hoennFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            hoennSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+            sinnohFirstComboBox.DataSource = new BindingSource(names, string.Empty);
+            sinnohSecondComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /*Rock smash encounters*/
+            rockSmashNinetyComboBox.DataSource = new BindingSource(names, string.Empty);
+            rockSmashTenComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /*Water encounters*/
+            surfSixtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfThirtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfFiveComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfFourComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfOneComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            oldRodFortyComboBox.DataSource = new BindingSource(names, string.Empty);
+            oldRodThirtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            oldRodFifteenComboBox.DataSource = new BindingSource(names, string.Empty);
+            oldRodTenComboBox.DataSource = new BindingSource(names, string.Empty);
+            oldRodFiveComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            goodRodFortyComboBox.DataSource = new BindingSource(names, string.Empty);
+            goodRodThirtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            goodRodFifteenComboBox.DataSource = new BindingSource(names, string.Empty);
+            goodRodTenComboBox.DataSource = new BindingSource(names, string.Empty);
+            goodRodFiveComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            superRodFortyComboBox.DataSource = new BindingSource(names, string.Empty);
+            superRodThirtyComboBox.DataSource = new BindingSource(names, string.Empty);
+            superRodFifteenComboBox.DataSource = new BindingSource(names, string.Empty);
+            superRodTenComboBox.DataSource = new BindingSource(names, string.Empty);
+            superRodFiveComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /*Swarm encounters*/
+            grassSwarmComboBox.DataSource = new BindingSource(names, string.Empty);
+            surfSwarmComboBox.DataSource = new BindingSource(names, string.Empty);
+            rodSwarmComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            nightFishingComboBox.DataSource = new BindingSource(names, string.Empty);
+        }
+
+        private void RegisterMarkDirtyHandlers()
+        {
+            //* Walking encounters *//
+            // Walking encounters - Morning
+            morningTwentyFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningTwentySecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningTenFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningTenSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningTenThirdComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningTenFourthComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningFiveFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningFiveSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningFourFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningFourSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningOneFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            morningOneSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+
+            // Walking encounters - Day
+            dayTwentyFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayTwentySecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayTenFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayTenSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayTenThirdComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayTenFourthComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayFiveFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayFiveSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayFourFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayFourSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayOneFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            dayOneSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+
+            // Walking encounters - Night
+            nightTwentyFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightTwentySecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightTenFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightTenSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightTenThirdComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightTenFourthComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightFiveFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightFiveSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightFourFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightFourSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightOneFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            nightOneSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+
+            // Radio music encounters
+            hoennFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            hoennSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            sinnohFirstComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            sinnohSecondComboBox.SelectedIndexChanged += MarkDirtyWalking;
+
+            // Rock smash encounters
+            rockSmashNinetyComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            rockSmashTenComboBox.SelectedIndexChanged += MarkDirtyWalking;
+
+            // Swarm encounters
+            grassSwarmComboBox.SelectedIndexChanged += MarkDirtyWalking;
+
+            // Walking levels
+            twentyFirstLevelUpDown.ValueChanged += MarkDirtyWalking;
+            twentySecondLevelUpDown.ValueChanged += MarkDirtyWalking;
+            tenFirstLevelUpDown.ValueChanged += MarkDirtyWalking;
+            tenSecondLevelUpDown.ValueChanged += MarkDirtyWalking;
+            tenThirdLevelUpDown.ValueChanged += MarkDirtyWalking;
+            tenFourthLevelUpDown.ValueChanged += MarkDirtyWalking;
+            fiveFirstLevelUpDown.ValueChanged += MarkDirtyWalking;
+            fiveSecondLevelUpDown.ValueChanged += MarkDirtyWalking;
+            fourFirstLevelUpDown.ValueChanged += MarkDirtyWalking;
+            fourSecondLevelUpDown.ValueChanged += MarkDirtyWalking;
+            oneFirstLevelUpDown.ValueChanged += MarkDirtyWalking;
+            oneSecondLevelUpDown.ValueChanged += MarkDirtyWalking;
+
+            // Rock smash levels
+            rockSmashNinetyMinLevelUpDown.ValueChanged += MarkDirtyWalking;
+            rockSmashTenMinLevelUpDown.ValueChanged += MarkDirtyWalking;
+            rockSmashNinetyMaxLevelUpDown.ValueChanged += MarkDirtyWalking;
+            rockSmashTenMaxLevelUpDown.ValueChanged += MarkDirtyWalking;
+
+            // Encounter rates
+            walkingRateUpDown.ValueChanged += MarkDirtyWalking;
+            rockSmashRateUpDown.ValueChanged += MarkDirtyWalking;
+
+            //* Water encounters *//
+            // Surf encounters
+            surfSixtyComboBox.SelectedIndexChanged += MarkDirtyWater;
+            surfThirtyComboBox.SelectedIndexChanged += MarkDirtyWater;
+            surfFiveComboBox.SelectedIndexChanged += MarkDirtyWater;
+            surfFourComboBox.SelectedIndexChanged += MarkDirtyWater;
+            surfOneComboBox.SelectedIndexChanged += MarkDirtyWater;
+            surfSwarmComboBox.SelectedIndexChanged += MarkDirtyWater;
+
+            // Fishing encounters - Old rod
+            oldRodFortyComboBox.SelectedIndexChanged += MarkDirtyWater;
+            oldRodThirtyComboBox.SelectedIndexChanged += MarkDirtyWater;
+            oldRodFifteenComboBox.SelectedIndexChanged += MarkDirtyWater;
+            oldRodTenComboBox.SelectedIndexChanged += MarkDirtyWater;
+            oldRodFiveComboBox.SelectedIndexChanged += MarkDirtyWater;
+
+            // Fishing encounters - Good rod
+            goodRodFortyComboBox.SelectedIndexChanged += MarkDirtyWater;
+            goodRodThirtyComboBox.SelectedIndexChanged += MarkDirtyWater;
+            goodRodFifteenComboBox.SelectedIndexChanged += MarkDirtyWater;
+            goodRodTenComboBox.SelectedIndexChanged += MarkDirtyWater;
+            goodRodFiveComboBox.SelectedIndexChanged += MarkDirtyWater;
+
+            // Fishing encounters - Super rod
+            superRodFortyComboBox.SelectedIndexChanged += MarkDirtyWater;
+            superRodThirtyComboBox.SelectedIndexChanged += MarkDirtyWater;
+            superRodFifteenComboBox.SelectedIndexChanged += MarkDirtyWater;
+            superRodTenComboBox.SelectedIndexChanged += MarkDirtyWater;
+            superRodFiveComboBox.SelectedIndexChanged += MarkDirtyWater;
+
+            // Swarm encounters (water)
+            nightFishingComboBox.SelectedIndexChanged += MarkDirtyWater;
+            rodSwarmComboBox.SelectedIndexChanged += MarkDirtyWater;
+
+            // Surf levels
+            surfSixtyMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfSixtyMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfThirtyMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfThirtyMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfFiveMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfFiveMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfFourMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfFourMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfOneMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            surfOneMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+
+            // Old rod levels
+            oldRodFortyMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodFortyMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodThirtyMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodThirtyMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodFifteenMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodFifteenMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodTenMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodTenMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodFiveMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            oldRodFiveMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+
+            // Good rod levels
+            goodRodFortyMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodFortyMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodThirtyMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodThirtyMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodFifteenMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodFifteenMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodTenMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodTenMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodFiveMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            goodRodFiveMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+
+            // Super rod levels
+            superRodFortyMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodFortyMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodThirtyMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodThirtyMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodFifteenMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodFifteenMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodTenMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodTenMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodFiveMinLevelUpDown.ValueChanged += MarkDirtyWater;
+            superRodFiveMaxLevelUpDown.ValueChanged += MarkDirtyWater;
+
+            // Water encounter rates
+            surfRateUpDown.ValueChanged += MarkDirtyWater;
+            oldRodRateUpDown.ValueChanged += MarkDirtyWater;
+            goodRodRateUpDown.ValueChanged += MarkDirtyWater;
+            superRodRateUpDown.ValueChanged += MarkDirtyWater;
+        }
+
+        private void SaveWalking()
+        {
+            if (currentFile == null) 
+            {
+                return;
+            }
+
+            //* Time based encounters *//
+            /* Morning */
+            currentFile.morningPokemon[0] = (ushort)morningTwentyFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[1] = (ushort)morningTwentySecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[2] = (ushort)morningTenFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[3] = (ushort)morningTenSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[4] = (ushort)morningTenThirdComboBox.SelectedIndex;
+            currentFile.morningPokemon[5] = (ushort)morningTenFourthComboBox.SelectedIndex;
+            currentFile.morningPokemon[6] = (ushort)morningFiveFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[7] = (ushort)morningFiveSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[8] = (ushort)morningFourFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[9] = (ushort)morningFourSecondComboBox.SelectedIndex;
+            currentFile.morningPokemon[10] = (ushort)morningOneFirstComboBox.SelectedIndex;
+            currentFile.morningPokemon[11] = (ushort)morningOneSecondComboBox.SelectedIndex;
+
+            /* Day */
+            currentFile.dayPokemon[0] = (ushort)dayTwentyFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[1] = (ushort)dayTwentySecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[2] = (ushort)dayTenFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[3] = (ushort)dayTenSecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[4] = (ushort)dayTenThirdComboBox.SelectedIndex;
+            currentFile.dayPokemon[5] = (ushort)dayTenFourthComboBox.SelectedIndex;
+            currentFile.dayPokemon[6] = (ushort)dayFiveFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[7] = (ushort)dayFiveSecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[8] = (ushort)dayFourFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[9] = (ushort)dayFourSecondComboBox.SelectedIndex;
+            currentFile.dayPokemon[10] = (ushort)dayOneFirstComboBox.SelectedIndex;
+            currentFile.dayPokemon[11] = (ushort)dayOneSecondComboBox.SelectedIndex;
+
+            /* Night */
+            currentFile.nightPokemon[0] = (ushort)nightTwentyFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[1] = (ushort)nightTwentySecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[2] = (ushort)nightTenFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[3] = (ushort)nightTenSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[4] = (ushort)nightTenThirdComboBox.SelectedIndex;
+            currentFile.nightPokemon[5] = (ushort)nightTenFourthComboBox.SelectedIndex;
+            currentFile.nightPokemon[6] = (ushort)nightFiveFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[7] = (ushort)nightFiveSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[8] = (ushort)nightFourFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[9] = (ushort)nightFourSecondComboBox.SelectedIndex;
+            currentFile.nightPokemon[10] = (ushort)nightOneFirstComboBox.SelectedIndex;
+            currentFile.nightPokemon[11] = (ushort)nightOneSecondComboBox.SelectedIndex;
+
+            //* Other encounters *//
+            /* Radio music encounters */
+            currentFile.hoennMusicPokemon[0] = (ushort)hoennFirstComboBox.SelectedIndex;
+            currentFile.hoennMusicPokemon[1] = (ushort)hoennSecondComboBox.SelectedIndex;
+            currentFile.sinnohMusicPokemon[0] = (ushort)sinnohFirstComboBox.SelectedIndex;
+            currentFile.sinnohMusicPokemon[1] = (ushort)sinnohSecondComboBox.SelectedIndex;
+
+            /* Rock smash encounters */
+            currentFile.rockSmashPokemon[0] = (ushort)rockSmashNinetyComboBox.SelectedIndex;
+            currentFile.rockSmashPokemon[1] = (ushort)rockSmashTenComboBox.SelectedIndex;
+
+            /* Swarm encounters */
+            currentFile.swarmPokemon[0] = (ushort)grassSwarmComboBox.SelectedIndex;
+
+            //* Levels *//
+            /* Time based encounters */
+            currentFile.walkingLevels[0] = (byte)twentyFirstLevelUpDown.Value;
+            currentFile.walkingLevels[1] = (byte)twentySecondLevelUpDown.Value;
+            currentFile.walkingLevels[2] = (byte)tenFirstLevelUpDown.Value;
+            currentFile.walkingLevels[3] = (byte)tenSecondLevelUpDown.Value;
+            currentFile.walkingLevels[4] = (byte)tenThirdLevelUpDown.Value;
+            currentFile.walkingLevels[5] = (byte)tenFourthLevelUpDown.Value;
+            currentFile.walkingLevels[6] = (byte)fiveFirstLevelUpDown.Value;
+            currentFile.walkingLevels[7] = (byte)fiveSecondLevelUpDown.Value;
+            currentFile.walkingLevels[8] = (byte)fourFirstLevelUpDown.Value;
+            currentFile.walkingLevels[9] = (byte)fourSecondLevelUpDown.Value;
+            currentFile.walkingLevels[10] = (byte)oneFirstLevelUpDown.Value;
+            currentFile.walkingLevels[11] = (byte)oneSecondLevelUpDown.Value;
+
+            /* Rock smash encounters */
+            currentFile.rockSmashMinLevels[0] = (byte)rockSmashNinetyMinLevelUpDown.Value;
+            currentFile.rockSmashMinLevels[1] = (byte)rockSmashTenMinLevelUpDown.Value;
+            currentFile.rockSmashMaxLevels[0] = (byte)rockSmashNinetyMaxLevelUpDown.Value;
+            currentFile.rockSmashMaxLevels[1] = (byte)rockSmashTenMaxLevelUpDown.Value;
+
+            //* Encounters rates *//
+            currentFile.walkingRate = (byte)walkingRateUpDown.Value;
+            currentFile.rockSmashRate = (byte)rockSmashRateUpDown.Value;
+
+            SetDirtyWalking(false);
+
+        }
+
+        private void SaveWater()
+        {
+            if (currentFile == null) 
+            {
+                return;
+            }
+            /* Surf encounters */
+            currentFile.surfPokemon[0] = (ushort)surfSixtyComboBox.SelectedIndex;
+            currentFile.surfPokemon[1] = (ushort)surfThirtyComboBox.SelectedIndex;
+            currentFile.surfPokemon[2] = (ushort)surfFiveComboBox.SelectedIndex;
+            currentFile.surfPokemon[3] = (ushort)surfFourComboBox.SelectedIndex;
+            currentFile.surfPokemon[4] = (ushort)surfOneComboBox.SelectedIndex;
+
+            currentFile.swarmPokemon[1] = (ushort)surfSwarmComboBox.SelectedIndex;
+
+            //* Fishing encounters *//
+            /* Old rod */
+            currentFile.oldRodPokemon[0] = (ushort)oldRodFortyComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[1] = (ushort)oldRodThirtyComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[2] = (ushort)oldRodFifteenComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[3] = (ushort)oldRodTenComboBox.SelectedIndex;
+            currentFile.oldRodPokemon[4] = (ushort)oldRodFiveComboBox.SelectedIndex;
+
+            /* Good rod */
+            currentFile.goodRodPokemon[0] = (ushort)goodRodFortyComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[1] = (ushort)goodRodThirtyComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[2] = (ushort)goodRodFifteenComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[3] = (ushort)goodRodTenComboBox.SelectedIndex;
+            currentFile.goodRodPokemon[4] = (ushort)goodRodFiveComboBox.SelectedIndex;
+
+            /* Super rod */
+            currentFile.superRodPokemon[0] = (ushort)superRodFortyComboBox.SelectedIndex;
+            currentFile.superRodPokemon[1] = (ushort)superRodThirtyComboBox.SelectedIndex;
+            currentFile.superRodPokemon[2] = (ushort)superRodFifteenComboBox.SelectedIndex;
+            currentFile.superRodPokemon[3] = (ushort)superRodTenComboBox.SelectedIndex;
+            currentFile.superRodPokemon[4] = (ushort)superRodFiveComboBox.SelectedIndex;
+
+            /* Swarm encounters */
+            currentFile.swarmPokemon[2] = (ushort)nightFishingComboBox.SelectedIndex; // Night fishing is part of the swarm array
+            currentFile.swarmPokemon[3] = (ushort)rodSwarmComboBox.SelectedIndex;
+
+            //* Levels *//
+            /* Surf */
+            currentFile.surfMinLevels[0] = (byte)surfSixtyMinLevelUpDown.Value;
+            currentFile.surfMaxLevels[0] = (byte)surfSixtyMaxLevelUpDown.Value;
+            currentFile.surfMinLevels[1] = (byte)surfThirtyMinLevelUpDown.Value;
+            currentFile.surfMaxLevels[1] = (byte)surfThirtyMaxLevelUpDown.Value;
+            currentFile.surfMinLevels[2] = (byte)surfFiveMinLevelUpDown.Value;
+            currentFile.surfMaxLevels[2] = (byte)surfFiveMaxLevelUpDown.Value;
+            currentFile.surfMinLevels[3] = (byte)surfFourMinLevelUpDown.Value;
+            currentFile.surfMaxLevels[3] = (byte)surfFourMaxLevelUpDown.Value;
+            currentFile.surfMinLevels[4] = (byte)surfOneMinLevelUpDown.Value;
+            currentFile.surfMaxLevels[4] = (byte)surfOneMaxLevelUpDown.Value;
+
+            /* Fishing */
+            /* Old rod */
+            currentFile.oldRodMinLevels[0] = (byte)oldRodFortyMinLevelUpDown.Value;
+            currentFile.oldRodMaxLevels[0] = (byte)oldRodFortyMaxLevelUpDown.Value;
+            currentFile.oldRodMinLevels[1] = (byte)oldRodThirtyMinLevelUpDown.Value;
+            currentFile.oldRodMaxLevels[1] = (byte)oldRodThirtyMaxLevelUpDown.Value;
+            currentFile.oldRodMinLevels[2] = (byte)oldRodFifteenMinLevelUpDown.Value;
+            currentFile.oldRodMaxLevels[2] = (byte)oldRodFifteenMaxLevelUpDown.Value;
+            currentFile.oldRodMinLevels[3] = (byte)oldRodTenMinLevelUpDown.Value;
+            currentFile.oldRodMaxLevels[3] = (byte)oldRodTenMaxLevelUpDown.Value;
+            currentFile.oldRodMinLevels[4] = (byte)oldRodFiveMinLevelUpDown.Value;
+            currentFile.oldRodMaxLevels[4] = (byte)oldRodFiveMaxLevelUpDown.Value;
+
+            /* Good rod */
+            currentFile.goodRodMinLevels[0] = (byte)goodRodFortyMinLevelUpDown.Value;
+            currentFile.goodRodMaxLevels[0] = (byte)goodRodFortyMaxLevelUpDown.Value;
+            currentFile.goodRodMinLevels[1] = (byte)goodRodThirtyMinLevelUpDown.Value;
+            currentFile.goodRodMaxLevels[1] = (byte)goodRodThirtyMaxLevelUpDown.Value;
+            currentFile.goodRodMinLevels[2] = (byte)goodRodFifteenMinLevelUpDown.Value;
+            currentFile.goodRodMaxLevels[2] = (byte)goodRodFifteenMaxLevelUpDown.Value;
+            currentFile.goodRodMinLevels[3] = (byte)goodRodTenMinLevelUpDown.Value;
+            currentFile.goodRodMaxLevels[3] = (byte)goodRodTenMaxLevelUpDown.Value;
+            currentFile.goodRodMinLevels[4] = (byte)goodRodFiveMinLevelUpDown.Value;
+            currentFile.goodRodMaxLevels[4] = (byte)goodRodFiveMaxLevelUpDown.Value;
+
+            /* Super rod */
+            currentFile.superRodMinLevels[0] = (byte)superRodFortyMinLevelUpDown.Value;
+            currentFile.superRodMaxLevels[0] = (byte)superRodFortyMaxLevelUpDown.Value;
+            currentFile.superRodMinLevels[1] = (byte)superRodThirtyMinLevelUpDown.Value;
+            currentFile.superRodMaxLevels[1] = (byte)superRodThirtyMaxLevelUpDown.Value;
+            currentFile.superRodMinLevels[2] = (byte)superRodFifteenMinLevelUpDown.Value;
+            currentFile.superRodMaxLevels[2] = (byte)superRodFifteenMaxLevelUpDown.Value;
+            currentFile.superRodMinLevels[3] = (byte)superRodTenMinLevelUpDown.Value;
+            currentFile.superRodMaxLevels[3] = (byte)superRodTenMaxLevelUpDown.Value;
+            currentFile.superRodMinLevels[4] = (byte)superRodFiveMinLevelUpDown.Value;
+            currentFile.superRodMaxLevels[4] = (byte)superRodFiveMaxLevelUpDown.Value;
+
+            //* Rates *//
+            currentFile.surfRate = (byte)surfRateUpDown.Value;
+            currentFile.oldRodRate = (byte)oldRodRateUpDown.Value;
+            currentFile.goodRodRate = (byte)goodRodRateUpDown.Value;
+            currentFile.superRodRate = (byte)superRodRateUpDown.Value;
+
+            SetDirtyWater(false);
+        }
+
+        private void AddTooltips() 
+        {
+            // Radio music encounters
+            SetToolTipsForControls(new Control[] { hoennFirstComboBox, sinnohFirstComboBox },
+                "Replaces the first two 10% slots in the morning, day and night.");
+            SetToolTipsForControls(new Control[] { hoennSecondComboBox, sinnohSecondComboBox },
+                "Replaces the second two 10% slots in the morning, day and night.");
+
+            SetToolTipsForControls(new Control[] { radioMusicGroupBox }, "Radio Music Encounters:\nThese replace the 10% slots.");
+            SetToolTipsForControls(new Control[] {morningTenFirstComboBox, dayTenFirstComboBox, nightTenFirstComboBox,
+                morningTenSecondComboBox, dayTenSecondComboBox, nightTenSecondComboBox}, "Replaced by radio slot 1 when radio is active.");
+            SetToolTipsForControls(new Control[] {morningTenThirdComboBox, dayTenThirdComboBox, nightTenThirdComboBox,
+                morningTenFourthComboBox, dayTenFourthComboBox, nightTenFourthComboBox}, "Replaced by radio slot 2 when radio is active.");
+
+            // Swarm encounters
+            SetToolTipsForControls(new Control[] { grassSwarmComboBox }, "This slot replaces both 20% slots in the morning, day and night.");
+            SetToolTipsForControls(new Control[] {morningTwentyFirstComboBox, dayTwentyFirstComboBox, nightTwentyFirstComboBox,
+                morningTwentySecondComboBox, dayTwentySecondComboBox, nightTwentySecondComboBox},"Replaced by grass swarm slot when swarm is active.");
+
+            SetToolTipsForControls(new Control[] { surfSwarmComboBox }, "Replaces the 60% surfing slot.");
+            SetToolTipsForControls(new Control[] { surfSixtyComboBox }, "Replaced by surf swarm slot when swarm is active.");
+
+            SetToolTipsForControls(new Control[] { rodSwarmComboBox }, "Replaced slot depends on the rod used:\n" +
+                "Old Rod: 15% slot\n" +
+                "Good Rod: 40% slot\n" +
+                "Super Rod: all slots");
+            SetToolTipsForControls(new Control[] { oldRodFifteenComboBox, goodRodFortyComboBox, 
+            superRodFortyComboBox, superRodFifteenComboBox, superRodTenComboBox, superRodFiveComboBox },
+                "Replaced by fishing swarm slot when swarm is active.");
+
+            // Night fishing
+            SetToolTipsForControls(new Control[] { nightFishingComboBox }, "Replaced slot depends on the rod used:\n" +
+                "Good Rod: 10% slot\n" +
+                "Super Rod: 30% slot");
+            SetToolTipsForControls(new Control[] { goodRodTenComboBox }, "Replaced by night fishing slot at night.");
+            SetToolTipsForControls(new Control[] { superRodThirtyComboBox }, "Replaced by night fishing slot at night.\nReplaced by fishing swarm slot when swarm is active.");
+        }
+
+        private void SetToolTipsForControls(IEnumerable<Control> controls, string text)
+        {
+            foreach (var control in controls)
+            {
+                toolTip.SetToolTip(control, text);
+            }
+        }
+
+        private bool ContinueUnsavedChanges()
+        {
+            if (walkingDirty || waterDirty)
+            {
+                DialogResult d = MessageBox.Show("There are unsaved changes. Do you want to save them before proceeding?", "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (d == DialogResult.Yes)
+                {
+                    SaveWalking();
+                    SaveWater();
+                    currentFile.SaveToFileDefaultDir(loadedEncounterFileIndex, showSuccessMessage: false);
+                    return true;
+                }
+                else if (d == DialogResult.No)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false; // Cancel
+                }
+            }
+            return true; // No unsaved changes
+        }
+
+        private void SetDirtyWalking(bool dirty)
+        {
+            if (dirty && !walkingDirty)
+            {
+                walkingDirty = true;
+                grassGroundTabPage.Text += "*";
+
+                if (!waterDirty)
+                {
+                    this.Text += "*";
+                }
+
+            }
+            else if (!dirty && walkingDirty)
+            {
+                walkingDirty = false;
+                grassGroundTabPage.Text = grassGroundTabPage.Text.TrimEnd('*');
+
+                if (!waterDirty)
+                {
+                    this.Text = this.Text.TrimEnd('*');
+                }
+            }
+        }
+        private void SetDirtyWater(bool dirty)
+        {
+            if (dirty && !waterDirty)
+            {
+                waterDirty = true;
+                waterTabPage.Text += "*";
+
+                if (!walkingDirty)
+                {
+                    this.Text += "*";
+                }
+
+            }
+            else if (!dirty && waterDirty)
+            {
+                waterDirty = false;
+                waterTabPage.Text = waterTabPage.Text.TrimEnd('*');
+
+                if (!walkingDirty)
+                {
+                    this.Text = this.Text.TrimEnd('*');
+                }
+            }
+        }
+
+        #region Event Handlers
+
+        private void MarkDirtyWalking(object sender, EventArgs e)
+        {
+            SetDirtyWalking(true);
+        }
+        private void MarkDirtyWater(object sender, EventArgs e)
+        {
+            SetDirtyWater(true);
+        }
+
         private void exportEncounterFileButton_Click(object sender, EventArgs e) {
+            SaveWalking();
+            SaveWater();
             currentFile.SaveToFileExplorePath("Encounter File " + selectEncounterComboBox.SelectedIndex);
         }
         private void importEncounterFileButton_Click(object sender, EventArgs e) {
@@ -284,813 +856,33 @@ namespace DSPRE {
             /* Update controls */
             SetupControls();
         }
-		private void selectEncounterComboBox_SelectedIndexChanged(object sender, EventArgs e) {
+		private void selectEncounterComboBox_SelectedIndexChanged(object sender, EventArgs e) 
+        {
             if (Helpers.HandlersDisabled) {
                 return;
             }
-            
+
+            Helpers.DisableHandlers();
+
+            if (!ContinueUnsavedChanges()) {
+                selectEncounterComboBox.SelectedIndex = loadedEncounterFileIndex;
+                Helpers.EnableHandlers();
+                return; // Cancel the change
+            }
+
             currentFile = new EncounterFileHGSS(selectEncounterComboBox.SelectedIndex);
             SetupControls();
+            Helpers.EnableHandlers();
         }
-        private void saveEncountersButton_Click(object sender, EventArgs e) {
-            currentFile.SaveToFileDefaultDir(selectEncounterComboBox.SelectedIndex);
-        }
+        private void saveEncountersButton_Click(object sender, EventArgs e) 
+        {
+            SaveWalking();
+            SaveWater();
+            currentFile.SaveToFileDefaultDir(selectEncounterComboBox.SelectedIndex, false);
+        }        
 
-        private void walkingRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingRate = (byte)walkingRateUpDown.Value;
-        }
-        private void rockSmashRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashRate = (byte)rockSmashRateUpDown.Value;
-        }
-        private void surfRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.surfRate = (byte)surfRateUpDown.Value;
-        }
-        private void oldRodRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.oldRodRate = (byte)oldRodRateUpDown.Value;
-        }
-        private void goodRodRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.goodRodRate = (byte)goodRodRateUpDown.Value;
-        }
-        private void superRodRateUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.superRodRate = (byte)superRodRateUpDown.Value;
-        }
-        private void morningTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[0] = (ushort)morningTwentyFirstComboBox.SelectedIndex;
-        }
-        private void morningTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[1] = (ushort)morningTwentySecondComboBox.SelectedIndex;
-        }
-        private void morningTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[2] = (ushort)morningTenFirstComboBox.SelectedIndex;
-        }
-        private void morningTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[3] = (ushort)morningTenSecondComboBox.SelectedIndex;
-        }
-        private void morningTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[4] = (ushort)morningTenThirdComboBox.SelectedIndex;
-        }
-        private void morningTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[5] = (ushort)morningTenFourthComboBox.SelectedIndex;
-        }
-        private void morningFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[6] = (ushort)morningFiveFirstComboBox.SelectedIndex;
-        }
-        private void morningFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[7] = (ushort)morningFiveSecondComboBox.SelectedIndex;
-        }
-        private void morningFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[8] = (ushort)morningFourFirstComboBox.SelectedIndex;
-        }
-        private void morningFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[9] = (ushort)morningFourSecondComboBox.SelectedIndex;
-        }
-        private void morningOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[10] = (ushort)morningOneFirstComboBox.SelectedIndex;
-        }
-        private void morningOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.morningPokemon[11] = (ushort)morningOneSecondComboBox.SelectedIndex;
-        }
-        private void dayTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[0] = (ushort)dayTwentyFirstComboBox.SelectedIndex;
-        }
-        private void dayTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[1] = (ushort)dayTwentySecondComboBox.SelectedIndex;
-        }
-        private void dayTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[2] = (ushort)dayTenFirstComboBox.SelectedIndex;
-        }
-        private void dayTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[3] = (ushort)dayTenSecondComboBox.SelectedIndex;
-        }
-        private void dayTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[4] = (ushort)dayTenThirdComboBox.SelectedIndex;
-        }
-        private void dayTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[5] = (ushort)dayTenFourthComboBox.SelectedIndex;
-        }
-        private void dayFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[6] = (ushort)dayFiveFirstComboBox.SelectedIndex;
-        }
-        private void dayFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[7] = (ushort)dayFiveSecondComboBox.SelectedIndex;
-        }
-        private void dayFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[8] = (ushort)dayFourFirstComboBox.SelectedIndex;
-        }
-        private void dayFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[9] = (ushort)dayFourSecondComboBox.SelectedIndex;
-        }
-        private void dayOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[10] = (ushort)dayOneFirstComboBox.SelectedIndex;
-        }
-        private void dayOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.dayPokemon[11] = (ushort)dayOneSecondComboBox.SelectedIndex;
-        }
-        private void nightTwentyFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[0] = (ushort)nightTwentyFirstComboBox.SelectedIndex;
-        }
-        private void nightTwentySecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[1] = (ushort)nightTwentySecondComboBox.SelectedIndex;
-        }
-        private void nightTenFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[2] = (ushort)nightTenFirstComboBox.SelectedIndex;
-        }
-        private void nightTenSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[3] = (ushort)nightTenSecondComboBox.SelectedIndex;
-        }
-        private void nightTenThirdComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[4] = (ushort)nightTenThirdComboBox.SelectedIndex;
-        }
-        private void nightTenFourthComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[5] = (ushort)nightTenFourthComboBox.SelectedIndex;
-        }
-        private void nightFiveFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[6] = (ushort)nightFiveFirstComboBox.SelectedIndex;
-        }
-        private void nightFiveSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[7] = (ushort)nightFiveSecondComboBox.SelectedIndex;
-        }
-        private void nightFourFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[8] = (ushort)nightFourFirstComboBox.SelectedIndex;
-        }
-        private void nightFourSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[9] = (ushort)nightFourSecondComboBox.SelectedIndex;
-        }
-        private void nightOneFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[10] = (ushort)nightOneFirstComboBox.SelectedIndex;
-        }
-        private void nightOneSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.nightPokemon[11] = (ushort)nightOneSecondComboBox.SelectedIndex;
-        }
-
-        private void twentyFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[0] = (byte)twentyFirstLevelUpDown.Value;
-        }
-        private void twentySecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[1] = (byte)twentySecondLevelUpDown.Value;
-        }
-        private void tenFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[2] = (byte)tenFirstLevelUpDown.Value;
-        }
-        private void tenSecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[3] = (byte)tenSecondLevelUpDown.Value;
-        }
-        private void tenThirdLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[4] = (byte)tenThirdLevelUpDown.Value;
-        }
-        private void tenFourthLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[5] = (byte)tenFourthLevelUpDown.Value;
-        }
-        private void fiveFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[6] = (byte)fiveFirstLevelUpDown.Value;
-        }
-        private void fiveSecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[7] = (byte)fiveSecondLevelUpDown.Value;
-        }
-        private void fourFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[8] = (byte)fourFirstLevelUpDown.Value;
-        }
-        private void fourSecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[9] = (byte)fourSecondLevelUpDown.Value;
-        }
-        private void oneFirstLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[10] = (byte)oneFirstLevelUpDown.Value;
-        }
-        private void oneSecondLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.walkingLevels[11] = (byte)oneSecondLevelUpDown.Value;
-        }
-
-        private void hoennFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.hoennMusicPokemon[0] = (ushort)hoennFirstComboBox.SelectedIndex;
-        }
-        private void hoennSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.hoennMusicPokemon[1] = (ushort)hoennSecondComboBox.SelectedIndex;
-        }
-        private void sinnohFirstComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.sinnohMusicPokemon[0] = (ushort)sinnohFirstComboBox.SelectedIndex;
-        }
-        private void sinnohSecondComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.sinnohMusicPokemon[1] = (ushort)sinnohSecondComboBox.SelectedIndex;
-        }
-
-        private void rockSmashNinetyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashPokemon[0] = (ushort)rockSmashNinetyComboBox.SelectedIndex;
-        }
-        private void rockSmashTenComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashPokemon[1] = (ushort)rockSmashTenComboBox.SelectedIndex;
-        }
-        private void rockSmashNinetyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashMinLevels[0] = (byte)rockSmashNinetyMinLevelUpDown.Value;
-        }
-        private void rockSmashTenMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashMinLevels[1] = (byte)rockSmashTenMinLevelUpDown.Value;
-        }
-        private void rockSmashNinetyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashMaxLevels[0] = (byte)rockSmashNinetyMaxLevelUpDown.Value;
-        }
-        private void rockSmashTenMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashMaxLevels[1] = (byte)rockSmashNinetyMaxLevelUpDown.Value;
-        }
-        private void rockSmashNinetyMaxLevelUpDown_ValueChanged_1(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashMaxLevels[0] = (byte)rockSmashNinetyMaxLevelUpDown.Value;
-        }
-        private void rockSmashTenMaxLevelUpDown_ValueChanged_1(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.rockSmashMaxLevels[1] = (byte)rockSmashTenMaxLevelUpDown.Value;
-        }
-
-        private void grassSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.swarmPokemon[0] = (ushort)grassSwarmComboBox.SelectedIndex;
-        }
-        private void surfSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.swarmPokemon[1] = (ushort)surfSwarmComboBox.SelectedIndex;
-        }
-        private void goodRodSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.swarmPokemon[2] = (ushort)goodRodSwarmComboBox.SelectedIndex;
-        }
-        private void superRodSwarmComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-        	if (Helpers.HandlersDisabled) { 
-                return; 
-            }
-            currentFile.swarmPokemon[3] = (ushort)superRodSwarmComboBox.SelectedIndex;
-        }
-
-        private void surfSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfPokemon[0] = (ushort)surfSixtyComboBox.SelectedIndex;
-        }
-        private void surfThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfPokemon[1] = (ushort)surfThirtyComboBox.SelectedIndex;
-        }
-        private void surfFiveComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfPokemon[2] = (ushort)surfFiveComboBox.SelectedIndex;
-        }
-        private void surfFourComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfPokemon[3] = (ushort)surfFourComboBox.SelectedIndex;
-        }
-        private void surfOneComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfPokemon[4] = (ushort)surfOneComboBox.SelectedIndex;
-        }
-        private void oldRodSixtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodPokemon[0] = (ushort)oldRodSixtyComboBox.SelectedIndex;
-        }
-        private void oldRodThirtyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodPokemon[1] = (ushort)oldRodThirtyComboBox.SelectedIndex;
-        }
-        private void oldRodFiveComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodPokemon[2] = (ushort)oldRodFiveComboBox.SelectedIndex;
-        }
-        private void oldRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodPokemon[3] = (ushort)oldRodFourComboBox.SelectedIndex;
-        }
-        private void oldRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodPokemon[4] = (ushort)oldRodOneComboBox.SelectedIndex;
-        }
-        private void goodRodFirstFortyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodPokemon[0] = (ushort)goodRodFirstFortyComboBox.SelectedIndex;
-        }
-        private void goodRodSecondFortyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodPokemon[1] = (ushort)goodRodSecondFortyComboBox.SelectedIndex;
-        }
-        private void goodRodFifteenComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodPokemon[2] = (ushort)goodRodFifteenComboBox.SelectedIndex;
-        }
-        private void goodRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodPokemon[3] = (ushort)goodRodFourComboBox.SelectedIndex;
-        }
-        private void goodRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodPokemon[4] = (ushort)goodRodOneComboBox.SelectedIndex;
-        }
-        private void superRodFirstFortyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodPokemon[0] = (ushort)superRodFirstFortyComboBox.SelectedIndex;
-        }
-        private void superRodSecondFortyComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodPokemon[1] = (ushort)superRodSecondFortyComboBox.SelectedIndex;
-        }
-        private void superRodFifteenComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodPokemon[2] = (ushort)superRodFifteenComboBox.SelectedIndex;
-        }
-        private void superRodFourComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodPokemon[3] = (ushort)superRodFourComboBox.SelectedIndex;
-        }
-        private void superRodOneComboBox_SelectedIndexChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodPokemon[4] = (ushort)superRodOneComboBox.SelectedIndex;
-        }
-
-        /* Water levels controls */
-        private void surfSixtyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMinLevels[0] = (byte)surfSixtyMinLevelUpDown.Value;
-        }
-        private void surfThirtyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMinLevels[1] = (byte)surfThirtyMinLevelUpDown.Value;
-        }
-        private void surfFiveMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMinLevels[2] = (byte)surfFiveMinLevelUpDown.Value;
-        }
-        private void surfFourMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMinLevels[3] = (byte)surfFourMinLevelUpDown.Value;
-        }
-        private void surfOneMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMinLevels[4] = (byte)surfOneMinLevelUpDown.Value;
-        }
-        private void surfSixtyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMaxLevels[0] = (byte)surfSixtyMaxLevelUpDown.Value;
-        }
-        private void surfThirtyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMaxLevels[1] = (byte)surfThirtyMaxLevelUpDown.Value;
-        }
-        private void surfFiveMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMaxLevels[2] = (byte)surfFiveMaxLevelUpDown.Value;
-        }
-        private void surfFourMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMaxLevels[3] = (byte)surfFourMaxLevelUpDown.Value;
-        }
-        private void surfOneMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.surfMaxLevels[4] = (byte)surfOneMaxLevelUpDown.Value;
-        }
-
-        private void oldRodSixtyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMinLevels[0] = (byte)oldRodSixtyMinLevelUpDown.Value;
-        }
-        private void oldRodThirtyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMinLevels[1] = (byte)oldRodThirtyMinLevelUpDown.Value;
-        }
-        private void oldRodFiveMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMinLevels[2] = (byte)oldRodFiveMinLevelUpDown.Value;
-        }
-        private void oldRodFourMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMinLevels[3] = (byte)oldRodFourMinLevelUpDown.Value;
-        }
-        private void oldRodOneMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMinLevels[4] = (byte)oldRodOneMinLevelUpDown.Value;
-        }
-        private void oldRodSixtyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMaxLevels[0] = (byte)oldRodSixtyMaxLevelUpDown.Value;
-        }
-        private void oldRodThirtyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMaxLevels[1] = (byte)oldRodThirtyMaxLevelUpDown.Value;
-        }
-        private void oldRodFiveMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMaxLevels[2] = (byte)oldRodFiveMaxLevelUpDown.Value;
-        }
-        private void oldRodFourMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMaxLevels[3] = (byte)oldRodFourMaxLevelUpDown.Value;
-        }
-        private void oldRodOneMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.oldRodMaxLevels[4] = (byte)oldRodOneMaxLevelUpDown.Value;
-        }
-
-        private void goodRodFirstFortyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-
-            currentFile.goodRodMinLevels[0] = (byte)goodRodFirstFortyMinLevelUpDown.Value;
-        }
-
-        private void goodRodSecondFortyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-
-            currentFile.goodRodMinLevels[1] = (byte)goodRodSecondFortyMinLevelUpDown.Value;
-        }
-        private void goodRodFifteenMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodMinLevels[2] = (byte)goodRodFifteenMinLevelUpDown.Value;
-        }
-        private void goodRodFourMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodMinLevels[3] = (byte)goodRodFourMinLevelUpDown.Value;
-        }
-        private void goodRodOneMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodMinLevels[4] = (byte)goodRodOneMinLevelUpDown.Value;
-        }
-        private void goodRodFirstFortyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodMaxLevels[0] = (byte)goodRodFirstFortyMaxLevelUpDown.Value;
-        }
-        private void goodRodSecondFortyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodMaxLevels[1] = (byte)goodRodSecondFortyMaxLevelUpDown.Value;
-        }
-        private void goodRodFifteenMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodMaxLevels[2] = (byte)goodRodFifteenMaxLevelUpDown.Value;
-        }
-        private void goodRodFourMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodMaxLevels[3] = (byte)goodRodFourMaxLevelUpDown.Value;
-        }
-        private void goodRodOneMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.goodRodMaxLevels[4] = (byte)goodRodOneMaxLevelUpDown.Value;
-        }
-
-        private void superRodFirstFortyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMinLevels[0] = (byte)superRodFirstFortyMinLevelUpDown.Value;
-        }
-        private void superRodSecondFortyMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMinLevels[1] = (byte)superRodSecondFortyMinLevelUpDown.Value;
-        }
-        private void superRodFifteenMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMinLevels[2] = (byte)superRodFifteenMinLevelUpDown.Value;
-        }
-        private void superRodFourMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMinLevels[3] = (byte)superRodFourMinLevelUpDown.Value;
-        }
-        private void superRodOneMinLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMinLevels[4] = (byte)superRodOneMinLevelUpDown.Value;
-        }
-        private void superRodFirstFortyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMaxLevels[0] = (byte)superRodFirstFortyMaxLevelUpDown.Value;
-        }
-        private void superRodSecondFortyMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMaxLevels[1] = (byte)superRodSecondFortyMaxLevelUpDown.Value;
-        }
-        private void superRodFifteenMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMaxLevels[2] = (byte)superRodFifteenMaxLevelUpDown.Value;
-        }
-        private void superRodFourMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMaxLevels[3] = (byte)superRodFourMaxLevelUpDown.Value;
-        }
-        private void superRodOneMaxLevelUpDown_ValueChanged(object sender, EventArgs e) {
-            if (Helpers.HandlersDisabled) {
-                return;
-            }
-            currentFile.superRodMaxLevels[4] = (byte)superRodOneMaxLevelUpDown.Value;
-        }
-
-        private void addEncounterFileButton_Click(object sender, EventArgs e) {
+        private void addEncounterFileButton_Click(object sender, EventArgs e) 
+        {
             int encounterCount = selectEncounterComboBox.Items.Count;
 
             /* Add new encounter file to encounter folder */
@@ -1104,7 +896,8 @@ namespace DSPRE {
             selectEncounterComboBox.SelectedIndex = encounterCount;
         }
 
-        private void removeLastEncounterFileButton_Click(object sender, EventArgs e) {
+        private void removeLastEncounterFileButton_Click(object sender, EventArgs e) 
+        {
             int encounterCount = selectEncounterComboBox.Items.Count;
 
             if (encounterCount > 1) {
@@ -1127,7 +920,8 @@ namespace DSPRE {
             }
         }
 
-        private void repairAllButton_Click(object sender, EventArgs e) {
+        private void repairAllButton_Click(object sender, EventArgs e) 
+        {
             DialogResult d = MessageBox.Show("DSPRE is about to open every Encounter File and attempt to reset every corrupted field to its default value.\n" +
                 "Do you wish to proceed?", "Repair all Encounter Files?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
@@ -1139,5 +933,15 @@ namespace DSPRE {
                 MessageBox.Show("All repairable fields have been fixed.", "Operation completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void WildEditorHGSS_FormClosing(object sender, FormClosingEventArgs e) 
+        {
+            if (!ContinueUnsavedChanges()) 
+            {
+                e.Cancel = true; // Cancel closing the form
+            }
+        }
+
+        #endregion
     }
 }

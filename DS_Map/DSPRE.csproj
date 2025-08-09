@@ -148,6 +148,12 @@
     <Compile Include="Editors\EncountersEditor.Designer.cs">
       <DependentUpon>EncountersEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editors\EventEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\EventEditor.Designer.cs">
+      <DependentUpon>EventEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editors\HeadbuttEncounterEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -159,6 +165,18 @@
     </Compile>
     <Compile Include="Editors\HeadbuttEncounterEditorTab.Designer.cs">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\HeaderEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\HeaderEditor.Designer.cs">
+      <DependentUpon>HeaderEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\MapEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\MapEditor.Designer.cs">
+      <DependentUpon>MapEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\Utils\IndexedBitmapHandler.cs" />
     <Compile Include="Editors\ItemEditor.cs">
@@ -175,6 +193,12 @@
     </Compile>
     <Compile Include="Editors\LoadingForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editors\MatrixEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editors\MatrixEditor.Designer.cs">
+      <DependentUpon>MatrixEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Editors\MoveDataEditor.cs">
       <SubType>Form</SubType>
@@ -509,17 +533,29 @@
     <EmbeddedResource Include="Editors\EncountersEditor.resx">
       <DependentUpon>EncountersEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\EventEditor.resx">
+      <DependentUpon>EventEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\HeadbuttEncounterEditor.resx">
       <DependentUpon>HeadbuttEncounterEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\HeadbuttEncounterEditorTab.resx">
       <DependentUpon>HeadbuttEncounterEditorTab.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editors\HeaderEditor.resx">
+      <DependentUpon>HeaderEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editors\ItemEditor.resx">
       <DependentUpon>ItemEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\LevelScriptEditor.resx">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\MapEditor.resx">
+      <DependentUpon>MapEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editors\MatrixEditor.resx">
+      <DependentUpon>MatrixEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editors\MoveDataEditor.resx">
       <DependentUpon>MoveDataEditor.cs</DependentUpon>
