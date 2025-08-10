@@ -1230,9 +1230,13 @@ namespace DSPRE
             OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(GameFamilies.HGSS), RomInfo.BuildCommandParametersDatabase(GameFamilies.HGSS),
                 RomInfo.BuildActionNamesDatabase(GameFamilies.HGSS), RomInfo.BuildComparisonOperatorsDatabase(GameFamilies.HGSS));
         }
-        private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private void manageDatabasesToolStripMenuItem_Click(object sender, EventArgs e) {
+            using (CustomScrcmdManager editor = new CustomScrcmdManager())
+                editor.ShowDialog();
+        }
+        private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) 
         {
-            if (mainTabControl.SelectedTab == headerEditorTabPage)
+            if (mainTabControl.SelectedTab == headerEditorTabPage) 
             {
                 headerEditor.SetupHeaderEditor(this);
             }
@@ -1533,10 +1537,6 @@ namespace DSPRE
 
             BtxEditor form = new BtxEditor();
             form.Show();
-        }
-        private void exportScriptDatabaseJSONToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("The database JSONs can be found in AppData/Roaming/DSPRE");
         }
 
         private void generateCSVToolStripMenuItem_Click(object sender, EventArgs e)

@@ -1943,9 +1943,49 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap scriptDBIconExport {
+            get {
+                object obj = ResourceManager.GetObject("scriptDBIconExport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scriptDBIconExport1 {
+            get {
+                object obj = ResourceManager.GetObject("scriptDBIconExport1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap scriptDBIconHGSS {
             get {
                 object obj = ResourceManager.GetObject("scriptDBIconHGSS", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scriptDBIconImport {
+            get {
+                object obj = ResourceManager.GetObject("scriptDBIconImport", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scriptDBIconImport1 {
+            get {
+                object obj = ResourceManager.GetObject("scriptDBIconImport1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

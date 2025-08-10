@@ -161,7 +161,11 @@ namespace DSPRE.ROMFiles {
                     } else { //Not a comparison
                         /* Convert strings of parameters to the correct datatypes */
                         NumberStyles numStyle = nameParts[i + 1].GetNumberStyle();
-                        if (!nameParts[i + 1].StartsWith("SEQ_")) {
+                        if (!nameParts[i + 1].StartsWith("SEQ_") 
+                            && !nameParts[i + 1].StartsWith("SPECIES_") 
+                            && !nameParts[i + 1].StartsWith("ITEM_")
+                            && !nameParts[i + 1].StartsWith("MOVE_")
+                            && !nameParts[i + 1].StartsWith("TRAINER_")) {
                             nameParts[i + 1] = nameParts[i + 1].PurgeSpecial(ScriptFile.specialChars);
                         }
 
@@ -175,7 +179,7 @@ namespace DSPRE.ROMFiles {
                         {
                             try
                             {
-                                string paramToCheck = RestoreSpaces(nameParts[i + 1]);
+                                string paramToCheck = CheckAndCompareParam(nameParts[i + 1]);
                                 var first = ScriptDatabase.specialOverworlds.FirstOrDefault(x => x.Value.IgnoreCaseEquals(paramToCheck));
                                 if (!string.IsNullOrWhiteSpace(first.Value))
                                 {
@@ -218,10 +222,18 @@ namespace DSPRE.ROMFiles {
                                                     }
                                                     else
                                                     {
-                                                        MessageBox.Show($"Argument {paramToCheck} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Pokemon ID, Item ID, Move ID, Sound ID, Script, Function or Action number.\n\n" +
+                                                        var trainer = ScriptDatabase.trainerNames.FirstOrDefault(x => x.Value.IgnoreCaseEquals(paramToCheck));
+                                                        if (!string.IsNullOrWhiteSpace(trainer.Value))
+                                                        {
+                                                            result = trainer.Key;
+                                                        }
+                                                        else
+                                                        {
+                                                            MessageBox.Show($"Argument {paramToCheck} couldn't be parsed as a valid Condition, Overworld ID, Direction ID, Pokemon, Item, Move, Sound, Trainer, Script, Function or Action number.\n\n" +
                                                                 $"Line {lineNumber}: {wholeLine}", "Invalid identifier", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                                        id = null;
-                                                        return;
+                                                            id = null;
+                                                            return;
+                                                        }
                                                     }
                                                 }
                                             }
@@ -331,87 +343,68 @@ namespace DSPRE.ROMFiles {
             return closest?.Name;
         }
 
-        private string RestoreSpaces(string parameter)
+        private string CheckAndCompareParam(string parameter)
         {
-            if (!parameter.StartsWith("[") || !parameter.EndsWith("]"))
-                return parameter;
-
-            string content = parameter.Substring(1, parameter.Length - 2);
-
-            // First restore any § back to spaces for comparison
-            string contentWithSpaces = content.Replace("§", " ");
 
             // Check for Pokemon names first
             var pokemon = ScriptDatabase.pokemonNames.FirstOrDefault(x =>
-                x.Value.IgnoreCaseEquals(contentWithSpaces));
+                x.Value.IgnoreCaseEquals(parameter));
             if (!string.IsNullOrWhiteSpace(pokemon.Value))
             {
                 return pokemon.Value;
             }
             var item = ScriptDatabase.itemNames.FirstOrDefault(x =>
-                x.Value.IgnoreCaseEquals(contentWithSpaces));
+                x.Value.IgnoreCaseEquals(parameter));
             if (!string.IsNullOrWhiteSpace(item.Value))
             {
                 return item.Value;
             }
             var move = ScriptDatabase.moveNames.FirstOrDefault(x =>
-                x.Value.IgnoreCaseEquals(contentWithSpaces));
+                x.Value.IgnoreCaseEquals(parameter));
             if (!string.IsNullOrWhiteSpace(move.Value))
             {
                 return move.Value;
             }
             var sound = ScriptDatabase.soundNames.FirstOrDefault(x =>
-                x.Value.IgnoreCaseEquals(contentWithSpaces));
+                x.Value.IgnoreCaseEquals(parameter));
             if (!string.IsNullOrWhiteSpace(sound.Value))
             {
                 return sound.Value;
             }
-
-            // If it's a number in brackets, provide suggestions
-            if (int.TryParse(content, out int numericValue))
+            var trainer = ScriptDatabase.trainerNames.FirstOrDefault(x =>
+                x.Value.IgnoreCaseEquals(parameter));
+            if (!string.IsNullOrWhiteSpace(trainer.Value))
             {
-                string suggestion = "";
-                if (ScriptDatabase.itemNames.TryGetValue((ushort)numericValue, out string itemName))
-                {
-                    suggestion = $"\nDid you mean [{itemName}]?";
-                }
-                else if (ScriptDatabase.pokemonNames.TryGetValue((ushort)numericValue, out string pokemonName))
-                {
-                    suggestion = $"\nDid you mean [{pokemonName}]?";
-                }
-                else if (ScriptDatabase.moveNames.TryGetValue((ushort)numericValue, out string moveName))
-                {
-                    suggestion = $"\nDid you mean [{moveName}]?";
-                }
-                else if (ScriptDatabase.soundNames.TryGetValue((ushort)numericValue, out string soundName))
-                {
-                    suggestion = $"\nDid you mean [{soundName}]?";
-                }
-                throw new ArgumentException($"Invalid syntax: Numbers should not be wrapped in brackets: '{parameter}'{suggestion}");
+                return trainer.Value;
             }
 
-            string closestItem = FindClosestMatch(contentWithSpaces, ScriptDatabase.itemNames.Values);
+            string closestItem = FindClosestMatch(parameter, ScriptDatabase.itemNames.Values);
             if (!string.IsNullOrWhiteSpace(closestItem))
             {
-                throw new ArgumentException($"'{parameter}' is not a valid Item name.\nDid you mean [{closestItem}]?");
+                throw new ArgumentException($"'{parameter}' is not a valid Item.\nDid you mean {closestItem}?");
             }
-            string closestPokemon = FindClosestMatch(contentWithSpaces, ScriptDatabase.pokemonNames.Values);
+            string closestPokemon = FindClosestMatch(parameter, ScriptDatabase.pokemonNames.Values);
             if (!string.IsNullOrWhiteSpace(closestPokemon))
             {
-                throw new ArgumentException($"'{parameter}' is not a valid Pokemon name.\nDid you mean [{closestPokemon}]?");
+                throw new ArgumentException($"'{parameter}' is not a valid Pokemon.\nDid you mean {closestPokemon}?");
             }
-            string closestMove = FindClosestMatch(contentWithSpaces, ScriptDatabase.moveNames.Values);
+            string closestMove = FindClosestMatch(parameter, ScriptDatabase.moveNames.Values);
             if (!string.IsNullOrWhiteSpace(closestMove))
             {
-                throw new ArgumentException($"'{parameter}' is not a valid Move name.\nDid you mean [{closestMove}]?");
+                throw new ArgumentException($"'{parameter}' is not a valid Move.\nDid you mean {closestMove}?");
             }
-            string closestSound = FindClosestMatch(contentWithSpaces, ScriptDatabase.soundNames.Values);
+            string closestSound = FindClosestMatch(parameter, ScriptDatabase.soundNames.Values);
             if (!string.IsNullOrWhiteSpace(closestSound))
             {
-                throw new ArgumentException($"'{parameter}' is not a valid Sound name.\nDid you mean [{closestSound}]?");
+                throw new ArgumentException($"'{parameter}' is not a valid Sound name.\nDid you mean {closestSound}?");
+            }
+            string closestTrainer = FindClosestMatch(parameter, ScriptDatabase.trainerNames.Values);
+            if (!string.IsNullOrWhiteSpace(closestTrainer))
+            {
+                throw new ArgumentException($"'{parameter}' is not a valid Trainer.\nDid you mean {closestTrainer}?");
             }
 
-            return contentWithSpaces;
+            return parameter;
         }
         
 

@@ -337,6 +337,12 @@
     <Compile Include="ReopenProjectConfirmation.Designer.cs">
       <DependentUpon>ReopenProjectConfirmation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Resources\CustomScrcmdManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Resources\CustomScrcmdManager.Designer.cs">
+      <DependentUpon>CustomScrcmdManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ROMToolboxDB\ToolboxDB.cs" />
     <Compile Include="Resources\ScriptDatabase.cs" />
     <Compile Include="ROMFiles\AreaData.cs" />
@@ -609,6 +615,9 @@
     <EmbeddedResource Include="ReopenProjectConfirmation.resx">
       <DependentUpon>ReopenProjectConfirmation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CustomScrcmdManager.resx">
+      <DependentUpon>CustomScrcmdManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ROMToolboxDB\BDHCAMPatchDB.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>BDHCAMPatchDB.Designer.cs</LastGenOutput>
@@ -863,6 +872,8 @@
     <None Include="Resources\Graphics\Program Icons\sortDescending.png" />
     <None Include="Resources\RenameIcon.png" />
     <None Include="Resources\weather_editor.bmp" />
+    <None Include="Resources\scriptDBIconExport.png" />
+    <None Include="Resources\scriptDBIconImport.png" />
     <Content Include="Tools\apicula.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
