@@ -122,6 +122,11 @@ public class ScriptParameter {
                     return owName;
                 return value < 4000 ? $"{Event.EventType.Overworld}.{value}" : FormatHexNumber(value);
             case ParameterType.OwMovementType:
+                MovementInfo movementInfo;
+                if (ScriptDatabase.movementsDict.TryGetValue((ushort)value, out movementInfo))
+                {
+                    return SettingsManager.Settings.useDecompNames ? movementInfo.DecompName : movementInfo.Name;
+                }
                 return value < 4000 ? $"Movement.{value}" : FormatHexNumber(value);
             case ParameterType.OwMovementDirection:
                 if (ScriptDatabase.overworldDirections.TryGetValue((byte)value, out string dirName))

@@ -7,7 +7,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using static DSPRE.RomInfo;
 using Path = System.IO.Path;
 
 namespace DSPRE
@@ -274,7 +273,10 @@ namespace DSPRE
             string editedDatabasesDir = Path.Combine(pathToDbRepo, "edited_databases");
             Directory.CreateDirectory(editedDatabasesDir);
 
-            string romFileName = Path.GetFileNameWithoutExtension(fileName);
+            string baseFileName = Path.GetFileNameWithoutExtension(fileName);
+            string romFileName = baseFileName.EndsWith("_DSPRE_contents") 
+                ? baseFileName.Substring(0, baseFileName.Length - "_DSPRE_contents".Length) 
+                : baseFileName;
             string targetJsonPath = Path.Combine(editedDatabasesDir, $"{romFileName}_scrcmd_database.json");
             string databaseJsonPath;
 

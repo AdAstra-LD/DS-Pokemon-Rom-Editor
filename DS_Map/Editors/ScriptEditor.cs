@@ -115,7 +115,7 @@ namespace DSPRE.Editors
         {
             //PREPARE SCRIPT EDITOR KEYWORDS
             cmdKeyWords = String.Join(" ", RomInfo.ScriptCommandNamesDict.Values) +
-                          " " + String.Join(" ", ScriptDatabase.movementsDictIDName.Values);
+                            " " + String.Join(" ", ScriptDatabase.movementsDictIDName.Values);
             cmdKeyWords += " " + cmdKeyWords.ToUpper() + " " + cmdKeyWords.ToLower();
             secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) +
                                 " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) +
@@ -714,28 +714,93 @@ namespace DSPRE.Editors
         }
         private void exportScriptFileButton_Click(object sender, EventArgs e)
         {
-            currentScriptFile.SaveToFileExplorePath(currentScriptFile.ToString(), blindmode: true);
+            string baseFileName = currentScriptFile.ToString();
+            string baseFolder = Path.GetDirectoryName(Application.ExecutablePath);
+
+            using (SaveFileDialog sf = new SaveFileDialog())
+            {
+                sf.Filter = "Script File (*.script)|*.script";
+                sf.FileName = baseFileName + ".script";
+                if (sf.ShowDialog() == DialogResult.OK)
+                {
+                    File.WriteAllText(sf.FileName, ScriptTextArea.Text);
+                    baseFolder = Path.GetDirectoryName(sf.FileName);
+                }
+            }
+
+            using (StreamWriter writer = new StreamWriter(Path.Combine(baseFolder, baseFileName + ".func")))
+            {
+                writer.Write(FunctionTextArea.Text);
+            }
+
+            using (StreamWriter writer = new StreamWriter(Path.Combine(baseFolder, baseFileName + ".action")))
+            {
+                writer.Write(ActionTextArea.Text);
+            }
+
+            MessageBox.Show("Script files exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
         private void importScriptFileButton_Click(object sender, EventArgs e)
         {
-            /* Prompt user to select .scr or .bin file */
             OpenFileDialog of = new OpenFileDialog
             {
-                Filter = "Script File (*.scr, *.bin)|*.scr;*.bin"
+                Filter = "Script Files (*.script)|*.script|Function Files (*.func)|*.func|Action Files (*.action)|*.action|All Files (*.*)|*.*"
             };
+
             if (of.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }
-            /* Update scriptFile object in memory */
-            int i = selectScriptFileComboBox.SelectedIndex;
-            string path = Filesystem.GetScriptPath(i);
-            File.Copy(of.FileName, path, true);
-            populate_selectScriptFileComboBox(i);
-            /* Refresh controls */
-            selectScriptFileComboBox_SelectedIndexChanged(null, null);
-            /* Display success message */
-            MessageBox.Show("Scripts imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            try
+            {
+                string filePath = of.FileName;
+                string extension = Path.GetExtension(filePath);
+                string baseFileName = Path.GetFileNameWithoutExtension(filePath);
+                string directory = Path.GetDirectoryName(filePath);
+
+                switch (extension.ToLower())
+                {
+                    case ".script":
+                        ScriptTextArea.Text = File.ReadAllText(filePath);
+                        ImportMatchingFiles(directory, baseFileName);
+                        break;
+
+                    case ".func":
+                        FunctionTextArea.Text = File.ReadAllText(filePath);
+                        ImportMatchingFiles(directory, baseFileName);
+                        break;
+
+                    case ".action":
+                        ActionTextArea.Text = File.ReadAllText(filePath);
+                        ImportMatchingFiles(directory, baseFileName);
+                        break;
+                }
+
+                MessageBox.Show("Script file(s) imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error importing script file: {ex.Message}", "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ImportMatchingFiles(string directory, string baseFileName)
+        {
+            // Try to import matching function file
+            string funcFile = Path.Combine(directory, baseFileName + ".func");
+            if (File.Exists(funcFile))
+            {
+                FunctionTextArea.Text = File.ReadAllText(funcFile);
+            }
+
+            // Try to import matching action file
+            string actionFile = Path.Combine(directory, baseFileName + ".action");
+            if (File.Exists(actionFile))
+            {
+                ActionTextArea.Text = File.ReadAllText(actionFile);
+            }
         }
         private void viewLevelScriptButton_Click(object sender, EventArgs e)
         {
