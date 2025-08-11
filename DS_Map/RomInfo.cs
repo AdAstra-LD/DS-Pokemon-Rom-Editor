@@ -7,7 +7,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using static DSPRE.RomInfo;
 using Path = System.IO.Path;
 
 namespace DSPRE
@@ -274,7 +273,10 @@ namespace DSPRE
             string editedDatabasesDir = Path.Combine(pathToDbRepo, "edited_databases");
             Directory.CreateDirectory(editedDatabasesDir);
 
-            string romFileName = Path.GetFileNameWithoutExtension(fileName);
+            string baseFileName = Path.GetFileNameWithoutExtension(fileName);
+            string romFileName = baseFileName.EndsWith("_DSPRE_contents") 
+                ? baseFileName.Substring(0, baseFileName.Length - "_DSPRE_contents".Length) 
+                : baseFileName;
             string targetJsonPath = Path.Combine(editedDatabasesDir, $"{romFileName}_scrcmd_database.json");
             string databaseJsonPath;
 
@@ -363,21 +365,7 @@ namespace DSPRE
 
         public static Dictionary<ushort, string> BuildActionNamesDatabase(GameFamilies gameFam)
         {
-            switch (gameFam)
-            {
-                case GameFamilies.DP:
-                case GameFamilies.Plat:
-                    return ScriptDatabase.movementsDictIDName;
-
-                default:
-#if false
-                    var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
-                    var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
-                    return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
-#else
-                    return ScriptDatabase.movementsDictIDName;
-#endif
-            }
+            return ScriptDatabase.movementsDict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Name);
         }
 
         public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(GameFamilies gameFam)

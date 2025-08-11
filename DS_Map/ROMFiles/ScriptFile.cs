@@ -589,18 +589,65 @@ namespace DSPRE.ROMFiles
             }
         }
 
-        private List<ScriptCommandContainer> ReadCommandsFromLines(List<string> linelist, ContainerTypes containerType, Func<List<(int linenum, string text)>, int, ushort?, bool> endConditions)
+        private List<(int linenum, string text)> PreprocessLines(List<string> linelist)
         {
             List<(int linenum, string text)> lineSource = new List<(int linenum, string text)>();
+            bool inBlockComment = false;
 
             for (int l = 0; l < linelist.Count; l++)
             {
-                string cur = linelist[l];
-                if (!string.IsNullOrWhiteSpace(cur))
+                string line = linelist[l];
+
+                // handle block comments first
+                if (inBlockComment)
                 {
-                    lineSource.Add((l, cur));
+                    int endComment = line.IndexOf("*/");
+                    if (endComment >= 0)
+                    {
+                        line = line.Substring(endComment + 2);
+                        inBlockComment = false;
+                    }
+                    else
+                    {
+                        continue; 
+                    }
+                }
+
+                while (!inBlockComment && line.Contains("/*"))
+                {
+                    int startComment = line.IndexOf("/*");
+                    int endComment = line.IndexOf("*/", startComment);
+
+                    if (endComment >= 0)
+                    {
+                        line = line.Substring(0, startComment) + line.Substring(endComment + 2);
+                    }
+                    else
+                    {
+                        line = line.Substring(0, startComment);
+                        inBlockComment = true;
+                    }
+                }
+
+                int inlineComment = line.IndexOf("//");
+                if (inlineComment >= 0)
+                {
+                    line = line.Substring(0, inlineComment);
+                }
+
+                line = line.Trim();
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    lineSource.Add((l, line));
                 }
             }
+
+            return lineSource;
+        }
+
+        private List<ScriptCommandContainer> ReadCommandsFromLines(List<string> linelist, ContainerTypes containerType, Func<List<(int linenum, string text)>, int, ushort?, bool> endConditions)
+        {
+            List<(int linenum, string text)> lineSource = PreprocessLines(linelist);
 
             List<ScriptCommandContainer> ls = new List<ScriptCommandContainer>();
             int i = 0;

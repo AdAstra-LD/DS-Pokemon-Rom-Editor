@@ -1,6 +1,5 @@
 ﻿using DSPRE;
 using DSPRE.Resources;
-using DSPRE.ROMFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,12 +21,17 @@ public static class ScriptDatabaseJsonLoader
         {
             JsonElement root = doc.RootElement;
 
-            ScriptDatabase.movementsDictIDName = root
+            ScriptDatabase.movementsDict = root
                 .GetProperty("movements")
                 .EnumerateObject()
                 .ToDictionary(
                     prop => Convert.ToUInt16(prop.Name.Substring(2), 16),
-                    prop => prop.Value.GetString()
+                    prop => new MovementInfo
+                    {
+                        Name = prop.Value.GetProperty("name").GetString(),
+                        DecompName = prop.Value.GetProperty("decomp_name").GetString(),
+                        Description = prop.Value.GetProperty("description").GetString(),
+                    }
                 );
 
             ScriptDatabase.comparisonOperatorsDict = root
@@ -56,7 +60,6 @@ public static class ScriptDatabaseJsonLoader
 
             Dictionary<ushort, string> namesDict;
             Dictionary<ushort, byte[]> paramsDict;
-            Dictionary<ushort, string> soundsDict = ScriptDatabase.soundNames;
 
             switch (gameVersion)
             {
@@ -82,7 +85,6 @@ public static class ScriptDatabaseJsonLoader
             if (!root.TryGetProperty("scrcmd", out scrRoot))
                 throw new InvalidOperationException("JSON is missing the \"scrcmd\" key");
 
-            Console.WriteLine("About to load scrcmd entries:");
             foreach (JsonProperty prop in scrRoot.EnumerateObject())
             {
                 ushort code = Convert.ToUInt16(prop.Name.Substring(2), 16);
@@ -98,6 +100,8 @@ public static class ScriptDatabaseJsonLoader
                     .ToArray();
                 paramsDict[code] = bytes;
             }
+
+            Dictionary<ushort, string> soundsDict = ScriptDatabase.soundNames;
 
             JsonElement soundsRoot;
             if (!root.TryGetProperty("sounds", out soundsRoot))
@@ -192,6 +196,22 @@ public static class ScriptDatabaseJsonLoader
 }
 
 namespace DSPRE.Resources {
+    public class MovementInfo
+    {
+        public string Name { get; set; }
+        public string DecompName { get; set; }
+        public string Description { get; set; }
+    }
+
+    public class ScriptCommandInfo
+    {
+        public string Name { get; set; }
+        public string DecompName { get; set; }
+        public byte[] Parameters { get; set; }
+        public List<string> ParameterTypes { get; set; }
+        public string Description { get; set; }
+    }
+
     public static class ScriptDatabase {  
         public static Dictionary<ushort, string> comparisonOperatorsGenVappendix = new Dictionary<ushort, string>() {
             /* GEN V ONLY */
@@ -218,7 +238,8 @@ namespace DSPRE.Resources {
         public static Dictionary<ushort, string> moveNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> soundNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> trainerNames = new Dictionary<ushort, string>();
-        public static Dictionary<ushort, string> movementsDictIDName = new Dictionary<ushort, string>();
+        public static Dictionary<ushort, MovementInfo> movementsDict = new Dictionary<ushort, MovementInfo>();
+        public static Dictionary<ushort, string> movementsDictIDName => movementsDict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Name);
 
         public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>()
         {
