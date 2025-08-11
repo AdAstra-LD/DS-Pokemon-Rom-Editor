@@ -65,7 +65,7 @@
             this.AddScrcmdButton.Location = new System.Drawing.Point(16, 372);
             this.AddScrcmdButton.Margin = new System.Windows.Forms.Padding(4);
             this.AddScrcmdButton.Name = "AddScrcmdButton";
-            this.AddScrcmdButton.Size = new System.Drawing.Size(120, 39);
+            this.AddScrcmdButton.Size = new System.Drawing.Size(129, 39);
             this.AddScrcmdButton.TabIndex = 1;
             this.AddScrcmdButton.Text = "Import DB";
             this.AddScrcmdButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -75,10 +75,10 @@
             // RemoveScrcmdButton
             // 
             this.RemoveScrcmdButton.Image = global::DSPRE.Properties.Resources.scriptDBIconExport;
-            this.RemoveScrcmdButton.Location = new System.Drawing.Point(144, 372);
+            this.RemoveScrcmdButton.Location = new System.Drawing.Point(153, 372);
             this.RemoveScrcmdButton.Margin = new System.Windows.Forms.Padding(4);
             this.RemoveScrcmdButton.Name = "RemoveScrcmdButton";
-            this.RemoveScrcmdButton.Size = new System.Drawing.Size(120, 39);
+            this.RemoveScrcmdButton.Size = new System.Drawing.Size(132, 39);
             this.RemoveScrcmdButton.TabIndex = 2;
             this.RemoveScrcmdButton.Text = "Export DB";
             this.RemoveScrcmdButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -88,10 +88,10 @@
             // button1
             // 
             this.button1.Image = global::DSPRE.Properties.Resources.open_file;
-            this.button1.Location = new System.Drawing.Point(473, 372);
+            this.button1.Location = new System.Drawing.Point(449, 372);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(160, 39);
+            this.button1.Size = new System.Drawing.Size(184, 39);
             this.button1.TabIndex = 3;
             this.button1.Text = "Open DB Folder";
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;

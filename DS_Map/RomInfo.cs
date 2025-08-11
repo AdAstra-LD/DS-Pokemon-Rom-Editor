@@ -259,50 +259,8 @@ namespace DSPRE
 
         public static void InitScriptDBs()
         {
-            // pull and overwrite the script database files with the latest from the repository on load
-            string pathToDbRepo = Program.DatabasePath;
-            using (var repo = new Repository(pathToDbRepo))
-            {
-                var remote = repo.Network.Remotes["origin"];
-                Commands.Fetch(repo, remote.Name, remote.FetchRefSpecs.Select(x => x.Specification), null, null);
-                var remoteMaster = repo.Branches["origin/main"];
-                Commands.Checkout(repo, repo.Branches["main"]);
-                repo.Reset(ResetMode.Hard, remoteMaster.Tip);
+            Helpers.InitializeScriptDatabase(fileName, gameFamily, gameVersion);
             }
-
-            string editedDatabasesDir = Path.Combine(pathToDbRepo, "edited_databases");
-            Directory.CreateDirectory(editedDatabasesDir);
-
-            string baseFileName = Path.GetFileNameWithoutExtension(fileName);
-            string romFileName = baseFileName.EndsWith("_DSPRE_contents") 
-                ? baseFileName.Substring(0, baseFileName.Length - "_DSPRE_contents".Length) 
-                : baseFileName;
-            string targetJsonPath = Path.Combine(editedDatabasesDir, $"{romFileName}_scrcmd_database.json");
-            string databaseJsonPath;
-
-            switch (gameFamily)
-            {
-                case GameFamilies.DP:
-                    databaseJsonPath = Path.Combine(Program.DatabasePath, "dppt_scrcmd_database.json");
-                    break;
-                case GameFamilies.HGSS:
-                    databaseJsonPath = Path.Combine(Program.DatabasePath, "hgss_scrcmd_database.json");
-                    break;
-                case GameFamilies.Plat:
-                    databaseJsonPath = Path.Combine(Program.DatabasePath, "platinum_scrcmd_database.json");
-                    break;
-                default:
-                    throw new Exception("Unknown game family");
-            }
-
-            if (!File.Exists(targetJsonPath))
-            {
-                File.Copy(databaseJsonPath, targetJsonPath);
-            }
-
-            ScriptDatabaseJsonLoader.InitializeFromJson(targetJsonPath, gameVersion);
-            ScriptDatabaseJsonLoader.LoadParameterTypes(targetJsonPath, gameVersion);
-        }
 
         public static Dictionary<ushort, string> BuildCommandNamesDatabase(GameFamilies gameFam)
         {

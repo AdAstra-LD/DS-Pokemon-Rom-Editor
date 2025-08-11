@@ -1,10 +1,10 @@
 ﻿using DSPRE.ROMFiles;
 using Ekona.Images;
 using Images;
+using LibGit2Sharp;
 using LibNDSFormats.NSBMD;
 using LibNDSFormats.NSBTX;
 using Microsoft.WindowsAPICodePack.Dialogs;
-using NSMBe4.DSFileSystem;
 using ScintillaNET;
 using ScintillaNET.Utils;
 using System;
@@ -17,7 +17,6 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using Tao.OpenGl;
-using Tao.Platform.Windows;
 using Velopack;
 using Velopack.Sources;
 using static DSPRE.RomInfo;
@@ -66,6 +65,99 @@ namespace DSPRE {
                 {
                     AppLogger.Info("User declined to update the application.");
                 }
+            }
+        }
+
+        public static void CheckForDatabaseUpdates(bool silent = true)
+        {
+            AppLogger.Info("Checking for script database updates...");
+            string pathToDbRepo = Program.DatabasePath;
+
+            try
+            {
+                using (var repo = new Repository(pathToDbRepo))
+                {
+                    var remote = repo.Network.Remotes["origin"];
+                    try
+                    {
+                        Commands.Fetch(repo, remote.Name, remote.FetchRefSpecs.Select(x => x.Specification), null, null);
+                        var remoteMaster = repo.Branches["origin/main"];
+                        Commands.Checkout(repo, repo.Branches["main"]);
+                        repo.Reset(ResetMode.Hard, remoteMaster.Tip);
+
+                        AppLogger.Info("Script databases updated successfully");
+                        if (!silent)
+                        {
+                            MessageBox.Show("Script database updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLogger.Warn($"Could not fetch updates: {ex.Message}");
+                        if (!silent)
+                        {
+                            MessageBox.Show("Could not fetch database updates. Using local database files.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Warn($"Could not access git repository: {ex.Message}");
+                if (!silent)
+                {
+                    MessageBox.Show("Could not access database repository. Using local database files.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        public static void InitializeScriptDatabase(string romFileName, GameFamilies gameFamily, GameVersions gameVersion)
+        {
+            string baseFileName = Path.GetFileNameWithoutExtension(romFileName);
+            string romFileNameClean = baseFileName.EndsWith("_DSPRE_contents")
+                ? baseFileName.Substring(0, baseFileName.Length - "_DSPRE_contents".Length)
+                : baseFileName;
+
+            if (SettingsManager.Settings.automaticallyUpdateDBs)
+            {
+                CheckForDatabaseUpdates();
+            }
+
+            string editedDatabasesDir = Path.Combine(Program.DatabasePath, "edited_databases");
+            Directory.CreateDirectory(editedDatabasesDir);
+
+            string targetJsonPath = Path.Combine(editedDatabasesDir, $"{romFileNameClean}_scrcmd_database.json");
+            string databaseJsonPath;
+
+            switch (gameFamily)
+            {
+                case GameFamilies.DP:
+                    databaseJsonPath = Path.Combine(Program.DatabasePath, "dppt_scrcmd_database.json");
+                    break;
+                case GameFamilies.HGSS:
+                    databaseJsonPath = Path.Combine(Program.DatabasePath, "hgss_scrcmd_database.json");
+                    break;
+                case GameFamilies.Plat:
+                    databaseJsonPath = Path.Combine(Program.DatabasePath, "platinum_scrcmd_database.json");
+                    break;
+                default:
+                    throw new Exception("Unknown game family");
+            }
+
+            if (!File.Exists(targetJsonPath))
+            {
+                File.Copy(databaseJsonPath, targetJsonPath);
+            }
+
+            try
+            {
+                ScriptDatabaseJsonLoader.InitializeFromJson(targetJsonPath, gameVersion);
+                ScriptDatabaseJsonLoader.LoadParameterTypes(targetJsonPath, gameVersion);
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Failed to load script database: {ex.Message}");
+                MessageBox.Show("Failed to load script database. Script editing features may be limited.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

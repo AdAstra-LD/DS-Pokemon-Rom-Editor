@@ -53,6 +53,7 @@ namespace DSPRE
             oldOpenDefaultPath = SettingsManager.Settings.openDefaultRom;
             dontAskOpenCheckbox.Checked = SettingsManager.Settings.neverAskForOpening;
             automaticCheckUpdateCheckbox.Checked = SettingsManager.Settings.automaticallyCheckForUpdates;
+            automaticCheckDBUpdateCheckbox.Checked = SettingsManager.Settings.automaticallyUpdateDBs;
 
         }
 
@@ -109,6 +110,7 @@ namespace DSPRE
             SettingsManager.Settings.openDefaultRom = openDefaultRomTextBox.Text;
 
             SettingsManager.Settings.neverAskForOpening = dontAskOpenCheckbox.Checked;
+            SettingsManager.Settings.automaticallyUpdateDBs = automaticCheckDBUpdateCheckbox.Checked;
             SettingsManager.Settings.automaticallyCheckForUpdates = automaticCheckUpdateCheckbox.Checked;
 
             oldExportPath = SettingsManager.Settings.exportPath;
@@ -117,6 +119,7 @@ namespace DSPRE
 
 
             SettingsManager.Save();
+            MessageBox.Show("Settings saved successfully!","", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
 
@@ -149,6 +152,11 @@ namespace DSPRE
         private void checkForUpdatesButton_Click(object sender, EventArgs e)
         {
             Helpers.CheckForUpdates(false);
+        }
+
+        private void checkDBUpdatesButton_Click(object sender, EventArgs e)
+        {
+            Helpers.CheckForDatabaseUpdates(false);
         }
     }
 }
