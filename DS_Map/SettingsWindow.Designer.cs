@@ -48,6 +48,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.advancedmodeCB = new System.Windows.Forms.PictureBox();
             this.enabledAdvancedModeButton = new System.Windows.Forms.Button();
+            this.automaticCheckDBUpdateCheckbox = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -186,7 +188,7 @@
             this.checkForUpdatesButton.Name = "checkForUpdatesButton";
             this.checkForUpdatesButton.Size = new System.Drawing.Size(183, 36);
             this.checkForUpdatesButton.TabIndex = 18;
-            this.checkForUpdatesButton.Text = "Check for updates";
+            this.checkForUpdatesButton.Text = "Check App updates";
             this.checkForUpdatesButton.UseVisualStyleBackColor = true;
             this.checkForUpdatesButton.Click += new System.EventHandler(this.checkForUpdatesButton_Click);
             // 
@@ -207,9 +209,9 @@
             this.automaticCheckUpdateCheckbox.Location = new System.Drawing.Point(16, 73);
             this.automaticCheckUpdateCheckbox.Margin = new System.Windows.Forms.Padding(4);
             this.automaticCheckUpdateCheckbox.Name = "automaticCheckUpdateCheckbox";
-            this.automaticCheckUpdateCheckbox.Size = new System.Drawing.Size(205, 20);
+            this.automaticCheckUpdateCheckbox.Size = new System.Drawing.Size(233, 20);
             this.automaticCheckUpdateCheckbox.TabIndex = 20;
-            this.automaticCheckUpdateCheckbox.Text = "Check Updates Automatically";
+            this.automaticCheckUpdateCheckbox.Text = "Check App Updates Automatically";
             this.automaticCheckUpdateCheckbox.UseVisualStyleBackColor = true;
             // 
             // groupBox3
@@ -278,11 +280,35 @@
             this.enabledAdvancedModeButton.Text = "Enable advanced mode (not implemented yet)";
             this.enabledAdvancedModeButton.UseVisualStyleBackColor = false;
             // 
+            // automaticCheckDBUpdateCheckbox
+            // 
+            this.automaticCheckDBUpdateCheckbox.AutoSize = true;
+            this.automaticCheckDBUpdateCheckbox.Location = new System.Drawing.Point(283, 73);
+            this.automaticCheckDBUpdateCheckbox.Margin = new System.Windows.Forms.Padding(4);
+            this.automaticCheckDBUpdateCheckbox.Name = "automaticCheckDBUpdateCheckbox";
+            this.automaticCheckDBUpdateCheckbox.Size = new System.Drawing.Size(227, 20);
+            this.automaticCheckDBUpdateCheckbox.TabIndex = 35;
+            this.automaticCheckDBUpdateCheckbox.Text = "Update Databases Automatically";
+            this.automaticCheckDBUpdateCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(283, 29);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(183, 36);
+            this.button1.TabIndex = 36;
+            this.button1.Text = "Check Database updates";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.checkDBUpdatesButton_Click);
+            // 
             // SettingsWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(871, 420);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.automaticCheckDBUpdateCheckbox);
             this.Controls.Add(this.advancedmodeCB);
             this.Controls.Add(this.enabledAdvancedModeButton);
             this.Controls.Add(this.groupBox2);
@@ -330,5 +356,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.PictureBox advancedmodeCB;
         private System.Windows.Forms.Button enabledAdvancedModeButton;
+        private System.Windows.Forms.CheckBox automaticCheckDBUpdateCheckbox;
+        private System.Windows.Forms.Button button1;
     }
 }
