@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using DSPRE.Resources;
+﻿using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using ScintillaNET;
 using ScintillaNET.Utils;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 namespace DSPRE.Editors
 {
     public partial class ScriptEditor : UserControl
@@ -115,7 +116,7 @@ namespace DSPRE.Editors
         {
             //PREPARE SCRIPT EDITOR KEYWORDS
             cmdKeyWords = String.Join(" ", RomInfo.ScriptCommandNamesDict.Values) +
-                            " " + String.Join(" ", ScriptDatabase.movementsDictIDName.Values);
+                            " " + String.Join(" ", ScriptDatabase.movementsDict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Name).Values);
             cmdKeyWords += " " + cmdKeyWords.ToUpper() + " " + cmdKeyWords.ToLower();
             secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) +
                                 " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) +

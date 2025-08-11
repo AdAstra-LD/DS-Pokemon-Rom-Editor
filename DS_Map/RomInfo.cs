@@ -365,21 +365,7 @@ namespace DSPRE
 
         public static Dictionary<ushort, string> BuildActionNamesDatabase(GameFamilies gameFam)
         {
-            switch (gameFam)
-            {
-                case GameFamilies.DP:
-                case GameFamilies.Plat:
-                    return ScriptDatabase.movementsDictIDName;
-
-                default:
-#if false
-                    var commonDictionaryParams = ScriptDatabase.movementsDictIDName;
-                    var customDictionaryParams = ScriptDatabase.customMovementsDictIDName;
-                    return commonDictionaryParams.Concat(customDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
-#else
-                    return ScriptDatabase.movementsDictIDName;
-#endif
-            }
+            return ScriptDatabase.movementsDict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Name);
         }
 
         public static Dictionary<ushort, string> BuildComparisonOperatorsDatabase(GameFamilies gameFam)
