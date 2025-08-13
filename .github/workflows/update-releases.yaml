@@ -51,6 +51,11 @@ jobs:
         uses: microsoft/setup-msbuild@v2
         if: ${{ needs.get_latest_tag.outputs.latest_tag != format('v{0}', steps.get_version.outputs.version) }}
 
+      - name: Clone Database Repository
+        if: ${{ needs.get_latest_tag.outputs.latest_tag != format('v{0}', steps.get_version.outputs.version) }}
+        run: |
+          git clone https://github.com/DS-Pokemon-Rom-Editor/scrcmd-database.git databases
+
       - name: Restore NuGet packages
         working-directory: ${{env.GITHUB_WORKSPACE}}
         run: nuget restore ${{env.SOLUTION_FILE_PATH}}
@@ -66,7 +71,9 @@ jobs:
         run: |
           mkdir -p publish
           cp -r DS_Map/bin/${{env.BUILD_CONFIGURATION}}/* publish/
-          ls DS_Map/bin/${{env.BUILD_CONFIGURATION}}/
+          mkdir -p "publish/databases"
+          robocopy databases "publish/databases" /E /XD "databases\.git\objects\pack"
+          if ($LASTEXITCODE -le 7) { exit 0 } else { exit 1 }
           ls publish/
 
       - name: Create Velopack Release
