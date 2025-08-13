@@ -495,7 +495,7 @@ namespace DSPRE.Editors
 
         private void saveDataButton_Click(object sender, EventArgs e)
         {
-            currentLoadedFile.SaveToFileDefaultDir(currentLoadedId, true);
+            currentLoadedFile.SaveToFileDefaultDir((int)itemNarcTable[currentLoadedFile.ID].itemData, true);
             setDirty(false);
         }
 
