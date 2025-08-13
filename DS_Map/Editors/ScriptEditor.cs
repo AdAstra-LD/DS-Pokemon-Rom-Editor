@@ -118,7 +118,6 @@ namespace DSPRE.Editors
             //PREPARE SCRIPT EDITOR KEYWORDS
             cmdKeyWords = String.Join(" ", RomInfo.ScriptCommandNamesDict.Values) +
                             " " + String.Join(" ", ScriptDatabase.movementsDict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Name).Values);
-            cmdKeyWords += " " + cmdKeyWords.ToUpper() + " " + cmdKeyWords.ToLower();
             secondaryKeyWords = String.Join(" ", RomInfo.ScriptComparisonOperatorsDict.Values) +
                                 " " + String.Join(" ", ScriptDatabase.specialOverworlds.Values) +
                                 " " + String.Join(" ", ScriptDatabase.overworldDirections.Values) +

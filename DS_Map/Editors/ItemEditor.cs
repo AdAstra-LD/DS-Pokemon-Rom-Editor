@@ -58,11 +58,11 @@ namespace DSPRE.Editors
                 itemNarcTable[i] = itemNarcTableEntry;
                 iconIdSet.Add(itemNarcTableEntry.itemIcon);
                 paletteIdSet.Add(itemNarcTableEntry.itemPalette);
-                if (itemFileNames[i] == null || itemFileNames[i] == "???")
-                {
-                    cleanNames.RemoveAt(i-killCount);
-                    killCount++;
-                }
+                //if (itemFileNames[i] == null || itemFileNames[i] == "???")
+                //{
+                //    cleanNames.RemoveAt(i-killCount);
+                //    killCount++;
+                //}
             }
             this.itemFileNames = cleanNames.ToArray();
             //this.itemDescriptions = itemDescriptions;
@@ -283,7 +283,11 @@ namespace DSPRE.Editors
         {
             Console.WriteLine("ItemEditor: ChangeLoadedFile: toLoad = " + toLoad);
             currentLoadedId = toLoad;
-            currentLoadedFile = new ItemData(toLoad);
+
+            var stream = new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\" 
+                + itemNarcTable[toLoad].itemData.ToString("D4"), FileMode.Open);
+
+            currentLoadedFile = new ItemData(stream, toLoad);
             PopulateAllFromCurrentFile();
             setDirty(false);
         }
@@ -325,7 +329,7 @@ namespace DSPRE.Editors
             itemParamsTabControl.Enabled = partyUseCheckBox.Checked;
             PopulateItemPartyParamsUI();
 
-            var entry = itemNarcTable[currentLoadedFile.RealID];
+            var entry = itemNarcTable[currentLoadedFile.ID];
 
             string iconID = entry.itemIcon.ToString("D4");
             string paletteID = entry.itemPalette.ToString("D4");
@@ -346,8 +350,8 @@ namespace DSPRE.Editors
 
         private void SetUpIcon()
         {
-            var itemIconId = itemNarcTable[currentLoadedFile.RealID].itemIcon;
-            var itemPaletteId = itemNarcTable[currentLoadedFile.RealID].itemPalette;
+            var itemIconId = itemNarcTable[currentLoadedFile.ID].itemIcon;
+            var itemPaletteId = itemNarcTable[currentLoadedFile.ID].itemPalette;
 
             string paletteFilename = itemPaletteId.ToString("D4");
             var itemPalette = new NCLR(gameDirs[DirNames.itemIcons].unpackedDir + "\\" + paletteFilename, (int)itemPaletteId, paletteFilename);
@@ -775,7 +779,7 @@ namespace DSPRE.Editors
             if (Helpers.HandlersDisabled || imageComboBox.SelectedItem == null) return;
 
             uint newIconID = uint.Parse(imageComboBox.SelectedItem.ToString());
-            itemNarcTable[currentLoadedFile.RealID].itemIcon = newIconID;
+            itemNarcTable[currentLoadedFile.ID].itemIcon = newIconID;
 
             SetUpIcon();
             setDirty(true);
@@ -786,7 +790,7 @@ namespace DSPRE.Editors
             if (Helpers.HandlersDisabled || paletteComboBox.SelectedItem == null) return;
 
             uint newPaletteID = uint.Parse(paletteComboBox.SelectedItem.ToString());
-            itemNarcTable[currentLoadedFile.RealID].itemPalette = newPaletteID;
+            itemNarcTable[currentLoadedFile.ID].itemPalette = newPaletteID;
 
             SetUpIcon();
             setDirty(true);
@@ -807,13 +811,13 @@ namespace DSPRE.Editors
                 if (itemNarcTable[i].itemIcon != itemNarcTableEntry.itemIcon)
                 {
                     byte[] bytes = BitConverter.GetBytes((ushort)itemNarcTableEntry.itemIcon);
-                    ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedFile.RealID * 8 + 2));
+                    ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedFile.ID * 8 + 2));
                 }   
                 itemNarcTableEntry.itemPalette = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 4));
                 if (itemNarcTable[i].itemPalette != itemNarcTableEntry.itemPalette)
                 {
                     byte[] bytes = BitConverter.GetBytes((ushort)itemNarcTableEntry.itemPalette);
-                    ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedFile.RealID * 8 + 4));
+                    ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedFile.ID * 8 + 4));
                 }
                 itemNarcTableEntry.itemAGB = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 6));
             }
