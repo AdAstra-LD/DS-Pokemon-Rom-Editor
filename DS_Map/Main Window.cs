@@ -54,7 +54,7 @@ namespace DSPRE
 
 #endif
             InitializeComponent();
-            Program.CloneAndSetupDatabase();
+            Program.SetupDatabase();
 
             EditorPanels.Initialize(this);
             Helpers.Initialize(this);

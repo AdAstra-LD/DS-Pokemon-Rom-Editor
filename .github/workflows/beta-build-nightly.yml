@@ -24,6 +24,10 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v2
 
+    - name: Clone Database Repository
+      run: |
+        git clone https://github.com/DS-Pokemon-Rom-Editor/scrcmd-database.git database
+
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
@@ -32,6 +36,12 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
     
+    - name: Prepare Release Files
+      run: |
+        mkdir "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\database"
+        robocopy database "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\database" /E /XD "database\.git\objects\pack"
+        if ($LASTEXITCODE -le 7) { exit 0 } else { exit 1 }
+
     - name: Zip Release Files
       run: Compress-Archive -Path ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release -DestinationPath DSPRE-beta-canary.zip
 
