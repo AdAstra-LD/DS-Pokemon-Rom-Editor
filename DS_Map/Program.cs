@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Velopack;
-using LibGit2Sharp;
 
 namespace DSPRE
 {
@@ -33,23 +29,30 @@ namespace DSPRE
             Application.Run(mainProgram);
         }
 
-        public static void CloneAndSetupDatabase()
-        {
+        public static void SetupDatabase()
+        {   
+            // needs to be this verbose (copy instead of move) so this works accross drives
             try
-            {
-                string repoUrl = "https://github.com/DS-Pokemon-Rom-Editor/scrcmd-database.git";
-                
-
-                // Only clone if directory doesn't exist
-                if (!Directory.Exists(DatabasePath) && SettingsManager.Settings.databasesPulled == false)
-                {
-                    Repository.Clone(repoUrl, DatabasePath);
+            { 
+                string sourceDbPath = Path.Combine(Application.StartupPath, "databases");
+                if (Directory.Exists(sourceDbPath) && !SettingsManager.Settings.databasesPulled) {
+                    if (!Directory.Exists(DatabasePath)) {
+                        Directory.CreateDirectory(DatabasePath);
+                    }
+                    foreach (string dirPath in Directory.GetDirectories(sourceDbPath, "*", SearchOption.AllDirectories)) {
+                        Directory.CreateDirectory(dirPath.Replace(sourceDbPath, DatabasePath));
+                    }
+                    foreach (string filePath in Directory.GetFiles(sourceDbPath, "*.*", SearchOption.AllDirectories)) {
+                        File.Copy(filePath, filePath.Replace(sourceDbPath, DatabasePath), true);
+                    }
+                    // After successful copy, delete source and update settings
+                    Directory.Delete(sourceDbPath, true);
                     SettingsManager.Settings.databasesPulled = true;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Failed to clone database repository: {ex.Message}",
+                MessageBox.Show($"Failed to copy databases: {ex.Message}",
                               "Database Setup Error",
                               MessageBoxButtons.OK,
                               MessageBoxIcon.Error);
