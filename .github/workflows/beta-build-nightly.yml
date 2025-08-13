@@ -26,7 +26,7 @@ jobs:
 
     - name: Clone Database Repository
       run: |
-        git clone https://github.com/DS-Pokemon-Rom-Editor/scrcmd-database.git database
+        git clone https://github.com/DS-Pokemon-Rom-Editor/scrcmd-database.git databases
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
@@ -38,8 +38,8 @@ jobs:
     
     - name: Prepare Release Files
       run: |
-        mkdir "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\database"
-        robocopy database "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\database" /E /XD "database\.git\objects\pack"
+        mkdir "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\databases"
+        robocopy databases "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\databases" /E /XD "databases\.git\objects\pack"
         if ($LASTEXITCODE -le 7) { exit 0 } else { exit 1 }
 
     - name: Zip Release Files
