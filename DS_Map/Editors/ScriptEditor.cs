@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 namespace DSPRE.Editors
 {
@@ -716,7 +717,6 @@ namespace DSPRE.Editors
         private void exportScriptFileButton_Click(object sender, EventArgs e)
         {
             string baseFileName = currentScriptFile.ToString();
-            string baseFolder = Path.GetDirectoryName(Application.ExecutablePath);
 
             using (SaveFileDialog sf = new SaveFileDialog())
             {
@@ -724,66 +724,97 @@ namespace DSPRE.Editors
                 sf.FileName = baseFileName + ".script";
                 if (sf.ShowDialog() == DialogResult.OK)
                 {
-                    File.WriteAllText(sf.FileName, ScriptTextArea.Text);
-                    baseFolder = Path.GetDirectoryName(sf.FileName);
+                    try
+                    {
+                        // Build the file content with headers and sections
+                        StringBuilder content = new StringBuilder();
+
+                        // Add file header
+                        content.AppendLine("/*");
+                        content.AppendLine(" * DSPRE Script File");
+                        content.AppendLine($" * File: {baseFileName}");
+                        content.AppendLine($" * Generated: {DateTime.Now}");
+                        content.AppendLine(" */");
+                        content.AppendLine();
+
+                        // Add Scripts section
+                        content.AppendLine("//===== SCRIPTS =====//");
+                        content.AppendLine(ScriptTextArea.Text.Trim());
+                        content.AppendLine();
+
+                        // Add Functions section
+                        content.AppendLine("//===== FUNCTIONS =====//");
+                        content.AppendLine(FunctionTextArea.Text.Trim());
+                        content.AppendLine();
+
+                        // Add Actions section
+                        content.AppendLine("//===== ACTIONS =====//");
+                        content.AppendLine(ActionTextArea.Text.Trim());
+
+                        File.WriteAllText(sf.FileName, content.ToString());
+                        MessageBox.Show("Script file exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error exporting script file: {ex.Message}", "Export Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-
-            using (StreamWriter writer = new StreamWriter(Path.Combine(baseFolder, baseFileName + ".func")))
-            {
-                writer.Write(FunctionTextArea.Text);
-            }
-
-            using (StreamWriter writer = new StreamWriter(Path.Combine(baseFolder, baseFileName + ".action")))
-            {
-                writer.Write(ActionTextArea.Text);
-            }
-
-            MessageBox.Show("Script files exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void importScriptFileButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog of = new OpenFileDialog
+            using (OpenFileDialog of = new OpenFileDialog())
             {
-                Filter = "Script Files (*.script)|*.script|Function Files (*.func)|*.func|Action Files (*.action)|*.action|All Files (*.*)|*.*"
-            };
+                of.Filter = "Script Files (*.script)|*.script|All Files (*.*)|*.*";
 
-            if (of.ShowDialog(this) != DialogResult.OK)
-            {
-                return;
-            }
-
-            try
-            {
-                string filePath = of.FileName;
-                string extension = Path.GetExtension(filePath);
-                string baseFileName = Path.GetFileNameWithoutExtension(filePath);
-                string directory = Path.GetDirectoryName(filePath);
-
-                switch (extension.ToLower())
+                if (of.ShowDialog(this) == DialogResult.OK)
                 {
-                    case ".script":
-                        ScriptTextArea.Text = File.ReadAllText(filePath);
-                        ImportMatchingFiles(directory, baseFileName);
-                        break;
+                    try
+                    {
+                        string content = File.ReadAllText(of.FileName);
 
-                    case ".func":
-                        FunctionTextArea.Text = File.ReadAllText(filePath);
-                        ImportMatchingFiles(directory, baseFileName);
-                        break;
+                        // Split content into sections
+                        const string SCRIPTS_HEADER = "//===== SCRIPTS =====//";
+                        const string FUNCTIONS_HEADER = "//===== FUNCTIONS =====//";
+                        const string ACTIONS_HEADER = "//===== ACTIONS =====//";
 
-                    case ".action":
-                        ActionTextArea.Text = File.ReadAllText(filePath);
-                        ImportMatchingFiles(directory, baseFileName);
-                        break;
+                        int scriptsStart = content.IndexOf(SCRIPTS_HEADER);
+                        int functionsStart = content.IndexOf(FUNCTIONS_HEADER);
+                        int actionsStart = content.IndexOf(ACTIONS_HEADER);
+
+                        if (scriptsStart == -1 || functionsStart == -1 || actionsStart == -1)
+                        {
+                            throw new FormatException("Invalid script file format. Missing required section headers.");
+                        }
+
+                        // Extract each section's content
+                        string scripts = content.Substring(
+                            scriptsStart + SCRIPTS_HEADER.Length,
+                            functionsStart - (scriptsStart + SCRIPTS_HEADER.Length)
+                        ).Trim();
+
+                        string functions = content.Substring(
+                            functionsStart + FUNCTIONS_HEADER.Length,
+                            actionsStart - (functionsStart + FUNCTIONS_HEADER.Length)
+                        ).Trim();
+
+                        string actions = content.Substring(
+                            actionsStart + ACTIONS_HEADER.Length
+                        ).Trim();
+
+                        // Update text areas
+                        ScriptTextArea.Text = scripts;
+                        FunctionTextArea.Text = functions;
+                        ActionTextArea.Text = actions;
+
+                        MessageBox.Show("Script file imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error importing script file: {ex.Message}", "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-
-                MessageBox.Show("Script file(s) imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error importing script file: {ex.Message}", "Import Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

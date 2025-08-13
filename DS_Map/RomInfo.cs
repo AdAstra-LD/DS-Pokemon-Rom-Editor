@@ -275,7 +275,6 @@ namespace DSPRE
                     break;
 
                 case GameFamilies.Plat:
-                    //commonDictionaryNames = ScriptDatabase.DPPtScrCmdNames;
                     commonDictionaryNames = ScriptDatabase.PlatScrCmdNames;
                     specificDictionaryNames = new Dictionary<ushort, string>();
                     break;
