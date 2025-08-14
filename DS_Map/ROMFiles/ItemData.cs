@@ -341,11 +341,11 @@ namespace DSPRE.ROMFiles
         public byte PartyUse;
         public ItemPartyUseParam PartyUseParam;
 
-        public int RealID;
+        public int ID;
 
         public ItemData(Stream stream, int ID)
         {
-            RealID = ID > 112 ? ID + 22 : ID; // Adjust ID for unused items
+            this.ID = ID;
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 price = reader.ReadUInt16();
