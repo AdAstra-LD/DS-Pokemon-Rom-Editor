@@ -322,9 +322,34 @@ namespace DSPRE.Editors
             priceNumericUpDown.Value = currentLoadedFile.price;
 
             // Usage Functions
-            fieldFunctionComboBox.SelectedIndex = (int)currentLoadedFile.fieldUseFunc;
-            battleFunctionComboBox.SelectedIndex = (int)currentLoadedFile.battleUseFunc;
+            if (Enum.IsDefined(typeof(FieldUseFunc), currentLoadedFile.fieldUseFunc))
+            {
+                fieldFunctionComboBox.SelectedIndex = (int)currentLoadedFile.fieldUseFunc;
+            }
+            else
+            {
+                // Add the unknown value if it's not already in the list
+                string unknownValue = $"Unknown ({(int)currentLoadedFile.fieldUseFunc})";
+                if (!fieldFunctionComboBox.Items.Contains(unknownValue))
+                {
+                    fieldFunctionComboBox.Items.Add(unknownValue);
+                }
+                fieldFunctionComboBox.SelectedItem = unknownValue;
+            }
 
+            if (Enum.IsDefined(typeof(BattleUseFunc), currentLoadedFile.battleUseFunc))
+            {
+                battleFunctionComboBox.SelectedIndex = (int)currentLoadedFile.battleUseFunc;
+            }
+            else
+            {
+                string unknownValue = $"Unknown ({(int)currentLoadedFile.battleUseFunc})";
+                if (!battleFunctionComboBox.Items.Contains(unknownValue))
+                {
+                    battleFunctionComboBox.Items.Add(unknownValue);
+                }
+                battleFunctionComboBox.SelectedItem = unknownValue;
+            }
 
             itemParamsTabControl.Enabled = partyUseCheckBox.Checked;
             PopulateItemPartyParamsUI();
@@ -675,7 +700,20 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.fieldUseFunc = (FieldUseFunc)fieldFunctionComboBox.SelectedIndex;
+            string selectedValue = fieldFunctionComboBox.SelectedItem.ToString();
+            if (selectedValue.StartsWith("Unknown ("))
+            {
+                // Parse the numeric value from "Unknown (X)"
+                string numericPart = selectedValue.Substring(8, selectedValue.Length - 9);
+                if (byte.TryParse(numericPart, out byte value))
+                {
+                    currentLoadedFile.fieldUseFunc = (FieldUseFunc)value;
+                }
+            }
+            else
+            {
+                currentLoadedFile.fieldUseFunc = (FieldUseFunc)fieldFunctionComboBox.SelectedIndex;
+            }
             setDirty(true);
         }
 
@@ -686,7 +724,20 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.battleUseFunc = (BattleUseFunc)battleFunctionComboBox.SelectedIndex;
+            string selectedValue = battleFunctionComboBox.SelectedItem.ToString();
+            if (selectedValue.StartsWith("Unknown ("))
+            {
+                // Parse the numeric value from "Unknown (X)"
+                string numericPart = selectedValue.Substring(8, selectedValue.Length - 9);
+                if (byte.TryParse(numericPart, out byte value))
+                {
+                    currentLoadedFile.battleUseFunc = (BattleUseFunc)value;
+                }
+            }
+            else
+            {
+                currentLoadedFile.battleUseFunc = (BattleUseFunc)battleFunctionComboBox.SelectedIndex;
+            }
             setDirty(true);
         }
 
