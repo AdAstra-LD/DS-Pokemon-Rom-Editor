@@ -165,7 +165,7 @@ namespace DSPRE {
 
             switch (gameFamily) {
                 case GameFamilies.DP:
-                    databaseJsonPath = Path.Combine(Program.DatabasePath, "dppt_scrcmd_database.json");
+                    databaseJsonPath = Path.Combine(Program.DatabasePath, "diamond_pearl_scrcmd_database.json");
                     break;
                 case GameFamilies.HGSS:
                     databaseJsonPath = Path.Combine(Program.DatabasePath, "hgss_scrcmd_database.json");
