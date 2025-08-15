@@ -7,6 +7,7 @@ using static Microsoft.WindowsAPICodePack.Shell.PropertySystem.SystemProperties.
 
 namespace DSPRE.ROMFiles
 {
+    #region Enums
     public enum NaturalGiftType
     {
         Normal = 0,
@@ -319,6 +320,7 @@ namespace DSPRE.ROMFiles
         //HearthflameMask = 219
     }
 
+    #endregion
     public class ItemData : RomFile
     {
         public ushort price;

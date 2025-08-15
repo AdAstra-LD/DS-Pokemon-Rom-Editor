@@ -45,7 +45,6 @@ namespace DSPRE.Editors
         public ItemEditor(string[] itemFileNames) //, string[] itemDescriptions)
          {
             itemNarcTableOffset = (uint)(RomInfo.gameFamily == RomInfo.GameFamilies.HGSS ? 0x100194 : RomInfo.gameFamily == RomInfo.GameFamilies.Plat ? 0xF0CC4 : 0xF85B4);
-            int killCount = 0;
             itemNarcTable = new ItemNarcTableEntry[itemFileNames.Length];
             List<string> cleanNames = itemFileNames.ToList();
             for (int i = 0; i < itemFileNames.Length; i++)
@@ -58,11 +57,6 @@ namespace DSPRE.Editors
                 itemNarcTable[i] = itemNarcTableEntry;
                 iconIdSet.Add(itemNarcTableEntry.itemIcon);
                 paletteIdSet.Add(itemNarcTableEntry.itemPalette);
-                //if (itemFileNames[i] == null || itemFileNames[i] == "???")
-                //{
-                //    cleanNames.RemoveAt(i-killCount);
-                //    killCount++;
-                //}
             }
             this.itemFileNames = cleanNames.ToArray();
             //this.itemDescriptions = itemDescriptions;
@@ -94,6 +88,11 @@ namespace DSPRE.Editors
             naturalGiftTypeComboBox.Items.AddRange(Enum.GetNames(typeof(NaturalGiftType)));
             fieldFunctionComboBox.Items.AddRange(Enum.GetNames(typeof(FieldUseFunc)));
             battleFunctionComboBox.Items.AddRange(Enum.GetNames(typeof(BattleUseFunc)));
+
+            if (RomInfo.gameFamily == GameFamilies.DP) 
+            {
+                holdEffectComboBox.Items.RemoveAt((int)HoldEffect.GiratinaBoost); // Effect doesn't exist in DP
+            }
 
             // ItemParameters
             BindItemParamsEvents();
