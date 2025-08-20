@@ -731,6 +731,13 @@ namespace DSPRE.Editors
                         // Add file header
                         content.AppendLine("/*");
                         content.AppendLine(" * DSPRE Script File");
+
+                        string romFileName = Path.GetFileNameWithoutExtension(RomInfo.fileName);
+                        string romFileNameClean = romFileName.EndsWith("_DSPRE_contents")
+                            ? romFileName.Substring(0, romFileName.Length - "_DSPRE_contents".Length)
+                            : romFileName;
+                        content.AppendLine(" * Rom ID: " + romFileNameClean);
+                        content.AppendLine(" * Game: " + RomInfo.gameFamily);
                         content.AppendLine($" * File: {baseFileName}");
                         content.AppendLine($" * Generated: {DateTime.Now}");
                         content.AppendLine(" */");
