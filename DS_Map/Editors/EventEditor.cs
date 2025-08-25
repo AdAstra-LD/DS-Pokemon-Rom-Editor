@@ -779,7 +779,7 @@ namespace DSPRE.Editors
             owMovementComboBox.Items.Clear();
             spawnableDirComboBox.Items.Clear();
             spawnableTypeComboBox.Items.Clear();
-            owMovementComboBox.Items.AddRange(PokeDatabase.EventEditor.Overworlds.movementsArray);
+            owMovementComboBox.Items.AddRange(PokeDatabase.EventEditor.Overworlds.movementTypesArray);
             spawnableDirComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.orientationsArray);
             spawnableTypeComboBox.Items.AddRange(PokeDatabase.EventEditor.Spawnables.typesArray);
 

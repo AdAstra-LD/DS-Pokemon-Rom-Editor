@@ -535,7 +535,7 @@ namespace DSPRE.Resources {
                 };
             }
             public static class Overworlds {
-                public static string[] movementsArray = new string[] {
+                public static string[] movementTypesArray = new string[] {
                     "[00]  None",
                     "[01]  None",
                     "[02]  Looking in all directions",
