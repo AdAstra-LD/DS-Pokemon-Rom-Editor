@@ -10,6 +10,28 @@ using static DSPRE.RomInfo;
 namespace DSPRE {
     public partial class WildEditorDPPt : Form {
 
+        #region Enums
+
+        public enum ShellosForm
+        {
+            WestSea,
+            EastSea
+        }
+
+        public enum UnownTable
+        {
+            MostForms,
+            OnlyF,
+            OnlyR,
+            OnlyI,
+            OnlyN,
+            OnlyE,
+            OnlyD,
+            ExclamQuestion
+        }
+
+        #endregion
+
         public string encounterFileFolder { get; private set; }
         public bool walkingDirty { get; private set; } = false;
         public bool waterDirty { get; private set; } = false;
@@ -145,6 +167,11 @@ namespace DSPRE {
             superRodFifteenComboBox.DataSource = new BindingSource(names, string.Empty);
             superRodFourComboBox.DataSource = new BindingSource(names, string.Empty);
             superRodOneComboBox.DataSource = new BindingSource(names, string.Empty);
+
+            /* Form Data */
+            shellosComboBox.DataSource = Enum.GetValues(typeof(ShellosForm));
+            gastrodonComboBox.DataSource = Enum.GetValues(typeof(ShellosForm));
+            unownComboBox.DataSource = Enum.GetValues(typeof(UnownTable));
         }
 
         private void SetupControls() {
@@ -295,6 +322,11 @@ namespace DSPRE {
             superRodOneMinLevelUpDown.Value = currentFile.superRodMinLevels[4];
             superRodOneMaxLevelUpDown.Value = currentFile.superRodMaxLevels[4];
 
+            /* Form data controls setup */
+            shellosComboBox.SelectedIndex = (currentFile.regionalForms[0] == 0) ? (int)ShellosForm.WestSea : (int)ShellosForm.EastSea;
+            gastrodonComboBox.SelectedIndex = (currentFile.regionalForms[1] == 0) ? (int)ShellosForm.WestSea : (int)ShellosForm.EastSea;
+            unownComboBox.SelectedIndex = (currentFile.unknownTable == 0) ? 0 : (int)currentFile.unknownTable - 1;
+
             SetDirtyWalking(false);
             SetDirtyWater(false);
 
@@ -433,6 +465,12 @@ namespace DSPRE {
             oldRodRateUpDown.ValueChanged += MarkDirtyWater;
             goodRodRateUpDown.ValueChanged += MarkDirtyWater;
             superRodRateUpDown.ValueChanged += MarkDirtyWater;
+
+            /* Form Data */
+            shellosComboBox.SelectedIndexChanged += MarkDirtyWalking; // technically also applies to water
+            gastrodonComboBox.SelectedIndexChanged += MarkDirtyWalking;
+            unownComboBox.SelectedIndexChanged += MarkDirtyWalking;
+
         }
 
         private void DrawConnectingLines()
@@ -543,6 +581,11 @@ namespace DSPRE {
             currentFile.radarPokemon[1] = (uint)radarSecondComboBox.SelectedIndex;
             currentFile.radarPokemon[2] = (uint)radarThirdComboBox.SelectedIndex;
             currentFile.radarPokemon[3] = (uint)radarFourthComboBox.SelectedIndex;
+
+            /* Form Data */
+            currentFile.regionalForms[0] = (uint)(shellosComboBox.SelectedIndex);
+            currentFile.regionalForms[1] = (uint)(gastrodonComboBox.SelectedIndex);
+            currentFile.unknownTable = (uint)(unownComboBox.SelectedIndex + 1);
 
             /* Levels */
             currentFile.walkingLevels[0] = (byte)walkingTwentyFirstUpDown.Value;

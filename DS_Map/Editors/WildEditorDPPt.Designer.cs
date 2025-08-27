@@ -38,6 +38,14 @@
             this.saveEventsButton = new System.Windows.Forms.Button();
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.grassGroundTabPage = new System.Windows.Forms.TabPage();
+            this.formDataGroupBox = new System.Windows.Forms.GroupBox();
+            this.formDataTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.unownLabel = new System.Windows.Forms.Label();
+            this.gastrodonLabel = new System.Windows.Forms.Label();
+            this.shellosLabel = new System.Windows.Forms.Label();
+            this.shellosComboBox = new DSPRE.InputComboBox();
+            this.gastrodonComboBox = new DSPRE.InputComboBox();
+            this.unownComboBox = new DSPRE.InputComboBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.walkingGroupBox = new System.Windows.Forms.GroupBox();
             this.walkingTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -123,26 +131,36 @@
             this.label61 = new System.Windows.Forms.Label();
             this.surfOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label62 = new System.Windows.Forms.Label();
             this.surfOneComboBox = new DSPRE.InputComboBox();
             this.surfFourMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfFourMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label63 = new System.Windows.Forms.Label();
             this.surfFourComboBox = new DSPRE.InputComboBox();
             this.surfFiveMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfFiveMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label64 = new System.Windows.Forms.Label();
             this.surfFiveComboBox = new DSPRE.InputComboBox();
             this.surfThirtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfThirtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label65 = new System.Windows.Forms.Label();
             this.surfThirtyComboBox = new DSPRE.InputComboBox();
             this.surfSixtyMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.surfSixtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label66 = new System.Windows.Forms.Label();
             this.surfSixtyComboBox = new DSPRE.InputComboBox();
             this.superRodPanel = new System.Windows.Forms.Panel();
             this.superRodPictureBox = new System.Windows.Forms.PictureBox();
             this.superRodGroupBox = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.label59 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.label60 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.superRodRateUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label18 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.superRodOneMaxLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodOneMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.superRodOneComboBox = new DSPRE.InputComboBox();
@@ -188,6 +206,11 @@
             this.oldRodPanel = new System.Windows.Forms.Panel();
             this.oldRodPictureBox = new System.Windows.Forms.PictureBox();
             this.oldRodGroupBox = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.oldRodRateUpDown = new System.Windows.Forms.NumericUpDown();
@@ -208,23 +231,10 @@
             this.oldRodSixtyMinLevelUpDown = new System.Windows.Forms.NumericUpDown();
             this.oldRodSixtyComboBox = new DSPRE.InputComboBox();
             this.repairAllButton = new System.Windows.Forms.Button();
-            this.label66 = new System.Windows.Forms.Label();
-            this.label65 = new System.Windows.Forms.Label();
-            this.label64 = new System.Windows.Forms.Label();
-            this.label63 = new System.Windows.Forms.Label();
-            this.label62 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.mainTabControl.SuspendLayout();
             this.grassGroundTabPage.SuspendLayout();
+            this.formDataGroupBox.SuspendLayout();
+            this.formDataTableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.walkingGroupBox.SuspendLayout();
             this.walkingTableLayoutPanel.SuspendLayout();
@@ -314,7 +324,7 @@
             // 
             this.removeEventFileButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.removeEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.removeEventFileButton.Location = new System.Drawing.Point(101, 667);
+            this.removeEventFileButton.Location = new System.Drawing.Point(92, 745);
             this.removeEventFileButton.Name = "removeEventFileButton";
             this.removeEventFileButton.Size = new System.Drawing.Size(95, 35);
             this.removeEventFileButton.TabIndex = 60;
@@ -327,7 +337,7 @@
             // 
             this.addEventFileButton.Image = global::DSPRE.Properties.Resources.addIcon;
             this.addEventFileButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.addEventFileButton.Location = new System.Drawing.Point(19, 667);
+            this.addEventFileButton.Location = new System.Drawing.Point(14, 745);
             this.addEventFileButton.Name = "addEventFileButton";
             this.addEventFileButton.Size = new System.Drawing.Size(72, 35);
             this.addEventFileButton.TabIndex = 59;
@@ -376,7 +386,7 @@
             // 
             this.saveEventsButton.Image = global::DSPRE.Properties.Resources.saveButton;
             this.saveEventsButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.saveEventsButton.Location = new System.Drawing.Point(784, 663);
+            this.saveEventsButton.Location = new System.Drawing.Point(773, 745);
             this.saveEventsButton.Name = "saveEventsButton";
             this.saveEventsButton.Size = new System.Drawing.Size(117, 35);
             this.saveEventsButton.TabIndex = 55;
@@ -392,11 +402,12 @@
             this.mainTabControl.Location = new System.Drawing.Point(15, 59);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(890, 602);
+            this.mainTabControl.Size = new System.Drawing.Size(879, 684);
             this.mainTabControl.TabIndex = 0;
             // 
             // grassGroundTabPage
             // 
+            this.grassGroundTabPage.Controls.Add(this.formDataGroupBox);
             this.grassGroundTabPage.Controls.Add(this.pictureBox2);
             this.grassGroundTabPage.Controls.Add(this.walkingGroupBox);
             this.grassGroundTabPage.Controls.Add(this.walkingRateUpDown);
@@ -404,10 +415,104 @@
             this.grassGroundTabPage.Location = new System.Drawing.Point(4, 22);
             this.grassGroundTabPage.Name = "grassGroundTabPage";
             this.grassGroundTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.grassGroundTabPage.Size = new System.Drawing.Size(882, 576);
+            this.grassGroundTabPage.Size = new System.Drawing.Size(871, 658);
             this.grassGroundTabPage.TabIndex = 0;
             this.grassGroundTabPage.Text = "Grass/Ground";
             this.grassGroundTabPage.UseVisualStyleBackColor = true;
+            // 
+            // formDataGroupBox
+            // 
+            this.formDataGroupBox.Controls.Add(this.formDataTableLayoutPanel);
+            this.formDataGroupBox.Location = new System.Drawing.Point(15, 566);
+            this.formDataGroupBox.Name = "formDataGroupBox";
+            this.formDataGroupBox.Size = new System.Drawing.Size(397, 76);
+            this.formDataGroupBox.TabIndex = 194;
+            this.formDataGroupBox.TabStop = false;
+            this.formDataGroupBox.Text = "Form Data";
+            // 
+            // formDataTableLayoutPanel
+            // 
+            this.formDataTableLayoutPanel.ColumnCount = 3;
+            this.formDataTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.formDataTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.formDataTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.formDataTableLayoutPanel.Controls.Add(this.unownLabel, 2, 0);
+            this.formDataTableLayoutPanel.Controls.Add(this.gastrodonLabel, 1, 0);
+            this.formDataTableLayoutPanel.Controls.Add(this.shellosLabel, 0, 0);
+            this.formDataTableLayoutPanel.Controls.Add(this.shellosComboBox, 0, 1);
+            this.formDataTableLayoutPanel.Controls.Add(this.gastrodonComboBox, 1, 1);
+            this.formDataTableLayoutPanel.Controls.Add(this.unownComboBox, 2, 1);
+            this.formDataTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.formDataTableLayoutPanel.Location = new System.Drawing.Point(3, 16);
+            this.formDataTableLayoutPanel.Name = "formDataTableLayoutPanel";
+            this.formDataTableLayoutPanel.RowCount = 2;
+            this.formDataTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.formDataTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.formDataTableLayoutPanel.Size = new System.Drawing.Size(391, 57);
+            this.formDataTableLayoutPanel.TabIndex = 0;
+            // 
+            // unownLabel
+            // 
+            this.unownLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.unownLabel.AutoSize = true;
+            this.unownLabel.Location = new System.Drawing.Point(263, 0);
+            this.unownLabel.Name = "unownLabel";
+            this.unownLabel.Size = new System.Drawing.Size(125, 13);
+            this.unownLabel.TabIndex = 190;
+            this.unownLabel.Text = "Unown Table";
+            // 
+            // gastrodonLabel
+            // 
+            this.gastrodonLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.gastrodonLabel.AutoSize = true;
+            this.gastrodonLabel.Location = new System.Drawing.Point(133, 0);
+            this.gastrodonLabel.Name = "gastrodonLabel";
+            this.gastrodonLabel.Size = new System.Drawing.Size(124, 13);
+            this.gastrodonLabel.TabIndex = 189;
+            this.gastrodonLabel.Text = "Gastrodon Form";
+            // 
+            // shellosLabel
+            // 
+            this.shellosLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.shellosLabel.AutoSize = true;
+            this.shellosLabel.Location = new System.Drawing.Point(3, 0);
+            this.shellosLabel.Name = "shellosLabel";
+            this.shellosLabel.Size = new System.Drawing.Size(124, 13);
+            this.shellosLabel.TabIndex = 188;
+            this.shellosLabel.Text = "Shellos Form";
+            // 
+            // shellosComboBox
+            // 
+            this.shellosComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.shellosComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.shellosComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.shellosComboBox.FormattingEnabled = true;
+            this.shellosComboBox.Location = new System.Drawing.Point(3, 24);
+            this.shellosComboBox.Name = "shellosComboBox";
+            this.shellosComboBox.Size = new System.Drawing.Size(124, 21);
+            this.shellosComboBox.TabIndex = 148;
+            // 
+            // gastrodonComboBox
+            // 
+            this.gastrodonComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.gastrodonComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.gastrodonComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.gastrodonComboBox.FormattingEnabled = true;
+            this.gastrodonComboBox.Location = new System.Drawing.Point(133, 24);
+            this.gastrodonComboBox.Name = "gastrodonComboBox";
+            this.gastrodonComboBox.Size = new System.Drawing.Size(124, 21);
+            this.gastrodonComboBox.TabIndex = 149;
+            // 
+            // unownComboBox
+            // 
+            this.unownComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.unownComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.unownComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.unownComboBox.FormattingEnabled = true;
+            this.unownComboBox.Location = new System.Drawing.Point(263, 24);
+            this.unownComboBox.Name = "unownComboBox";
+            this.unownComboBox.Size = new System.Drawing.Size(125, 21);
+            this.unownComboBox.TabIndex = 150;
             // 
             // pictureBox2
             // 
@@ -424,7 +529,7 @@
             this.walkingGroupBox.Location = new System.Drawing.Point(15, 35);
             this.walkingGroupBox.Name = "walkingGroupBox";
             this.walkingGroupBox.Padding = new System.Windows.Forms.Padding(5);
-            this.walkingGroupBox.Size = new System.Drawing.Size(857, 535);
+            this.walkingGroupBox.Size = new System.Drawing.Size(857, 529);
             this.walkingGroupBox.TabIndex = 188;
             this.walkingGroupBox.TabStop = false;
             this.walkingGroupBox.Text = "Walking";
@@ -533,7 +638,7 @@
             this.walkingTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.walkingTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.walkingTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.walkingTableLayoutPanel.Size = new System.Drawing.Size(847, 512);
+            this.walkingTableLayoutPanel.Size = new System.Drawing.Size(847, 506);
             this.walkingTableLayoutPanel.TabIndex = 195;
             this.walkingTableLayoutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.walkingTableLayoutPanel_Paint);
             // 
@@ -1283,7 +1388,7 @@
             this.waterTabPage.Location = new System.Drawing.Point(4, 22);
             this.waterTabPage.Name = "waterTabPage";
             this.waterTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.waterTabPage.Size = new System.Drawing.Size(882, 576);
+            this.waterTabPage.Size = new System.Drawing.Size(871, 658);
             this.waterTabPage.TabIndex = 1;
             this.waterTabPage.Text = "Water";
             this.waterTabPage.UseVisualStyleBackColor = true;
@@ -1297,12 +1402,13 @@
             this.waterTableLayoutPanel.Controls.Add(this.superRodPanel, 1, 1);
             this.waterTableLayoutPanel.Controls.Add(this.goodRodPanel, 0, 1);
             this.waterTableLayoutPanel.Controls.Add(this.oldRodPanel, 1, 0);
-            this.waterTableLayoutPanel.Location = new System.Drawing.Point(6, 6);
+            this.waterTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.waterTableLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.waterTableLayoutPanel.Name = "waterTableLayoutPanel";
             this.waterTableLayoutPanel.RowCount = 2;
             this.waterTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.waterTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.waterTableLayoutPanel.Size = new System.Drawing.Size(870, 564);
+            this.waterTableLayoutPanel.Size = new System.Drawing.Size(865, 652);
             this.waterTableLayoutPanel.TabIndex = 203;
             // 
             // surfPanel
@@ -1310,17 +1416,16 @@
             this.surfPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.surfPanel.Controls.Add(this.surfPicture);
             this.surfPanel.Controls.Add(this.surfGroupBox);
             this.surfPanel.Location = new System.Drawing.Point(3, 3);
             this.surfPanel.Name = "surfPanel";
-            this.surfPanel.Size = new System.Drawing.Size(429, 276);
+            this.surfPanel.Size = new System.Drawing.Size(426, 320);
             this.surfPanel.TabIndex = 202;
             // 
             // surfPicture
             // 
             this.surfPicture.Image = global::DSPRE.Properties.Resources.SurfIcon;
-            this.surfPicture.Location = new System.Drawing.Point(101, 15);
+            this.surfPicture.Location = new System.Drawing.Point(6, 19);
             this.surfPicture.Name = "surfPicture";
             this.surfPicture.Size = new System.Drawing.Size(42, 42);
             this.surfPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1329,6 +1434,10 @@
             // 
             // surfGroupBox
             // 
+            this.surfGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.surfGroupBox.Controls.Add(this.surfPicture);
             this.surfGroupBox.Controls.Add(this.label68);
             this.surfGroupBox.Controls.Add(this.label67);
             this.surfGroupBox.Controls.Add(this.surfRateUpDown);
@@ -1353,7 +1462,7 @@
             this.surfGroupBox.Controls.Add(this.surfSixtyMinLevelUpDown);
             this.surfGroupBox.Controls.Add(this.label66);
             this.surfGroupBox.Controls.Add(this.surfSixtyComboBox);
-            this.surfGroupBox.Location = new System.Drawing.Point(51, 29);
+            this.surfGroupBox.Location = new System.Drawing.Point(51, 45);
             this.surfGroupBox.Name = "surfGroupBox";
             this.surfGroupBox.Size = new System.Drawing.Size(325, 220);
             this.surfGroupBox.TabIndex = 4;
@@ -1414,6 +1523,16 @@
             this.surfOneMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfOneMinLevelUpDown.TabIndex = 21;
             // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label62.Location = new System.Drawing.Point(18, 188);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(21, 13);
+            this.label62.TabIndex = 20;
+            this.label62.Text = "1%";
+            // 
             // surfOneComboBox
             // 
             this.surfOneComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1437,6 +1556,16 @@
             this.surfFourMinLevelUpDown.Name = "surfFourMinLevelUpDown";
             this.surfFourMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfFourMinLevelUpDown.TabIndex = 17;
+            // 
+            // label63
+            // 
+            this.label63.AutoSize = true;
+            this.label63.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label63.Location = new System.Drawing.Point(18, 161);
+            this.label63.Name = "label63";
+            this.label63.Size = new System.Drawing.Size(21, 13);
+            this.label63.TabIndex = 16;
+            this.label63.Text = "4%";
             // 
             // surfFourComboBox
             // 
@@ -1462,6 +1591,16 @@
             this.surfFiveMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfFiveMinLevelUpDown.TabIndex = 13;
             // 
+            // label64
+            // 
+            this.label64.AutoSize = true;
+            this.label64.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label64.Location = new System.Drawing.Point(18, 134);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(21, 13);
+            this.label64.TabIndex = 12;
+            this.label64.Text = "5%";
+            // 
             // surfFiveComboBox
             // 
             this.surfFiveComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1485,6 +1624,16 @@
             this.surfThirtyMinLevelUpDown.Name = "surfThirtyMinLevelUpDown";
             this.surfThirtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfThirtyMinLevelUpDown.TabIndex = 9;
+            // 
+            // label65
+            // 
+            this.label65.AutoSize = true;
+            this.label65.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label65.Location = new System.Drawing.Point(12, 107);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(27, 13);
+            this.label65.TabIndex = 8;
+            this.label65.Text = "30%";
             // 
             // surfThirtyComboBox
             // 
@@ -1510,6 +1659,16 @@
             this.surfSixtyMinLevelUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfSixtyMinLevelUpDown.TabIndex = 5;
             // 
+            // label66
+            // 
+            this.label66.AutoSize = true;
+            this.label66.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label66.Location = new System.Drawing.Point(12, 80);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(27, 13);
+            this.label66.TabIndex = 4;
+            this.label66.Text = "60%";
+            // 
             // surfSixtyComboBox
             // 
             this.surfSixtyComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -1525,17 +1684,16 @@
             this.superRodPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.superRodPanel.Controls.Add(this.superRodPictureBox);
             this.superRodPanel.Controls.Add(this.superRodGroupBox);
-            this.superRodPanel.Location = new System.Drawing.Point(438, 285);
+            this.superRodPanel.Location = new System.Drawing.Point(435, 329);
             this.superRodPanel.Name = "superRodPanel";
-            this.superRodPanel.Size = new System.Drawing.Size(429, 276);
+            this.superRodPanel.Size = new System.Drawing.Size(427, 320);
             this.superRodPanel.TabIndex = 200;
             // 
             // superRodPictureBox
             // 
             this.superRodPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("superRodPictureBox.Image")));
-            this.superRodPictureBox.Location = new System.Drawing.Point(118, 23);
+            this.superRodPictureBox.Location = new System.Drawing.Point(12, 19);
             this.superRodPictureBox.Name = "superRodPictureBox";
             this.superRodPictureBox.Size = new System.Drawing.Size(25, 26);
             this.superRodPictureBox.TabIndex = 196;
@@ -1543,6 +1701,10 @@
             // 
             // superRodGroupBox
             // 
+            this.superRodGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.superRodGroupBox.Controls.Add(this.superRodPictureBox);
             this.superRodGroupBox.Controls.Add(this.label15);
             this.superRodGroupBox.Controls.Add(this.label59);
             this.superRodGroupBox.Controls.Add(this.label16);
@@ -1574,6 +1736,16 @@
             this.superRodGroupBox.TabStop = false;
             this.superRodGroupBox.Text = "Super Rod";
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label15.Location = new System.Drawing.Point(18, 188);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(21, 13);
+            this.label15.TabIndex = 46;
+            this.label15.Text = "1%";
+            // 
             // label59
             // 
             this.label59.AutoSize = true;
@@ -1583,6 +1755,16 @@
             this.label59.TabIndex = 41;
             this.label59.Text = "Max Lvl.";
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label16.Location = new System.Drawing.Point(18, 161);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(21, 13);
+            this.label16.TabIndex = 45;
+            this.label16.Text = "4%";
+            // 
             // label60
             // 
             this.label60.AutoSize = true;
@@ -1591,6 +1773,16 @@
             this.label60.Size = new System.Drawing.Size(44, 13);
             this.label60.TabIndex = 40;
             this.label60.Text = "Min Lvl.";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label17.Location = new System.Drawing.Point(12, 134);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(27, 13);
+            this.label17.TabIndex = 44;
+            this.label17.Text = "15%";
             // 
             // superRodRateUpDown
             // 
@@ -1604,6 +1796,16 @@
             this.superRodRateUpDown.Size = new System.Drawing.Size(42, 20);
             this.superRodRateUpDown.TabIndex = 39;
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label18.Location = new System.Drawing.Point(12, 107);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(27, 13);
+            this.label18.TabIndex = 43;
+            this.label18.Text = "40%";
+            // 
             // label69
             // 
             this.label69.AutoSize = true;
@@ -1613,6 +1815,16 @@
             this.label69.Size = new System.Drawing.Size(30, 13);
             this.label69.TabIndex = 38;
             this.label69.Text = "Rate";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label19.Location = new System.Drawing.Point(12, 80);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(27, 13);
+            this.label19.TabIndex = 42;
+            this.label19.Text = "40%";
             // 
             // superRodOneMaxLevelUpDown
             // 
@@ -1739,17 +1951,16 @@
             this.goodRodPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.goodRodPanel.Controls.Add(this.pictureBox6);
             this.goodRodPanel.Controls.Add(this.goodRodGroupBox);
-            this.goodRodPanel.Location = new System.Drawing.Point(3, 285);
+            this.goodRodPanel.Location = new System.Drawing.Point(3, 329);
             this.goodRodPanel.Name = "goodRodPanel";
-            this.goodRodPanel.Size = new System.Drawing.Size(429, 276);
+            this.goodRodPanel.Size = new System.Drawing.Size(426, 320);
             this.goodRodPanel.TabIndex = 201;
             // 
             // pictureBox6
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(118, 23);
+            this.pictureBox6.Location = new System.Drawing.Point(6, 19);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(25, 26);
             this.pictureBox6.TabIndex = 195;
@@ -1757,6 +1968,10 @@
             // 
             // goodRodGroupBox
             // 
+            this.goodRodGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.goodRodGroupBox.Controls.Add(this.pictureBox6);
             this.goodRodGroupBox.Controls.Add(this.label51);
             this.goodRodGroupBox.Controls.Add(this.label52);
             this.goodRodGroupBox.Controls.Add(this.goodRodRateUpDown);
@@ -2003,17 +2218,16 @@
             this.oldRodPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.oldRodPanel.Controls.Add(this.oldRodPictureBox);
             this.oldRodPanel.Controls.Add(this.oldRodGroupBox);
-            this.oldRodPanel.Location = new System.Drawing.Point(438, 3);
+            this.oldRodPanel.Location = new System.Drawing.Point(435, 3);
             this.oldRodPanel.Name = "oldRodPanel";
-            this.oldRodPanel.Size = new System.Drawing.Size(429, 276);
+            this.oldRodPanel.Size = new System.Drawing.Size(427, 320);
             this.oldRodPanel.TabIndex = 199;
             // 
             // oldRodPictureBox
             // 
             this.oldRodPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("oldRodPictureBox.Image")));
-            this.oldRodPictureBox.Location = new System.Drawing.Point(108, 23);
+            this.oldRodPictureBox.Location = new System.Drawing.Point(6, 19);
             this.oldRodPictureBox.Name = "oldRodPictureBox";
             this.oldRodPictureBox.Size = new System.Drawing.Size(25, 26);
             this.oldRodPictureBox.TabIndex = 194;
@@ -2021,6 +2235,10 @@
             // 
             // oldRodGroupBox
             // 
+            this.oldRodGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.oldRodGroupBox.Controls.Add(this.oldRodPictureBox);
             this.oldRodGroupBox.Controls.Add(this.label1);
             this.oldRodGroupBox.Controls.Add(this.label2);
             this.oldRodGroupBox.Controls.Add(this.label3);
@@ -2051,6 +2269,56 @@
             this.oldRodGroupBox.TabIndex = 42;
             this.oldRodGroupBox.TabStop = false;
             this.oldRodGroupBox.Text = "Old Rod";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label1.Location = new System.Drawing.Point(18, 188);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(21, 13);
+            this.label1.TabIndex = 46;
+            this.label1.Text = "1%";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label2.Location = new System.Drawing.Point(18, 161);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(21, 13);
+            this.label2.TabIndex = 45;
+            this.label2.Text = "4%";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label3.Location = new System.Drawing.Point(18, 134);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(21, 13);
+            this.label3.TabIndex = 44;
+            this.label3.Text = "5%";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label4.Location = new System.Drawing.Point(12, 107);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(27, 13);
+            this.label4.TabIndex = 43;
+            this.label4.Text = "30%";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.label5.Location = new System.Drawing.Point(12, 80);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(27, 13);
+            this.label5.TabIndex = 42;
+            this.label5.Text = "60%";
             // 
             // label43
             // 
@@ -2222,161 +2490,11 @@
             this.repairAllButton.UseVisualStyleBackColor = true;
             this.repairAllButton.Click += new System.EventHandler(this.repairAllButton_Click);
             // 
-            // label66
-            // 
-            this.label66.AutoSize = true;
-            this.label66.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label66.Location = new System.Drawing.Point(12, 80);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(27, 13);
-            this.label66.TabIndex = 4;
-            this.label66.Text = "60%";
-            // 
-            // label65
-            // 
-            this.label65.AutoSize = true;
-            this.label65.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label65.Location = new System.Drawing.Point(12, 107);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(27, 13);
-            this.label65.TabIndex = 8;
-            this.label65.Text = "30%";
-            // 
-            // label64
-            // 
-            this.label64.AutoSize = true;
-            this.label64.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label64.Location = new System.Drawing.Point(18, 134);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(21, 13);
-            this.label64.TabIndex = 12;
-            this.label64.Text = "5%";
-            // 
-            // label63
-            // 
-            this.label63.AutoSize = true;
-            this.label63.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label63.Location = new System.Drawing.Point(18, 161);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(21, 13);
-            this.label63.TabIndex = 16;
-            this.label63.Text = "4%";
-            // 
-            // label62
-            // 
-            this.label62.AutoSize = true;
-            this.label62.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label62.Location = new System.Drawing.Point(18, 188);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(21, 13);
-            this.label62.TabIndex = 20;
-            this.label62.Text = "1%";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label1.Location = new System.Drawing.Point(18, 188);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(21, 13);
-            this.label1.TabIndex = 46;
-            this.label1.Text = "1%";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label2.Location = new System.Drawing.Point(18, 161);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(21, 13);
-            this.label2.TabIndex = 45;
-            this.label2.Text = "4%";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label3.Location = new System.Drawing.Point(18, 134);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(21, 13);
-            this.label3.TabIndex = 44;
-            this.label3.Text = "5%";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label4.Location = new System.Drawing.Point(12, 107);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(27, 13);
-            this.label4.TabIndex = 43;
-            this.label4.Text = "30%";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label5.Location = new System.Drawing.Point(12, 80);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(27, 13);
-            this.label5.TabIndex = 42;
-            this.label5.Text = "60%";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label15.Location = new System.Drawing.Point(18, 188);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(21, 13);
-            this.label15.TabIndex = 46;
-            this.label15.Text = "1%";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label16.Location = new System.Drawing.Point(18, 161);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(21, 13);
-            this.label16.TabIndex = 45;
-            this.label16.Text = "4%";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label17.Location = new System.Drawing.Point(12, 134);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(27, 13);
-            this.label17.TabIndex = 44;
-            this.label17.Text = "15%";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label18.Location = new System.Drawing.Point(12, 107);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(27, 13);
-            this.label18.TabIndex = 43;
-            this.label18.Text = "40%";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label19.Location = new System.Drawing.Point(12, 80);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(27, 13);
-            this.label19.TabIndex = 42;
-            this.label19.Text = "40%";
-            // 
             // WildEditorDPPt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(916, 710);
+            this.ClientSize = new System.Drawing.Size(895, 786);
             this.Controls.Add(this.repairAllButton);
             this.Controls.Add(this.mainTabControl);
             this.Controls.Add(this.removeEventFileButton);
@@ -2393,6 +2511,9 @@
             this.mainTabControl.ResumeLayout(false);
             this.grassGroundTabPage.ResumeLayout(false);
             this.grassGroundTabPage.PerformLayout();
+            this.formDataGroupBox.ResumeLayout(false);
+            this.formDataTableLayoutPanel.ResumeLayout(false);
+            this.formDataTableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.walkingGroupBox.ResumeLayout(false);
             this.walkingTableLayoutPanel.ResumeLayout(false);
@@ -2672,5 +2793,13 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.GroupBox formDataGroupBox;
+        private System.Windows.Forms.TableLayoutPanel formDataTableLayoutPanel;
+        private InputComboBox shellosComboBox;
+        private InputComboBox gastrodonComboBox;
+        private InputComboBox unownComboBox;
+        private System.Windows.Forms.Label unownLabel;
+        private System.Windows.Forms.Label gastrodonLabel;
+        private System.Windows.Forms.Label shellosLabel;
     }
 }
