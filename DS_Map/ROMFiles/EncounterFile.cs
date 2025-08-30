@@ -148,6 +148,11 @@ namespace DSPRE.ROMFiles {
         public uint[] emeraldPokemon = new uint[2];
         public uint[] fireRedPokemon = new uint[2];
         public uint[] leafGreenPokemon = new uint[2];
+
+        /* Form Data */
+        public uint[] regionalForms = new uint[5];
+        public uint unknownTable = 0;
+
         #endregion
 
         #region Constructors (1)
@@ -206,7 +211,25 @@ namespace DSPRE.ROMFiles {
                     }
                 }
 
-                reader.BaseStream.Position = 0xA4;
+                /* Form data */
+                for (int i = 0; i < 5; i++) {
+                    try {
+                        regionalForms[i] = reader.ReadUInt32();
+                    } catch {
+                        regionalForms[i] = 0x00;
+                        fieldsWithErrors.Add("Form data" + ' ' + '[' + i + ']' + msgFixed);
+                    }
+                }
+
+                try
+                {
+                    unknownTable = reader.ReadUInt32();
+                }
+                catch
+                {
+                    unknownTable = 0x00;
+                    fieldsWithErrors.Add("Unknown table" + msgFixed);
+                }
 
                 /* Dual-slot encounters */
                 for (int i = 0; i < 2; i++) {
