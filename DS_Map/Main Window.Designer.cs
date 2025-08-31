@@ -610,7 +610,7 @@
             this.openROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.open_rom;
             this.openROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openROMToolStripMenuItem.Name = "openROMToolStripMenuItem";
-            this.openROMToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.openROMToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.openROMToolStripMenuItem.Text = "Open ROM";
             this.openROMToolStripMenuItem.Click += new System.EventHandler(this.loadRom_Click);
             // 
@@ -619,7 +619,8 @@
             this.openFolderToolStripMenuItem.Image = global::DSPRE.Properties.Resources.open_file;
             this.openFolderToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.openFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.readDataFromFolderButton_Click);
             // 
@@ -629,7 +630,9 @@
             this.saveROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.saveROMToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.saveROMToolStripMenuItem.Text = "Save ROM";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveRom_Click);
             // 
@@ -639,7 +642,8 @@
             this.settingsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.RightToLeftAutoMirrorImage = true;
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.settingsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemcomma)));
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -699,7 +703,7 @@
             this.diamondAndPearlToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconDP;
             this.diamondAndPearlToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.diamondAndPearlToolStripMenuItem.Name = "diamondAndPearlToolStripMenuItem";
-            this.diamondAndPearlToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.diamondAndPearlToolStripMenuItem.Size = new System.Drawing.Size(222, 38);
             this.diamondAndPearlToolStripMenuItem.Text = "Diamond && Pearl";
             this.diamondAndPearlToolStripMenuItem.Click += new System.EventHandler(this.diamondAndPearlToolStripMenuItem_Click);
             // 
@@ -708,7 +712,7 @@
             this.platinumToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconPt;
             this.platinumToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.platinumToolStripMenuItem.Name = "platinumToolStripMenuItem";
-            this.platinumToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.platinumToolStripMenuItem.Size = new System.Drawing.Size(222, 38);
             this.platinumToolStripMenuItem.Text = "Platinum";
             this.platinumToolStripMenuItem.Click += new System.EventHandler(this.platinumToolStripMenuItem_Click);
             // 
@@ -717,7 +721,7 @@
             this.heartGoldAndSoulSilverToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconHGSS;
             this.heartGoldAndSoulSilverToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.heartGoldAndSoulSilverToolStripMenuItem.Name = "heartGoldAndSoulSilverToolStripMenuItem";
-            this.heartGoldAndSoulSilverToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.heartGoldAndSoulSilverToolStripMenuItem.Size = new System.Drawing.Size(222, 38);
             this.heartGoldAndSoulSilverToolStripMenuItem.Text = "HeartGold && SoulSilver";
             this.heartGoldAndSoulSilverToolStripMenuItem.Click += new System.EventHandler(this.heartGoldAndSoulSilverToolStripMenuItem_Click);
             // 
@@ -726,7 +730,7 @@
             this.manageDatabasesToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIcon;
             this.manageDatabasesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.manageDatabasesToolStripMenuItem.Name = "manageDatabasesToolStripMenuItem";
-            this.manageDatabasesToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.manageDatabasesToolStripMenuItem.Size = new System.Drawing.Size(222, 38);
             this.manageDatabasesToolStripMenuItem.Text = "Manage Script Databases";
             this.manageDatabasesToolStripMenuItem.Click += new System.EventHandler(this.manageDatabasesToolStripMenuItem_Click);
             // 
