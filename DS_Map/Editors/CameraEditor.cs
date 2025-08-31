@@ -103,7 +103,7 @@ namespace DSPRE.Editors
         private void exportCameraTableButton_Click(object sender, EventArgs e) {
             SaveFileDialog of = new SaveFileDialog {
                 Filter = "Camera Table File (*.bin)|*.bin",
-                FileName = Path.GetFileNameWithoutExtension(RomInfo.fileName) + " - CameraTable.bin"
+                FileName = Path.GetFileNameWithoutExtension(RomInfo.projectName) + " - CameraTable.bin"
             };
             if (of.ShowDialog(this) != DialogResult.OK) {
                 return;
@@ -126,7 +126,7 @@ namespace DSPRE.Editors
                 if (e.ColumnIndex == cameraEditorDataGridView.Columns.Count - 2) { //Export
                     SaveFileDialog sf = new SaveFileDialog {
                         Filter = type + " (*.bin)|*.bin",
-                        FileName = Path.GetFileNameWithoutExtension(RomInfo.fileName) + " - Camera " + e.RowIndex + ".bin"
+                        FileName = Path.GetFileNameWithoutExtension(RomInfo.projectName) + " - Camera " + e.RowIndex + ".bin"
                     };
 
                     if (sf.ShowDialog(this) != DialogResult.OK) {

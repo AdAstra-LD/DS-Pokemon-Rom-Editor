@@ -833,7 +833,7 @@ namespace DSPRE.Editors
                         content.AppendLine("/*");
                         content.AppendLine(" * DSPRE Script File");
 
-                        string romFileName = Path.GetFileNameWithoutExtension(RomInfo.fileName);
+                        string romFileName = Path.GetFileNameWithoutExtension(RomInfo.projectName);
                         string romFileNameClean = romFileName.EndsWith("_DSPRE_contents")
                             ? romFileName.Substring(0, romFileName.Length - "_DSPRE_contents".Length)
                             : romFileName;

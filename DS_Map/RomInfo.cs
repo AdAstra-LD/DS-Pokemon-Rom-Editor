@@ -17,11 +17,11 @@ namespace DSPRE
 
     public class RomInfo
     {
-        public static string folderSuffix = "_DSPRE_contents";
+        public const string folderSuffix = "_DSPRE_contents"; // changed back to public static string
         private const string dataFolderName = @"data";
 
         public static string romID { get; private set; }
-        public static string fileName { get; private set; }
+        public static string projectName { get; private set; }
         public static string workDir { get; private set; }
         public static string arm9Path { get; private set; }
         public static string arm7Path { get; private set; }
@@ -183,16 +183,12 @@ namespace DSPRE
 
         #region Constructors (1)
 
-        public RomInfo(string id, string romName, bool useSuffix = true)
+        public RomInfo(string id, string romFolderName)
         {
-            if (!useSuffix)
-            {
-                folderSuffix = "";
-            }
 
-            string path = Path.GetDirectoryName(romName) + "\\" + Path.GetFileNameWithoutExtension(romName) + folderSuffix + "\\";
+            string path = Path.GetFullPath(romFolderName);
 
-            workDir = path;
+            workDir = path + "\\"; // This is required still. Ideally all paths should be combined with Path.Combine and not by string concatenation
             arm9Path = Path.Combine(workDir, @"arm9.bin");
             arm7Path = Path.Combine(workDir, @"arm7.bin");
             overlayTablePath = Path.Combine(workDir, @"y9.bin");
@@ -216,7 +212,7 @@ namespace DSPRE
             }
 
             romID = id;
-            fileName = romName;
+            projectName = Path.GetFileNameWithoutExtension(romFolderName);
 
             LoadGameFamily();
             LoadGameLanguage();
@@ -259,7 +255,7 @@ namespace DSPRE
 
         public static void InitScriptDBs()
         {
-            Helpers.InitializeScriptDatabase(fileName, gameFamily, gameVersion);
+            Helpers.InitializeScriptDatabase(projectName, gameFamily, gameVersion);
             }
 
         public static Dictionary<ushort, string> BuildCommandNamesDatabase(GameFamilies gameFam)
@@ -1433,45 +1429,45 @@ namespace DSPRE
 
                     packedDirsDict = new Dictionary<DirNames, string>()
                     {
-                        [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
-                        [DirNames.textArchives] = @"data\msgdata\msg.narc",
+                        [DirNames.synthOverlay] = $@"{dataFolderName}\data\weather_sys.narc",
+                        [DirNames.textArchives] = $@"{dataFolderName}\msgdata\msg.narc",
 
-                        [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
+                        [DirNames.matrices] = $@"{dataFolderName}\fielddata\mapmatrix\map_matrix.narc",
 
-                        [DirNames.maps] = @"data\fielddata\land_data\land_data" + suffix + ".narc",
-                        [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
-                        [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
-                        [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
-                        [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
-                        [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
+                        [DirNames.maps] = $@"{dataFolderName}\fielddata\land_data\land_data" + suffix + ".narc",
+                        [DirNames.exteriorBuildingModels] = $@"{dataFolderName}\fielddata\build_model\build_model.narc",
+                        [DirNames.buildingConfigFiles] = $@"{dataFolderName}\fielddata\areadata\area_build_model\area_build.narc",
+                        [DirNames.buildingTextures] = $@"{dataFolderName}\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        [DirNames.mapTextures] = $@"{dataFolderName}\fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        [DirNames.areaData] = $@"{dataFolderName}\fielddata\areadata\area_data.narc",
 
-                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event" + suffix + ".narc",
-                        [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
+                        [DirNames.eventFiles] = $@"{dataFolderName}\fielddata\eventdata\zone_event" + suffix + ".narc",
+                        [DirNames.OWSprites] = $@"{dataFolderName}\data\mmodel\mmodel.narc",
 
-                        [DirNames.scripts] = @"data\fielddata\script\scr_seq" + suffix + ".narc",
+                        [DirNames.scripts] = $@"{dataFolderName}\fielddata\script\scr_seq" + suffix + ".narc",
 
-                        [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
-                        [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
-                        [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
-                        [DirNames.moveData] = @"data\poketool\waza\waza_tbl.narc",
+                        [DirNames.trainerProperties] = $@"{dataFolderName}\poketool\trainer\trdata.narc",
+                        [DirNames.trainerParty] = $@"{dataFolderName}\poketool\trainer\trpoke.narc",
+                        [DirNames.trainerGraphics] = $@"{dataFolderName}\poketool\trgra\trfgra.narc",
+                        [DirNames.moveData] = $@"{dataFolderName}\poketool\waza\waza_tbl.narc",
 
-                        [DirNames.monIcons] = @"data\poketool\icongra\poke_icon.narc",
+                        [DirNames.monIcons] = $@"{dataFolderName}\poketool\icongra\poke_icon.narc",
 
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
-                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
-                        [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
+                        [DirNames.encounters] = $@"{dataFolderName}\fielddata\encountdata\" + char.ToLower(gameVersion.ToString()[0]) + '_' + "enc_data.narc",
+                        [DirNames.learnsets] = $@"{dataFolderName}\poketool\personal\wotbl.narc",
+                        [DirNames.evolutions] = $@"{dataFolderName}\poketool\personal\evo.narc",
 
-                        [DirNames.pokemonBattleSprites] = @"data\poketool\pokegra\pokegra.narc",
-                        [DirNames.otherPokemonBattleSprites] = @"data\poketool\pokegra\otherpoke.narc",
+                        [DirNames.pokemonBattleSprites] = $@"{dataFolderName}\poketool\pokegra\pokegra.narc",
+                        [DirNames.otherPokemonBattleSprites] = $@"{dataFolderName}\poketool\pokegra\otherpoke.narc",
 
-                        [DirNames.itemData] = @"data\itemtool\itemdata\item_data.narc",
-                        [DirNames.itemIcons] = @"data\itemtool\itemdata\item_icon.narc",
+                        [DirNames.itemData] = $@"{dataFolderName}\itemtool\itemdata\item_data.narc",
+                        [DirNames.itemIcons] = $@"{dataFolderName}\itemtool\itemdata\item_icon.narc",
 
-                        [DirNames.tradeData] = @"data\fielddata\pokemon_trade\fld_trade.narc"
+                        [DirNames.tradeData] = $@"{dataFolderName}\fielddata\pokemon_trade\fld_trade.narc"
                     };
 
                     //Personal Data archive is different for Pearl
-                    string personal = @"data\poketool\personal";
+                    string personal = $@"{dataFolderName}\poketool\personal";
                     if (gameVersion == GameVersions.Pearl)
                     {
                         personal += ("_" + gameVersion.ToString().ToLower());
@@ -1481,7 +1477,7 @@ namespace DSPRE
 
                     if (gameLanguage != GameLanguages.Japanese)
                     {
-                        packedDirsDict[DirNames.tradeData] = $@"data\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
+                        packedDirsDict[DirNames.tradeData] = $@"{dataFolderName}\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
                     }
 
                     break;
@@ -1491,50 +1487,50 @@ namespace DSPRE
 
                     packedDirsDict = new Dictionary<DirNames, string>()
                     {
-                        [DirNames.personalPokeData] = @"data\poketool\personal\pl_personal.narc",
+                        [DirNames.personalPokeData] = $@"{dataFolderName}\poketool\personal\pl_personal.narc",
 
-                        [DirNames.pokemonBattleSprites] = @"data\poketool\pokegra\pl_pokegra.narc",
-                        [DirNames.otherPokemonBattleSprites] = @"data\poketool\pokegra\pl_otherpoke.narc",
+                        [DirNames.pokemonBattleSprites] = $@"{dataFolderName}\poketool\pokegra\pl_pokegra.narc",
+                        [DirNames.otherPokemonBattleSprites] = $@"{dataFolderName}\poketool\pokegra\pl_otherpoke.narc",
 
-                        [DirNames.synthOverlay] = @"data\data\weather_sys.narc",
-                        [DirNames.dynamicHeaders] = @"data\debug\cb_edit\d_test.narc",
+                        [DirNames.synthOverlay] = $@"{dataFolderName}\data\weather_sys.narc",
+                        [DirNames.dynamicHeaders] = $@"{dataFolderName}\debug\cb_edit\d_test.narc",
 
-                        [DirNames.textArchives] = @"data\msgdata\" + suffix + '_' + "msg.narc",
+                        [DirNames.textArchives] = $@"{dataFolderName}\msgdata\" + suffix + '_' + "msg.narc",
 
-                        [DirNames.matrices] = @"data\fielddata\mapmatrix\map_matrix.narc",
+                        [DirNames.matrices] = $@"{dataFolderName}\fielddata\mapmatrix\map_matrix.narc",
 
-                        [DirNames.maps] = @"data\fielddata\land_data\land_data.narc",
-                        [DirNames.exteriorBuildingModels] = @"data\fielddata\build_model\build_model.narc",
-                        [DirNames.buildingConfigFiles] = @"data\fielddata\areadata\area_build_model\area_build.narc",
-                        [DirNames.buildingTextures] = @"data\fielddata\areadata\area_build_model\areabm_texset.narc",
-                        [DirNames.mapTextures] = @"data\fielddata\areadata\area_map_tex\map_tex_set.narc",
-                        [DirNames.areaData] = @"data\fielddata\areadata\area_data.narc",
+                        [DirNames.maps] = $@"{dataFolderName}\fielddata\land_data\land_data.narc",
+                        [DirNames.exteriorBuildingModels] = $@"{dataFolderName}\fielddata\build_model\build_model.narc",
+                        [DirNames.buildingConfigFiles] = $@"{dataFolderName}\fielddata\areadata\area_build_model\area_build.narc",
+                        [DirNames.buildingTextures] = $@"{dataFolderName}\fielddata\areadata\area_build_model\areabm_texset.narc",
+                        [DirNames.mapTextures] = $@"{dataFolderName}\fielddata\areadata\area_map_tex\map_tex_set.narc",
+                        [DirNames.areaData] = $@"{dataFolderName}\fielddata\areadata\area_data.narc",
 
-                        [DirNames.eventFiles] = @"data\fielddata\eventdata\zone_event.narc",
-                        [DirNames.OWSprites] = @"data\data\mmodel\mmodel.narc",
+                        [DirNames.eventFiles] = $@"{dataFolderName}\fielddata\eventdata\zone_event.narc",
+                        [DirNames.OWSprites] = $@"{dataFolderName}\data\mmodel\mmodel.narc",
 
-                        [DirNames.scripts] = @"data\fielddata\script\scr_seq.narc",
+                        [DirNames.scripts] = $@"{dataFolderName}\fielddata\script\scr_seq.narc",
 
-                        [DirNames.trainerProperties] = @"data\poketool\trainer\trdata.narc",
-                        [DirNames.trainerParty] = @"data\poketool\trainer\trpoke.narc",
-                        [DirNames.trainerGraphics] = @"data\poketool\trgra\trfgra.narc",
-                        [DirNames.moveData] = @"data\poketool\waza\pl_waza_tbl.narc",
+                        [DirNames.trainerProperties] = $@"{dataFolderName}\poketool\trainer\trdata.narc",
+                        [DirNames.trainerParty] = $@"{dataFolderName}\poketool\trainer\trpoke.narc",
+                        [DirNames.trainerGraphics] = $@"{dataFolderName}\poketool\trgra\trfgra.narc",
+                        [DirNames.moveData] = $@"{dataFolderName}\poketool\waza\pl_waza_tbl.narc",
 
-                        [DirNames.monIcons] = @"data\poketool\icongra\pl_poke_icon.narc",
+                        [DirNames.monIcons] = $@"{dataFolderName}\poketool\icongra\pl_poke_icon.narc",
 
-                        [DirNames.encounters] = @"data\fielddata\encountdata\" + suffix + '_' + "enc_data.narc",
-                        [DirNames.learnsets] = @"data\poketool\personal\wotbl.narc",
-                        [DirNames.evolutions] = @"data\poketool\personal\evo.narc",
+                        [DirNames.encounters] = $@"{dataFolderName}\fielddata\encountdata\" + suffix + '_' + "enc_data.narc",
+                        [DirNames.learnsets] = $@"{dataFolderName}\poketool\personal\wotbl.narc",
+                        [DirNames.evolutions] = $@"{dataFolderName}\poketool\personal\evo.narc",
 
-                        [DirNames.itemData] = @"data\itemtool\itemdata\pl_item_data.narc",
-                        [DirNames.itemIcons] = @"data\itemtool\itemdata\item_icon.narc",
+                        [DirNames.itemData] = $@"{dataFolderName}\itemtool\itemdata\pl_item_data.narc",
+                        [DirNames.itemIcons] = $@"{dataFolderName}\itemtool\itemdata\item_icon.narc",
 
-                        [DirNames.tradeData] = @"data\fielddata\pokemon_trade\fld_trade.narc"
+                        [DirNames.tradeData] = $@"{dataFolderName}\fielddata\pokemon_trade\fld_trade.narc"
                     };
 
                     if (gameLanguage != GameLanguages.Japanese && gameLanguage != GameLanguages.English)
                     {
-                        packedDirsDict[DirNames.tradeData] = $@"data\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
+                        packedDirsDict[DirNames.tradeData] = $@"{dataFolderName}\resource\{GetLangResFolderName()}\pokemon_trade\fld_trade.narc";
                     }
 
                     break;
@@ -1542,56 +1538,58 @@ namespace DSPRE
                 case GameFamilies.HGSS:
                     packedDirsDict = new Dictionary<DirNames, string>()
                     {
-                        [DirNames.personalPokeData] = @"data\a\0\0\2",
-                        [DirNames.pokemonBattleSprites] = @"data\a\0\0\4",
-                        [DirNames.otherPokemonBattleSprites] = @"data\a\1\1\4",
+                        [DirNames.personalPokeData] = $@"{dataFolderName}\a\0\0\2",
+                        [DirNames.pokemonBattleSprites] = $@"{dataFolderName}\a\0\0\4",
+                        [DirNames.otherPokemonBattleSprites] = $@"{dataFolderName}\a\1\1\4",
 
-                        [DirNames.synthOverlay] = @"data\a\0\2\8",
-                        [DirNames.dynamicHeaders] = @"data\a\0\5\0",
+                        [DirNames.synthOverlay] = $@"{dataFolderName}\a\0\2\8",
+                        [DirNames.dynamicHeaders] = $@"{dataFolderName}\a\0\5\0",
 
-                        [DirNames.textArchives] = @"data\a\0\2\7",
+                        [DirNames.textArchives] = $@"{dataFolderName}\a\0\2\7",
 
-                        [DirNames.matrices] = @"data\a\0\4\1",
+                        [DirNames.matrices] = $@"{dataFolderName}\a\0\4\1",
 
-                        [DirNames.maps] = @"data\a\0\6\5",
-                        [DirNames.exteriorBuildingModels] = @"data\a\0\4\0",
-                        [DirNames.buildingConfigFiles] = @"data\a\0\4\3",
-                        [DirNames.buildingTextures] = @"data\a\0\7\0",
-                        [DirNames.mapTextures] = @"data\a\0\4\4",
-                        [DirNames.areaData] = @"data\a\0\4\2",
+                        [DirNames.maps] = $@"{dataFolderName}\a\0\6\5",
+                        [DirNames.exteriorBuildingModels] = $@"{dataFolderName}\a\0\4\0",
+                        [DirNames.buildingConfigFiles] = $@"{dataFolderName}\a\0\4\3",
+                        [DirNames.buildingTextures] = $@"{dataFolderName}\a\0\7\0",
+                        [DirNames.mapTextures] = $@"{dataFolderName}\a\0\4\4",
+                        [DirNames.areaData] = $@"{dataFolderName}\a\0\4\2",
 
-                        [DirNames.eventFiles] = @"data\a\0\3\2",
-                        [DirNames.OWSprites] = @"data\a\0\8\1",
+                        [DirNames.eventFiles] = $@"{dataFolderName}\a\0\3\2",
+                        [DirNames.OWSprites] = $@"{dataFolderName}\a\0\8\1",
 
-                        [DirNames.scripts] = @"data\a\0\1\2",
+                        [DirNames.scripts] = $@"{dataFolderName}\a\0\1\2",
                         //ENCOUNTERS FOLDER DEPENDS ON VERSION
-                        [DirNames.trainerProperties] = @"data\a\0\5\5",
-                        [DirNames.trainerParty] = @"data\a\0\5\6",
-                        [DirNames.trainerGraphics] = @"data\a\0\5\8",
-                        [DirNames.moveData] = @"data\a\0\1\1",
+                        [DirNames.trainerProperties] = $@"{dataFolderName}\a\0\5\5",
+                        [DirNames.trainerParty] = $@"{dataFolderName}\a\0\5\6",
+                        [DirNames.trainerGraphics] = $@"{dataFolderName}\a\0\5\8",
+                        [DirNames.moveData] = $@"{dataFolderName}\a\0\1\1",
 
-                        [DirNames.monIcons] = @"data\a\0\2\0",
+                        [DirNames.monIcons] = $@"{dataFolderName}\a\0\2\0",
 
-                        [DirNames.interiorBuildingModels] = @"data\a\1\4\8",
-                        [DirNames.learnsets] = @"data\a\0\3\3",
-                        [DirNames.evolutions] = @"data\a\0\3\4",
-                        [DirNames.itemData] = @"data\a\0\1\7",
-                        [DirNames.itemIcons] = @"data\a\0\1\8",
-                        [DirNames.tradeData] = @"data\a\1\1\2",
+                        [DirNames.interiorBuildingModels] = $@"{dataFolderName}\a\1\4\8",
+                        [DirNames.learnsets] = $@"{dataFolderName}\a\0\3\3",
+                        [DirNames.evolutions] = $@"{dataFolderName}\a\0\3\4",
+                        [DirNames.itemData] = $@"{dataFolderName}\a\0\1\7",
+                        [DirNames.itemIcons] = $@"{dataFolderName}\a\0\1\8",
+                        [DirNames.tradeData] = $@"{dataFolderName}\a\1\1\2",
 
-                        [DirNames.safariZone] = @"data\a\2\3\0",
-                        [DirNames.headbutt] = @"data\a\2\5\2", //both versions use the same folder with different data
+                        [DirNames.safariZone] = $@"{dataFolderName}\a\2\3\0",
+                        [DirNames.headbutt] = $@"{dataFolderName}\a\2\5\2", //both versions use the same folder with different data
                     };
 
                     //Encounter archive is different for SS
-                    packedDirsDict[DirNames.encounters] = gameVersion == GameVersions.HeartGold ? @"data\a\0\3\7" : @"data\a\1\3\6";
+                    packedDirsDict[DirNames.encounters] = gameVersion == GameVersions.HeartGold ? $@"{dataFolderName}\a\0\3\7" : $@"{dataFolderName}\a\1\3\6";
                     break;
             }
 
             gameDirs = new Dictionary<DirNames, (string packedDir, string unpackedDir)>();
             foreach (KeyValuePair<DirNames, string> kvp in packedDirsDict)
             {
-                gameDirs.Add(kvp.Key, (workDir + kvp.Value, workDir + @"unpacked" + '\\' + kvp.Key.ToString()));
+                string packedDir = Path.Combine(workDir, kvp.Value);
+                string unpackedDir = Path.Combine(workDir, "unpacked", kvp.Key.ToString());
+                gameDirs.Add(kvp.Key, (packedDir, unpackedDir));
             }
         }
 

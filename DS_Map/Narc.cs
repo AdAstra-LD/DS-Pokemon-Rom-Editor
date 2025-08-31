@@ -38,12 +38,18 @@ namespace NarcAPI {
             narc.ReadOffsets(br);
             narc.ReadElements(br);
             br.Close();
+
+            AppLogger.Debug($"Loaded NARC \"{narc.Name}\" with {narc.Elements.Length} elements from file: {filePath}");
+
             return narc;
         }
 
         public static Narc FromFolder(String dirPath) {
-            Narc narc = new Narc(Path.GetDirectoryName(dirPath));
+            Narc narc = new Narc(Path.GetFileNameWithoutExtension(dirPath));
             String[] fileNames = Directory.GetFiles(dirPath, "*.*", SearchOption.AllDirectories);
+
+            Array.Sort(fileNames, StringComparer.OrdinalIgnoreCase);
+
             uint numberOfElements = (uint)fileNames.Length;
             narc.Elements = new MemoryStream[numberOfElements];
 
@@ -56,6 +62,9 @@ namespace NarcAPI {
                 narc.Elements[i] = ms;
                 fs.Close();
             });
+
+            AppLogger.Debug($"Loaded NARC \"{narc.Name}\" with {numberOfElements} elements from folder: {dirPath}");
+
             return narc;
         }
 
@@ -106,12 +115,23 @@ namespace NarcAPI {
                 bw.Write(buffer, 0, (int)Elements[i].Length);
                 curOffset += (uint)Elements[i].Length;
             }
+
+            // Pad to 4-byte boundary
+            while (curOffset % 4 != 0)
+            {
+                bw.Write((Byte)0xFF);
+                curOffset++;
+            }
+
             // Writes sizes
             int fileSize = (int)bw.BaseStream.Position;
             bw.Seek((int)fileSizeOffset, SeekOrigin.Begin);         // File size
             bw.Write((UInt32)fileSize);
             bw.Seek((int)fileImageSizeOffset, SeekOrigin.Begin);         // seeks back to FIMG size
             bw.Write((UInt32)curOffset + FILE_IMAGE_HEADER_SIZE);   // FIMG size == Last end offset + File image header size
+
+            AppLogger.Debug($"Saved NARC \"{Name}\" with {Elements.Length} elements and filesize {fileSize} Bytes to file: {filePath}");
+
             bw.Close();
         }
 
@@ -126,13 +146,13 @@ namespace NarcAPI {
                     try {
                         if (dirPath.IndexOf(RomInfo.folderSuffix, StringComparison.CurrentCultureIgnoreCase) >= 0) {
                             Directory.Delete(dirPath, true);
-                            Console.WriteLine("Deleted DSPRE-related folder \"" + dirPath + "\" without user confirmation.");
+                            AppLogger.Debug("Deleted DSPRE-related folder \"" + dirPath + "\" without user confirmation.");
                         } else {
                             DialogResult d = MessageBox.Show("Directory \"" + dirPath + "\" already exists and is not empty.\n" +
                                 "Do you want to delete its contents?", "Directory not empty", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                             if (d.Equals(DialogResult.Yes)) {
                                 Directory.Delete(dirPath, true);
-                                Console.WriteLine("Deleted non-DSPRE-related folder \"" + dirPath + "\" after user confirmation.");
+                                AppLogger.Debug("Deleted non-DSPRE-related folder \"" + dirPath + "\" after user confirmation.");
                             }
                         }
                     } catch (IOException) {
@@ -145,7 +165,7 @@ namespace NarcAPI {
             if (!Directory.Exists(dirPath)) {
                 try {
                     Directory.CreateDirectory(dirPath);
-                    Console.WriteLine("Created NARC folder \"" + dirPath + "\".");
+                    AppLogger.Debug("Created NARC folder \"" + dirPath + "\".");
                 } catch (IOException) {
                     MessageBox.Show("NARC has not been extracted.\nCan't create directory: \n" + dirPath + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Creation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -162,6 +182,9 @@ namespace NarcAPI {
                     wr.Write(buffer);
                 }
             });
+
+            AppLogger.Debug($"Extracted NARC \"{Name}\" with {Elements.Length} elements to folder: {dirPath}");
+
         }
 
         public void Free() { // Libera todos los recursos de memoria asociados (cierra los streams)
