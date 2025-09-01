@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -16,8 +17,7 @@ namespace DSPRE.Editors
 {
     public partial class TextEditor : UserControl
     {
-        MainProgram _parent;
-        public bool textEditorIsReady { get; set; } = false;
+        
         public TextEditor()
         {
             InitializeComponent();
@@ -28,14 +28,122 @@ namespace DSPRE.Editors
         #region Text Editor
 
         #region Variables
+        MainProgram _parent;
+        public bool textEditorIsReady { get; set; } = false;
+
         public TextArchive currentTextArchive;
+        private Dictionary<string, Color> highlightPatterns = new Dictionary<string, Color>
+        {
+            {"{STRVAR[^}]*}", Color.Blue},
+            {"{YESNO[^}]*}", Color.Green},
+            {"{PAUSE[^}]*}", Color.Green},
+            {"{WAIT[^}]*}", Color.Green},
+            {"{CURSOR[^}]*}", Color.Green},
+            {"{ALN[^}]*}", Color.Green},
+            {"{UNK[^}]*}", Color.Red},
+            {"{COLOR[^}]*}", Color.Gray},
+            {"{SIZE[^}]*}", Color.Green}
+        };
         #endregion
-        
+
+        #region syntax highlighting
+        private string ApplyHighlightMarkers(string text)
+        {
+            string markedText = text;
+            foreach (var pattern in highlightPatterns)
+            {
+                markedText = System.Text.RegularExpressions.Regex.Replace(markedText, pattern.Key, match =>
+                    $"[COLOR={pattern.Value.Name.ToLower()}]{match.Value}[/COLOR]");
+            }
+            return markedText;
+        }
+
+        private void textEditorDataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex != 0) return;
+
+            e.Paint(e.CellBounds, DataGridViewPaintParts.Background | DataGridViewPaintParts.Border | DataGridViewPaintParts.Focus | DataGridViewPaintParts.SelectionBackground);
+
+            using (SolidBrush clearBrush = new SolidBrush(e.CellStyle.BackColor))
+            {
+                e.Graphics.FillRectangle(clearBrush, e.CellBounds);
+            }
+
+            string cellText = e.FormattedValue?.ToString() ?? "";
+            Rectangle rect = e.CellBounds;
+            int x = rect.X + 2;
+            int y = rect.Y + 2;
+
+            using (Brush brush = new SolidBrush(e.CellStyle.ForeColor))
+            using (StringFormat sf = new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Near })
+            {
+                int pos = 0;
+                while (pos < cellText.Length)
+                {
+                    int colorStart = cellText.IndexOf("[COLOR=", pos, StringComparison.Ordinal);
+                    if (colorStart < 0)
+                    {
+                        // No more color tags, draw remaining text
+                        e.Graphics.DrawString(cellText.Substring(pos), e.CellStyle.Font, brush, x, y, sf);
+                        break;
+                    }
+
+                    // Draw text before color tag
+                    if (colorStart > pos)
+                    {
+                        e.Graphics.DrawString(cellText.Substring(pos, colorStart - pos), e.CellStyle.Font, brush, x, y, sf);
+                        x += (int)e.Graphics.MeasureString(cellText.Substring(pos, colorStart - pos), e.CellStyle.Font).Width;
+                    }
+
+                    // Parse color tag
+                    int colorEnd = cellText.IndexOf("]", colorStart);
+                    if (colorEnd < 0) break;
+                    string colorName = cellText.Substring(colorStart + 7, colorEnd - colorStart - 7).ToLower();
+                    Color color = Color.FromName(colorName) == Color.Empty ? e.CellStyle.ForeColor : Color.FromName(colorName);
+
+                    // Find end of colored text
+                    int textEnd = cellText.IndexOf("[/COLOR]", colorEnd);
+                    if (textEnd < 0) break;
+                    string coloredText = cellText.Substring(colorEnd + 1, textEnd - colorEnd - 1);
+
+                    // Draw colored text
+                    using (Brush colorBrush = new SolidBrush(color))
+                    {
+                        e.Graphics.DrawString(coloredText, e.CellStyle.Font, colorBrush, x, y, sf);
+                        x += (int)e.Graphics.MeasureString(coloredText, e.CellStyle.Font).Width;
+                    }
+
+                    pos = textEnd + 8; // Skip [/COLOR]
+                }
+            }
+
+            e.Handled = true; // Prevent default painting
+        }
+
+        private void textEditorDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (Helpers.HandlersDisabled || e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            try
+            {
+                string originalText = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString() ?? "";
+                string cleanedText = System.Text.RegularExpressions.Regex.Replace(originalText, @"\[COLOR=[a-z]+\](.*?)\[/COLOR\]", "$1");
+                currentTextArchive.messages[e.RowIndex] = cleanedText;
+                textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = ApplyHighlightMarkers(cleanedText); // Reapply markers
+            }
+            catch (NullReferenceException)
+            {
+                currentTextArchive.messages[e.RowIndex] = "";
+                textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = ApplyHighlightMarkers("");
+            }
+        }
+
+        #endregion
 
         private void addTextArchiveButton_Click(object sender, EventArgs e)
         {
             /* Add copy of message 0 to text archives folder */
-            new TextArchive(0, new List<string>() { "Your text here." }, discardLines: true).SaveToFileDefaultDir(selectTextFileComboBox.Items.Count, false);
+            new TextArchive(selectTextFileComboBox.Items.Count, new List<string>() { "Your text here." }, discardLines: true).SaveToFileDefaultDir(selectTextFileComboBox.Items.Count);
 
             /* Update ComboBox and select new file */
             selectTextFileComboBox.Items.Add("Text Archive " + selectTextFileComboBox.Items.Count);
@@ -421,7 +529,7 @@ namespace DSPRE.Editors
 
             foreach (string msg in currentTextArchive.messages)
             {
-                textEditorDataGridView.Rows.Add(msg);
+                textEditorDataGridView.Rows.Add(ApplyHighlightMarkers(msg)); // Apply markers before adding
             }
 
             if (hexRadiobutton.Checked)
@@ -433,8 +541,12 @@ namespace DSPRE.Editors
                 PrintTextEditorLinesDecimal();
             }
 
-            Helpers.EnableHandlers();
+            // Ensure single event subscription
+            textEditorDataGridView.CellPainting -= textEditorDataGridView_CellPainting;
+            textEditorDataGridView.CellPainting += textEditorDataGridView_CellPainting;
+            textEditorDataGridView.Invalidate(); // Force repaint
 
+            Helpers.EnableHandlers();
             textEditorDataGridView_CurrentCellChanged(textEditorDataGridView, null);
         }
         private void PrintTextEditorLinesHex()
@@ -455,24 +567,7 @@ namespace DSPRE.Editors
                 textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
             }
         }
-        private void textEditorDataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (Helpers.HandlersDisabled)
-            {
-                return;
-            }
-            if (e.RowIndex > -1 && e.ColumnIndex > -1)
-            {
-                try
-                {
-                    currentTextArchive.messages[e.RowIndex] = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                }
-                catch (NullReferenceException)
-                {
-                    currentTextArchive.messages[e.RowIndex] = "";
-                }
-            }
-        }
+        
         private void textEditorDataGridView_CurrentCellChanged(object sender, EventArgs e)
         {
             DataGridView dgv = sender as DataGridView;
@@ -502,6 +597,7 @@ namespace DSPRE.Editors
                 selectedLineMoveDownButton.Enabled = false;
             }
         }
+
         private void textSearchResultsListBox_GoToEntryResult(object sender, MouseEventArgs e)
         {
             if (textSearchResultsListBox.SelectedIndex < 0)
@@ -575,6 +671,8 @@ namespace DSPRE.Editors
             int textCount = parent.romInfo.GetTextArchivesCount();
             for (int i = 0; i < textCount; i++)
             {
+                Helpers.statusLabelMessage($"Parsing text file {i} of {textCount}");
+                ExpandTextFile(i);
                 selectTextFileComboBox.Items.Add("Text Archive " + i);
             }
 
@@ -584,6 +682,94 @@ namespace DSPRE.Editors
 
             selectTextFileComboBox.SelectedIndex = 0;
             Helpers.statusLabelMessage();
+        }
+
+        public static void ExpandTextFile(int ID)
+        {
+            string baseDir = RomInfo.gameDirs[DirNames.textArchives].unpackedDir;
+            string expandedDir = Path.Combine(baseDir, "expanded");
+            string path = Path.Combine(baseDir, ID.ToString("D4"));
+            string expandedPath = Path.Combine(expandedDir, ID.ToString("D4") + ".txt");
+            string toolPath = Path.Combine(Application.StartupPath, "Tools", "msgenc.exe");
+            string charmapPath = Path.Combine("Tools", "charmap.txt");
+
+            if (!Directory.Exists(expandedDir))
+            {
+                try
+                {
+                    Directory.CreateDirectory(expandedDir);
+                    Console.WriteLine("Created expanded folder \"" + expandedDir + "\".");
+                }
+                catch (IOException)
+                {
+                    MessageBox.Show("Text File has not been extracted.\nCan't create directory: \n" + expandedDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Creation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            if (File.Exists(expandedPath) && File.GetLastWriteTimeUtc(expandedPath) >= File.GetLastWriteTimeUtc(path))
+            {
+                Console.WriteLine($"Skipped expanding {ID:D4} — already up to date.");
+                return;
+            }
+
+            Process expand = new Process();
+            expand.StartInfo.FileName = toolPath;
+            expand.StartInfo.Arguments = $"-d -c \"{charmapPath}\" \"{path}\" \"{expandedPath}\"";
+            expand.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            expand.StartInfo.CreateNoWindow = false;
+
+            try
+            {
+                expand.Start();
+                expand.WaitForExit();
+                Console.WriteLine($"Expanded {ID:D4}");
+            }
+            catch (Win32Exception ex)
+            {
+                MessageBox.Show($"Failed to start msgenc.exe: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static bool CompressTextFile(int ID)
+        {
+            string baseDir = RomInfo.gameDirs[DirNames.textArchives].unpackedDir;
+            string expandedDir = Path.Combine(baseDir, "expanded");
+            string path = Path.Combine(baseDir, ID.ToString("D4"));
+            string expandedPath = Path.Combine(expandedDir, ID.ToString("D4") + ".txt");
+            string toolPath = Path.Combine(Application.StartupPath, "Tools", "msgenc.exe");
+            string charmapPath = Path.Combine("Tools", "charmap.txt");
+
+            if (!Directory.Exists(expandedDir))
+            {
+                 MessageBox.Show("No expanded files to compress.", "Creation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 return false;                
+            }
+
+            if (File.Exists(path) && File.GetLastWriteTimeUtc(path) >= File.GetLastWriteTimeUtc(expandedPath))
+            {
+                Console.WriteLine($"Skipped expanding {ID:D4} — already up to date.");
+                return false;
+            }
+
+            Process expand = new Process();
+            expand.StartInfo.FileName = toolPath;
+            expand.StartInfo.Arguments = $"-e -c \"{charmapPath}\" \"{expandedPath}\" \"{path}\"";
+            expand.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            expand.StartInfo.CreateNoWindow = false;
+
+            try
+            {
+                expand.Start();
+                expand.WaitForExit();
+                Console.WriteLine($"Compressed {ID:D4}");
+                return true;
+            }
+            catch (Win32Exception ex)
+            {
+                MessageBox.Show($"Failed to start msgenc.exe: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return false;
         }
     }
 }
