@@ -589,8 +589,8 @@ namespace DSPRE
         {
             unpackBuildingEditorNARCs();
 
-            using (BuildingEditor editor = new BuildingEditor(romInfo))
-                editor.ShowDialog();
+            BuildingEditor editor = new BuildingEditor(romInfo);
+            editor.Show();
         }
         private void unpackBuildingEditorNARCs(bool forceUnpack = false)
         {
@@ -1148,7 +1148,7 @@ namespace DSPRE
         }
         private void manageDatabasesToolStripMenuItem_Click(object sender, EventArgs e) {
             using (CustomScrcmdManager editor = new CustomScrcmdManager())
-                editor.ShowDialog();
+                editor.Show();
         }
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) 
         {
@@ -1488,7 +1488,7 @@ namespace DSPRE
             ItemEditor itemEditor = new ItemEditor(
                 RomInfo.GetItemNames()
             );
-            itemEditor.ShowDialog();
+            itemEditor.Show();
 
             Helpers.statusLabelMessage();
             Update();
@@ -1671,7 +1671,7 @@ namespace DSPRE
             Helpers.statusLabelMessage("Setting up Overlay Editor...");
             Update();
             OverlayEditor ovlEditor = new OverlayEditor();
-            ovlEditor.ShowDialog();
+            ovlEditor.Show();
 
             Helpers.statusLabelMessage();
             Update();
@@ -1691,7 +1691,7 @@ namespace DSPRE
                 new TextArchive(RomInfo.moveNamesTextNumbers).messages.ToArray(),
                 moveDescriptions
             );
-            mde.ShowDialog();
+            mde.Show();
 
             Helpers.statusLabelMessage();
             Update();
@@ -1700,7 +1700,7 @@ namespace DSPRE
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (SettingsWindow editor = new SettingsWindow())
-                editor.ShowDialog();
+                editor.Show();
         }
 
         private void pokemonDataEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1719,7 +1719,7 @@ namespace DSPRE
             Helpers.statusLabelMessage();
             Update();
 
-            pde.ShowDialog();
+            pde.Show();
         }
 
 
@@ -1798,6 +1798,8 @@ namespace DSPRE
             Register(EditorPanels.levelScriptEditor, LSEditorPoppedOutLabel, popoutLevelScriptEditorButton);
             Register(EditorPanels.textEditor, textEditorPoppedOutLabel, popoutTextEditorButton);
             Register(EditorPanels.trainerEditor, trainerEditorPoppedOutLabel, popoutTrainerEditorButton);
+            Register(EditorPanels.nsbtxEditor, nsbtxEditorPopOutLabel, popoutNsbtxEditorButton);
+            Register(EditorPanels.eventEditor, eventEditorPopOutLabel, popoutEventEditorButton);
         }
 
         void Register(Control control, Label lbl, Button btn)
