@@ -98,11 +98,16 @@ namespace DSPRE.ROMFiles
 
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true)
         {
+            string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
+            string expandedDir = Path.Combine(baseDir, "expanded");
+            string path = Path.Combine(expandedDir, $"{IDtoReplace:D4}.txt");
+            string expandedPath = Path.Combine(baseDir, "expanded", $"{IDtoReplace:D4}.txt");
+
+            File.WriteAllText(path, string.Join(Environment.NewLine + Environment.NewLine, messages), Encoding.UTF8);
             bool success = TextEditor.CompressTextFile(IDtoReplace);
             if (showSuccessMessage && success)
             {
                 MessageBox.Show("Saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                TextEditor.ExpandTextFile(IDtoReplace);
             }
         }
 
