@@ -189,6 +189,7 @@ namespace DSPRE.Editors
             Helpers.DisableHandlers();
             LoadSprites();
             Helpers.EnableHandlers();
+            IndexBox.SelectedIndex = 1;
         }
 
         public bool CheckDiscardChanges()
@@ -450,107 +451,60 @@ namespace DSPRE.Editors
             if (OpenPngs.Enabled == false)
                 return;
             OpenPngs.Enabled = false;
-            string[] filenames = new string[5] { "", "", "", "", "" };
-            bool Autofill = false;
-            DialogResult yesno = MessageBox.Show("Autofill missing images?", "Autofill", MessageBoxButtons.YesNoCancel);
-            if (yesno == DialogResult.Cancel)
-            {
-                OpenPngs.Enabled = true;
-                return;
-            }
-            if (yesno == DialogResult.Yes)
-                Autofill = true;
+            PictureBox source = sender as PictureBox;
+            int index = Convert.ToInt32(source.Name);
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Title = "Choose up to 5 images";
-            openFileDialog.Multiselect = true;
+            openFileDialog.Title = "Choose an image";
             openFileDialog.CheckPathExists = true;
             openFileDialog.Filter = "Supported fomats: *.bmp, *.gif, *.png | *.bmp; *.gif; *.png";
             openFileDialog.ShowHelp = true;
+            Bitmap image;
             if (openFileDialog.ShowDialog() != DialogResult.OK)
             {
                 OpenPngs.Enabled = true;
                 return;
             }
-            string[] selected = openFileDialog.FileNames;
-            int shinymatch = 0;
-            for (int i = 0; i < selected.Length; i++)
+            image = new Bitmap(openFileDialog.FileName);
+            IndexedBitmapHandler Handler = new IndexedBitmapHandler();
+            if (index > 3)
             {
-                for (int j = 0; j < 5; j++)
+                image = CheckSize(image, openFileDialog.FileName, "Shiny");
+                if (image == null)
                 {
-                    if (selected[i].ToLower().Contains(names[j].ToLower()))
-                    {
-                        filenames[j] = selected[i];
-                        if (j < 4)
-                            shinymatch = j;
-                        break;
-                    }
+                    OpenPngs.Enabled = true;
+                    return;
                 }
+                ColorPalette temp = Handler.AlternatePalette(CurrentSprites.Sprites[index % 4], image);
+                if (temp != null)
+                    CurrentSprites.Shiny = temp;
+                else
+                    CurrentSprites.Shiny = image.Palette;
             }
-            SpriteSet temp = new SpriteSet();
-            bool[] tempUsed = new bool[16];
-            for (int i = 0; i < 4; i++)
+            else
             {
-                if (filenames[i] != "")
+                image = CheckSize(image, openFileDialog.FileName, names[index], index);
+                if (image == null)
                 {
-                    Bitmap image = new Bitmap(filenames[i]);
-                    image = CheckSize(image, filenames[i], names[i], i);
-                    if (image == null)
+                    OpenPngs.Enabled = true;
+                    return;
+                }
+                bool match = Handler.PaletteEquals(CurrentSprites.Normal, image);
+                if (!match)
+                {
+                    DialogResult yesno = MessageBox.Show("Image's palette does not match the current palette. Use PaletteMatch?", "Palette mismatch", MessageBoxButtons.YesNo);
+                    if (yesno == DialogResult.Yes)
                     {
-                        OpenPngs.Enabled = true;
-                        return;
-                    }
-                    temp.Sprites[i] = image;
-                    if (temp.Normal == null)
-                    {
-                        temp.Normal = temp.Sprites[i].Palette;
-                        tempUsed = Handler.IsUsed(temp.Sprites[i]);
+                        image = Handler.PaletteMatch(CurrentSprites.Normal, image, used);
+                        used = Handler.IsUsed(image, used);
                     }
                     else
-                    {
-                        bool match = Handler.PaletteEquals(temp.Normal, temp.Sprites[i]);
-                        if (!match)
-                        {
-                            temp.Sprites[i] = Handler.PaletteMatch(temp.Normal, temp.Sprites[i], tempUsed);
-                            temp.Normal = temp.Sprites[i].Palette;
-                        }
-                        tempUsed = Handler.IsUsed(temp.Sprites[i], tempUsed);
-                    }
+                        used = Handler.IsUsed(image);
+                    CurrentSprites.Normal = image.Palette;
                 }
+                CurrentSprites.Sprites[index] = image;
             }
-            used = tempUsed;
-            if (filenames[4] != "")
-            {
-                Bitmap image = new Bitmap(filenames[4]);
-                image = CheckSize(image, filenames[4], names[4], 4);
-                if ((shinymatch < 4) && (temp.Sprites[shinymatch] != null))
-                    temp.Shiny = Handler.AlternatePalette(temp.Sprites[shinymatch], image);
-                else
-                    temp.Shiny = image.Palette;
-            }
-            if (Autofill)
-            {
-                if (temp.Sprites[0] == null)
-                    temp.Sprites[0] = temp.Sprites[1];
-                if (temp.Sprites[1] == null)
-                    temp.Sprites[1] = temp.Sprites[0];
-                if (temp.Sprites[2] == null)
-                    temp.Sprites[2] = temp.Sprites[3];
-                if (temp.Sprites[3] == null)
-                    temp.Sprites[3] = temp.Sprites[2];
-                if (filenames[4] == "")
-                    temp.Shiny = temp.Normal;
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                if (temp.Sprites[i] != null)
-                    CurrentSprites.Sprites[i] = temp.Sprites[i];
-            }
-            if (temp.Normal != null)
-                CurrentSprites.Normal = temp.Normal;
-            if (temp.Shiny != null)
-                CurrentSprites.Shiny = temp.Shiny;
-            LoadImages();
             OpenPngs.Enabled = true;
+            LoadImages();
             setDirty(true);
         }
 
@@ -813,14 +767,14 @@ namespace DSPRE.Editors
 
         private Bitmap MakeImage(FileStream fs)
         {
+            fs.Seek(48L, SeekOrigin.Current);
             BinaryReader binaryReader = new BinaryReader(fs);
-            binaryReader.BaseStream.Seek(48L, SeekOrigin.Begin);
             ushort[] array = new ushort[3200];
             for (int i = 0; i < 3200; i++)
             {
                 array[i] = binaryReader.ReadUInt16();
             }
-            uint num = 0u;
+            uint num = array[0];
             if (RomInfo.gameFamily != RomInfo.GameFamilies.DP)
             {
                 for (int j = 0; j < 3200; j++)
@@ -837,55 +791,69 @@ namespace DSPRE.Editors
             }
             else
             {
-                for (int k = 0; k < 3200; k++)
+                num = array[3199];
+                for (int num2 = 3199; num2 >= 0; num2--)
                 {
                     unchecked
                     {
                         ushort[] array2;
                         IntPtr value;
-                        (array2 = array)[(int)(value = (IntPtr)k)] = (ushort)(array2[(int)value] ^ (ushort)(num & 0xFFFF));
+                        (array2 = array)[(int)(value = (IntPtr)num2)] = (ushort)(array2[(int)value] ^ (ushort)(num & 0xFFFF));
                         num *= 1103515245;
                         num += 24691;
                     }
                 }
             }
-            byte[] array3 = new byte[12800];
-            for (int l = 0; l < 3200; l++)
-            {
-                array3[l * 4] = (byte)(array[l] & 0xF);
-                array3[l * 4 + 1] = (byte)((array[l] >> 4) & 0xF);
-                array3[l * 4 + 2] = (byte)((array[l] >> 8) & 0xF);
-                array3[l * 4 + 3] = (byte)((array[l] >> 12) & 0xF);
-            }
-            Bitmap bitmap = new Bitmap(160, 80, PixelFormat.Format4bppIndexed);
+            Bitmap r_bitmap = new Bitmap(160, 80, PixelFormat.Format8bppIndexed);
             rect = new Rectangle(0, 0, 160, 80);
-            BitmapData bitmapData = bitmap.LockBits(rect, ImageLockMode.WriteOnly, bitmap.PixelFormat);
+            byte[] array3 = new byte[12800];
+            for (int k = 0; k < 3200; k++)
+            {
+                array3[k * 4] = (byte)(array[k] & 0xF);
+                array3[k * 4 + 1] = (byte)((array[k] >> 4) & 0xF);
+                array3[k * 4 + 2] = (byte)((array[k] >> 8) & 0xF);
+                array3[k * 4 + 3] = (byte)((array[k] >> 12) & 0xF);
+            }
+            BitmapData bitmapData = r_bitmap.LockBits(rect, ImageLockMode.WriteOnly, r_bitmap.PixelFormat);
             IntPtr scan = bitmapData.Scan0;
             Marshal.Copy(array3, 0, scan, 12800);
-            bitmap.UnlockBits(bitmapData);
-            return bitmap;
+            r_bitmap.UnlockBits(bitmapData);
+            Bitmap bitmap = new Bitmap(1, 1, PixelFormat.Format4bppIndexed);
+            ColorPalette palette = bitmap.Palette;
+            for (int l = 0; l < 16; l++)
+            {
+                palette.Entries[l] = Color.FromArgb(l << 4, l << 4, l << 4);
+            }
+            r_bitmap.Palette = palette;
+            if (r_bitmap == null)
+            {
+                MessageBox.Show("MakeImage Failed");
+                return null;
+            }
+            return r_bitmap;
         }
 
         private ColorPalette SetPal(FileStream fs)
         {
-            BinaryReader binaryReader = new BinaryReader(fs);
-            binaryReader.BaseStream.Seek(40L, SeekOrigin.Begin);
+            fs.Seek(40L, SeekOrigin.Current);
             ushort[] array = new ushort[16];
+            BinaryReader binaryReader = new BinaryReader(fs);
             for (int i = 0; i < 16; i++)
             {
                 array[i] = binaryReader.ReadUInt16();
             }
-            ColorPalette palette = new Bitmap(1, 1, PixelFormat.Format8bppIndexed).Palette;
+            Bitmap bitmap = new Bitmap(1, 1, PixelFormat.Format4bppIndexed);
+            ColorPalette palette = bitmap.Palette;
             for (int j = 0; j < 16; j++)
             {
-                palette.Entries[j] = Color.FromArgb((array[j] & 0x1F) * 8, ((array[j] >> 5) & 0x1F) * 8, ((array[j] >> 10) & 0x1F) * 8);
+                palette.Entries[j] = Color.FromArgb((array[j] & 0x1F) << 3, ((array[j] >> 5) & 0x1F) << 3, ((array[j] >> 10) & 0x1F) << 3);
             }
             return palette;
         }
 
         private void LoadSprites()
         {
-            nr = new NarcReader(RomInfo.pokeSpriteDir);
+            nr = new NarcReader(RomInfo.gameDirs[DirNames.pokemonBattleSprites].packedDir);
             used = new bool[nr.fe.Length];
             for (int i = 0; i < nr.fe.Length; i++)
             {
