@@ -43,17 +43,7 @@ namespace DSPRE {
 
                 this.Invalidate();
             } else {
-                Console.WriteLine(e.Delta);
-
-                //if (e.Delta > 0) {
-                //    if (scalingTrackBar.Value < scalingTrackBar.Maximum) {
-                //        scalingTrackBar.Value += (e.Delta > 0 ? 1 : -1);
-                //    }
-                //} else {
-                //    if (scalingTrackBar.Value > scalingTrackBar.Minimum) {
-                //        scalingTrackBar.Value += (e.Delta > 0 ? 1 : -1);
-                //    }
-                //}
+                AppLogger.Debug(e.Delta.ToString());
             }
 
             base.OnMouseMove(e);

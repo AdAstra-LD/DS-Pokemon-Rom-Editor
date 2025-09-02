@@ -123,7 +123,7 @@ namespace DSPRE.Editors
         {
             if (trainerSprite == null)
             {
-                Console.WriteLine("Sprite is null!");
+                AppLogger.Error("Sprite is null!");
                 return;
             }
 

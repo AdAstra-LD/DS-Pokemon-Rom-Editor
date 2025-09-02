@@ -251,7 +251,7 @@ namespace DSPRE {
                     t.Enabled = true;
 
                     if (p.Value != 0) {
-                        Console.WriteLine("Warning: Evolution parameter is not 0, but it should be.");
+                        AppLogger.Warn("Warning: Evolution parameter is not 0, but it should be.");
                     }
                     
                     p.Value = 0;

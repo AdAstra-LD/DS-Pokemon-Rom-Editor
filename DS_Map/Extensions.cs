@@ -59,7 +59,7 @@ namespace DSPRE {
                 o.Opacity -= (1.0 / frames);
             }
             o.Opacity = 0; //make fully invisible
-            Console.WriteLine("Fadeout done");
+            AppLogger.Debug("Fadeout done");
         }
 
         public static byte[] ToByteArrayChooseSize(this int num, byte size) {

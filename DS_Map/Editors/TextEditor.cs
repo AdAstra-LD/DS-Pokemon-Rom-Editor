@@ -576,8 +576,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            Console.WriteLine("R: " + dgv.CurrentCell.RowIndex);
-            Console.WriteLine("Last index: " + (dgv.RowCount - 1).ToString());
+            AppLogger.Debug("R: " + dgv.CurrentCell.RowIndex);
+            AppLogger.Debug("Last index: " + (dgv.RowCount - 1).ToString());
 
             if (dgv.CurrentCell.RowIndex > 0)
             {
@@ -698,7 +698,7 @@ namespace DSPRE.Editors
                 try
                 {
                     Directory.CreateDirectory(expandedDir);
-                    Console.WriteLine("Created expanded folder \"" + expandedDir + "\".");
+                    AppLogger.Info("Created expanded folder \"" + expandedDir + "\".");
                 }
                 catch (IOException)
                 {
@@ -709,7 +709,7 @@ namespace DSPRE.Editors
 
             if (File.Exists(expandedPath) && File.GetLastWriteTimeUtc(expandedPath) >= File.GetLastWriteTimeUtc(path))
             {
-                Console.WriteLine($"Skipped expanding {ID:D4} — already up to date.");
+                AppLogger.Info($"Skipped expanding {ID:D4} — already up to date.");
                 return;
             }
 
@@ -723,7 +723,7 @@ namespace DSPRE.Editors
             {
                 expand.Start();
                 expand.WaitForExit();
-                Console.WriteLine($"Expanded {ID:D4}");
+                AppLogger.Info($"Expanded {ID:D4}");
             }
             catch (Win32Exception ex)
             {
@@ -748,7 +748,7 @@ namespace DSPRE.Editors
 
             if (File.Exists(path) && File.GetLastWriteTimeUtc(path) >= File.GetLastWriteTimeUtc(expandedPath))
             {
-                Console.WriteLine($"Skipped expanding {ID:D4} — already up to date.");
+                AppLogger.Info($"Skipped expanding {ID:D4} — already up to date.");
                 return false;
             }
 
@@ -762,7 +762,7 @@ namespace DSPRE.Editors
             {
                 expand.Start();
                 expand.WaitForExit();
-                Console.WriteLine($"Compressed {ID:D4}");
+                AppLogger.Info($"Compressed {ID:D4}");
                 return true;
             }
             catch (Win32Exception ex)

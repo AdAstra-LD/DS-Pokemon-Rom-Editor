@@ -559,7 +559,7 @@ namespace DSPRE.Editors
                     scriptEditorNumberFormatDecimal.Checked = true;
                     break;
             }
-            Console.WriteLine("changed style to " + SettingsManager.Settings.scriptEditorFormatPreference);
+            AppLogger.Debug("changed style to " + SettingsManager.Settings.scriptEditorFormatPreference);
             Helpers.EnableHandlers();
         }
         private void UpdateScriptNumberFormat(NumberStyles numberStyle)
@@ -588,7 +588,7 @@ namespace DSPRE.Editors
         }
         private bool DisplayScript()
         {
-            Console.WriteLine("Script Reload has been requested");
+            AppLogger.Debug("Script Reload has been requested");
             /* clear controls */
             if (Helpers.HandlersDisabled || selectScriptFileComboBox.SelectedItem == null)
             {
@@ -1130,7 +1130,7 @@ namespace DSPRE.Editors
                 });
                 int i = selectScriptFileComboBox.SelectedIndex;
                 ScriptFile scriptFile = new ScriptFile(i);
-                Console.WriteLine("Attempting to load script " + scriptFile.fileID);
+                AppLogger.Debug("Attempting to load script " + scriptFile.fileID);
                 scriptsToSearch.Add(scriptFile);
                 this.UIThread(() => {
                     searchProgressBar.IncrementNoAnimation();
@@ -1144,7 +1144,7 @@ namespace DSPRE.Editors
                 for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++)
                 {
                     ScriptFile scriptFile = new ScriptFile(i);
-                    Console.WriteLine("Attempting to load script " + scriptFile.fileID);
+                    AppLogger.Debug("Attempting to load script " + scriptFile.fileID);
                     scriptsToSearch.Add(scriptFile);
                     this.UIThread(() => {
                         searchProgressBar.IncrementNoAnimation();

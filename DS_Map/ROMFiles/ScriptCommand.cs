@@ -154,7 +154,7 @@ namespace DSPRE.ROMFiles {
 
             if (nameParts.Length - 1 == paramLength) {
                 for (int i = paramsProcessed; i < paramLength; i++) {
-                    Console.WriteLine($"Parameter #{i}: {nameParts[i + 1]}");
+                    AppLogger.Debug($"Parameter #{i}: {nameParts[i + 1]}");
 
                     if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID)) { //Check succeeds when command is like "asdfg LESS" or "asdfg DIFFERENT"
                         cmdParams.Add(new byte[] { (byte)cmdID });

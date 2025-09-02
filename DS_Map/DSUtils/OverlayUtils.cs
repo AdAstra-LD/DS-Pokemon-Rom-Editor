@@ -62,7 +62,7 @@ namespace DSPRE {
 
             if (File.Exists(overlayFilePath + DSUtils.backupSuffix)) {
                 if (new FileInfo(overlayFilePath).Length <= new FileInfo(overlayFilePath + DSUtils.backupSuffix).Length) { //if overlay is bigger than its backup
-                    Console.WriteLine($"Overlay {overlayNumber} is already compressed.");
+                    AppLogger.Info($"Overlay {overlayNumber} is already compressed.");
                     return;
                 } else {
                     File.Delete(overlayFilePath);
@@ -70,7 +70,7 @@ namespace DSPRE {
                 }
             } else {
                 string msg = $"Overlay File {overlayFilePath}{DSUtils.backupSuffix} couldn't be found and restored.";
-                Console.WriteLine(msg);
+                AppLogger.Debug(msg);
 
                 if (eventEditorIsReady) {
                     MessageBox.Show(msg, "Can't restore overlay from backup", MessageBoxButtons.OK, MessageBoxIcon.Error);

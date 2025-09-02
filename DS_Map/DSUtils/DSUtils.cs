@@ -49,7 +49,7 @@ namespace DSPRE {
                 try {
                     buffer = reader.ReadBytes(numberOfBytes == 0 ? (int)(reader.BaseStream.Length - reader.BaseStream.Position) : (int)numberOfBytes);
                 } catch (EndOfStreamException) {
-                    Console.WriteLine("Stream ended");
+                    AppLogger.Error("Stream ended");
                 }
             }
 
@@ -68,7 +68,7 @@ namespace DSPRE {
                         buffer = reader.ReadBytes((int)numberOfBytes);
                     }
                 } catch (EndOfStreamException) {
-                    Console.WriteLine("Stream ended");
+                    AppLogger.Error("Stream ended");
                 }
             }
             return buffer;

@@ -962,7 +962,6 @@ namespace DSPRE.Editors
             Helpers.RenderMap(ref mapRenderer, ref buildingsRenderer, ref currentMapFile, ang, dist, elev, perspective, mapOpenGlControl.Width, mapOpenGlControl.Height, mapTexturesOn, bldTexturesOn);
 
             Helpers.EnableHandlers();
-            Console.WriteLine("X Rot " + currentMapFile.buildings[selection].xRotation.ToString());
         }
 
         private void yRotBuildUpDown_ValueChanged(object sender, EventArgs e)
@@ -1937,7 +1936,7 @@ namespace DSPRE.Editors
             }
             catch (FormatException)
             {
-                Console.WriteLine("Format incompatible");
+                AppLogger.Error("Format incompatible");
                 result = null;
             }
             return result;

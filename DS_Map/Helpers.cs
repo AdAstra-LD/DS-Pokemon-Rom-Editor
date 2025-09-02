@@ -373,7 +373,7 @@ namespace DSPRE {
                     NSBMD file = mapFile.buildings[i].NSBMDFile;
                     if (file is null)
                     {
-                        Console.WriteLine("Null building can't be rendered");
+                        AppLogger.Warn("Null building can't be rendered");
                     }
                     else
                     {
@@ -695,7 +695,6 @@ namespace DSPRE {
                 const byte toRead = 16;
                 foreach (FileInfo f in files)
                 {
-                    Console.WriteLine(f.Name);
 
                     string fileNameOnly = Path.GetFileNameWithoutExtension(f.FullName);
                     string dirNameOnly = Path.GetDirectoryName(f.FullName);
@@ -894,7 +893,7 @@ namespace DSPRE {
                 }
             }
 
-            Console.WriteLine("CSV file exported successfully.");
+            AppLogger.Info("CSV file exported successfully.");
         }
 
     }
