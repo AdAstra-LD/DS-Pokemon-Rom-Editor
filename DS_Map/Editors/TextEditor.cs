@@ -55,7 +55,8 @@ namespace DSPRE.Editors
                 markedText = System.Text.RegularExpressions.Regex.Replace(markedText, pattern.Key, match =>
                     $"[COLOR={pattern.Value.Name.ToLower()}]{match.Value}[/COLOR]");
             }
-            return markedText;
+            //return markedText;
+            return text;
         }
 
         private void textEditorDataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -127,7 +128,8 @@ namespace DSPRE.Editors
             try
             {
                 string originalText = textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString() ?? "";
-                string cleanedText = System.Text.RegularExpressions.Regex.Replace(originalText, @"\[COLOR=[a-z]+\](.*?)\[/COLOR\]", "$1");
+                //string cleanedText = System.Text.RegularExpressions.Regex.Replace(originalText, @"\[COLOR=[a-z]+\](.*?)\[/COLOR\]", "$1");
+                string cleanedText = originalText;
                 currentTextArchive.messages[e.RowIndex] = cleanedText;
                 textEditorDataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = ApplyHighlightMarkers(cleanedText); // Reapply markers
             }
