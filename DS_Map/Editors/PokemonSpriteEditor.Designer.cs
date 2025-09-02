@@ -8,7 +8,6 @@ namespace DSPRE.Editors
     partial class PokemonSpriteEditor
     {
         private System.ComponentModel.IContainer components = null;
-        private ComboBox IndexBox;
         private ComboBox SaveBox;
         private ComboBox BasePalette;
         private ComboBox ShinyPalette;
@@ -360,5 +359,6 @@ namespace DSPRE.Editors
         private PictureBox femaleBackShinyPic;
         private PictureBox maleFrontShinyPic;
         private PictureBox femaleFrontShinyPic;
+        public ComboBox IndexBox;
     }
 }
