@@ -45,11 +45,6 @@ namespace DSPRE.ROMFiles
             messages = File.ReadLines(expandedPath)
                           .Where((line, index) => index % 2 == 0)
                           .ToList();
-
-            foreach (string line in messages)
-            {
-                Console.WriteLine(line);
-            }
         }
 
         #endregion Constructors (1)

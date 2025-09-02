@@ -280,7 +280,7 @@ namespace DSPRE.Editors
 
         private void ChangeLoadedFile(int toLoad)
         {
-            Console.WriteLine("ItemEditor: ChangeLoadedFile: toLoad = " + toLoad);
+            AppLogger.Debug("ItemEditor: ChangeLoadedFile: toLoad = " + toLoad);
             currentLoadedId = toLoad;
 
             var stream = new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\" 
@@ -535,7 +535,7 @@ namespace DSPRE.Editors
             if (CheckDiscardChanges())
             {
                 int newId = itemNameInputComboBox.SelectedIndex;
-                Console.WriteLine("ItemEditor: itemNameInputComboBox_SelectedIndexChanged: newId = " + newId);
+                AppLogger.Debug("ItemEditor: itemNameInputComboBox_SelectedIndexChanged: newId = " + newId);
                 itemNumberNumericUpDown.Value = newId;
                 ChangeLoadedFile(newId);
             }
@@ -556,7 +556,7 @@ namespace DSPRE.Editors
             {
                 int newId = (int)itemNumberNumericUpDown.Value;
                 itemNameInputComboBox.SelectedIndex = newId;
-                Console.WriteLine("ItemEditor: itemNumberNumericUpDown_ValueChanged: newId = " + newId);
+                AppLogger.Debug("ItemEditor: itemNumberNumericUpDown_ValueChanged: newId = " + newId);
                 ChangeLoadedFile(newId);
             }
 

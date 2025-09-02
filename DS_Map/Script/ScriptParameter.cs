@@ -31,7 +31,7 @@ public class ScriptParameter {
         }
         catch (ArgumentException)
         {
-            Console.WriteLine($"Warning: Unknown parameter type '{typeStr}', defaulting to Integer");
+            AppLogger.Warn($"Warning: Unknown parameter type '{typeStr}', defaulting to Integer");
             return ParameterType.Integer;
         }
     }

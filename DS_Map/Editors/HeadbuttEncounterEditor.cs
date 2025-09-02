@@ -158,7 +158,7 @@ namespace DSPRE.Editors {
             } catch (Exception ex) {
                 //most likely more headbutt files than map headers
                 //there should be the same amount
-                Console.WriteLine(ex);
+                AppLogger.Error(ex.ToString());
                 return;
             }
 

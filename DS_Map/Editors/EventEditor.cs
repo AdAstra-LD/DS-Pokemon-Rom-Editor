@@ -331,7 +331,6 @@ namespace DSPRE.Editors
                         {
                             if (val.IndexOf("Warp", StringComparison.InvariantCultureIgnoreCase) >= 0)
                             {
-                                //Console.WriteLine("Found warp at " + i + ", " + j);
                                 g.DrawImage(icon, y * (tileSize + 1), x * (tileSize + 1));
                             }
                         }

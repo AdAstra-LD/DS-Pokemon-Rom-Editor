@@ -65,7 +65,7 @@ namespace DSPRE {
             byte[] texData = NSBUtils.GetTexturesFromTexturedNSBMD(txFile);
 
             if (texData.Length <= 4) {
-                Console.WriteLine("No textures found");
+                AppLogger.Error("No textures found");
                 return;
             }
             DSUtils.WriteToFile(Path.GetTempPath() + temp_btxname, texData, fmode: FileMode.Create);

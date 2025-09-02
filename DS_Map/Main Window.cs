@@ -113,7 +113,7 @@ namespace DSPRE
 
         private void SetMenuLayout(byte layoutStyle)
         {
-            Console.WriteLine("Setting menuLayout to" + layoutStyle);
+            AppLogger.Debug("Setting menuLayout to" + layoutStyle);
 
             IList list = menuViewToolStripMenuItem.DropDownItems;
             for (int i = 0; i < list.Count; i++)
@@ -1397,7 +1397,6 @@ namespace DSPRE
                 for (i = 0; i < tot; i++)
                 {
                     FileInfo f = files[i];
-                    Console.WriteLine(f.Name);
                     string destName = Path.GetDirectoryName(f.FullName) + "\\" + listLines[i];
 
                     if (string.IsNullOrWhiteSpace(destName))
@@ -1425,7 +1424,6 @@ namespace DSPRE
                         while (i < files.Length)
                         {
                             FileInfo f = files[i];
-                            Console.WriteLine(f.Name);
                             string destName = d.FullName + "\\" + ISOLATED_FOLDERNAME + "\\" + f.Name;
                             File.Move(f.FullName, destName);
                             i++;
