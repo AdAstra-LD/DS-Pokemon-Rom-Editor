@@ -245,7 +245,7 @@ namespace DSPRE.Editors
             toolTip1.SetToolTip(frzHealCheckBox, "Cures freeze status");
             toolTip1.SetToolTip(przHealCheckBox, "Cures paralysis status");
             toolTip1.SetToolTip(cfsHealCheckBox, "Cures confusion");
-            toolTip1.SetToolTip(infHealCheckBox, "Cures infatuation");
+            toolTip1.SetToolTip(infHealCheckBox, "Cures all");
             toolTip1.SetToolTip(guardSpecCheckBox, "Applies Mist effect to party (Guard Spec)");
 
             toolTip1.SetToolTip(reviveCheckBox, "Revives a fainted Pokémon to 50% HP");
