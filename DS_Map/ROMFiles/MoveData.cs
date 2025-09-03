@@ -9,7 +9,7 @@ using static DSPRE.RomInfo;
 namespace DSPRE {
     public class MoveData : RomFile {
         public enum AttackRange : ushort {
-            SELECTION = (0),
+            SELECTION = 0,
             VARIABLE = (1 << 0),
             RANDOM = (1 << 1),
             BOTH = (1 << 2),
@@ -36,6 +36,7 @@ namespace DSPRE {
         };
 
         public enum MoveFlags : byte {
+            NONE = 0,
             CONTACT = (1 << 0),
             PROTECT = (1 << 1),
             MAGIC_COAT = (1 << 2),
