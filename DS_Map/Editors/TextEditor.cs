@@ -750,10 +750,10 @@ namespace DSPRE.Editors
 
             if (File.Exists(path) && File.GetLastWriteTimeUtc(path) >= File.GetLastWriteTimeUtc(expandedPath))
             {
-                AppLogger.Info($"Skipped expanding {ID:D4} — already up to date.");
+                AppLogger.Info($"Skipped compressing {ID:D4} — already up to date.");
                 return false;
             }
-
+            File.Delete(path);
             Process expand = new Process();
             expand.StartInfo.FileName = toolPath;
             expand.StartInfo.Arguments = $"-e -c \"{charmapPath}\" \"{expandedPath}\" \"{path}\"";
