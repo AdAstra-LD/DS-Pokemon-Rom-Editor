@@ -94,6 +94,8 @@ namespace DSPRE.Editors
                 holdEffectComboBox.Items.RemoveAt((int)HoldEffect.GiratinaBoost); // Effect doesn't exist in DP
             }
 
+            // Base tooltips
+            toolTip1.SetToolTip(priceGroupBox, "Sets the value of the item, 50% less by DEFAULT in the shop");
             toolTip1.SetToolTip(partyUseCheckBox, "Enables the Item's party usage parameters");
 
             // ItemParameters

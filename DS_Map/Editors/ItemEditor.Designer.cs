@@ -43,6 +43,10 @@
             this.holdEffectLabel = new System.Windows.Forms.Label();
             this.pocketFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.pocketGroupBox = new System.Windows.Forms.GroupBox();
+            this.statusHealersBattlePocketCheck = new System.Windows.Forms.CheckBox();
+            this.hpRestoreBattlePocketCheck = new System.Windows.Forms.CheckBox();
+            this.ppRestoreBattlePocketCheck = new System.Windows.Forms.CheckBox();
+            this.battleItemsBattlePocketCheck = new System.Windows.Forms.CheckBox();
             this.pokeBallsBattlePocketCheck = new System.Windows.Forms.CheckBox();
             this.fieldPocketLabel = new System.Windows.Forms.Label();
             this.battlePocketLabel = new System.Windows.Forms.Label();
@@ -139,10 +143,6 @@
             this.imageLabel = new System.Windows.Forms.Label();
             this.itemEditorSelectedPictureBox = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.battleItemsBattlePocketCheck = new System.Windows.Forms.CheckBox();
-            this.ppRestoreBattlePocketCheck = new System.Windows.Forms.CheckBox();
-            this.hpRestoreBattlePocketCheck = new System.Windows.Forms.CheckBox();
-            this.statusHealersBattlePocketCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.itemNumberNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -357,6 +357,46 @@
             this.pocketGroupBox.TabIndex = 0;
             this.pocketGroupBox.TabStop = false;
             this.pocketGroupBox.Text = "Pocket Data";
+            // 
+            // statusHealersBattlePocketCheck
+            // 
+            this.statusHealersBattlePocketCheck.AutoSize = true;
+            this.statusHealersBattlePocketCheck.Location = new System.Drawing.Point(167, 81);
+            this.statusHealersBattlePocketCheck.Name = "statusHealersBattlePocketCheck";
+            this.statusHealersBattlePocketCheck.Size = new System.Drawing.Size(95, 17);
+            this.statusHealersBattlePocketCheck.TabIndex = 13;
+            this.statusHealersBattlePocketCheck.Text = "Status Healers";
+            this.statusHealersBattlePocketCheck.UseVisualStyleBackColor = true;
+            // 
+            // hpRestoreBattlePocketCheck
+            // 
+            this.hpRestoreBattlePocketCheck.AutoSize = true;
+            this.hpRestoreBattlePocketCheck.Location = new System.Drawing.Point(88, 81);
+            this.hpRestoreBattlePocketCheck.Name = "hpRestoreBattlePocketCheck";
+            this.hpRestoreBattlePocketCheck.Size = new System.Drawing.Size(81, 17);
+            this.hpRestoreBattlePocketCheck.TabIndex = 12;
+            this.hpRestoreBattlePocketCheck.Text = "HP Restore";
+            this.hpRestoreBattlePocketCheck.UseVisualStyleBackColor = true;
+            // 
+            // ppRestoreBattlePocketCheck
+            // 
+            this.ppRestoreBattlePocketCheck.AutoSize = true;
+            this.ppRestoreBattlePocketCheck.Location = new System.Drawing.Point(88, 105);
+            this.ppRestoreBattlePocketCheck.Name = "ppRestoreBattlePocketCheck";
+            this.ppRestoreBattlePocketCheck.Size = new System.Drawing.Size(80, 17);
+            this.ppRestoreBattlePocketCheck.TabIndex = 11;
+            this.ppRestoreBattlePocketCheck.Text = "PP Restore";
+            this.ppRestoreBattlePocketCheck.UseVisualStyleBackColor = true;
+            // 
+            // battleItemsBattlePocketCheck
+            // 
+            this.battleItemsBattlePocketCheck.AutoSize = true;
+            this.battleItemsBattlePocketCheck.Location = new System.Drawing.Point(9, 105);
+            this.battleItemsBattlePocketCheck.Name = "battleItemsBattlePocketCheck";
+            this.battleItemsBattlePocketCheck.Size = new System.Drawing.Size(81, 17);
+            this.battleItemsBattlePocketCheck.TabIndex = 10;
+            this.battleItemsBattlePocketCheck.Text = "Battle Items";
+            this.battleItemsBattlePocketCheck.UseVisualStyleBackColor = true;
             // 
             // pokeBallsBattlePocketCheck
             // 
@@ -598,9 +638,9 @@
             this.priceLabel.AutoSize = true;
             this.priceLabel.Location = new System.Drawing.Point(30, 37);
             this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(31, 13);
+            this.priceLabel.Size = new System.Drawing.Size(34, 13);
             this.priceLabel.TabIndex = 9;
-            this.priceLabel.Text = "Price";
+            this.priceLabel.Text = "Value";
             this.priceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // functionsFlowLayoutPanel
@@ -1322,46 +1362,6 @@
             this.itemEditorSelectedPictureBox.Size = new System.Drawing.Size(47, 47);
             this.itemEditorSelectedPictureBox.TabIndex = 18;
             this.itemEditorSelectedPictureBox.TabStop = false;
-            // 
-            // battleItemsBattlePocketCheck
-            // 
-            this.battleItemsBattlePocketCheck.AutoSize = true;
-            this.battleItemsBattlePocketCheck.Location = new System.Drawing.Point(9, 105);
-            this.battleItemsBattlePocketCheck.Name = "battleItemsBattlePocketCheck";
-            this.battleItemsBattlePocketCheck.Size = new System.Drawing.Size(81, 17);
-            this.battleItemsBattlePocketCheck.TabIndex = 10;
-            this.battleItemsBattlePocketCheck.Text = "Battle Items";
-            this.battleItemsBattlePocketCheck.UseVisualStyleBackColor = true;
-            // 
-            // ppRestoreBattlePocketCheck
-            // 
-            this.ppRestoreBattlePocketCheck.AutoSize = true;
-            this.ppRestoreBattlePocketCheck.Location = new System.Drawing.Point(88, 105);
-            this.ppRestoreBattlePocketCheck.Name = "ppRestoreBattlePocketCheck";
-            this.ppRestoreBattlePocketCheck.Size = new System.Drawing.Size(80, 17);
-            this.ppRestoreBattlePocketCheck.TabIndex = 11;
-            this.ppRestoreBattlePocketCheck.Text = "PP Restore";
-            this.ppRestoreBattlePocketCheck.UseVisualStyleBackColor = true;
-            // 
-            // hpRestoreBattlePocketCheck
-            // 
-            this.hpRestoreBattlePocketCheck.AutoSize = true;
-            this.hpRestoreBattlePocketCheck.Location = new System.Drawing.Point(88, 81);
-            this.hpRestoreBattlePocketCheck.Name = "hpRestoreBattlePocketCheck";
-            this.hpRestoreBattlePocketCheck.Size = new System.Drawing.Size(81, 17);
-            this.hpRestoreBattlePocketCheck.TabIndex = 12;
-            this.hpRestoreBattlePocketCheck.Text = "HP Restore";
-            this.hpRestoreBattlePocketCheck.UseVisualStyleBackColor = true;
-            // 
-            // statusHealersBattlePocketCheck
-            // 
-            this.statusHealersBattlePocketCheck.AutoSize = true;
-            this.statusHealersBattlePocketCheck.Location = new System.Drawing.Point(167, 81);
-            this.statusHealersBattlePocketCheck.Name = "statusHealersBattlePocketCheck";
-            this.statusHealersBattlePocketCheck.Size = new System.Drawing.Size(95, 17);
-            this.statusHealersBattlePocketCheck.TabIndex = 13;
-            this.statusHealersBattlePocketCheck.Text = "Status Healers";
-            this.statusHealersBattlePocketCheck.UseVisualStyleBackColor = true;
             // 
             // ItemEditor
             // 
