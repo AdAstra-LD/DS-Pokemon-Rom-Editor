@@ -436,9 +436,11 @@
             this.textEditorDataGridView.RowHeadersWidth = 68;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textEditorDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.textEditorDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.textEditorDataGridView.Size = new System.Drawing.Size(873, 491);
             this.textEditorDataGridView.TabIndex = 67;
             this.textEditorDataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.textEditorDataGridView_CellValueChanged);
+            this.textEditorDataGridView.SelectionChanged += new System.EventHandler(this.textEditorDataGridView_SelectionChanged);
             // 
             // messageColumn
             // 

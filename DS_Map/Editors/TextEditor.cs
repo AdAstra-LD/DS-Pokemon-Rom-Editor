@@ -22,7 +22,6 @@ namespace DSPRE.Editors
         {
             InitializeComponent();
             this.textSearchResultsListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textSearchResultsListBox_GoToEntryResult);
-
         }
 
         #region Text Editor
@@ -549,7 +548,7 @@ namespace DSPRE.Editors
             textEditorDataGridView.Invalidate(); // Force repaint
 
             Helpers.EnableHandlers();
-            textEditorDataGridView_CurrentCellChanged(textEditorDataGridView, null);
+            textEditorDataGridView_SelectionChanged(textEditorDataGridView, null);
         }
         private void PrintTextEditorLinesHex()
         {
@@ -569,36 +568,58 @@ namespace DSPRE.Editors
                 textEditorDataGridView.Rows[i].HeaderCell.Value = i.ToString();
             }
         }
-        
-        private void textEditorDataGridView_CurrentCellChanged(object sender, EventArgs e)
+        private void textEditorDataGridView_SelectionChanged(object sender, EventArgs e)
         {
             DataGridView dgv = sender as DataGridView;
-            if (Helpers.HandlersDisabled || dgv == null || dgv.CurrentCell == null)
+            if (Helpers.HandlersDisabled || dgv == null)
             {
+                AppLogger.Debug($"Handler skipped: HandlersDisabled={Helpers.HandlersDisabled}, dgv={dgv == null}");
+                selectedLineMoveUpButton.Enabled = false;
+                selectedLineMoveDownButton.Enabled = false;
+                selectedLineMoveUpButton.Refresh();
+                selectedLineMoveDownButton.Refresh();
                 return;
             }
 
-            AppLogger.Debug("R: " + dgv.CurrentCell.RowIndex);
-            AppLogger.Debug("Last index: " + (dgv.RowCount - 1).ToString());
-
-            if (dgv.CurrentCell.RowIndex > 0)
+            if (dgv.SelectedRows.Count == 0)
             {
-                selectedLineMoveUpButton.Enabled = true;
-            }
-            else
-            {
+                AppLogger.Debug("No rows selected, disabling buttons");
                 selectedLineMoveUpButton.Enabled = false;
+                selectedLineMoveDownButton.Enabled = false;
+                selectedLineMoveUpButton.Refresh();
+                selectedLineMoveDownButton.Refresh();
+                return;
             }
 
-            if (dgv.CurrentCell.RowIndex < dgv.RowCount - 1)
+            int rowIndex = dgv.SelectedRows[0].Index;
+            try
             {
-                selectedLineMoveDownButton.Enabled = true;
+                int firstVisibleColumn = -1;
+                for (int i = 0; i < dgv.Columns.Count; i++)
+                {
+                    if (dgv.Columns[i].Visible && !dgv.Columns[i].Frozen)
+                    {
+                        firstVisibleColumn = i;
+                        break;
+                    }
+                }
+                if (firstVisibleColumn >= 0 && (dgv.CurrentCell == null || dgv.CurrentCell.RowIndex != rowIndex))
+                {
+                    dgv.CurrentCell = dgv[firstVisibleColumn, rowIndex];
+                }
             }
-            else
+            catch (Exception ex)
             {
-                selectedLineMoveDownButton.Enabled = false;
+                AppLogger.Warn($"Failed to set CurrentCell: {ex.Message}");
             }
+
+            int rowCount = dgv.RowCount;
+            selectedLineMoveUpButton.Enabled = rowIndex > 0;
+            selectedLineMoveDownButton.Enabled = rowIndex < rowCount - 1;
+            selectedLineMoveUpButton.Refresh();
+            selectedLineMoveDownButton.Refresh();
         }
+        
 
         private void textSearchResultsListBox_GoToEntryResult(object sender, MouseEventArgs e)
         {
@@ -727,7 +748,7 @@ namespace DSPRE.Editors
 
             if (File.Exists(expandedPath) && File.GetLastWriteTimeUtc(expandedPath) >= File.GetLastWriteTimeUtc(path))
             {
-                AppLogger.Info($"Skipped expanding {ID:D4} — already up to date.");
+                //AppLogger.Debug($"Skipped expanding {ID:D4} — already up to date.");
                 return;
             }
 

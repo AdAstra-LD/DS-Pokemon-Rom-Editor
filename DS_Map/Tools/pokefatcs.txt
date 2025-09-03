@@ -98,30 +98,29 @@ Skarmory’s feathers are as hard as steel.
 The Eterna Galactic Building hides Team Galactic’s plans.
 Lopunny’s fluffy fur is popular in fashion.
 DSPRE is a major overhaul of Nomura's 2020 DS Pokemon ROM Editor.
-Did you know? DSPRE significantly shortened load and save times – no more waiting like a Snorlax!
-In DSPRE, the Script Editor now has syntax highlighting – code like a pro trainer!
-DSPRE added a new Advanced Header Search feature – find what you need faster than a Pidgeot!
-DSPRE's ROM Toolbox can expand ARM9 memory – more space for your epic hacks!
-Did you know? DSPRE's commit once celebrated 'Trainer Name Encoding (F YEAH!)' – pure enthusiasm from Mixone!
-The SpawnPoint button was 'lost to Hades' in a DSPRE commit – Mixone brought it back from the underworld!
-DSPRE versions 1.9 and 1.9.1 were 'violently yeeted out of existence' due to a bug – dramatic updates!
-Thanks to SunakazeKun, DSPRE added missing ReplaceMove args – completing the move set!
-Xzonn updated Chinese character support in DSPRE – making it multilingual master!
-DSPRE's Event Editor now supports mouse dragging for buildings – drag and drop like a boss!
-In DSPRE, the Text Editor shows row numbers in hex – for those who think in code!
-DSPRE fixed the 'stupid bug' in some commits – because even tools have off days!
-Did you know? DSPRE's contributors like Mixone and OtakuGracie keep the project evolving!
-DSPRE added glTF exporter for Map Models – export your worlds in style!
-DSPRE's Wild Encounters Editor can repair corrupted files – a lifesaver for hackers!
-In DSPRE, the Matrix Editor supports custom color tables – paint your world!
-DSPRE's Trainer Editor got a partial overhaul – train harder, hack smarter!
-Did you know? DSPRE's release notes once said 'whoops' for a quick fix – honest mistakes!
-DSPRE fixed unresponsive text editors after unpacking – no more frozen screens!
-DSPRE's Map Editor has a flood fill for permissions – cover ground quickly!
-In a DSPRE commit, 'Fixed stupid bug' was the message – self-roast level high!
-DSPRE added support for BDHCAM import/export – camera work like a director!
-DSPRE's NSBTX Editor has a palette match algorithm – colors just click!
-Did you know? AdAstra yeeted buggy versions – only the best for ROM hackers!
-DSPRE's Event Editor can duplicate events – clone your way to victory!
-DSPRE fixed ARM9 mismatch warnings – keeping your ROM stable!
-In DSPRE, the Spawn Settings Editor lets you change starting money – rich from the start!
+Did you know? DSPRE significantly shortened load and save times - no more waiting like a Snorlax!
+In DSPRE, the Script Editor now has syntax highlighting - code like a pro trainer!
+DSPRE added a new Advanced Header Search feature - find what you need faster than a Pidgeot!
+DSPRE's ROM Toolbox can expand ARM9 memory - more space for your epic hacks!
+Did you know? DSPRE's commit once celebrated 'Trainer Name Encoding (F YEAH!)'!
+The SpawnPoint button was 'lost to Hades' in a DSPRE commit - Mixone brought it back from the underworld!
+DSPRE versions 1.9 and 1.9.1 were 'violently yeeted out of existence' due to a bug - dramatic updates!
+Thanks to SunakazeKun, DSPRE added missing ReplaceMove args - completing the move set!
+Xzonn updated Chinese character support in DSPRE - making it multilingual master!
+DSPRE's Event Editor now supports mouse dragging for buildings - drag and drop like a boss!
+In DSPRE, the Text Editor shows row numbers in hex - for those who think in code!
+DSPRE fixed the 'stupid bug' in some commits - because even tools have off days!
+Did you know? DSPRE's contributors like Yako, Kuha and Kalaay keep the project evolving!
+DSPRE's Wild Encounters Editor can repair corrupted files - a lifesaver for hackers!
+In DSPRE, the Matrix Editor supports custom color tables - paint your world!
+DSPRE's Trainer Editor got a partial overhaul - train harder, hack smarter!
+Did you know? DSPRE's release notes once said 'whoops' for a quick fix - honest mistakes!
+DSPRE fixed unresponsive text editors after unpacking - no more frozen screens!
+DSPRE's Map Editor has a flood fill for permissions - cover ground quickly!
+In a DSPRE commit, 'Fixed stupid bug' was the message - self-roast level high!
+DSPRE added support for BDHCAM import/export - camera work like a director!
+DSPRE's NSBTX Editor has a palette match algorithm - colors just click!
+Did you know? AdAstra yeeted buggy versions - only the best for ROM hackers!
+DSPRE's Event Editor can duplicate events - clone your way to victory!
+DSPRE fixed ARM9 mismatch warnings - keeping your ROM stable!
+In DSPRE, the Spawn Settings Editor lets you change starting money - rich from the start!
