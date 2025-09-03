@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
-using static Tao.Platform.Windows.Winmm;
+using DSPRE.Editors.Utils;
 
 namespace DSPRE.Editors
 {
@@ -671,19 +671,35 @@ namespace DSPRE.Editors
 
             selectTextFileComboBox.Items.Clear();
             int textCount = parent.romInfo.GetTextArchivesCount();
-            for (int i = 0; i < textCount; i++)
+
+            using (var loadingForm = new LoadingForm(textCount, "Loading text archives..."))
             {
-                Helpers.statusLabelMessage($"Parsing text file {i} of {textCount}");
-                ExpandTextFile(i);
-                selectTextFileComboBox.Items.Add("Text Archive " + i);
+                Helpers.statusLabelMessage("Setting up Text Editor...");
+
+                Task.Run(() =>
+                {
+                    selectTextFileComboBox.Invoke((Action)(() => selectTextFileComboBox.Items.Clear()));
+                    for (int i = 0; i < textCount; i++)
+                    {
+                        ExpandTextFile(i);
+                        loadingForm.Invoke((Action)(() => loadingForm.UpdateProgress(i + 1)));
+                        selectTextFileComboBox.Invoke((Action)(() => selectTextFileComboBox.Items.Add("Text Archive " + i)));
+                    }
+
+                    _parent.Invoke((Action)(() =>
+                    {
+                        Helpers.DisableHandlers();
+                        hexRadiobutton.Checked = SettingsManager.Settings.textEditorPreferHex;
+                        Helpers.EnableHandlers();
+                        selectTextFileComboBox.SelectedIndex = 0;
+                        Helpers.statusLabelMessage();
+                        loadingForm.Close();
+                    }));
+                });
+
+                // ShowDialog to keep the form modal while allowing background processing
+                loadingForm.ShowDialog();
             }
-
-            Helpers.DisableHandlers();
-            hexRadiobutton.Checked = SettingsManager.Settings.textEditorPreferHex;
-            Helpers.EnableHandlers();
-
-            selectTextFileComboBox.SelectedIndex = 0;
-            Helpers.statusLabelMessage();
         }
 
         public static void ExpandTextFile(int ID)

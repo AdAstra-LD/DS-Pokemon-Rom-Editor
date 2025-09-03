@@ -1,0 +1,127 @@
+Pikachu is the mascot of the Pokemon franchise!
+Bulbasaur is the first Pokemon in the National Pokedex.
+Mewtwo was created by scientists in a lab on Cinnabar Island.
+Eevee has eight different evolutions, known as Eeveelutions!
+Charizard's tail flame burns brighter when it's healthy.
+Gengar is said to steal the shadows of its victims.
+The Pokemon world has eight regions, from Kanto to Paldea!
+Snorlax can sleep for days and only wakes up to eat.
+Magikarp is weak but evolves into the powerful Gyarados.
+Jigglypuff loves to sing, but its song puts others to sleep!
+Lucario can sense auras to read emotions and intentions.
+Wailord is the largest Pokemon, over 47 feet long!
+Arceus is considered the creator of the Pokemon universe.
+Gyarados can cause storms when it appears in the wild.
+Pidgeot can fly at speeds up to Mach 2!
+Mimikyu dresses as Pikachu to make friends.
+The Sinnoh region, home of Platinum, is based on Hokkaido, Japan.
+Dragonite can circle the globe in just 16 hours.
+Clefairy is rumored to have come from the moon.
+Garchomp's speed rivals that of a jet plane.
+Mew is said to contain the DNA of every Pokemon.
+The move Hyper Beam requires a recharge after use.
+Togepi evolves with high friendship, not just levels.
+Alakazam has an IQ of over 5,000!
+The Poke Ball was invented by Professor Westwood V.
+Vaporeon’s tail resembles a mermaid’s.
+Ho-Oh’s feathers glow in seven colors.
+Rayquaza lives in the ozone layer and rarely descends.
+The Elite Four challenge trainers to prove their strength.
+Porygon was the first Pokemon created by programming.
+Sylveon can calm others with its soothing ribbons.
+Ditto can transform into any Pokemon it sees.
+The Pokedex is a high-tech encyclopedia of Pokemon.
+Latias and Latios can communicate telepathically.
+Groudon can cause droughts and expand landmasses.
+Kyogre can summon rain and expand oceans.
+Turtwig’s shell is made of soil and hardens with water.
+Piplup is based on a penguin and loves to swim.
+Staraptor can carry heavy loads while flying.
+The Move Tutor teaches Pokemon new moves for a price.
+Eevee’s unstable DNA allows multiple evolutions.
+Shaymin can purify polluted areas with its flowers.
+Darkrai can trap people in nightmares.
+The Battle Frontier is an ultimate test for trainers.
+Psyduck gets headaches that unleash psychic powers.
+Geodude is often mistaken for a regular rock.
+Chikorita’s leaf indicates its health and mood.
+Munchlax eats ten times its weight in food daily.
+The Day-Care Center helps Pokemon breed and level up.
+Legendary Pokemon are often tied to myths and legends.
+Giratina guards the Distortion World in Platinum.
+The HM Surf lets Pokemon swim across water.
+Bidoof is a fan-favorite for its goofy charm.
+Cynthia is the Champion of the Sinnoh region in Platinum.
+The move Earthquake can hit multiple Pokemon at once.
+Palkia controls space and lives in a parallel dimension.
+Dialga controls time and is revered in Sinnoh lore.
+The Underground in Sinnoh lets trainers dig for treasures.
+Abomasnow can summon blizzards with its presence.
+Rotom can possess appliances to change its form.
+The move Flamethrower is super effective against Grass types.
+Meowth can learn Pay Day to scatter coins in battle.
+The Safari Zone lets trainers catch rare Pokemon.
+Jolteon’s electric shocks can reach 10,000 volts.
+Scyther’s blades are as sharp as samurai swords.
+Lapras is known for ferrying people across bodies of water.
+The move Psychic can lower an opponent’s defenses.
+Blastoise has water cannons that can pierce steel.
+The Pokemon Tower in Lavender Town is a memorial for departed Pokemon.
+Cubone wears its mother’s skull as a helmet.
+The move Thunderbolt has a chance to paralyze foes.
+Happiny carries a stone that looks like an egg.
+The Distortion World in Platinum has reversed gravity.
+Glaceon evolves near an Ice Rock in cold regions.
+Leafeon evolves near a Moss Rock in lush forests.
+The move Surf is both a battle move and a field ability.
+Mr. Mime creates invisible walls with its mime skills.
+The Battle Tower challenges trainers with tough battles.
+Miltank’s milk is highly nutritious and heals Pokemon.
+The move Solar Beam needs sunlight to charge.
+Drifloon is said to carry children to the afterlife.
+The Pokemon League is the ultimate goal for trainers.
+Aerodactyl is a fossil Pokemon revived from amber.
+The move Ice Beam can freeze opponents solid.
+Magmar lives in active volcanoes and thrives in heat.
+The Sinnoh Pokedex has 210 Pokemon in Platinum.
+Riolu evolves into Lucario with high friendship during the day.
+The move Shadow Ball is super effective against Ghost types.
+Tropius grows fruit on its neck that kids love to eat.
+The Poke Flute can wake sleeping Pokemon like Snorlax.
+Sudowoodo pretends to be a tree but is actually a Rock type.
+The move Metronome randomly uses any move in the game.
+Ninetales can curse foes with its mystical tails.
+The Old Chateau in Sinnoh is haunted by Ghost Pokemon.
+Pachirisu stores electricity in its cheeks like Pikachu.
+The move Protect shields Pokemon from attacks for one turn.
+Skarmory’s feathers are as hard as steel.
+The Eterna Galactic Building hides Team Galactic’s plans.
+Lopunny’s fluffy fur is popular in fashion.
+DSPRE is a major overhaul of Nomura's 2020 DS Pokemon ROM Editor.
+Did you know? DSPRE significantly shortened load and save times – no more waiting like a Snorlax!
+In DSPRE, the Script Editor now has syntax highlighting – code like a pro trainer!
+DSPRE added a new Advanced Header Search feature – find what you need faster than a Pidgeot!
+DSPRE's ROM Toolbox can expand ARM9 memory – more space for your epic hacks!
+Did you know? DSPRE's commit once celebrated 'Trainer Name Encoding (F YEAH!)' – pure enthusiasm from Mixone!
+The SpawnPoint button was 'lost to Hades' in a DSPRE commit – Mixone brought it back from the underworld!
+DSPRE versions 1.9 and 1.9.1 were 'violently yeeted out of existence' due to a bug – dramatic updates!
+Thanks to SunakazeKun, DSPRE added missing ReplaceMove args – completing the move set!
+Xzonn updated Chinese character support in DSPRE – making it multilingual master!
+DSPRE's Event Editor now supports mouse dragging for buildings – drag and drop like a boss!
+In DSPRE, the Text Editor shows row numbers in hex – for those who think in code!
+DSPRE fixed the 'stupid bug' in some commits – because even tools have off days!
+Did you know? DSPRE's contributors like Mixone and OtakuGracie keep the project evolving!
+DSPRE added glTF exporter for Map Models – export your worlds in style!
+DSPRE's Wild Encounters Editor can repair corrupted files – a lifesaver for hackers!
+In DSPRE, the Matrix Editor supports custom color tables – paint your world!
+DSPRE's Trainer Editor got a partial overhaul – train harder, hack smarter!
+Did you know? DSPRE's release notes once said 'whoops' for a quick fix – honest mistakes!
+DSPRE fixed unresponsive text editors after unpacking – no more frozen screens!
+DSPRE's Map Editor has a flood fill for permissions – cover ground quickly!
+In a DSPRE commit, 'Fixed stupid bug' was the message – self-roast level high!
+DSPRE added support for BDHCAM import/export – camera work like a director!
+DSPRE's NSBTX Editor has a palette match algorithm – colors just click!
+Did you know? AdAstra yeeted buggy versions – only the best for ROM hackers!
+DSPRE's Event Editor can duplicate events – clone your way to victory!
+DSPRE fixed ARM9 mismatch warnings – keeping your ROM stable!
+In DSPRE, the Spawn Settings Editor lets you change starting money – rich from the start!
