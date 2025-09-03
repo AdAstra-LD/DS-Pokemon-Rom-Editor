@@ -94,6 +94,8 @@ namespace DSPRE.Editors
                 holdEffectComboBox.Items.RemoveAt((int)HoldEffect.GiratinaBoost); // Effect doesn't exist in DP
             }
 
+            toolTip1.SetToolTip(partyUseCheckBox, "Enables the Item's party usage parameters");
+
             // ItemParameters
             BindItemParamsEvents();
             SetItemParamToolTips();
