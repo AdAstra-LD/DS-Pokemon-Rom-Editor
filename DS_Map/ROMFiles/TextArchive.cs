@@ -41,10 +41,15 @@ namespace DSPRE.ROMFiles
 
             TextEditor.ExpandTextFile(ID);
 
-            // Read lines and keep only every other line (e.g., even indices: 0, 2, 4, ...)
-            messages = File.ReadLines(expandedPath)
-                          .Where((line, index) => index % 2 == 0)
-                          .ToList();
+            string rawText = File.ReadAllText(expandedPath);
+            // Replace all possible line endings with \r\n because f me thats why
+            rawText = rawText.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n");
+            messages = rawText.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
+            // Get rid of trailing empty line if it exists
+            if (messages.Count > 0 && messages[messages.Count - 1] == "")
+            {
+                messages.RemoveAt(messages.Count - 1);
+            }
         }
 
         #endregion Constructors (1)
@@ -101,9 +106,9 @@ namespace DSPRE.ROMFiles
             string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
             string expandedDir = Path.Combine(baseDir, "expanded");
             string path = Path.Combine(expandedDir, $"{IDtoReplace:D4}.txt");
-            string expandedPath = Path.Combine(baseDir, "expanded", $"{IDtoReplace:D4}.txt");
 
-            File.WriteAllText(path, string.Join(Environment.NewLine + Environment.NewLine, messages), Encoding.UTF8);
+            var utf8WithoutBom = new UTF8Encoding(false);
+            File.WriteAllText(path, string.Join(Environment.NewLine, messages), utf8WithoutBom);
             bool success = TextEditor.CompressTextFile(IDtoReplace);
             if (showSuccessMessage && success)
             {
