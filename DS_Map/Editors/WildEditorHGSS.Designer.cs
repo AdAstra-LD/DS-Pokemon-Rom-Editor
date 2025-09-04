@@ -560,11 +560,6 @@
             // rockSmashRateUpDown
             // 
             this.rockSmashRateUpDown.Location = new System.Drawing.Point(181, 19);
-            this.rockSmashRateUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             this.rockSmashRateUpDown.Name = "rockSmashRateUpDown";
             this.rockSmashRateUpDown.Size = new System.Drawing.Size(42, 20);
             this.rockSmashRateUpDown.TabIndex = 69;
@@ -1608,11 +1603,6 @@
             // superRodRateUpDown
             // 
             this.superRodRateUpDown.Location = new System.Drawing.Point(265, 17);
-            this.superRodRateUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             this.superRodRateUpDown.Name = "superRodRateUpDown";
             this.superRodRateUpDown.Size = new System.Drawing.Size(42, 20);
             this.superRodRateUpDown.TabIndex = 39;
@@ -1851,11 +1841,6 @@
             // goodRodRateUpDown
             // 
             this.goodRodRateUpDown.Location = new System.Drawing.Point(265, 17);
-            this.goodRodRateUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             this.goodRodRateUpDown.Name = "goodRodRateUpDown";
             this.goodRodRateUpDown.Size = new System.Drawing.Size(42, 20);
             this.goodRodRateUpDown.TabIndex = 39;
@@ -2094,11 +2079,6 @@
             // oldRodRateUpDown
             // 
             this.oldRodRateUpDown.Location = new System.Drawing.Point(265, 17);
-            this.oldRodRateUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             this.oldRodRateUpDown.Name = "oldRodRateUpDown";
             this.oldRodRateUpDown.Size = new System.Drawing.Size(42, 20);
             this.oldRodRateUpDown.TabIndex = 39;
@@ -2337,11 +2317,6 @@
             // surfRateUpDown
             // 
             this.surfRateUpDown.Location = new System.Drawing.Point(265, 17);
-            this.surfRateUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             this.surfRateUpDown.Name = "surfRateUpDown";
             this.surfRateUpDown.Size = new System.Drawing.Size(42, 20);
             this.surfRateUpDown.TabIndex = 39;

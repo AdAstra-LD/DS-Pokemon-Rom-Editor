@@ -84,8 +84,10 @@ namespace DSPRE {
 
             currentFile = new EncounterFileDPPt(selectEncounterComboBox.SelectedIndex);
 
+            InitRanges();
             AddPokemonNamesBinding(names);
             RegisterMarkDirtyHandlers();
+            AddTooltips();
             SetupControls();
 
             Helpers.EnableHandlers();            
@@ -473,6 +475,16 @@ namespace DSPRE {
 
         }
 
+        private void InitRanges()
+        {
+            walkingRateUpDown.Maximum = 255;
+            surfRateUpDown.Maximum = 255;
+            oldRodRateUpDown.Maximum = 255;
+            goodRodRateUpDown.Maximum = 255;
+            superRodRateUpDown.Maximum = 255;
+        }
+
+
         private void DrawConnectingLines()
         {
             var panel = walkingTableLayoutPanel;
@@ -695,6 +707,25 @@ namespace DSPRE {
             currentFile.superRodRate = (byte)superRodRateUpDown.Value;
 
             SetDirtyWater(false);
+        }
+
+        private void AddTooltips()
+        {
+            // Encounter rates
+            SetToolTipsForControls(new Control[] { walkingRateUpDown, surfRateUpDown, oldRodRateUpDown, goodRodRateUpDown, superRodRateUpDown },
+                "The rate in percent from 0-100.\nA value above 100 may cause unintended behaviour when using things like the cleanse tag.");
+
+            // Unown forms
+            SetToolTipsForControls(new Control[] { unownComboBox },
+                "Sets which Unown forms can appear in this area.\nThe game offers these lists to choose from.");
+        }
+
+        private void SetToolTipsForControls(IEnumerable<Control> controls, string text)
+        {
+            foreach (var control in controls)
+            {
+                toolTip.SetToolTip(control, text);
+            }
         }
 
         private bool ContinueUnsavedChanges()
