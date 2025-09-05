@@ -417,6 +417,7 @@ namespace DSPRE {
 
             UpdateMovesListFromFile();
             movesListBox.SelectedIndex = index;
+            UpdateEntryCountLabel();
             UpdateAddEditStatus();
             SetDirty(true);
         }
