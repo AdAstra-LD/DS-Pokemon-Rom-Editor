@@ -54,6 +54,9 @@ namespace DSPRE.Editors {
         }
 
         void disableButtons() {
+            buttonOpenSelectedScript.Enabled = true;
+            buttonOpenHeaderScript.Enabled = false;
+
             listBoxTriggers.DataSource = null;
 
             textBoxScriptID.Clear();
@@ -88,6 +91,9 @@ namespace DSPRE.Editors {
         }
 
         void enableButtons() {
+            buttonOpenHeaderScript.Enabled = true;
+            buttonOpenSelectedScript.Enabled = false;
+
             textBoxScriptID.Enabled = true;
             textBoxVariableName.Enabled = true;
             textBoxVariableValue.Enabled = true;
@@ -128,12 +134,8 @@ namespace DSPRE.Editors {
 
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (selectScriptFileComboBox.SelectedIndex == -1) {
-                buttonOpenSelectedScript.Enabled = false;
-                buttonOpenHeaderScript.Enabled = false;
                 buttonLocate.Enabled = false;
             } else {
-                buttonOpenSelectedScript.Enabled = true;
-                buttonOpenHeaderScript.Enabled = true;
                 buttonLocate.Enabled = true;
             }
 
