@@ -238,6 +238,11 @@ namespace DSPRE.Editors {
             result = HeaderSearch.AdvancedSearch(0, (ushort)EditorPanels.headerEditor.internalNames.Count, EditorPanels.headerEditor.internalNames, (int)MapHeader.SearchableFields.LevelScriptID, (int)HeaderSearch.NumOperators.Equal, EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex.ToString());
             AppLogger.Debug($"Found {result.Count} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex}");
             AppLogger.Debug($"Searching for script file {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in headers: {string.Join(", ", result)}");
+            if (result.Count == 0)
+            {
+                MessageBox.Show($"No headers found with level-script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex}.", "No headers found");
+                return;
+            }
             string[] arr = new string[result.Count];
             result.CopyTo(arr);
             for (int i = 0; i < arr.Length; i++)
