@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
@@ -53,41 +54,47 @@ namespace DSPRE.Editors {
             selectScriptFileComboBox.SelectedIndex = selectedIndex;
         }
 
-        void disableButtons() {
-            buttonOpenSelectedScript.Enabled = true;
-            buttonOpenHeaderScript.Enabled = false;
+        void disableButtons(bool usurp = false) {
+            if (!usurp && isEmptyLevelScript()) {
+                enableButtons();
+            } else
+            {
+                buttonOpenSelectedScript.Enabled = true;
+                buttonOpenHeaderScript.Enabled = false;
 
-            listBoxTriggers.DataSource = null;
+                listBoxTriggers.DataSource = null;
 
-            textBoxScriptID.Clear();
-            textBoxVariableName.Clear();
-            textBoxVariableValue.Clear();
+                textBoxScriptID.Clear();
+                textBoxVariableName.Clear();
+                textBoxVariableValue.Clear();
 
-            radioButtonVariableValue.Checked = false;
-            radioButtonMapChange.Checked = false;
-            radioButtonScreenReset.Checked = false;
-            radioButtonLoadGame.Checked = false;
+                radioButtonVariableValue.Checked = false;
+                radioButtonMapChange.Checked = false;
+                radioButtonScreenReset.Checked = false;
+                radioButtonLoadGame.Checked = false;
 
-            textBoxScriptID.Enabled = false;
+                textBoxScriptID.Enabled = false;
 
-            radioButtonVariableValue.Enabled = false;
-            radioButtonMapChange.Enabled = false;
-            radioButtonScreenReset.Enabled = false;
-            radioButtonLoadGame.Enabled = false;
+                radioButtonVariableValue.Enabled = false;
+                radioButtonMapChange.Enabled = false;
+                radioButtonScreenReset.Enabled = false;
+                radioButtonLoadGame.Enabled = false;
 
-            radioButtonAuto.Enabled = false;
-            radioButtonHex.Enabled = false;
-            radioButtonDecimal.Enabled = false;
+                radioButtonAuto.Enabled = false;
+                radioButtonHex.Enabled = false;
+                radioButtonDecimal.Enabled = false;
 
-            buttonImport.Enabled = false;
-            buttonSave.Enabled = false;
-            buttonExport.Enabled = false;
-            checkBoxPadding.Enabled = false;
+                buttonImport.Enabled = false;
+                buttonSave.Enabled = false;
+                buttonExport.Enabled = false;
+                checkBoxPadding.Enabled = false;
 
-            buttonAdd.Enabled = false;
-            buttonRemove.Enabled = false;
+                buttonAdd.Enabled = false;
+                buttonRemove.Enabled = false;
 
-            buttonOpenSelectedScript.Enabled = true;
+                buttonOpenSelectedScript.Enabled = true;
+            }
+                
         }
 
         void enableButtons() {
@@ -139,7 +146,7 @@ namespace DSPRE.Editors {
                 buttonLocate.Enabled = true;
             }
 
-            disableButtons();
+            disableButtons(true);
 
             try {
                 _levelScriptFile = new LevelScriptFile(selectScriptFileComboBox.SelectedIndex);
@@ -249,6 +256,12 @@ namespace DSPRE.Editors {
                 h = MapHeader.LoadFromARM9(index);
             }
             EditorPanels.scriptEditor.OpenScriptEditor(this._parent, (int)h.scriptFileID);
+        }
+
+        private bool isEmptyLevelScript()
+        {
+            ScriptFile script = new ScriptFile((int)EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex, true, true);
+            return script.isLevelScript;
         }
 
         private void buttonOpenSelectedScript_Click(object sender, EventArgs e) {
