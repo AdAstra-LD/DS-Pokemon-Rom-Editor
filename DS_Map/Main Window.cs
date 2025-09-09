@@ -1055,12 +1055,6 @@ namespace DSPRE
 
             Update();
 
-            //for (int i = 0; i < 128; i++) {
-            //    if (!OverlayUtils.IsCompressed(i)) {
-            //        OverlayUtils.Compress(i);
-            //    }
-            //}
-
             bool success = DSUtils.RepackROM(saveRom.FileName);
 
             if (RomInfo.gameFamily != GameFamilies.DP && RomInfo.gameFamily != GameFamilies.Plat)

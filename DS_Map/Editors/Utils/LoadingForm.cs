@@ -76,7 +76,7 @@ namespace DSPRE.Editors.Utils
 
             factTimer = new Timer
             {
-                Interval = 3000 
+                Interval = 5000 
             };
             factTimer.Tick += (s, e) => factLabel.Text = GetRandomFact();
             factTimer.Start();
