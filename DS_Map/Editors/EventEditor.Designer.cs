@@ -2329,7 +2329,7 @@
             this.Location = new System.Drawing.Point(4, 23);
             this.Name = "EventEditor";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(1193, 646);
+            this.Size = new System.Drawing.Size(1193, 619);
             this.groupBox21.ResumeLayout(false);
             this.groupBox21.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.eventAreaDataUpDown)).EndInit();

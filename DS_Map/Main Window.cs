@@ -61,7 +61,7 @@ namespace DSPRE
             WireEditorsPopout();
 
             SetMenuLayout(SettingsManager.Settings.menuLayout); //Read user settings for menu layout
-            Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion() + " (Nømura, AdAstra/LD3005, Mixone)";
+            Text = "DS Pokémon Rom Editor Reloaded " + GetDSPREVersion();
 
             string romFolder = SettingsManager.Settings.openDefaultRom;
             if (romFolder != string.Empty)
@@ -100,11 +100,10 @@ namespace DSPRE
 
         #region Variables
         public bool iconON = false;
-        public bool wslDetected = false; // Not technically necessary rn, but it might be useful in the future
 
         /* ROM Information */
         public static string gameCode;
-        public static byte europeByte;
+        public static byte revisionByte;
         public RomInfo romInfo;
         public Dictionary<ushort /*evFile*/, ushort /*header*/> eventToHeader = new Dictionary<ushort, ushort>();
 
@@ -114,7 +113,7 @@ namespace DSPRE
 
         private void SetMenuLayout(byte layoutStyle)
         {
-            Console.WriteLine("Setting menuLayout to" + layoutStyle);
+            AppLogger.Debug("Setting menuLayout to" + layoutStyle);
 
             IList list = menuViewToolStripMenuItem.DropDownItems;
             for (int i = 0; i < list.Count; i++)
@@ -342,75 +341,51 @@ namespace DSPRE
             Helpers.statusLabelMessage();
         }
 
-        private int UnpackRomCheckUserChoice()
+        /// <summary>
+        /// Check if extracted data for the ROM exists, and ask user if they want to load it.
+        /// </summary>
+        /// <returns>
+        /// -1 - Do nothing, no data found
+        ///  0 - User wants to abort loading
+        ///  1 - User wants to load existing data
+        ///  2 - User wants to re-extract data
+        /// </returns>
+        private int UnpackRomCheckUserChoice(string romDir)
         {
-            // Check if extracted data for the ROM exists, and ask user if they want to load it.
-            // Returns true if user aborted the process
-            if (Directory.Exists(RomInfo.workDir))
+            switch (DSUtils.GetFolderType(romDir))
             {
-                DialogResult d = MessageBox.Show("Extracted data of this ROM has been found.\n" +
-                    "Do you want to load it and unpack it?", "Data detected", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                case -1:
+                    return -1; // Do nothing case
+                case 0:
+                    MessageBox.Show("Extracted data of this ROM is not yet supported.\n" +
+                        "Loading will be aborted.", "Unsupported ROM", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return 0; //user wants to abort loading
+                case 1:
+                    DialogResult d2 = MessageBox.Show("Extracted data of this ROM has been found.\n" +
+                        "Do you want to load it?", "Extracted data detected", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-                if (d == DialogResult.Cancel)
-                {
-                    return -1; //user wants to abort loading
-                }
-                else if (d == DialogResult.Yes)
-                {
-                    return 0; //user wants to load data
-                }
-                else
-                {
-                    DialogResult nd = MessageBox.Show("All data of this ROM will be re-extracted. Proceed?\n",
+                    if (d2 == DialogResult.Cancel)
+                    {
+                        return 0; //user wants to abort loading
+                    }
+                    else if (d2 == DialogResult.Yes)
+                    {
+                        return 1; //user wants to load data
+                    }
+
+                    DialogResult nd2 = MessageBox.Show("All data of this ROM will be re-extracted. Proceed?\n",
                         "Existing data will be deleted", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                    if (nd == DialogResult.No)
+                    if (nd2 == DialogResult.Yes)
                     {
-                        return -1; //user wants to abort loading
+                        return 2; //user wants to re-extract data
                     }
-                    else
-                    {
-                        return 1; //user wants to re-extract data
-                    }
-                }
-            }
-            else
-            {
-                return 2; //No data found
-            }
-        }
-        private bool UnpackRom(string ndsFileName)
-        {
-            Helpers.statusLabelMessage("Unpacking ROM contents to " + RomInfo.workDir + " ...");
-            Update();
 
-            Directory.CreateDirectory(RomInfo.workDir);
-            Process unpack = new Process();
-            unpack.StartInfo.FileName = @"Tools\ndstool.exe";
-            unpack.StartInfo.Arguments = "-x " + '"' + ndsFileName + '"'
-                + " -9 " + '"' + RomInfo.arm9Path + '"'
-                + " -7 " + '"' + RomInfo.workDir + "arm7.bin" + '"'
-                + " -y9 " + '"' + RomInfo.workDir + "y9.bin" + '"'
-                + " -y7 " + '"' + RomInfo.workDir + "y7.bin" + '"'
-                + " -d " + '"' + RomInfo.workDir + "data" + '"'
-                + " -y " + '"' + RomInfo.workDir + "overlay" + '"'
-                + " -t " + '"' + RomInfo.workDir + "banner.bin" + '"'
-                + " -h " + '"' + RomInfo.workDir + "header.bin" + '"';
-            Application.DoEvents();
-            unpack.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            unpack.StartInfo.CreateNoWindow = true;
-            try
-            {
-                unpack.Start();
-                unpack.WaitForExit();
+                    return 0; //user wants to abort loading
+                default:
+                    return -1; // Do nothing case
+
             }
-            catch (System.ComponentModel.Win32Exception)
-            {
-                MessageBox.Show("Failed to call ndstool.exe" + Environment.NewLine + "Make sure DSPRE's Tools folder is intact.",
-                    "Couldn't unpack ROM", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            return true;
         }
         #endregion
 
@@ -614,8 +589,8 @@ namespace DSPRE
         {
             unpackBuildingEditorNARCs();
 
-            using (BuildingEditor editor = new BuildingEditor(romInfo))
-                editor.ShowDialog();
+            BuildingEditor editor = new BuildingEditor(romInfo);
+            editor.Show();
         }
         private void unpackBuildingEditorNARCs(bool forceUnpack = false)
         {
@@ -660,11 +635,14 @@ namespace DSPRE
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string message = "DS Pokémon ROM Editor Reloaded by AdAstra/LD3005" + Environment.NewLine + "version " + GetDSPREVersion() + Environment.NewLine
+            string message = "DS Pokémon ROM Editor Reloaded by AdAstra, Mixone, Kuha, Yako & Kalaay" 
+                + Environment.NewLine + "Version " + GetDSPREVersion() 
+                + Environment.NewLine
                 + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4."
-                + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused." +
-                "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." + Environment.NewLine
-                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, Mixone, JackHack96, Pleonex and BagBoy."
+                + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused." 
+                + Environment.NewLine + "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." 
+                + Environment.NewLine
+                + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
 
             MessageBox.Show(message, "About...", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -677,126 +655,76 @@ namespace DSPRE
             }; // Select ROM
             if (openRom.ShowDialog(this) != DialogResult.OK)
             {
+                AppLogger.Debug("User cancelled the ROM loading dialog.");
                 return;
             }
 
             // Validate path and check for OneDrive
             if (!ValidateFilePath(openRom.FileName))
             {
+                AppLogger.Warn("ROM path validation failed. Loading Aborted!");
                 return;
             }
 
-            if (!detectAndHandleWSL(openRom.FileName))
-            {
-                return; // User chose not to create a new work directory
-            }
+            string workDir = DSUtils.WorkDirPathFromFile(openRom.FileName);
+            AppLogger.Info(workDir + " will be used as the working directory for the ROM.");
 
-            // Handle WSL
-            if (wslDetected)
-            {
-                string executablePath = Path.GetDirectoryName(Application.ExecutablePath);
-                string buildFolderPath = Path.Combine(executablePath, "build");
-                // Create a new work directory in the same folder as DSPRE
-                if (!Directory.Exists(buildFolderPath))
-                {
-                    Directory.CreateDirectory(buildFolderPath);
-                }
-
-                // Copy the ROM to the build folder
-                string newRomPath = Path.Combine(buildFolderPath, Path.GetFileName(openRom.FileName));
-
-                // Check if file already exists and ask to overwrite
-                if (File.Exists(newRomPath))
-                {
-                    DialogResult overwriteResult = MessageBox.Show("The ROM file already exists in the build folder. Do you want to overwrite it?", "File Exists", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (overwriteResult != DialogResult.Yes)
-                    {
-                        return; // User chose not to overwrite
-                    }
-                }
-
-                try
-                {
-                    File.Copy(openRom.FileName, newRomPath, true);
-                    openRom.FileName = newRomPath; // Update the file name to the new path
-                }
-                catch (IOException ex)
-                {
-                    MessageBox.Show("Failed to copy ROM to build folder: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-
-            SetupROMLanguage(openRom.FileName);
-            /* Set ROM gameVersion and language */
-            romInfo = new RomInfo(gameCode, openRom.FileName, useSuffix: true);
-
-            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName))
-            {
-                return;
-            }
-
-            CheckROMLanguage();
-
-            int userchoice = UnpackRomCheckUserChoice();
+            int userchoice = UnpackRomCheckUserChoice(workDir);
             switch (userchoice)
             {
                 case -1:
+                    if (!DSUtils.UnpackRom(openRom.FileName, workDir))
+                    {
+                        AppLogger.Error($"Unpacking of ROM \"{openRom.FileName}\" has failed!");
+                        Helpers.statusLabelError($"Unpacking of ROM ROM \"{openRom.FileName}\" has failed");
+                        Update();
+                        return; // Unpacking failed, abort loading
+                    }
+                    break;
+                case 0:
+                    AppLogger.Info("User chose to abort loading the ROM.");
                     Helpers.statusLabelMessage("Loading aborted");
                     Update();
                     return;
-                case 0:
-                    break;
                 case 1:
-                case 2:
+                    AppLogger.Info("User chose to load existing data from " + workDir);
                     Application.DoEvents();
-                    if (userchoice == 1)
-                    {
-                        Helpers.statusLabelMessage("Deleting old data...");
-                        try
-                        {
-                            Directory.Delete(RomInfo.workDir, true);
-                        }
-                        catch (IOException)
-                        {
-                            MessageBox.Show("Concurrent access detected: \n" + RomInfo.workDir +
-                                "\nMake sure no other process is using the extracted ROM folder while DSPRE is running.", "Concurrent Access", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
-                        }
-                        Update();
-                    }
+                    break;
+                case 2:
+                    AppLogger.Info("User chose to re-extract data from " + openRom.FileName);
+                    Application.DoEvents();
+                    Helpers.statusLabelMessage("Deleting old data...");
+                    Update();
 
                     try
                     {
-                        if (!UnpackRom(openRom.FileName))
-                        {
-                            Helpers.statusLabelError("ERROR");
-                            languageLabel.Text = "";
-                            versionLabel.Text = "Error";
-                            return;
-                        }
-                        ARM9.EditSize(-12);
+                        Directory.Delete(workDir, true);
+                        AppLogger.Debug(workDir + " was deleted successfully.");
                     }
                     catch (IOException)
                     {
-                        MessageBox.Show("Can't access temp directory: \n" + RomInfo.workDir + "\nThis might be a temporary issue.\nMake sure no other process is using it and try again.", "Open Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        Helpers.statusLabelError("ERROR: Concurrent access to " + RomInfo.workDir);
-                        Update();
+                        AppLogger.Error("Concurrent access detected while trying to delete " + workDir);
+                        MessageBox.Show("Concurrent access detected: \n" + workDir +
+                            "\nMake sure no other process is using the extracted ROM folder while DSPRE is running.", "Concurrent Access", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+
+                    if (!DSUtils.UnpackRom(openRom.FileName, workDir))
+                    {
+                        AppLogger.Error($"Unpacking of ROM \"{openRom.FileName}\" has failed!");
+                        Helpers.statusLabelError("Unpacking of ROM \"" + openRom.FileName + "\" has failed");
+                        Update();
+                        return; // Unpacking failed, abort loading
+                    }
+
                     break;
             }
 
-            iconON = true;
-            gameIcon.Refresh();  // Paint game icon
-            Helpers.statusLabelMessage("Attempting to unpack NARCs from folder...");
+            AppLogger.Info("ROM unpacked successfully, proceeding to open the ROM from " + workDir);
             Update();
-            //for (int i = 0; i < 128; i++) {
-            //    if (OverlayUtils.IsCompressed(i)) {
-            //        OverlayUtils.Decompress(i);
-            //    }
-            //}
-            ReadROMInitData();
+
+            OpenRomFromFolder(workDir);
+
         }
 
         private bool ValidateFilePath(string fileName)
@@ -826,35 +754,21 @@ namespace DSPRE
             return true;
         }
 
-        private bool detectAndHandleWSL(string fileName)
+        private bool DetectAndHandleWSL(string fileName)
         {
             string fullPath = Path.GetFullPath(fileName);
-
             if (!fullPath.ToLower().Contains("wsl."))
             {
-                return true; // No WSL detected, proceed normally
-            }
-            if (Directory.Exists(fullPath))
-            {
-                MessageBox.Show("WSL was detected in the path. " +
-                    "The associated unpacked folder of a ROM should not be stored on the WSL file system! " +
-                    "Please move the folder to the same drive that DSPRE is located on.", "Invalid Path", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return false; // No WSL detected, proceed normally
             }
 
-            DialogResult result = MessageBox.Show("WSL was detected in the path. " +
-                "Do you want to create a build directory in the same folder as DSPRE to unpack to?", "WSL Detected", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            wslDetected = true;
+            MessageBox.Show("WSL was detected in the path. " +
+                "You may experience some slow-downs, especially on WSL2.\n" +
+                "If the slow-down is too excessive consider moving your files to the Windows filesystem.",
+                "WSL Detected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            AppLogger.Info("WSL detected in the path: " + fullPath);
 
-            if (result == DialogResult.Yes)
-            {
-                return true; // User wants to create a new work directory
-            }
-            else
-            {
-                MessageBox.Show("Unpacking will not be possible without a valid work directory.", "Unpacking aborted", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
+            return true;
         }
         private bool DetectRequiredTools()
         {
@@ -912,7 +826,7 @@ namespace DSPRE
 
             if (RomInfo.gameLanguage == GameLanguages.English)
             {
-                if (europeByte == 0x0A)
+                if (revisionByte == 0x0A)
                 {
                     languageLabel.Text += " [Europe]";
                 }
@@ -950,35 +864,28 @@ namespace DSPRE
                 AppLogger.Warn("ROM path validation failed. Possibly invalid or on a restricted (OneDrive).");
                 return;
             }
+            
+            DetectAndHandleWSL(romFolderPath);
 
-            if (!detectAndHandleWSL(romFolderPath))
+            if (DSUtils.GetFolderType(romFolderPath) == -1)
             {
-                AppLogger.Info("ROM path validation failed. Possibly invalid or on a restricted (WSL).");
-                return;
+                AppLogger.Error("The selected folder does not contain a valid ROM folder structure.");
+                MessageBox.Show("The selected folder does not contain a valid ROM folder structure.", "Invalid Folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; // Invalid folder, abort loading
             }
 
-            try
-            {
-                string headerFile = Directory.GetFiles(romFolderPath).First(x => x.Contains("header.bin"));
-                AppLogger.Debug($"Found header file: {headerFile}");
-                SetupROMLanguage(headerFile);
-            }
-            catch (InvalidOperationException)
-            {
-                AppLogger.Error("No 'header.bin' file found in ROM folder. Cannot initialize ROM.");
-                MessageBox.Show("This folder does not seem to contain any data from a NDS Pokémon ROM.", "No ROM Data", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            SetupROMLanguage(Path.Combine(romFolderPath, "header.bin"));
+            AppLogger.Debug("ROM language setup completed.");
 
-            romInfo = new RomInfo(gameCode, romFolderPath, useSuffix: false);
+            romInfo = new RomInfo(gameCode, romFolderPath);
 
-            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.fileName))
+            if (string.IsNullOrWhiteSpace(RomInfo.romID) || string.IsNullOrWhiteSpace(RomInfo.projectName))
             {
                 AppLogger.Error("ROM ID or filename is empty after initialization. Aborting.");
                 return;
             }
 
-            AppLogger.Info($"ROM loaded successfully: ID = {RomInfo.romID}, Name = {RomInfo.fileName}");
+            AppLogger.Info($"ROM loaded successfully: ID = {RomInfo.romID}, Project Name = {RomInfo.projectName}");
 
             CheckROMLanguage();
             AppLogger.Debug("ROM language checked and applied.");
@@ -986,6 +893,12 @@ namespace DSPRE
             iconON = true;
             gameIcon.Refresh();  // Paint game icon
             AppLogger.Debug("Game icon refreshed.");
+
+            if (!CheckAndDecompressARM9())
+            {
+                AppLogger.Error("ARM9 decompression failed. Aborting.");
+                return;
+            }
 
             ReadROMInitData();
             AppLogger.Info("ROM initialization data loaded.");
@@ -998,26 +911,39 @@ namespace DSPRE
             {
                 gameCode = Encoding.UTF8.GetString(br.ReadBytes(4));
                 br.BaseStream.Position = 0x1E;
-                europeByte = br.ReadByte();
+                revisionByte = br.ReadByte();
             }
+        }
+
+        private bool CheckAndDecompressARM9()
+        {
+            if (!ARM9.CheckCompressionMark())
+            {
+                return true; // ARM9 is not compressed, proceed normally
+            }
+
+            if (!RomInfo.gameFamily.Equals(GameFamilies.HGSS))
+            {
+                MessageBox.Show("Unexpected compressed ARM9. It is advised that you double check the ARM9.");
+                return false;
+            }
+
+            ARM9.EditSize(-12); // Fix ARM9 size before decompression
+
+            if (!ARM9.Decompress(RomInfo.arm9Path))
+            {
+                MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
+                            "Error with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            AppLogger.Info("ARM9 decompressed and size fixed.");
+
+            return true;
         }
 
         private void ReadROMInitData()
         {
-            if (ARM9.CheckCompressionMark())
-            {
-                if (!RomInfo.gameFamily.Equals(GameFamilies.HGSS))
-                {
-                    MessageBox.Show("Unexpected compressed ARM9. It is advised that you double check the ARM9.");
-                }
-                if (!ARM9.Decompress(RomInfo.arm9Path))
-                {
-                    MessageBox.Show("ARM9 decompression failed. The program can't proceed.\nAborting.",
-                                "Error with ARM9 decompression", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-
             /* Setup essential editors */
             EditorPanels.headerEditor.SetupHeaderEditor(this);
 
@@ -1054,11 +980,13 @@ namespace DSPRE
             }
 
             Helpers.statusLabelMessage();
-            this.Text += "  -  " + RomInfo.fileName;
+            this.Text += "  -  " + RomInfo.projectName;
         }
 
         private void saveRom_Click(object sender, EventArgs e)
         {
+            AppLogger.Info("Saving ROM...");
+
             SaveFileDialog saveRom = new SaveFileDialog
             {
                 Filter = DSUtils.NDSRomFilter,
@@ -1066,6 +994,7 @@ namespace DSPRE
             };
             if (saveRom.ShowDialog(this) != DialogResult.OK)
             {
+                AppLogger.Debug("User cancelled the Save ROM dialog.");
                 return;
             }
 
@@ -1126,13 +1055,7 @@ namespace DSPRE
 
             Update();
 
-            //for (int i = 0; i < 128; i++) {
-            //    if (!OverlayUtils.IsCompressed(i)) {
-            //        OverlayUtils.Compress(i);
-            //    }
-            //}
-
-            DSUtils.RepackROM(saveRom.FileName);
+            bool success = DSUtils.RepackROM(saveRom.FileName);
 
             if (RomInfo.gameFamily != GameFamilies.DP && RomInfo.gameFamily != GameFamilies.Plat)
             {
@@ -1151,6 +1074,13 @@ namespace DSPRE
             var StringDate = Helpers.formatTime(date.Hour) + ":" + Helpers.formatTime(date.Minute) + ":" + Helpers.formatTime(date.Second);
             int timeSpent = Helpers.CalculateTimeDifferenceInSeconds(dateBegin.Hour, dateBegin.Minute, dateBegin.Second, date.Hour, date.Minute, date.Second);
 
+            if (!success)
+            {
+                AppLogger.Error("An error occurred while repacking the ROM. Save failed.");
+                Helpers.statusLabelError("An error occurred while repacking the ROM. Save failed. Your ROM may have been corrupted.");
+                return;
+            }
+            AppLogger.Info($"ROM saved successfully to {saveRom.FileName} in {timeSpent} seconds.");
             Helpers.statusLabelMessage("Ready - " + StringDate + " | Build time: " + timeSpent.ToString() + "s | " + saveRom.FileName);
         }
 
@@ -1232,7 +1162,7 @@ namespace DSPRE
         }
         private void manageDatabasesToolStripMenuItem_Click(object sender, EventArgs e) {
             using (CustomScrcmdManager editor = new CustomScrcmdManager())
-                editor.ShowDialog();
+                editor.Show();
         }
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) 
         {
@@ -1481,7 +1411,6 @@ namespace DSPRE
                 for (i = 0; i < tot; i++)
                 {
                     FileInfo f = files[i];
-                    Console.WriteLine(f.Name);
                     string destName = Path.GetDirectoryName(f.FullName) + "\\" + listLines[i];
 
                     if (string.IsNullOrWhiteSpace(destName))
@@ -1509,7 +1438,6 @@ namespace DSPRE
                         while (i < files.Length)
                         {
                             FileInfo f = files[i];
-                            Console.WriteLine(f.Name);
                             string destName = d.FullName + "\\" + ISOLATED_FOLDERNAME + "\\" + f.Name;
                             File.Move(f.FullName, destName);
                             i++;
@@ -1574,7 +1502,7 @@ namespace DSPRE
             ItemEditor itemEditor = new ItemEditor(
                 RomInfo.GetItemNames()
             );
-            itemEditor.ShowDialog();
+            itemEditor.Show();
 
             Helpers.statusLabelMessage();
             Update();
@@ -1757,7 +1685,7 @@ namespace DSPRE
             Helpers.statusLabelMessage("Setting up Overlay Editor...");
             Update();
             OverlayEditor ovlEditor = new OverlayEditor();
-            ovlEditor.ShowDialog();
+            ovlEditor.Show();
 
             Helpers.statusLabelMessage();
             Update();
@@ -1777,7 +1705,7 @@ namespace DSPRE
                 new TextArchive(RomInfo.moveNamesTextNumbers).messages.ToArray(),
                 moveDescriptions
             );
-            mde.ShowDialog();
+            mde.Show();
 
             Helpers.statusLabelMessage();
             Update();
@@ -1785,8 +1713,8 @@ namespace DSPRE
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (SettingsWindow editor = new SettingsWindow())
-                editor.ShowDialog();
+            SettingsWindow editor = new SettingsWindow();
+             editor.Show();
         }
 
         private void pokemonDataEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1805,7 +1733,7 @@ namespace DSPRE
             Helpers.statusLabelMessage();
             Update();
 
-            pde.ShowDialog();
+            pde.Show();
         }
 
 
@@ -1884,6 +1812,8 @@ namespace DSPRE
             Register(EditorPanels.levelScriptEditor, LSEditorPoppedOutLabel, popoutLevelScriptEditorButton);
             Register(EditorPanels.textEditor, textEditorPoppedOutLabel, popoutTextEditorButton);
             Register(EditorPanels.trainerEditor, trainerEditorPoppedOutLabel, popoutTrainerEditorButton);
+            Register(EditorPanels.nsbtxEditor, nsbtxEditorPopOutLabel, popoutNsbtxEditorButton);
+            Register(EditorPanels.eventEditor, eventEditorPopOutLabel, popoutEventEditorButton);
         }
 
         void Register(Control control, Label lbl, Button btn)

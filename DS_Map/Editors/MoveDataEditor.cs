@@ -58,7 +58,7 @@ namespace DSPRE {
             list = flagsTableLayoutPanel.Controls;
             for (int i = 0; i < list.Count; i++) {
                 CheckBox cb = list[i] as CheckBox;
-                cb.Text = names[i];
+                cb.Text = names[i + 1];
                 cb.CheckedChanged += FlagsCheckBox_CheckedChanged;
             }
 

@@ -1,13 +1,16 @@
+using DSPRE.Editors;
+using DSPRE.MessageEnc;
+using DSPRE.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Text;
-using System.Resources;
+using System.Linq;
 using System.Reflection;
+using System.Resources;
+using System.Text;
 using System.Windows.Forms;
-using DSPRE.Resources;
 using static DSPRE.RomInfo;
-using DSPRE.MessageEnc;
 
 namespace DSPRE.ROMFiles
 {
@@ -25,243 +28,33 @@ namespace DSPRE.ROMFiles
 
         #region Constructors (1)
 
-        public TextArchive(FileStream messageStream, List<string> msg, bool discardLines = false)
+        public TextArchive(int ID, List<string> msg = null, bool discardLines = false)
         {
-            messages = msg ?? EncryptText.ReadMessageArchive(messageStream, discardLines);
-        }
+            if (msg != null)
+            {
+                messages = msg;
+                return;
+            }
 
-        public TextArchive(int ID, List<string> msg = null, bool discardLines = false) : this(new FileStream($"{gameDirs[DirNames.textArchives].unpackedDir}\\{ID:D4}", FileMode.Open), msg, discardLines)
-        {
+            string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
+            string expandedPath = Path.Combine(baseDir, "expanded", $"{ID:D4}.txt");
+
+            TextEditor.ExpandTextFile(ID);
+
+            string rawText = File.ReadAllText(expandedPath);
+            // Replace all possible line endings with \r\n because f me thats why
+            rawText = rawText.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n");
+            messages = rawText.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
+            // Get rid of trailing empty line if it exists
+            if (messages.Count > 0 && messages[messages.Count - 1] == "")
+            {
+                messages.RemoveAt(messages.Count - 1);
+            }
         }
 
         #endregion Constructors (1)
 
         #region Methods (2)
-
-        public int[] EncodeString(string currentMessage, int stringIndex, int stringSize)
-        { // Converts string to hex characters
-            ResourceManager GetByte = new ResourceManager("DSPRE.Resources.WriteText", Assembly.GetExecutingAssembly());
-
-            int[] pokemonMessage = new int[stringSize - 1];
-            var charArray = currentMessage.ToCharArray();
-            int count = 0;
-            try
-            {
-                for (int i = 0; i < currentMessage.Length; i++)
-                {
-                    if (charArray[i] == '\\')
-                    {
-                        if (charArray[i + 1] == 'r')
-                        {
-                            pokemonMessage[count] = 0x25BC;
-                            i++;
-                        }
-                        else
-                        {
-                            if (charArray[i + 1] == 'n')
-                            {
-                                pokemonMessage[count] = 0xE000;
-                                i++;
-                            }
-                            else
-                            {
-                                if (charArray[i + 1] == 'f')
-                                {
-                                    pokemonMessage[count] = 0x25BD;
-                                    i++;
-                                }
-                                else
-                                {
-                                    if (charArray[i + 1] == 'v')
-                                    {
-                                        pokemonMessage[count] = 0xFFFE;
-                                        count++;
-                                        string characterID = ((char)charArray[i + 2]).ToString() + ((char)charArray[i + 3]).ToString() + ((char)charArray[i + 4]).ToString() + ((char)charArray[i + 5]).ToString();
-                                        pokemonMessage[count] = (int)Convert.ToUInt32(characterID, 16);
-                                        i += 5;
-                                    }
-                                    else
-                                    {
-                                        //This looks like it can be optimized
-                                        if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '0')
-                                        {
-                                            pokemonMessage[count] = 0x0000;
-                                            i += 5;
-                                        }
-                                        else
-                                        {
-                                            if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '1')
-                                            {
-                                                pokemonMessage[count] = 0x0001;
-                                                i += 5;
-                                            }
-                                            else
-                                            {
-                                                string characterID = ((char)charArray[i + 2]).ToString() + ((char)charArray[i + 3]).ToString() + ((char)charArray[i + 4]).ToString() + ((char)charArray[i + 5]).ToString();
-                                                pokemonMessage[count] = (int)Convert.ToUInt32(characterID, 16);
-                                                i += 5;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (charArray[i] == '[')
-                        {
-                            if (charArray[i + 1] == 'P')
-                            {
-                                pokemonMessage[count] = 0x01E0;
-                                i += 3;
-                            }
-                            if (charArray[i + 1] == 'M')
-                            {
-                                pokemonMessage[count] = 0x01E1;
-                                i += 3;
-                            }
-                        }
-                        else
-                        {
-                            pokemonMessage[count] = (int)Convert.ToUInt32(GetByte.GetString(((int)charArray[i]).ToString()), 16);
-                        }
-                    }
-                    count++;
-                }
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Format exception. Assembled so far: " + Environment.NewLine + pokemonMessage);
-            }
-            return pokemonMessage;
-        }
-
-        public int GetStringLength(string currentMessage)
-        { // Calculates string length
-            int count = 0;
-            var charArray = currentMessage.ToCharArray();
-            for (int i = 0; i < currentMessage.Length; i++)
-            {
-                if (charArray[i] == '\\')
-                {
-                    if (charArray[i + 1] == 'r')
-                    {
-                        count++;
-                        i++;
-                    }
-                    else
-                    {
-                        if (charArray[i + 1] == 'n')
-                        {
-                            count++;
-                            i++;
-                        }
-                        else
-                        {
-                            if (charArray[i + 1] == 'f')
-                            {
-                                count++;
-                                i++;
-                            }
-                            else
-                            {
-                                if (charArray[i + 1] == 'v')
-                                {
-                                    count += 2;
-                                    i += 5;
-                                }
-                                else
-                                {
-                                    if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '0')
-                                    {
-                                        count++;
-                                        i += 5;
-                                    }
-                                    else
-                                    {
-                                        if (charArray[i + 1] == 'x' && charArray[i + 2] == '0' && charArray[i + 3] == '0' && charArray[i + 4] == '0' && charArray[i + 5] == '1')
-                                        {
-                                            count++;
-                                            i += 5;
-                                        }
-                                        else
-                                        {
-                                            count++;
-                                            i += 5;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (charArray[i] == '[')
-                    {
-                        if (charArray[i + 1] == 'P')
-                        {
-                            count++;
-                            i += 3;
-                        }
-                        if (charArray[i + 1] == 'M')
-                        {
-                            count++;
-                            i += 3;
-                        }
-                    }
-                    else
-                    {
-                        count++;
-                    }
-                }
-            }
-            count++;
-            return count;
-        }
-
-        private byte[] ToByteArray(List<string> msgSource)
-        {
-            MemoryStream newData = new MemoryStream();
-            using (BinaryWriter writer = new BinaryWriter(newData))
-            {
-                writer.Write((ushort)msgSource.Count);
-                writer.Write((ushort)initialKey);
-
-                int key = (initialKey * 0x2FD) & 0xFFFF;
-                int key2 = 0;
-                int realKey = 0;
-                int offset = 0x4 + (msgSource.Count * 8);
-                int[] stringSize = new int[msgSource.Count];
-
-                for (int i = 0; i < msgSource.Count; i++)
-                { // Reads and stores string offsets and sizes
-                    key2 = (key * (i + 1) & 0xFFFF);
-                    realKey = key2 | (key2 << 16);
-                    writer.Write(offset ^ realKey);
-                    int length = GetStringLength(msgSource[i]);
-                    stringSize[i] = length;
-                    writer.Write(length ^ realKey);
-                    offset += length * 2;
-                }
-
-                for (int i = 0; i < msgSource.Count; i++)
-                { // Encodes strings and writes them to file
-                    key = (0x91BD3 * (i + 1)) & 0xFFFF;
-                    int[] currentString = EncodeString(msgSource[i], i, stringSize[i]);
-
-                    for (int j = 0; j < stringSize[i] - 1; j++)
-                    {
-                        writer.Write((ushort)(currentString[j] ^ key));
-                        key += 0x493D;
-                        key &= 0xFFFF;
-                    }
-                    writer.Write((ushort)(0xFFFF ^ key));
-                }
-            }
-            return newData.ToArray();
-        }
 
         public override string ToString()
         {
@@ -270,12 +63,53 @@ namespace DSPRE.ROMFiles
 
         public override byte[] ToByteArray()
         {
-            return this.ToByteArray(messages);
+            string tempTxt = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
+            string tempMsg = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".msg");
+
+            try
+            {
+                // Write messages in the format expected by msgenc (text\n\ntext\n\n...)
+                File.WriteAllText(tempTxt, string.Join(Environment.NewLine + Environment.NewLine, messages));
+
+                string toolPath = Path.Combine(Application.StartupPath, "Tools", "msgenc.exe");
+                string charmapPath = Path.Combine("Tools", "charmap.txt");
+
+                Process process = new Process();
+                process.StartInfo.FileName = toolPath;
+                process.StartInfo.Arguments = $"-e -c \"{charmapPath}\" \"{tempTxt}\" \"{tempMsg}\"";
+                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                process.StartInfo.CreateNoWindow = true;
+                process.Start();
+                process.WaitForExit();
+
+                if (process.ExitCode != 0)
+                {
+                    throw new Exception("msgenc.exe failed to encode the text file.");
+                }
+
+                return File.ReadAllBytes(tempMsg);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during encoding: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            finally
+            {
+                if (File.Exists(tempTxt)) File.Delete(tempTxt);
+                if (File.Exists(tempMsg)) File.Delete(tempMsg);
+            }
         }
 
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true)
         {
-            bool success = EncryptText.WriteMessageArchive(IDtoReplace, messages, IDtoReplace == trainerNamesMessageNumber);
+            string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
+            string expandedDir = Path.Combine(baseDir, "expanded");
+            string path = Path.Combine(expandedDir, $"{IDtoReplace:D4}.txt");
+
+            var utf8WithoutBom = new UTF8Encoding(false);
+            File.WriteAllText(path, string.Join(Environment.NewLine, messages), utf8WithoutBom);
+            bool success = TextEditor.CompressTextFile(IDtoReplace);
             if (showSuccessMessage && success)
             {
                 MessageBox.Show("Saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);

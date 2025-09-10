@@ -21,12 +21,14 @@ namespace DSPRE {
             overlays = new List<Overlay>();
             int numOverlays = OverlayUtils.OverlayTable.GetNumberOfOverlays();
             for (int i = 0; i < numOverlays; i++) {
-                Overlay ovl = new Overlay();
-                ovl.number = i;
-                ovl.isCompressed = OverlayUtils.IsCompressed(i);
-                ovl.isMarkedCompressed = OverlayUtils.OverlayTable.IsDefaultCompressed(i);
-                ovl.RAMAddress = OverlayUtils.OverlayTable.GetRAMAddress(i);
-                ovl.uncompressedSize = OverlayUtils.OverlayTable.GetUncompressedSize(i);
+                Overlay ovl = new Overlay
+                {
+                    number = i,
+                    isCompressed = OverlayUtils.IsCompressed(i),
+                    isMarkedCompressed = OverlayUtils.OverlayTable.IsDefaultCompressed(i),
+                    RAMAddress = OverlayUtils.OverlayTable.GetRAMAddress(i),
+                    uncompressedSize = OverlayUtils.OverlayTable.GetUncompressedSize(i)
+                };
                 overlays.Add(ovl);
             }
             overlayDataGrid.DataSource = overlays;
@@ -40,6 +42,29 @@ namespace DSPRE {
             overlayDataGrid.Columns[0].ReadOnly = true;
             overlayDataGrid.Columns[3].ReadOnly = true;
             overlayDataGrid.Columns[4].ReadOnly = true;
+
+            // Register the new event handler for real-time checkbox updates
+            overlayDataGrid.CurrentCellDirtyStateChanged += overlayDataGrid_CurrentCellDirtyStateChanged;
+            overlayDataGrid.DataBindingComplete += overlayDataGrid_DataBindingComplete;
+        }
+
+        // new event handler to ensure mismatch highlighting after data binding
+        // seems that its because in the constructor the databinding is not done so cant make mismatch search work there
+        private void overlayDataGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            FindMismatches(); // Apply mismatch highlighting after data binding is complete
+        }
+
+        // New event handler for real-time checkbox updates
+        private void overlayDataGrid_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (overlayDataGrid.CurrentCell is DataGridViewCheckBoxCell)
+            {
+                // Commit the edit immediately to update the underlying data
+                overlayDataGrid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                // Refresh the mismatch highlighting
+                FindMismatches();
+            }
         }
 
         private void isMarkedCompressedButton_Click(object sender, EventArgs e) {
@@ -47,6 +72,7 @@ namespace DSPRE {
                 r.Cells[2].Value = currentValMark;                
             }
             currentValMark = !currentValMark;
+            FindMismatches(); // Update highlighting after button click
         }
 
         private void isCompressedButton_Click(object sender, EventArgs e) {
@@ -54,6 +80,7 @@ namespace DSPRE {
                 r.Cells[1].Value = currentValComp;                
             }
             currentValComp = !currentValComp;
+            FindMismatches(); // Update highlighting after button click
         }
 
         private void revertChangesButton_Click(object sender, EventArgs e) {
@@ -69,6 +96,7 @@ namespace DSPRE {
                 overlays.Add(ovl);
             }
             overlayDataGrid.DataSource = overlays;
+            FindMismatches(); // Update highlighting after button click
         }
 
         private void overlayDataGrid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e) {

@@ -550,7 +550,7 @@ namespace DSPRE.ROMFiles
 
         private void addParametersToList(ref List<byte[]> parameterList, ushort id, BinaryReader dataReader)
         {
-            Console.WriteLine("Loaded command id: " + id.ToString("X4"));
+            AppLogger.Debug("Loaded command id: " + id.ToString("X4"));
             try
             {
                 foreach (int bytesToRead in RomInfo.ScriptCommandParametersDict[id])
@@ -1059,7 +1059,7 @@ namespace DSPRE.ROMFiles
                 }
                 catch (NullReferenceException nre)
                 {
-                    Console.WriteLine(nre);
+                    AppLogger.Error(nre.ToString());
                     return null;
                 }
             }
@@ -1077,11 +1077,11 @@ namespace DSPRE.ROMFiles
                 return false;
             }
 
-            Console.WriteLine("Checking calls of function " + funcID + (excludedCaller == null ? "" : " excluding Function " + excludedCaller + " as the caller."));
+            AppLogger.Debug("Checking calls of function " + funcID + (excludedCaller == null ? "" : " excluding Function " + excludedCaller + " as the caller."));
 
             if (!uninvokedFuncsSet.Contains(funcID))
             {
-                Console.WriteLine("Function " + funcID + " has already been invoked before. Nothing to check.");
+                AppLogger.Debug("Function " + funcID + " has already been invoked before. Nothing to check.");
                 return true; //Abort 
             }
 
@@ -1096,13 +1096,13 @@ namespace DSPRE.ROMFiles
 
             if (sr is null)
             {
-                Console.WriteLine("No reference found!!!");
+                AppLogger.Debug("No reference found!!!");
                 return false;
             }
 
             if (sr.typeOfCaller is ContainerTypes.Script)
             {
-                Console.WriteLine("Function " + funcID + " is directly called by Script " + sr.callerID);
+                AppLogger.Debug("Function " + funcID + " is directly called by Script " + sr.callerID);
                 return true;
             }
 
@@ -1110,12 +1110,12 @@ namespace DSPRE.ROMFiles
             {
                 if (FunctionIsInvoked(refList, uninvokedFuncsSet, sr.callerID, ++callCount, excludedCaller: sr.invokedID))
                 { //check if caller function is invoked as well
-                    Console.WriteLine("Function " + funcID + " is called by Function " + sr.callerID);
+                    AppLogger.Debug("Function " + funcID + " is called by Function " + sr.callerID);
                     return true;
                 }
             }
 
-            Console.WriteLine("Function " + funcID + " is unused");
+            AppLogger.Debug("Function " + funcID + " is unused");
             return false;
         }
 

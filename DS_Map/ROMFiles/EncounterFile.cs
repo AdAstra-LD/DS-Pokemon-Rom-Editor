@@ -377,7 +377,13 @@ namespace DSPRE.ROMFiles {
                     writer.Write(radarPokemon[i]);
                 }
 
-                writer.BaseStream.Position = 0xA4;
+                /* Form data */
+                for (int i = 0; i < 5; i++) {
+                    writer.Write(regionalForms[i]);
+                }
+
+                /* Unknown table */
+                writer.Write(unknownTable);
 
                 /* Dual-slot encounters */
                 for (int i = 0; i < 2; i++) {

@@ -191,9 +191,6 @@
     <Compile Include="Editors\LevelScriptEditor.Designer.cs">
       <DependentUpon>LevelScriptEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editors\LoadingForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Editors\MatrixEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -271,6 +268,9 @@
     </Compile>
     <Compile Include="Editors\TrainerEditor.Designer.cs">
       <DependentUpon>TrainerEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editors\Utils\LoadingForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Editors\Utils\NarcReader.cs" />
     <Compile Include="Editors\Utils\SpriteSet.cs" />
@@ -751,6 +751,9 @@
     <None Include="Resources\Graphics\Program Icons\exploreKit.png" />
     <None Include="Resources\Graphics\Program Icons\buildingEditorButton.png" />
     <None Include="Resources\alphabgCheckerboard.png" />
+    <Content Include="Tools\pokefatcs.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Graphics\Area Icons\hgsslake.png" />
     <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera0.png" />
     <Content Include="Resources\Graphics\Camera Angles\DPPt\dpcamera1.png" />
@@ -878,6 +881,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\blz.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\charmap.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Tools\msgenc.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\ndstool.exe">

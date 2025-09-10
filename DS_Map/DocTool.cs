@@ -276,23 +276,20 @@ namespace DSPRE
             {
                 MoveData curMoveDataFile = new MoveData(i);
 
-                // Lambda magic to select the flags that are set
-                string moveFlagsString = string.Join("|", moveFlags.Select((flag, index) 
+                // Lambda magic to select the flags that are set, skipping the first enum entry (no flags)
+                string moveFlagsString = string.Join("|", moveFlags.Skip(1).Select((flag, index)
                     => (curMoveDataFile.flagField & (1 << index)) != 0 ? flag : "").Where(flag => !string.IsNullOrEmpty(flag)));
                 
-                string attackRangeString = string.Join("|", attackRange.Select((range, index) 
+                string attackRangeString = string.Join("|", attackRange.Skip(1).Select((range, index)
                     => (curMoveDataFile.target & (1 << index)) != 0 ? range : "").Where(range => !string.IsNullOrEmpty(range)));
 
-                string battleSeqDescString = "";
+                string battleSeqDescString = curMoveDataFile.battleeffect < battleSeqDesc.Length ? 
+                    battleSeqDesc[curMoveDataFile.battleeffect] : "UnknownEffect_" + curMoveDataFile.battleeffect;
 
-                if (curMoveDataFile.battleeffect < battleSeqDesc.Length)
-                {
-                    battleSeqDescString = battleSeqDesc[curMoveDataFile.battleeffect];
-                }
+                string typeString = (int)curMoveDataFile.movetype < typeNames.Length ? 
+                    typeNames[(int)curMoveDataFile.movetype] : "UnknownType_" + (int)curMoveDataFile.movetype;
 
-                string typeString = (int)curMoveDataFile.movetype < typeNames.Length ? typeNames[(int)curMoveDataFile.movetype] : "UnknownType_" + (int)curMoveDataFile.movetype;
-
-                sw.WriteLine($"{i},{moveNames[i]},{curMoveDataFile.movetype},{curMoveDataFile.split}," +
+                sw.WriteLine($"{i},{moveNames[i]},{typeString},{curMoveDataFile.split}," +
                              $"{curMoveDataFile.damage},{curMoveDataFile.accuracy},{curMoveDataFile.priority}," +
                              $"{curMoveDataFile.sideEffectProbability},{curMoveDataFile.pp}," +
                              $"[{attackRangeString}],[{moveFlagsString}],{battleSeqDescString}");

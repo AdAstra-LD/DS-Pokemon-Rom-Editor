@@ -94,6 +94,9 @@ namespace DSPRE.Editors
                 holdEffectComboBox.Items.RemoveAt((int)HoldEffect.GiratinaBoost); // Effect doesn't exist in DP
             }
 
+            // Base tooltips
+            SetBaseToolTips();
+
             // ItemParameters
             BindItemParamsEvents();
             SetItemParamToolTips();
@@ -103,6 +106,49 @@ namespace DSPRE.Editors
             Helpers.EnableHandlers();
 
             itemNameInputComboBox.SelectedIndex = 1;
+        }
+
+        private void SetBaseToolTips()
+        {
+            // Icon box
+            toolTip1.SetToolTip(itemEditorSelectedPictureGroupBox, "Change data related to the Item's");
+            toolTip1.SetToolTip(imageComboBox, "Change the icon image for the Item here.");
+            toolTip1.SetToolTip(paletteComboBox, "Change the icon palette for the Item here.");
+            toolTip1.SetToolTip(saveIconButton, "Save changes to icon.");
+
+            // Hold Effects box
+            toolTip1.SetToolTip(holdGroupBox, "Change data related to the Item's hold effect here.");
+            toolTip1.SetToolTip(holdEffectComboBox, "Sets the hold effect of the item.");
+            toolTip1.SetToolTip(holdEffectParameterNumericUpDown, "Sets the parameter for the hold effect.");
+
+            // Pocket Data box
+            toolTip1.SetToolTip(pocketGroupBox, "Change data related to the Item's pocket data here.");
+            toolTip1.SetToolTip(fieldPocketComboBox, "Sets the field pocket where the item is stored.");
+            toolTip1.SetToolTip(battlePocketLabel, "Sets the battle pocket where the item is stored.");
+
+            // Checks box
+            toolTip1.SetToolTip(checksGroupBox, "Change data related to the Item's usage checks here.");
+            toolTip1.SetToolTip(partyUseCheckBox, "Enables the Item's party usage parameters");
+            toolTip1.SetToolTip(preventTossCheckBox, "Prevents the item from being tossed.");
+            toolTip1.SetToolTip(canSelectCheckBox, "Allows the item to be used with SELECT mode.");
+
+            // Price box
+            toolTip1.SetToolTip(priceGroupBox, "Change data related to price/value of item here.");
+            toolTip1.SetToolTip(priceLabel, "Sets the value of the item, 50% less by DEFAULT in the shop");
+            toolTip1.SetToolTip(priceNumericUpDown, "Sets the value of the item, 50% less by DEFAULT in the shop");
+
+            // Move Related box
+            toolTip1.SetToolTip(moveRelatedGroupBox, "Change data related to the Item's move-related effects here.");
+            toolTip1.SetToolTip(naturalGiftTypeComboBox, "Sets the type of Natural Gift when held.");
+            toolTip1.SetToolTip(naturalGiftPowerNumericUpDown, "Sets the power of Natural Gift when held.");
+            toolTip1.SetToolTip(pluckEffectNumericUpDown, "Sets the effect ID when Plucked.");
+            toolTip1.SetToolTip(flingEffectNumericUpDown, "Sets the effect ID when Flung.");
+            toolTip1.SetToolTip(flingPowerNumericUpDown, "Sets the power when Flung.");
+
+            // Functions box
+            toolTip1.SetToolTip(functionsGroupBox, "Change data related to the Item's usage functions here.");
+            toolTip1.SetToolTip(fieldFunctionComboBox, "Sets the field function of the item.");
+            toolTip1.SetToolTip(battleFunctionComboBox, "Sets the battle function of the item.");
         }
 
         private void PopulateIconPaletteDropdowns()
@@ -199,7 +245,7 @@ namespace DSPRE.Editors
             toolTip1.SetToolTip(frzHealCheckBox, "Cures freeze status");
             toolTip1.SetToolTip(przHealCheckBox, "Cures paralysis status");
             toolTip1.SetToolTip(cfsHealCheckBox, "Cures confusion");
-            toolTip1.SetToolTip(infHealCheckBox, "Cures infatuation");
+            toolTip1.SetToolTip(infHealCheckBox, "Cures all");
             toolTip1.SetToolTip(guardSpecCheckBox, "Applies Mist effect to party (Guard Spec)");
 
             toolTip1.SetToolTip(reviveCheckBox, "Revives a fainted Pokémon to 50% HP");
@@ -280,7 +326,7 @@ namespace DSPRE.Editors
 
         private void ChangeLoadedFile(int toLoad)
         {
-            Console.WriteLine("ItemEditor: ChangeLoadedFile: toLoad = " + toLoad);
+            AppLogger.Debug("ItemEditor: ChangeLoadedFile: toLoad = " + toLoad);
             currentLoadedId = toLoad;
 
             var stream = new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\" 
@@ -535,7 +581,7 @@ namespace DSPRE.Editors
             if (CheckDiscardChanges())
             {
                 int newId = itemNameInputComboBox.SelectedIndex;
-                Console.WriteLine("ItemEditor: itemNameInputComboBox_SelectedIndexChanged: newId = " + newId);
+                AppLogger.Debug("ItemEditor: itemNameInputComboBox_SelectedIndexChanged: newId = " + newId);
                 itemNumberNumericUpDown.Value = newId;
                 ChangeLoadedFile(newId);
             }
@@ -556,7 +602,7 @@ namespace DSPRE.Editors
             {
                 int newId = (int)itemNumberNumericUpDown.Value;
                 itemNameInputComboBox.SelectedIndex = newId;
-                Console.WriteLine("ItemEditor: itemNumberNumericUpDown_ValueChanged: newId = " + newId);
+                AppLogger.Debug("ItemEditor: itemNumberNumericUpDown_ValueChanged: newId = " + newId);
                 ChangeLoadedFile(newId);
             }
 

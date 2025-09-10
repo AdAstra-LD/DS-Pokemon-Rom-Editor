@@ -174,7 +174,6 @@ public static class ScriptDatabaseJsonLoader
                         string typeStr = typeElement.GetString();
                         if (!string.IsNullOrEmpty(typeStr))
                         {
-                            // Console.WriteLine($"Command 0x{code:X3} parameter type: {typeStr}");
                             var paramType = ScriptParameter.ParseTypeString(typeStr);
                             paramTypes.Add(paramType);
                         }

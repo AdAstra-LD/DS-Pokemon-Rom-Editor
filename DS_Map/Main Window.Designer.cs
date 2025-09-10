@@ -38,9 +38,13 @@
             this.mapEditorTabPage = new System.Windows.Forms.TabPage();
             this.mapEditor = new DSPRE.Editors.MapEditor();
             this.nsbtxEditorTabPage = new System.Windows.Forms.TabPage();
+            this.popoutNsbtxEditorButton = new System.Windows.Forms.Button();
+            this.nsbtxEditorPopOutLabel = new System.Windows.Forms.Label();
             this.nsbtxEditor = new DSPRE.Editors.NsbtxEditor();
             this.eventEditorTabPage = new System.Windows.Forms.TabPage();
             this.eventEditor = new DSPRE.Editors.EventEditor();
+            this.eventEditorPopOutLabel = new System.Windows.Forms.Label();
+            this.popoutEventEditorButton = new System.Windows.Forms.Button();
             this.tabPageScriptEditor = new System.Windows.Forms.TabPage();
             this.popoutScriptEditorButton = new System.Windows.Forms.Button();
             this.scriptEditor = new DSPRE.Editors.ScriptEditor();
@@ -251,6 +255,8 @@
             // 
             // nsbtxEditorTabPage
             // 
+            this.nsbtxEditorTabPage.Controls.Add(this.popoutNsbtxEditorButton);
+            this.nsbtxEditorTabPage.Controls.Add(this.nsbtxEditorPopOutLabel);
             this.nsbtxEditorTabPage.Controls.Add(this.nsbtxEditor);
             this.nsbtxEditorTabPage.ImageIndex = 6;
             this.nsbtxEditorTabPage.Location = new System.Drawing.Point(4, 23);
@@ -260,6 +266,29 @@
             this.nsbtxEditorTabPage.TabIndex = 6;
             this.nsbtxEditorTabPage.Text = "NSBTX Editor";
             this.nsbtxEditorTabPage.UseVisualStyleBackColor = true;
+            // 
+            // popoutNsbtxEditorButton
+            // 
+            this.popoutNsbtxEditorButton.Image = global::DSPRE.Properties.Resources.popout;
+            this.popoutNsbtxEditorButton.Location = new System.Drawing.Point(1144, 634);
+            this.popoutNsbtxEditorButton.Name = "popoutNsbtxEditorButton";
+            this.popoutNsbtxEditorButton.Size = new System.Drawing.Size(35, 35);
+            this.popoutNsbtxEditorButton.TabIndex = 4;
+            this.popoutNsbtxEditorButton.UseVisualStyleBackColor = true;
+            // 
+            // nsbtxEditorPopOutLabel
+            // 
+            this.nsbtxEditorPopOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.nsbtxEditorPopOutLabel.AutoSize = true;
+            this.nsbtxEditorPopOutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nsbtxEditorPopOutLabel.Location = new System.Drawing.Point(444, 325);
+            this.nsbtxEditorPopOutLabel.Name = "nsbtxEditorPopOutLabel";
+            this.nsbtxEditorPopOutLabel.Size = new System.Drawing.Size(296, 24);
+            this.nsbtxEditorPopOutLabel.TabIndex = 3;
+            this.nsbtxEditorPopOutLabel.Text = "This editor is currently popped-out";
+            this.nsbtxEditorPopOutLabel.Visible = false;
             // 
             // nsbtxEditor
             // 
@@ -273,7 +302,9 @@
             // eventEditorTabPage
             // 
             this.eventEditorTabPage.BackColor = System.Drawing.SystemColors.Window;
+            this.eventEditorTabPage.Controls.Add(this.popoutEventEditorButton);
             this.eventEditorTabPage.Controls.Add(this.eventEditor);
+            this.eventEditorTabPage.Controls.Add(this.eventEditorPopOutLabel);
             this.eventEditorTabPage.ImageIndex = 3;
             this.eventEditorTabPage.Location = new System.Drawing.Point(4, 23);
             this.eventEditorTabPage.Name = "eventEditorTabPage";
@@ -292,6 +323,29 @@
             this.eventEditor.Padding = new System.Windows.Forms.Padding(3);
             this.eventEditor.Size = new System.Drawing.Size(1179, 669);
             this.eventEditor.TabIndex = 0;
+            // 
+            // eventEditorPopOutLabel
+            // 
+            this.eventEditorPopOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventEditorPopOutLabel.AutoSize = true;
+            this.eventEditorPopOutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.eventEditorPopOutLabel.Location = new System.Drawing.Point(468, 318);
+            this.eventEditorPopOutLabel.Name = "eventEditorPopOutLabel";
+            this.eventEditorPopOutLabel.Size = new System.Drawing.Size(296, 24);
+            this.eventEditorPopOutLabel.TabIndex = 6;
+            this.eventEditorPopOutLabel.Text = "This editor is currently popped-out";
+            this.eventEditorPopOutLabel.Visible = false;
+            // 
+            // popoutEventEditorButton
+            // 
+            this.popoutEventEditorButton.Image = global::DSPRE.Properties.Resources.popout;
+            this.popoutEventEditorButton.Location = new System.Drawing.Point(1144, 634);
+            this.popoutEventEditorButton.Name = "popoutEventEditorButton";
+            this.popoutEventEditorButton.Size = new System.Drawing.Size(35, 35);
+            this.popoutEventEditorButton.TabIndex = 5;
+            this.popoutEventEditorButton.UseVisualStyleBackColor = true;
             // 
             // tabPageScriptEditor
             // 
@@ -559,7 +613,7 @@
             this.gameIcon.ErrorImage = null;
             this.gameIcon.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.gameIcon.InitialImage = null;
-            this.gameIcon.Location = new System.Drawing.Point(1167, 35);
+            this.gameIcon.Location = new System.Drawing.Point(1165, 781);
             this.gameIcon.Name = "gameIcon";
             this.gameIcon.Size = new System.Drawing.Size(32, 32);
             this.gameIcon.TabIndex = 8;
@@ -569,7 +623,7 @@
             // languageLabel
             // 
             this.languageLabel.AutoSize = true;
-            this.languageLabel.Location = new System.Drawing.Point(1042, 52);
+            this.languageLabel.Location = new System.Drawing.Point(1040, 798);
             this.languageLabel.Name = "languageLabel";
             this.languageLabel.Size = new System.Drawing.Size(58, 13);
             this.languageLabel.TabIndex = 10;
@@ -610,7 +664,7 @@
             this.openROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.open_rom;
             this.openROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openROMToolStripMenuItem.Name = "openROMToolStripMenuItem";
-            this.openROMToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.openROMToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.openROMToolStripMenuItem.Text = "Open ROM";
             this.openROMToolStripMenuItem.Click += new System.EventHandler(this.loadRom_Click);
             // 
@@ -619,7 +673,8 @@
             this.openFolderToolStripMenuItem.Image = global::DSPRE.Properties.Resources.open_file;
             this.openFolderToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
-            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.openFolderToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openFolderToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.openFolderToolStripMenuItem.Text = "Open Folder";
             this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.readDataFromFolderButton_Click);
             // 
@@ -629,7 +684,9 @@
             this.saveROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.saveROMToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.saveROMToolStripMenuItem.Text = "Save ROM";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveRom_Click);
             // 
@@ -639,7 +696,8 @@
             this.settingsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.RightToLeftAutoMirrorImage = true;
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(155, 38);
+            this.settingsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Oemcomma)));
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
@@ -699,7 +757,7 @@
             this.diamondAndPearlToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconDP;
             this.diamondAndPearlToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.diamondAndPearlToolStripMenuItem.Name = "diamondAndPearlToolStripMenuItem";
-            this.diamondAndPearlToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.diamondAndPearlToolStripMenuItem.Size = new System.Drawing.Size(222, 38);
             this.diamondAndPearlToolStripMenuItem.Text = "Diamond && Pearl";
             this.diamondAndPearlToolStripMenuItem.Click += new System.EventHandler(this.diamondAndPearlToolStripMenuItem_Click);
             // 
@@ -708,7 +766,7 @@
             this.platinumToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconPt;
             this.platinumToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.platinumToolStripMenuItem.Name = "platinumToolStripMenuItem";
-            this.platinumToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.platinumToolStripMenuItem.Size = new System.Drawing.Size(222, 38);
             this.platinumToolStripMenuItem.Text = "Platinum";
             this.platinumToolStripMenuItem.Click += new System.EventHandler(this.platinumToolStripMenuItem_Click);
             // 
@@ -717,7 +775,7 @@
             this.heartGoldAndSoulSilverToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIconHGSS;
             this.heartGoldAndSoulSilverToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.heartGoldAndSoulSilverToolStripMenuItem.Name = "heartGoldAndSoulSilverToolStripMenuItem";
-            this.heartGoldAndSoulSilverToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.heartGoldAndSoulSilverToolStripMenuItem.Size = new System.Drawing.Size(222, 38);
             this.heartGoldAndSoulSilverToolStripMenuItem.Text = "HeartGold && SoulSilver";
             this.heartGoldAndSoulSilverToolStripMenuItem.Click += new System.EventHandler(this.heartGoldAndSoulSilverToolStripMenuItem_Click);
             // 
@@ -726,7 +784,7 @@
             this.manageDatabasesToolStripMenuItem.Image = global::DSPRE.Properties.Resources.scriptDBIcon;
             this.manageDatabasesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.manageDatabasesToolStripMenuItem.Name = "manageDatabasesToolStripMenuItem";
-            this.manageDatabasesToolStripMenuItem.Size = new System.Drawing.Size(211, 38);
+            this.manageDatabasesToolStripMenuItem.Size = new System.Drawing.Size(222, 38);
             this.manageDatabasesToolStripMenuItem.Text = "Manage Script Databases";
             this.manageDatabasesToolStripMenuItem.Click += new System.EventHandler(this.manageDatabasesToolStripMenuItem_Click);
             // 
@@ -1340,7 +1398,7 @@
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
-            this.versionLabel.Location = new System.Drawing.Point(1042, 36);
+            this.versionLabel.Location = new System.Drawing.Point(1040, 782);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(35, 13);
             this.versionLabel.TabIndex = 9;
@@ -1374,7 +1432,9 @@
             this.matrixEditorTabPage.ResumeLayout(false);
             this.mapEditorTabPage.ResumeLayout(false);
             this.nsbtxEditorTabPage.ResumeLayout(false);
+            this.nsbtxEditorTabPage.PerformLayout();
             this.eventEditorTabPage.ResumeLayout(false);
+            this.eventEditorTabPage.PerformLayout();
             this.tabPageScriptEditor.ResumeLayout(false);
             this.tabPageScriptEditor.PerformLayout();
             this.tabPageLevelScriptEditor.ResumeLayout(false);
@@ -1556,6 +1616,10 @@
         public Editors.TableEditor tableEditor;
         public Editors.EncountersEditor encountersEditor;
         public Editors.HeaderEditor headerEditor;
+        private System.Windows.Forms.Button popoutNsbtxEditorButton;
+        private System.Windows.Forms.Label nsbtxEditorPopOutLabel;
+        private System.Windows.Forms.Label eventEditorPopOutLabel;
+        private System.Windows.Forms.Button popoutEventEditorButton;
     }
 }
 

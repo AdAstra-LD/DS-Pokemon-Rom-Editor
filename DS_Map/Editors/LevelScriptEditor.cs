@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 using static DSPRE.RomInfo;
@@ -53,41 +54,53 @@ namespace DSPRE.Editors {
             selectScriptFileComboBox.SelectedIndex = selectedIndex;
         }
 
-        void disableButtons() {
-            listBoxTriggers.DataSource = null;
+        void disableButtons(bool usurp = false) {
+            if (!usurp && isEmptyLevelScript()) {
+                enableButtons();
+            } else
+            {
+                buttonOpenSelectedScript.Enabled = true;
+                buttonOpenHeaderScript.Enabled = false;
 
-            textBoxScriptID.Clear();
-            textBoxVariableName.Clear();
-            textBoxVariableValue.Clear();
+                listBoxTriggers.DataSource = null;
 
-            radioButtonVariableValue.Checked = false;
-            radioButtonMapChange.Checked = false;
-            radioButtonScreenReset.Checked = false;
-            radioButtonLoadGame.Checked = false;
+                textBoxScriptID.Clear();
+                textBoxVariableName.Clear();
+                textBoxVariableValue.Clear();
 
-            textBoxScriptID.Enabled = false;
+                radioButtonVariableValue.Checked = false;
+                radioButtonMapChange.Checked = false;
+                radioButtonScreenReset.Checked = false;
+                radioButtonLoadGame.Checked = false;
 
-            radioButtonVariableValue.Enabled = false;
-            radioButtonMapChange.Enabled = false;
-            radioButtonScreenReset.Enabled = false;
-            radioButtonLoadGame.Enabled = false;
+                textBoxScriptID.Enabled = false;
 
-            radioButtonAuto.Enabled = false;
-            radioButtonHex.Enabled = false;
-            radioButtonDecimal.Enabled = false;
+                radioButtonVariableValue.Enabled = false;
+                radioButtonMapChange.Enabled = false;
+                radioButtonScreenReset.Enabled = false;
+                radioButtonLoadGame.Enabled = false;
 
-            buttonImport.Enabled = false;
-            buttonSave.Enabled = false;
-            buttonExport.Enabled = false;
-            checkBoxPadding.Enabled = false;
+                radioButtonAuto.Enabled = false;
+                radioButtonHex.Enabled = false;
+                radioButtonDecimal.Enabled = false;
 
-            buttonAdd.Enabled = false;
-            buttonRemove.Enabled = false;
+                buttonImport.Enabled = false;
+                buttonSave.Enabled = false;
+                buttonExport.Enabled = false;
+                checkBoxPadding.Enabled = false;
 
-            buttonOpenSelectedScript.Enabled = true;
+                buttonAdd.Enabled = false;
+                buttonRemove.Enabled = false;
+
+                buttonOpenSelectedScript.Enabled = true;
+            }
+                
         }
 
         void enableButtons() {
+            buttonOpenHeaderScript.Enabled = true;
+            buttonOpenSelectedScript.Enabled = false;
+
             textBoxScriptID.Enabled = true;
             textBoxVariableName.Enabled = true;
             textBoxVariableValue.Enabled = true;
@@ -128,16 +141,12 @@ namespace DSPRE.Editors {
 
         private void selectScriptFileComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (selectScriptFileComboBox.SelectedIndex == -1) {
-                buttonOpenSelectedScript.Enabled = false;
-                buttonOpenHeaderScript.Enabled = false;
                 buttonLocate.Enabled = false;
             } else {
-                buttonOpenSelectedScript.Enabled = true;
-                buttonOpenHeaderScript.Enabled = true;
                 buttonLocate.Enabled = true;
             }
 
-            disableButtons();
+            disableButtons(true);
 
             try {
                 _levelScriptFile = new LevelScriptFile(selectScriptFileComboBox.SelectedIndex);
@@ -148,7 +157,7 @@ namespace DSPRE.Editors {
                 enableButtons();
             } catch (InvalidDataException ex) { //not a level script
                 disableButtons();
-                Console.WriteLine(ex.Message);
+                AppLogger.Info(ex.Message);
             }
         }
 
@@ -227,15 +236,20 @@ namespace DSPRE.Editors {
         private void buttonOpenHeaderScript_Click(object sender, EventArgs e) {
             HashSet<string> result;
             result = HeaderSearch.AdvancedSearch(0, (ushort)EditorPanels.headerEditor.internalNames.Count, EditorPanels.headerEditor.internalNames, (int)MapHeader.SearchableFields.LevelScriptID, (int)HeaderSearch.NumOperators.Equal, EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex.ToString());
-            //Console.WriteLine($"Found {result.Count} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex}");
-            //Console.WriteLine($"Searching for script file {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in headers: {string.Join(", ", result)}");
+            AppLogger.Debug($"Found {result.Count} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex}");
+            AppLogger.Debug($"Searching for script file {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in headers: {string.Join(", ", result)}");
+            if (result.Count == 0)
+            {
+                MessageBox.Show($"No headers found with level-script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex}.", "No headers found");
+                return;
+            }
             string[] arr = new string[result.Count];
             result.CopyTo(arr);
             for (int i = 0; i < arr.Length; i++)
             {
                 arr[i] = arr[i].Remove(0, 3).Replace(MapHeader.nameSeparator, "");
             }
-            Console.WriteLine($"Found {arr.Length} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in internal names: {string.Join(", ", arr)}");
+            AppLogger.Debug($"Found {arr.Length} headers with script ID {EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex} in internal names: {string.Join(", ", arr)}");
             ushort index = (ushort)EditorPanels.headerEditor.internalNames.IndexOf(arr[0]);
             MapHeader h;
             if (PatchToolboxDialog.flag_DynamicHeadersPatchApplied || PatchToolboxDialog.CheckFilesDynamicHeadersPatchApplied())
@@ -246,8 +260,13 @@ namespace DSPRE.Editors {
             {
                 h = MapHeader.LoadFromARM9(index);
             }
-            //Console.WriteLine($"Opening script file {h.scriptFileID} for header {_parent.internalNames[index]} ({index})");
             EditorPanels.scriptEditor.OpenScriptEditor(this._parent, (int)h.scriptFileID);
+        }
+
+        private bool isEmptyLevelScript()
+        {
+            ScriptFile script = new ScriptFile((int)EditorPanels.levelScriptEditor.selectScriptFileComboBox.SelectedIndex, true, true);
+            return script.isLevelScript;
         }
 
         private void buttonOpenSelectedScript_Click(object sender, EventArgs e) {
