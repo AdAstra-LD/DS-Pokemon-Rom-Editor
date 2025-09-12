@@ -337,6 +337,7 @@ namespace DSPRE.Resources {
             [0x00AF] = "RecordMixingUnion",
 
             [0x00B0] = "EndGameScreen",
+            [0x00B1] = "PCHallOfFameScreen",
 
             [0x00B4] = "StarterSelectionScreen",
             [0x00B5] = "EndStarterSelectionScreen",
@@ -1823,6 +1824,7 @@ namespace DSPRE.Resources {
             [0x009D] = "WorldMapScreen",
 
             [0x00A3] = "EndGameScreen",
+            [0x00A4] = "PCHallOfFameScreen",
 
             [0x00A7] = "StarterSelectionScreen",
 
@@ -2329,7 +2331,7 @@ namespace DSPRE.Resources {
             [0x00A1] = new byte[1] { 0 },
             [0x00A2] = new byte[1] { 0 },
             [0x00A3] = new byte[] { 2 },
-            [0x00A4] = new byte[] { 2, 2, 2, 2 },
+            [0x00A4] = new byte[] { 0 },
             [0x00A5] = new byte[] { 2, 2 },
             [0x00A6] = new byte[] { 2 },
             [0x00A7] = new byte[1] { 0 },
