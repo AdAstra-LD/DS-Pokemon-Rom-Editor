@@ -631,6 +631,9 @@ namespace DSPRE.Resources {
 
             [0x0252] = "CountPCFreeSpace",
 
+            [0x0258] = "SetPlayerSavingForm",
+            [0x0259] = "ResetPlayerForm",
+
             [0x0261] = "TextAccessory",
             [0x0262] = "CheckPokemonInParty",
             [0x0263] = "SetDeoxysForm",
@@ -2052,6 +2055,9 @@ namespace DSPRE.Resources {
 
             [0x01FB] = "CountPCFreeSpace",
 
+            [0x0200] = "SetPlayerSavingForm",
+            [0x0201] = "ResetPlayerForm",
+
             [0x0204] = "TextAccessory",
             [0x0205] = "CheckPokemonInParty",
             [0x0206] = "SetDeoxysForm",
@@ -2099,7 +2105,7 @@ namespace DSPRE.Resources {
             [0x025E] = "BallResetFollowingPoke",
             [0x025F] = "NoBallResetFollowingPoke",
             [0x0260] = "SendOutFollowingPoke",
-            [0x0261] = "MecScript",
+            [0x0261] = "ResetFollowingPoke",
 
             [0x0267] = "TakePhoto",
 
@@ -2514,7 +2520,7 @@ namespace DSPRE.Resources {
             [0x0158] = new byte[] { 2, 2 },
             [0x0159] = new byte[1] { 0 },
             [0x015A] = new byte[1] { 0 },
-            [0x015B] = new byte[] { 2, 2 },
+            [0x015B] = new byte[] { 2 },
             [0x015C] = new byte[] { 2 },
             [0x015D] = new byte[1] { 0 },
             [0x015E] = new byte[1] { 0 },
@@ -2638,7 +2644,7 @@ namespace DSPRE.Resources {
             [0x01C4] = new byte[] { 2, 2 },
             [0x01C5] = new byte[1] { 0 },
             [0x01C6] = new byte[1] { 0 },
-            [0x01C7] = new byte[] { 2 },
+            [0x01C7] = new byte[1] { 0 },
             [0x01C8] = new byte[] { 2, 2 },
             [0x01C9] = new byte[] { 2, 2 },
             [0x01CA] = new byte[] { 2, 2, 2 },
@@ -2714,8 +2720,8 @@ namespace DSPRE.Resources {
             [0x01FD] = new byte[] { 2 },
             [0x01FE] = new byte[1] { 0 },
             [0x01FF] = new byte[] { 2, 2 },
-            [0x0200] = new byte[] { 2 },
-            [0x0201] = new byte[] { 2, 2, 2 },
+            [0x0200] = new byte[] { 0 },
+            [0x0201] = new byte[] { 0 },
             [0x0202] = new byte[] { 2 },
             [0x0203] = new byte[] { 2 },
             [0x0204] = new byte[] { 1, 2 },
