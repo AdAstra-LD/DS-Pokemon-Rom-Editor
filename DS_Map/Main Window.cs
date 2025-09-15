@@ -1260,12 +1260,14 @@ namespace DSPRE
             {
                 case GameFamilies.DP:
                 case GameFamilies.Plat:
-                    using (WildEditorDPPt editor = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen, EditorPanels.headerEditor.internalNames.Count))
-                        editor.ShowDialog();
+                    WildEditorDPPt wildEditorDppt = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(),
+                        encToOpen, EditorPanels.headerEditor.internalNames.Count);
+                        wildEditorDppt.Show();
                     break;
                 default:
-                    using (WildEditorHGSS editor = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(), encToOpen, EditorPanels.headerEditor.internalNames.Count))
-                        editor.ShowDialog();
+                    WildEditorHGSS wildEditorHgss = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(),
+                        encToOpen, EditorPanels.headerEditor.internalNames.Count);
+                        wildEditorHgss.Show();
                     break;
             }
             Helpers.statusLabelMessage();
