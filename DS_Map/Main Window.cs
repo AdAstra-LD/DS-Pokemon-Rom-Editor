@@ -1160,9 +1160,10 @@ namespace DSPRE
             OpenCommandsDatabase(RomInfo.BuildCommandNamesDatabase(GameFamilies.HGSS), RomInfo.BuildCommandParametersDatabase(GameFamilies.HGSS),
                 RomInfo.BuildActionNamesDatabase(GameFamilies.HGSS), RomInfo.BuildComparisonOperatorsDatabase(GameFamilies.HGSS));
         }
-        private void manageDatabasesToolStripMenuItem_Click(object sender, EventArgs e) {
-            using (CustomScrcmdManager editor = new CustomScrcmdManager())
-                editor.Show();
+        private void manageDatabasesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CustomScrcmdManager editor = new CustomScrcmdManager();
+            editor.Show();
         }
         private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) 
         {
