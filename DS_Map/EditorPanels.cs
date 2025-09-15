@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Forms;
 using DSPRE.Editors;
 
@@ -8,6 +11,7 @@ namespace DSPRE {
     public static void Initialize(MainProgram mainProgram) {
       MainProgram = mainProgram;
     }
+    
 
         public sealed class EditorPopoutConfig
         {
@@ -23,6 +27,32 @@ namespace DSPRE {
             }
 
         }
+        
+        public static class PopoutRegistry
+        {
+            private static readonly Dictionary<Control, Form> _hosts = new Dictionary<Control, Form>();
+
+            public static bool IsPoppedOut(Control control) => _hosts.ContainsKey(control);
+
+            public static bool TryGetHost(Control control, out Form host) => _hosts.TryGetValue(control, out host);
+
+            public static IReadOnlyDictionary<Control, Form> Snapshot
+                => new ReadOnlyDictionary<Control, Form>(new Dictionary<Control, Form>(_hosts));
+
+            internal static void Add(Control control, Form host)
+            {
+                _hosts[control] = host;
+                host.FormClosed += (_, __) => _hosts.Remove(control);
+            }
+
+            public static void CloseAll()
+            {
+                foreach (var host in _hosts.Values.ToList())
+                    host.Close();
+            }
+        }
+        
+
 
 
         #region Editors

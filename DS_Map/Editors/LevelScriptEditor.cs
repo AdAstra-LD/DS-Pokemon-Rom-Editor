@@ -39,7 +39,14 @@ namespace DSPRE.Editors {
             SetUpLevelScriptEditor(parent);
 
             selectScriptFileComboBox.SelectedIndex = levelScriptID;
-            EditorPanels.mainTabControl.SelectedTab = EditorPanels.levelScriptEditorTabPage;
+            if (EditorPanels.PopoutRegistry.TryGetHost(this, out var host))
+            {
+                host.Focus();
+            }
+            else
+            {
+                EditorPanels.mainTabControl.SelectedTab = EditorPanels.levelScriptEditorTabPage;
+            }
         }
 
         private void populate_selectScriptFileComboBox(int selectedIndex = 0) {

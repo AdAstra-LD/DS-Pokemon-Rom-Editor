@@ -579,20 +579,44 @@ namespace DSPRE {
         extern static bool DestroyIcon(IntPtr handle);
 
 
-        public static void PopOutEditorHandler<T>(T control, string title, Image icon, Action<T> onClose = null) where T : Control
+     public static void PopOutEditorHandler<T>(T control, string title, Image icon, Action<T> onClose = null)
+            where T : Control
         {
+            if (control == null) return;
+            
+            if (EditorPanels.PopoutRegistry.TryGetHost(control, out var existingHost))
+            {
+                if (existingHost.WindowState == FormWindowState.Minimized) existingHost.WindowState = FormWindowState.Normal;
+                existingHost.Activate();
+                return;
+            }
+
             var originalParent = control.Parent;
             var originalIndex = originalParent?.Controls.IndexOf(control) ?? -1;
+            var originalDock = control.Dock;
 
             originalParent?.Controls.Remove(control);
-            Icon _icon = null;
-            if(icon != null)
+            
+            Icon managedIcon = null;
+            if (icon != null)
             {
-                Bitmap bitmap = new Bitmap(icon);
-                _icon = Icon.FromHandle(bitmap.GetHicon());
+                using (var bmp = new Bitmap(icon))
+                {
+                    IntPtr hIcon = bmp.GetHicon();
+                    try
+                    {
+                        using (var tmp = Icon.FromHandle(hIcon))
+                        {
+                            managedIcon = (Icon)tmp.Clone();
+                        }
+                    }
+                    finally
+                    {
+                        DestroyIcon(hIcon);
+                    }
+                }
             }
-        
-
+            
             var form = new Form
             {
                 Text = title,
@@ -600,37 +624,37 @@ namespace DSPRE {
                 FormBorderStyle = FormBorderStyle.FixedSingle,
                 MaximizeBox = false,
                 ClientSize = control.Size,
-                ShowIcon = icon == null ? false : true,
-                Icon = _icon
-                
+                ShowIcon = managedIcon != null,
+                Icon = managedIcon
             };
+            
 
             control.Dock = DockStyle.Fill;
             form.Controls.Add(control);
 
+            EditorPanels.PopoutRegistry.Add(control, form);
+
             form.FormClosing += (s, e) =>
             {
+
                 form.Controls.Remove(control);
-                if(_icon != null)
-                {
-                    DestroyIcon(_icon.Handle);
-                }
+                
                 if (originalParent != null && !originalParent.IsDisposed)
                 {
-                    if (originalIndex >= 0 && originalIndex <= originalParent.Controls.Count)
-                        originalParent.Controls.Add(control);
-                    else
-                        originalParent.Controls.Add(control);
+                    originalParent.Controls.Add(control);
+                    if (originalIndex >= 0 && originalIndex < originalParent.Controls.Count)
+                        originalParent.Controls.SetChildIndex(control, originalIndex);
 
-                    originalParent.Controls.SetChildIndex(control, originalIndex);
+                    control.Dock = originalDock;
                 }
+                
+                managedIcon?.Dispose();
 
                 onClose?.Invoke(control);
             };
 
             form.Show();
         }
-
 
         public static void PopOutEditor(Control control, string editorName, Label label, Button button, Image icon)
         {

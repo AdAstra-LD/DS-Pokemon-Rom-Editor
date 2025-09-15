@@ -798,7 +798,14 @@ namespace DSPRE.Editors
 
             EditorPanels.nsbtxEditor.selectAreaDataListBox.SelectedIndex = (int)areaDataUpDown.Value;
             EditorPanels.nsbtxEditor.texturePacksListBox.SelectedIndex = (EditorPanels.nsbtxEditor.mapTilesetRadioButton.Checked ? (int)EditorPanels.nsbtxEditor.areaDataMapTilesetUpDown.Value : (int)EditorPanels.nsbtxEditor.areaDataBuildingTilesetUpDown.Value);
-            _parent.mainTabControl.SelectedTab = EditorPanels.nsbtxEditorTabPage;
+            if (EditorPanels.PopoutRegistry.TryGetHost(EditorPanels.nsbtxEditor, out var host))
+            {
+                host.Focus();
+            }
+            else
+            {
+                _parent.mainTabControl.SelectedTab = EditorPanels.nsbtxEditorTabPage;
+            }
 
             if (EditorPanels.nsbtxEditor.texturesListBox.Items.Count > 0)
                 EditorPanels.nsbtxEditor.texturesListBox.SelectedIndex = 0;
@@ -817,7 +824,14 @@ namespace DSPRE.Editors
 
             EditorPanels.eventEditor.eventMatrixUpDown.Value = matrixUpDown.Value; // Open the right matrix in event editor
             EditorPanels.eventEditor.selectEventComboBox.SelectedIndex = (int)eventFileUpDown.Value; // Select event file
-            _parent.mainTabControl.SelectedTab = EditorPanels.eventEditorTabPage;
+            if (EditorPanels.PopoutRegistry.TryGetHost(EditorPanels.eventEditor, out var host))
+            {
+                host.Focus();
+            }
+            else
+            {
+                _parent.mainTabControl.SelectedTab = EditorPanels.eventEditorTabPage;
+            }
 
             EditorPanels.eventEditor.eventMatrixUpDown_ValueChanged(null, null);
         }

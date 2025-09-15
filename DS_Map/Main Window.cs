@@ -1828,10 +1828,16 @@ namespace DSPRE
 
         private void popoutEditorClickHandler(object sender, EventArgs e)
         {
-            var currentTabInfos = EditorPanels.mainTabControl.SelectedTab;
+            var currentTab = EditorPanels.mainTabControl.SelectedTab;
             if (sender is Button btn && _popouts.TryGetValue(btn, out var cfg))
-                Helpers.PopOutEditor(cfg.Control, currentTabInfos.Text, cfg.PlaceholderLabel, cfg.PopoutButton, mainTabImageList.Images[currentTabInfos.ImageIndex]);
+            {
+                Helpers.PopOutEditor(cfg.Control, currentTab.Text, cfg.PlaceholderLabel, cfg.PopoutButton,
+                    mainTabImageList.Images[currentTab.ImageIndex]);
+            }
         }
+
         #endregion
+
+ 
     }
 }

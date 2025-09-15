@@ -677,7 +677,16 @@ namespace DSPRE.Editors
             SetupTextEditor(parent);
 
             selectTextFileComboBox.SelectedIndex = TextArchiveID;
-            EditorPanels.mainTabControl.SelectedTab = EditorPanels.textEditorTabPage;
+            if (EditorPanels.PopoutRegistry.TryGetHost(this, out var host))
+            {
+                host.Focus();
+            }
+            else
+            {
+                EditorPanels.mainTabControl.SelectedTab = EditorPanels.textEditorTabPage;
+            }
+
+
         }
 
         public void SetupTextEditor(MainProgram parent, bool force = false)
