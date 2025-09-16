@@ -747,16 +747,17 @@ namespace DSPRE {
                 "Old Rod: 15% slot\n" +
                 "Good Rod: 40%, 15% and 10% slots\n" +
                 "Super Rod: all slots");
-            SetToolTipsForControls(new Control[] { oldRodFifteenComboBox, goodRodFortyComboBox, goodRodFifteenComboBox, goodRodTenComboBox,
+            SetToolTipsForControls(new Control[] { oldRodFifteenComboBox, goodRodFortyComboBox, goodRodFifteenComboBox,
             superRodFortyComboBox, superRodFifteenComboBox, superRodTenComboBox, superRodFiveComboBox },
                 "Replaced by fishing swarm slot when swarm is active.");
 
             // Night fishing
             SetToolTipsForControls(new Control[] { nightFishingComboBox }, "Replaced slot depends on the rod used:\n" +
                 "Good Rod: 10% slot\n" +
-                "Super Rod: 30% slot");
-            SetToolTipsForControls(new Control[] { goodRodTenComboBox }, "Replaced by night fishing slot at night.");
-            SetToolTipsForControls(new Control[] { superRodThirtyComboBox }, "Replaced by night fishing slot at night.\nReplaced by fishing swarm slot when swarm is active.");
+                "Super Rod: 30% slot\n" +
+                "Swarm takes priority when active.");
+            SetToolTipsForControls(new Control[] { goodRodTenComboBox }, "Replaced by night fishing slot at night, when no swarm is active.\nReplaced by fishing swarm slot when swarm is active.");
+            SetToolTipsForControls(new Control[] { superRodThirtyComboBox }, "Replaced by night fishing slot at night, when no swarm is active.\nReplaced by fishing swarm slot when swarm is active.");
         }
 
         private void SetToolTipsForControls(IEnumerable<Control> controls, string text)
