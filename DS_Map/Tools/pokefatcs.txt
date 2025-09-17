@@ -23,8 +23,8 @@ The move Hyper Beam requires a recharge after use.
 Togepi evolves with high friendship, not just levels.
 Alakazam has an IQ of over 5,000!
 The Poke Ball was invented by Professor Westwood V.
-Vaporeon’s tail resembles a mermaid’s.
-Ho-Oh’s feathers glow in seven colors.
+Vaporeon's tail resembles a mermaid's.
+Ho-Oh's feathers glow in seven colors.
 Rayquaza lives in the ozone layer and rarely descends.
 The Elite Four challenge trainers to prove their strength.
 Porygon was the first Pokemon created by programming.
@@ -34,17 +34,17 @@ The Pokedex is a high-tech encyclopedia of Pokemon.
 Latias and Latios can communicate telepathically.
 Groudon can cause droughts and expand landmasses.
 Kyogre can summon rain and expand oceans.
-Turtwig’s shell is made of soil and hardens with water.
+Turtwig's shell is made of soil and hardens with water.
 Piplup is based on a penguin and loves to swim.
 Staraptor can carry heavy loads while flying.
 The Move Tutor teaches Pokemon new moves for a price.
-Eevee’s unstable DNA allows multiple evolutions.
+Eevee's unstable DNA allows multiple evolutions.
 Shaymin can purify polluted areas with its flowers.
 Darkrai can trap people in nightmares.
 The Battle Frontier is an ultimate test for trainers.
 Psyduck gets headaches that unleash psychic powers.
 Geodude is often mistaken for a regular rock.
-Chikorita’s leaf indicates its health and mood.
+Chikorita's leaf indicates its health and mood.
 Munchlax eats ten times its weight in food daily.
 The Day-Care Center helps Pokemon breed and level up.
 Legendary Pokemon are often tied to myths and legends.
@@ -61,13 +61,13 @@ Rotom can possess appliances to change its form.
 The move Flamethrower is super effective against Grass types.
 Meowth can learn Pay Day to scatter coins in battle.
 The Safari Zone lets trainers catch rare Pokemon.
-Jolteon’s electric shocks can reach 10,000 volts.
-Scyther’s blades are as sharp as samurai swords.
+Jolteon's electric shocks can reach 10,000 volts.
+Scyther's blades are as sharp as samurai swords.
 Lapras is known for ferrying people across bodies of water.
-The move Psychic can lower an opponent’s defenses.
+The move Psychic can lower an opponent's defenses.
 Blastoise has water cannons that can pierce steel.
 The Pokemon Tower in Lavender Town is a memorial for departed Pokemon.
-Cubone wears its mother’s skull as a helmet.
+Cubone wears its mother's skull as a helmet.
 The move Thunderbolt has a chance to paralyze foes.
 Happiny carries a stone that looks like an egg.
 The Distortion World in Platinum has reversed gravity.
@@ -76,7 +76,7 @@ Leafeon evolves near a Moss Rock in lush forests.
 The move Surf is both a battle move and a field ability.
 Mr. Mime creates invisible walls with its mime skills.
 The Battle Tower challenges trainers with tough battles.
-Miltank’s milk is highly nutritious and heals Pokemon.
+Miltank's milk is highly nutritious and heals Pokemon.
 The move Solar Beam needs sunlight to charge.
 Drifloon is said to carry children to the afterlife.
 The Pokemon League is the ultimate goal for trainers.
@@ -94,9 +94,9 @@ Ninetales can curse foes with its mystical tails.
 The Old Chateau in Sinnoh is haunted by Ghost Pokemon.
 Pachirisu stores electricity in its cheeks like Pikachu.
 The move Protect shields Pokemon from attacks for one turn.
-Skarmory’s feathers are as hard as steel.
-The Eterna Galactic Building hides Team Galactic’s plans.
-Lopunny’s fluffy fur is popular in fashion.
+Skarmory's feathers are as hard as steel.
+The Eterna Galactic Building hides Team Galactic's plans.
+Lopunny's fluffy fur is popular in fashion.
 DSPRE is a major overhaul of Nomura's 2020 DS Pokemon ROM Editor.
 Did you know? DSPRE significantly shortened load and save times - no more waiting like a Snorlax!
 In DSPRE, the Script Editor now has syntax highlighting - code like a pro trainer!
@@ -124,3 +124,14 @@ Did you know? AdAstra yeeted buggy versions - only the best for ROM hackers!
 DSPRE's Event Editor can duplicate events - clone your way to victory!
 DSPRE fixed ARM9 mismatch warnings - keeping your ROM stable!
 In DSPRE, the Spawn Settings Editor lets you change starting money - rich from the start!
+Need Heart Scales in Johto? Rock Smash outside Earl's Pokemon School for the best odds!
+For a Dragon Tamer, Lance sure has a lot of Flying-type Pokemon...
+Jasmine is the only Johto Gym Leader who doesn't unlock the use of a HM.
+Pryce claims that the Glacier Badge will increase the Special stats of Pokemon, didn't he get the memo?
+Professor Elm is known for research into Pokemon Eggs, but Professor Oak calls him an expert in Evolution!
+Solar-powered Sunflora rushes about in the daylight, then closes its petals and stops completely at sunset.
+Shuckie the Shuckle was one of a Cianwood City PokeManiac's two rare Pokemon, the other was stolen by Silver!
+The only Pokemon with higher Defense and Special Defense stats than Shuckle, is Eternamax Eternatus!
+Shuckle's base stats are the most uneven of all Pokemon, measured by standard deviation.
+In Pokemon Gold & Silver, Shuckle will sometimes turn a held berry into Berry Juice!
+It's theorised that a Shuckle-Regigigas hybrid could vie with Arceus for supremecy.
