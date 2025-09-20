@@ -175,12 +175,9 @@ namespace DSPRE {
             {
                 if (editMode)
                 {
-                    editMoveButton.Enabled = false;
-                }
-                else
-                {
-                    addMoveButton.Enabled = false;
-                }
+                    editMoveButton.Enabled = false;                    
+                }                
+                addMoveButton.Enabled = false;
                 statusLabel.Text = "Entry already exists!";
             }
             else
@@ -252,8 +249,7 @@ namespace DSPRE {
         }
         private bool IsValidEntry()
         {
-            return levelNumericUpDown.Value > 0 &&
-                moveInputComboBox.SelectedIndex > 0;
+            return levelNumericUpDown.Value > 0 && levelNumericUpDown.Value <= 100 && moveInputComboBox.SelectedIndex > 0;
         }
 
         private void UpdateByEditMode()
@@ -459,7 +455,7 @@ namespace DSPRE {
 
         private void editMoveButton_Click(object sender, EventArgs e) {
             int sel = movesListBox.SelectedIndex;
-            if (sel < 0) {
+            if (sel < 0 || currentLoadedFile == null) {
                 return;
             }
 
@@ -468,6 +464,11 @@ namespace DSPRE {
 
                 int newSelection;
                 int oldLevel = currentLoadedFile.list[sel].level;
+
+                if (!IsValidEntry())
+                {
+                    return;
+                }
 
                 if (newEntry.level == oldLevel)
                 {

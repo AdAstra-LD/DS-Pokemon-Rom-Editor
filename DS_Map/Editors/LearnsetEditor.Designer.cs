@@ -33,16 +33,16 @@
             this.movesListBox = new System.Windows.Forms.ListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.editLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.entryCountLabel = new System.Windows.Forms.Label();
-            this.descriptorLabel = new System.Windows.Forms.Label();
+            this.moveDownButton = new System.Windows.Forms.Button();
+            this.moveUpButton = new System.Windows.Forms.Button();
             this.addMoveButton = new System.Windows.Forms.Button();
             this.deleteMoveButton = new System.Windows.Forms.Button();
             this.editMoveButton = new System.Windows.Forms.Button();
             this.levelNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.descriptorLabel = new System.Windows.Forms.Label();
+            this.entryCountLabel = new System.Windows.Forms.Label();
             this.levelLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
-            this.moveUpButton = new System.Windows.Forms.Button();
-            this.moveDownButton = new System.Windows.Forms.Button();
             this.moveInputComboBox = new DSPRE.InputComboBox();
             this.pokemonNameInputComboBox = new DSPRE.InputComboBox();
             this.tableLayoutPanel1.SuspendLayout();
@@ -172,10 +172,10 @@
             this.editLayoutPanel.Controls.Add(this.editMoveButton, 1, 5);
             this.editLayoutPanel.Controls.Add(this.levelNumericUpDown, 1, 2);
             this.editLayoutPanel.Controls.Add(this.moveInputComboBox, 0, 0);
-            this.editLayoutPanel.Controls.Add(this.descriptorLabel, 0, 1);
             this.editLayoutPanel.Controls.Add(this.entryCountLabel, 0, 6);
             this.editLayoutPanel.Controls.Add(this.levelLabel, 0, 2);
             this.editLayoutPanel.Controls.Add(this.statusLabel, 0, 3);
+            this.editLayoutPanel.Controls.Add(this.descriptorLabel, 0, 1);
             this.editLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editLayoutPanel.Location = new System.Drawing.Point(3, 16);
             this.editLayoutPanel.Margin = new System.Windows.Forms.Padding(2);
@@ -192,31 +192,37 @@
             this.editLayoutPanel.Size = new System.Drawing.Size(226, 357);
             this.editLayoutPanel.TabIndex = 0;
             // 
-            // entryCountLabel
+            // moveDownButton
             // 
-            this.entryCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.entryCountLabel.AutoSize = true;
-            this.editLayoutPanel.SetColumnSpan(this.entryCountLabel, 3);
-            this.entryCountLabel.Location = new System.Drawing.Point(4, 334);
-            this.entryCountLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.entryCountLabel.Name = "entryCountLabel";
-            this.entryCountLabel.Padding = new System.Windows.Forms.Padding(1, 4, 1, 4);
-            this.entryCountLabel.Size = new System.Drawing.Size(70, 21);
-            this.entryCountLabel.TabIndex = 9;
-            this.entryCountLabel.Text = "Entry Count: ";
-            this.entryCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.moveDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.moveDownButton.Enabled = false;
+            this.moveDownButton.Image = global::DSPRE.Properties.Resources.arrowdown;
+            this.moveDownButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.moveDownButton.Location = new System.Drawing.Point(77, 151);
+            this.moveDownButton.Margin = new System.Windows.Forms.Padding(2);
+            this.moveDownButton.Name = "moveDownButton";
+            this.moveDownButton.Size = new System.Drawing.Size(70, 32);
+            this.moveDownButton.TabIndex = 11;
+            this.moveDownButton.Text = "Move";
+            this.moveDownButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.moveDownButton.UseVisualStyleBackColor = true;
+            this.moveDownButton.Click += new System.EventHandler(this.moveDownButton_Click);
             // 
-            // descriptorLabel
+            // moveUpButton
             // 
-            this.descriptorLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.descriptorLabel.AutoSize = true;
-            this.editLayoutPanel.SetColumnSpan(this.descriptorLabel, 3);
-            this.descriptorLabel.Location = new System.Drawing.Point(5, 45);
-            this.descriptorLabel.Name = "descriptorLabel";
-            this.descriptorLabel.Padding = new System.Windows.Forms.Padding(1, 5, 1, 5);
-            this.descriptorLabel.Size = new System.Drawing.Size(57, 23);
-            this.descriptorLabel.TabIndex = 8;
-            this.descriptorLabel.Text = "Descriptor";
+            this.moveUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.moveUpButton.Enabled = false;
+            this.moveUpButton.Image = global::DSPRE.Properties.Resources.arrowup;
+            this.moveUpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.moveUpButton.Location = new System.Drawing.Point(4, 151);
+            this.moveUpButton.Margin = new System.Windows.Forms.Padding(2);
+            this.moveUpButton.Name = "moveUpButton";
+            this.moveUpButton.Size = new System.Drawing.Size(69, 32);
+            this.moveUpButton.TabIndex = 10;
+            this.moveUpButton.Text = "Move";
+            this.moveUpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.moveUpButton.UseVisualStyleBackColor = true;
+            this.moveUpButton.Click += new System.EventHandler(this.moveUpButton_Click);
             // 
             // addMoveButton
             // 
@@ -277,14 +283,38 @@
             this.levelNumericUpDown.TabIndex = 4;
             this.levelNumericUpDown.ValueChanged += new System.EventHandler(this.levelNumericUpDown_ValueChanged);
             // 
+            // descriptorLabel
+            // 
+            this.descriptorLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.descriptorLabel.AutoSize = true;
+            this.editLayoutPanel.SetColumnSpan(this.descriptorLabel, 3);
+            this.descriptorLabel.Location = new System.Drawing.Point(5, 50);
+            this.descriptorLabel.Name = "descriptorLabel";
+            this.descriptorLabel.Size = new System.Drawing.Size(55, 13);
+            this.descriptorLabel.TabIndex = 8;
+            this.descriptorLabel.Text = "Descriptor";
+            // 
+            // entryCountLabel
+            // 
+            this.entryCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.entryCountLabel.AutoSize = true;
+            this.editLayoutPanel.SetColumnSpan(this.entryCountLabel, 3);
+            this.entryCountLabel.Location = new System.Drawing.Point(4, 334);
+            this.entryCountLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.entryCountLabel.Name = "entryCountLabel";
+            this.entryCountLabel.Padding = new System.Windows.Forms.Padding(1, 4, 1, 4);
+            this.entryCountLabel.Size = new System.Drawing.Size(70, 21);
+            this.entryCountLabel.TabIndex = 9;
+            this.entryCountLabel.Text = "Entry Count: ";
+            this.entryCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // levelLabel
             // 
-            this.levelLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.levelLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.levelLabel.AutoSize = true;
-            this.levelLabel.Location = new System.Drawing.Point(4, 85);
-            this.levelLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.levelLabel.Location = new System.Drawing.Point(5, 85);
             this.levelLabel.Name = "levelLabel";
-            this.levelLabel.Size = new System.Drawing.Size(69, 13);
+            this.levelLabel.Size = new System.Drawing.Size(36, 13);
             this.levelLabel.TabIndex = 5;
             this.levelLabel.Text = "Level:";
             // 
@@ -293,45 +323,11 @@
             this.statusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.statusLabel.AutoSize = true;
             this.editLayoutPanel.SetColumnSpan(this.statusLabel, 3);
-            this.statusLabel.Location = new System.Drawing.Point(4, 119);
-            this.statusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.statusLabel.Location = new System.Drawing.Point(5, 129);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Padding = new System.Windows.Forms.Padding(1, 5, 1, 5);
-            this.statusLabel.Size = new System.Drawing.Size(39, 23);
+            this.statusLabel.Size = new System.Drawing.Size(37, 13);
             this.statusLabel.TabIndex = 7;
             this.statusLabel.Text = "Status";
-            // 
-            // moveUpButton
-            // 
-            this.moveUpButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.moveUpButton.Enabled = false;
-            this.moveUpButton.Image = global::DSPRE.Properties.Resources.arrowup;
-            this.moveUpButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.moveUpButton.Location = new System.Drawing.Point(4, 151);
-            this.moveUpButton.Margin = new System.Windows.Forms.Padding(2);
-            this.moveUpButton.Name = "moveUpButton";
-            this.moveUpButton.Size = new System.Drawing.Size(69, 32);
-            this.moveUpButton.TabIndex = 10;
-            this.moveUpButton.Text = "Move";
-            this.moveUpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.moveUpButton.UseVisualStyleBackColor = true;
-            this.moveUpButton.Click += new System.EventHandler(this.moveUpButton_Click);
-            // 
-            // moveDownButton
-            // 
-            this.moveDownButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.moveDownButton.Enabled = false;
-            this.moveDownButton.Image = global::DSPRE.Properties.Resources.arrowdown;
-            this.moveDownButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.moveDownButton.Location = new System.Drawing.Point(77, 151);
-            this.moveDownButton.Margin = new System.Windows.Forms.Padding(2);
-            this.moveDownButton.Name = "moveDownButton";
-            this.moveDownButton.Size = new System.Drawing.Size(70, 32);
-            this.moveDownButton.TabIndex = 11;
-            this.moveDownButton.Text = "Move";
-            this.moveDownButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.moveDownButton.UseVisualStyleBackColor = true;
-            this.moveDownButton.Click += new System.EventHandler(this.moveDownButton_Click);
             // 
             // moveInputComboBox
             // 
