@@ -735,7 +735,7 @@ namespace DSPRE.Editors
         public static void ExpandTextFile(int ID)
         {
             string baseDir = RomInfo.gameDirs[DirNames.textArchives].unpackedDir;
-            string expandedDir = Path.Combine(baseDir, "expanded");
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "textArchives");
             string path = Path.Combine(baseDir, ID.ToString("D4"));
             string expandedPath = Path.Combine(expandedDir, ID.ToString("D4") + ".txt");
             string toolPath = Path.Combine(Application.StartupPath, "Tools", "msgenc.exe");
@@ -799,7 +799,7 @@ namespace DSPRE.Editors
         public static bool CompressTextFile(int ID)
         {
             string baseDir = RomInfo.gameDirs[DirNames.textArchives].unpackedDir;
-            string expandedDir = Path.Combine(baseDir, "expanded");
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "textArchives");
             string path = Path.Combine(baseDir, ID.ToString("D4"));
             string expandedPath = Path.Combine(expandedDir, ID.ToString("D4") + ".txt");
             string toolPath = Path.Combine(Application.StartupPath, "Tools", "msgenc.exe");

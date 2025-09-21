@@ -37,7 +37,7 @@ namespace DSPRE.ROMFiles
             }
 
             string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
-            string expandedPath = Path.Combine(baseDir, "expanded", $"{ID:D4}.txt");
+            string expandedPath = Path.Combine(RomInfo.workDir, "expanded", "textArchives", $"{ID:D4}.txt");
 
             TextEditor.ExpandTextFile(ID);
 
@@ -104,7 +104,7 @@ namespace DSPRE.ROMFiles
         public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true)
         {
             string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
-            string expandedDir = Path.Combine(baseDir, "expanded");
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "textArchives");
             string path = Path.Combine(expandedDir, $"{IDtoReplace:D4}.txt");
 
             var utf8WithoutBom = new UTF8Encoding(false);
