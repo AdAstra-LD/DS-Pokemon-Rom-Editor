@@ -216,23 +216,7 @@ namespace DSPRE {
             toolStripProgressBar.Value++;
         }
 
-        public void SetupScriptEditor() {
-            /* Extract essential NARCs sub-archives*/
-            Helpers.statusLabelMessage("Setting up Script Editor...");
-            Update();
-
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.scripts }); //12 = scripts Narc Dir
-
-            EditorPanels.scriptEditor.selectScriptFileComboBox.Items.Clear();
-            int scriptCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.scripts].unpackedDir).Length;
-            for (int i = 0; i < scriptCount; i++) {
-                EditorPanels.scriptEditor.selectScriptFileComboBox.Items.Add("Script File " + i);
-            }
-
-            EditorPanels.scriptEditor.UpdateScriptNumberCheckBox((NumberStyles)Properties.Settings.Default.scriptEditorFormatPreference);
-            EditorPanels.scriptEditor.selectScriptFileComboBox.SelectedIndex = 0;
-            Helpers.statusLabelMessage();
-        }
+    
         private void SetupTextEditor() {
             DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.textArchives });
 
@@ -799,7 +783,7 @@ namespace DSPRE {
                 SetupMapEditor();
                 SetupNSBTXEditor();
                 SetupEventEditor();
-                SetupScriptEditor();
+                scriptEditor.SetupScriptEditor(this);
                 SetupTextEditor();
                 SetupTrainerEditor();
 
