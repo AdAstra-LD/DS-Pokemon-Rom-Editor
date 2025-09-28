@@ -371,10 +371,32 @@ namespace DSPRE.Editors
 
             trainerComboBox.SelectedIndex = 0;
 
+            AddTooltips();
+
             Helpers.EnableHandlers();
             trainerComboBox_SelectedIndexChanged(null, null);
             Helpers.statusLabelMessage();
         }
+
+        private void AddTooltips()
+        {
+            // Ability Tooltips
+            toolTip.SetToolTip(partyAbility1ComboBox, "\"Default Ability\" will use the first ability of this Pokémon");
+
+            for (int i = 1; i < 6; i++)
+            {
+                toolTip.SetToolTip(partyAbilityComboBoxList[i], "\"Default Ability\" will use the same ability slot as the previous party member");                
+            }
+
+            // Gender Tooltips
+            for (int i = 0; i < 6; i++)
+            {
+                toolTip.SetToolTip(partyGenderComboBoxList[i], "\"Default Gender\" will use the gender with higher ratio.\n" +
+                    "If the ratio is 50/50 the Pokémon's gender will match the trainer's.");
+            }
+
+        }
+
         private void trainerComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Helpers.HandlersDisabled)
@@ -1115,7 +1137,7 @@ namespace DSPRE.Editors
         private void setTrainerPartyPokemonAbilities(int partyPokemonPosition)
         {
             (string ability1, string ability2) = getPokemonAbilityNames(partyPokemonComboboxList[partyPokemonPosition].SelectedIndex);
-            string noFlags = "No Flag";
+            string noFlags = "Default Ability";
 
             partyAbilityComboBoxList[partyPokemonPosition].Items.Clear();
 
