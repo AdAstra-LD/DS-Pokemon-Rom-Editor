@@ -138,6 +138,11 @@ namespace DSPRE
             spritePage.Text = spriteEditor.Text;
         }
 
+        public bool GetSyncChangesCheckbox()
+        {
+            return syncChangesCheckbox.Checked;
+        }
+
         private void PokemonEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (personalEditor == null || learnsetEditor == null || evoEditor == null || spriteEditor == null)

@@ -97,8 +97,12 @@ namespace DSPRE {
             currentLoadedFile = new LearnsetData(learnsetID);
             currentLoadedId = learnsetID;
 
-            monNumberNumericUpDown.Value = currentLoadedId;
-            pokemonNameInputComboBox.SelectedIndex = currentLoadedId;
+            if (editMode)
+            {
+                editMode = false;
+                movesListBox.Enabled = true;
+                UpdateByEditMode();
+            }            
 
             UpdateMovesListFromFile();
             UpdateEntryCountLabel();
@@ -360,10 +364,10 @@ namespace DSPRE {
             }
 
             Update();
-
-            this._parent.TrySyncIndices((ComboBox)sender);
+            
             Helpers.DisableHandlers();
-            if (CheckDiscardChanges()) 
+            _parent.TrySyncIndices((ComboBox)sender);
+            if (!_parent.GetSyncChangesCheckbox() && CheckDiscardChanges()) 
             {
                 ChangeLoadedFile(pokemonNameInputComboBox.SelectedIndex);
             }
@@ -379,9 +383,9 @@ namespace DSPRE {
 
             Update();
             
-            this._parent.TrySyncIndices((NumericUpDown)sender);
             Helpers.DisableHandlers();
-            if (CheckDiscardChanges()) 
+            _parent.TrySyncIndices((NumericUpDown)sender);
+            if (!_parent.GetSyncChangesCheckbox() && CheckDiscardChanges()) 
             {
                 ChangeLoadedFile((int)monNumberNumericUpDown.Value);
             }
