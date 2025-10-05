@@ -4522,9 +4522,18 @@ namespace DSPRE {
                 return;
             }
 
-            File.WriteAllBytes(em.FileName, currentMapFile.CollisionsToByteArray());
-
+            //Determine Which Operation Should Be Performed From The Selected File Type
+            string fileExtension = Path.GetExtension(em.FileName).ToLower();
+            switch(fileExtension){
+                case ".per":
+                    File.WriteAllBytes(em.FileName, currentMapFile.CollisionsToByteArray());
+                    break;
+                case ".csv":
+                    File.WriteAllText(em.FileName, currentMapFile.CollisionsToString());
+                    break;
+            }
             MessageBox.Show("Permissions exported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+             
         }
         private void importMovButton_Click(object sender, EventArgs e) {
             OpenFileDialog ip = new OpenFileDialog {
@@ -4533,8 +4542,24 @@ namespace DSPRE {
             if (ip.ShowDialog(this) != DialogResult.OK) {
                 return;
             }
-
-            currentMapFile.ImportPermissions(File.ReadAllBytes(ip.FileName));
+            //Determine Which Operation Should Be Performed From The Selected File Type
+            string fileExtension = Path.GetExtension(ip.FileName).ToLower();
+            List<byte> byteList = new List<byte>();
+            switch (fileExtension){
+                case ".per":
+                    byteList = new List<byte>(File.ReadAllBytes(ip.FileName));
+                    break;
+                case ".csv":
+                    byteList = new List<byte>(
+                        File.ReadAllLines(ip.FileName)
+                        .SelectMany(line => line.Split(',')
+                        .SelectMany(hexPair => hexPair.Split(':')
+                        .Select(hex => Convert.ToByte(hex, 16))))
+                        .ToArray());
+                    break;
+                }
+            currentMapFile.ImportPermissions(byteList.ToArray());
+            
 
             DrawSmallCollision();
             DrawSmallTypeCollision();
