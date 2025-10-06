@@ -2,8 +2,10 @@
 using DSPRE.ROMFiles;
 using Ekona.Images;
 using Images;
+using NSMBe4;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -27,38 +29,24 @@ namespace DSPRE.Editors
     public partial class ItemEditor : Form
     {
 
-        private string[] itemFileNames;
+        private string[] itemNames;
         //private readonly string[] itemDescriptions;
 
         private int currentLoadedId = 0;
-        private ItemData currentLoadedFile = null;
+        private ItemNarcTableEntry currentLoadedEntry;
+        private ItemData currentLoadedItemData = null;
 
-        private static bool dirty = false;
+        private static bool itemDataDirty = false;
+        private static bool itemEntryDirty = false;
         private static readonly string formName = "Item Data Editor";
 
-        private ItemNarcTableEntry[] itemNarcTable;
         private uint itemNarcTableOffset;
 
-        private HashSet<uint> iconIdSet = new HashSet<uint>();
-        private HashSet<uint> paletteIdSet = new HashSet<uint>();
-
         public ItemEditor(string[] itemFileNames) //, string[] itemDescriptions)
-         {
-            itemNarcTableOffset = (uint)(RomInfo.gameFamily == RomInfo.GameFamilies.HGSS ? 0x100194 : RomInfo.gameFamily == RomInfo.GameFamilies.Plat ? 0xF0CC4 : 0xF85B4);
-            itemNarcTable = new ItemNarcTableEntry[itemFileNames.Length];
-            List<string> cleanNames = itemFileNames.ToList();
-            for (int i = 0; i < itemFileNames.Length; i++)
-            {
-                ItemNarcTableEntry itemNarcTableEntry = new ItemNarcTableEntry();
-                itemNarcTableEntry.itemData = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i*8));
-                itemNarcTableEntry.itemIcon = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 2));
-                itemNarcTableEntry.itemPalette = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 4));
-                itemNarcTableEntry.itemAGB = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 6));
-                itemNarcTable[i] = itemNarcTableEntry;
-                iconIdSet.Add(itemNarcTableEntry.itemIcon);
-                paletteIdSet.Add(itemNarcTableEntry.itemPalette);
-            }
-            this.itemFileNames = cleanNames.ToArray();
+         {      
+            itemNarcTableOffset = GetNarcTableOffset();
+
+            this.itemNames = itemFileNames;
             //this.itemDescriptions = itemDescriptions;
 
             InitializeComponent();
@@ -68,8 +56,10 @@ namespace DSPRE.Editors
             // Set up max and min for numerics
             priceNumericUpDown.Minimum = 0;
             priceNumericUpDown.Maximum = 65535;
-            itemNumberNumericUpDown.Minimum = 0;
-            itemNumberNumericUpDown.Maximum = this.itemFileNames.Length - 1;
+            itemIDNumericUpDown.Minimum = 0;
+            itemIDNumericUpDown.Maximum = this.itemNames.Length - 1;
+            itemDataNumericUpDown.Minimum = 0;
+            itemDataNumericUpDown.Maximum = GetItemDataFileCount() - 1;
             holdEffectParameterNumericUpDown.Minimum = 0;
             holdEffectParameterNumericUpDown.Maximum = 255;
             pluckEffectNumericUpDown.Minimum = 0;
@@ -82,7 +72,7 @@ namespace DSPRE.Editors
             naturalGiftPowerNumericUpDown.Maximum = 255;
 
             // Set up combobox ranges
-            itemNameInputComboBox.Items.AddRange(this.itemFileNames);
+            itemNameInputComboBox.Items.AddRange(this.itemNames);
             holdEffectComboBox.Items.AddRange(Enum.GetNames(typeof(HoldEffect)));
             fieldPocketComboBox.Items.AddRange(Enum.GetNames(typeof(FieldPocket)));
             naturalGiftTypeComboBox.Items.AddRange(Enum.GetNames(typeof(NaturalGiftType)));
@@ -108,13 +98,43 @@ namespace DSPRE.Editors
             itemNameInputComboBox.SelectedIndex = 1;
         }
 
+        private uint GetNarcTableOffset()
+        {            
+            switch (RomInfo.gameFamily)
+            {
+                case RomInfo.GameFamilies.HGSS:
+                    return 0x100194;
+                case RomInfo.GameFamilies.Plat:
+                    return 0xF0CC4;
+                case RomInfo.GameFamilies.DP:
+                    return 0xF85B4;
+                default:
+                    AppLogger.Error("ItemEditor: GetNarcTableOffset: Unsupported game");
+                    throw new NotSupportedException("Game not supported");
+            }
+        }
+
+        private ItemNarcTableEntry ReadTableEntry(int index)
+        {
+            ItemNarcTableEntry itemNarcTableEntry = new ItemNarcTableEntry();
+            itemNarcTableEntry.itemData = ARM9.ReadWordLE((uint)(itemNarcTableOffset + index * 8));
+            itemNarcTableEntry.itemIcon = ARM9.ReadWordLE((uint)(itemNarcTableOffset + index * 8 + 2));
+            itemNarcTableEntry.itemPalette = ARM9.ReadWordLE((uint)(itemNarcTableOffset + index * 8 + 4));
+            itemNarcTableEntry.itemAGB = ARM9.ReadWordLE((uint)(itemNarcTableOffset + index * 8 + 6));
+            return itemNarcTableEntry;
+        }
+
         private void SetBaseToolTips()
         {
             // Icon box
-            toolTip1.SetToolTip(itemEditorSelectedPictureGroupBox, "Change data related to the Item's");
+            toolTip1.SetToolTip(itemTableEntryGroupBox, "Change data for this entry in the Item Table.");
             toolTip1.SetToolTip(imageComboBox, "Change the icon image for the Item here.");
             toolTip1.SetToolTip(paletteComboBox, "Change the icon palette for the Item here.");
-            toolTip1.SetToolTip(saveIconButton, "Save changes to icon.");
+            toolTip1.SetToolTip(itemDataNumericUpDown, "Change the Item Data ID for this item here.\n" +
+                "This controls which data file is associated with the item.\n" +
+                "Items may share data files. Making changes to the data file will affect all items associated with it.\n" +
+                "Directly corresponds to the index in the .NARC file.");
+            toolTip1.SetToolTip(saveItemButton, "Save changes to Item Data ID, Icon and Palette.");
 
             // Hold Effects box
             toolTip1.SetToolTip(holdGroupBox, "Change data related to the Item's hold effect here.");
@@ -158,11 +178,33 @@ namespace DSPRE.Editors
             imageComboBox.Items.Clear();
             paletteComboBox.Items.Clear();
 
-            foreach (var icon in iconIdSet.OrderBy(i => i))
-                imageComboBox.Items.Add(icon.ToString("D4"));
+            var narcFiles = Directory.GetFiles(gameDirs[DirNames.itemIcons].unpackedDir, "*", SearchOption.TopDirectoryOnly);
+            uint index = 0;
 
-            foreach (var palette in paletteIdSet.OrderBy(p => p))
-                paletteComboBox.Items.Add(palette.ToString("D4"));
+            foreach (var file in narcFiles)
+            {
+                var stream = File.Open(file, FileMode.Open, FileAccess.Read);
+                byte[] bytes = new byte[4];
+                stream.Read(bytes, 0, 4);
+                var header = Encoding.ASCII.GetString(bytes);
+
+                switch (header)
+                {
+                    case "RGCN":
+                        imageComboBox.Items.Add(index.ToString("D4"));
+                        index++;
+                        break;
+                    case "RLCN":
+                        paletteComboBox.Items.Add(index.ToString("D4"));
+                        index++;
+                        break;
+                    default:
+                        index++;
+                        break;
+                }
+
+                stream.Close();
+            }                
 
             imageComboBox.EndUpdate();
             paletteComboBox.EndUpdate();
@@ -170,7 +212,7 @@ namespace DSPRE.Editors
 
         public void UpdateBattlePocketCheckBoxes()
         {
-            BattlePocket battlePocket = currentLoadedFile.battlePocket;
+            BattlePocket battlePocket = currentLoadedItemData.battlePocket;
 
             pokeBallsBattlePocketCheck.Checked = (battlePocket & BattlePocket.PokeBalls) != 0;
             battleItemsBattlePocketCheck.Checked = (battlePocket & BattlePocket.BattleItems) != 0;
@@ -292,117 +334,81 @@ namespace DSPRE.Editors
             toolTip1.SetToolTip(friendshipHighValueNumeric, "Friendship change for high base friendship");
         }
 
-        private void setDirty(bool status)
+        private void SetItemDataDirty(bool status)
         {
             if (status)
             {
-                dirty = true;
+                itemDataDirty = true;
                 this.Text = formName + "*";
             }
             else
             {
-                dirty = false;
+                itemDataDirty = false;
                 this.Text = formName;
             }
         }
 
-        private bool CheckDiscardChanges()
+        private void SetItemEntryDirty(bool status)
         {
-            if (!dirty)
+            if (status && !itemEntryDirty)
+            {
+                itemEntryDirty = true;
+                itemTableEntryGroupBox.Text += "*";
+            }
+            else if (!status)
+            {
+                itemEntryDirty = false;
+                itemTableEntryGroupBox.Text = itemTableEntryGroupBox.Text.TrimEnd('*');
+            }
+        }
+
+        private bool CheckDiscardItemDataChanges()
+        {
+            if (!itemDataDirty)
             {
                 return true;
             }
 
-            DialogResult res = MessageBox.Show(this, "There are unsaved changes to the current Item data.\nDiscard and proceed?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult res = MessageBox.Show(this, "There are unsaved changes to the current Item Data.\nDiscard and proceed?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (res == DialogResult.Yes)
             {
                 return true;
             }
 
-            itemNumberNumericUpDown.Value = currentLoadedId;
+            itemDataNumericUpDown.Value = currentLoadedItemData.ID;
+
+            return false;
+        }
+
+        private bool CheckDiscardChanges()
+        {
+            if (!itemEntryDirty && !itemDataDirty)
+            {
+                return true;
+            }
+
+            DialogResult res = MessageBox.Show(this, "There are unsaved changes to the current Item.\nDiscard and proceed?", "Unsaved changes", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (res == DialogResult.Yes)
+            {
+                return true;
+            }
+
+            itemIDNumericUpDown.Value = currentLoadedId;
             itemNameInputComboBox.SelectedIndex = currentLoadedId;
+            itemDataNumericUpDown.Value = currentLoadedItemData.ID;
+
             return false;
         }
 
         private void ChangeLoadedFile(int toLoad)
         {
             AppLogger.Debug("ItemEditor: ChangeLoadedFile: toLoad = " + toLoad);
+
             currentLoadedId = toLoad;
+            currentLoadedEntry = ReadTableEntry(toLoad);
 
-            var stream = new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\" 
-                + itemNarcTable[toLoad].itemData.ToString("D4"), FileMode.Open);
-
-            currentLoadedFile = new ItemData(stream, toLoad);
-            PopulateAllFromCurrentFile();
-            setDirty(false);
-        }
-
-        private void PopulateAllFromCurrentFile()
-        {
-            // Hold effects
-            holdEffectComboBox.SelectedIndex = (int)currentLoadedFile.holdEffect;
-            holdEffectParameterNumericUpDown.Value = currentLoadedFile.HoldEffectParam;
-
-            // Pockets
-            fieldPocketComboBox.SelectedIndex = (int)currentLoadedFile.fieldPocket;
-            // Set the selected value for non sequential enums
-            UpdateBattlePocketCheckBoxes();
-
-            // Move Related
-            // Set the selected value for non sequential enums
-            NaturalGiftType naturalGiftType = (NaturalGiftType)currentLoadedFile.naturalGiftType;
-            string naturalGiftTypeEnum = Enum.GetName(typeof(NaturalGiftType), naturalGiftType);
-            naturalGiftTypeComboBox.SelectedItem = naturalGiftTypeEnum;
-            naturalGiftPowerNumericUpDown.Value = currentLoadedFile.NaturalGiftPower;
-            flingEffectNumericUpDown.Value = currentLoadedFile.FlingEffect;
-            flingPowerNumericUpDown.Value = currentLoadedFile.FlingPower;
-            pluckEffectNumericUpDown.Value = currentLoadedFile.PluckEffect;
-
-            // Checks
-            preventTossCheckBox.Checked = currentLoadedFile.PreventToss;
-            canSelectCheckBox.Checked = currentLoadedFile.Selectable;
-            partyUseCheckBox.Checked = currentLoadedFile.PartyUse == 1;
-
-            // Price
-            priceNumericUpDown.Value = currentLoadedFile.price;
-
-            // Usage Functions
-            if (Enum.IsDefined(typeof(FieldUseFunc), currentLoadedFile.fieldUseFunc))
-            {
-                fieldFunctionComboBox.SelectedIndex = (int)currentLoadedFile.fieldUseFunc;
-            }
-            else
-            {
-                // Add the unknown value if it's not already in the list
-                string unknownValue = $"Unknown ({(int)currentLoadedFile.fieldUseFunc})";
-                if (!fieldFunctionComboBox.Items.Contains(unknownValue))
-                {
-                    fieldFunctionComboBox.Items.Add(unknownValue);
-                }
-                fieldFunctionComboBox.SelectedItem = unknownValue;
-            }
-
-            if (Enum.IsDefined(typeof(BattleUseFunc), currentLoadedFile.battleUseFunc))
-            {
-                battleFunctionComboBox.SelectedIndex = (int)currentLoadedFile.battleUseFunc;
-            }
-            else
-            {
-                string unknownValue = $"Unknown ({(int)currentLoadedFile.battleUseFunc})";
-                if (!battleFunctionComboBox.Items.Contains(unknownValue))
-                {
-                    battleFunctionComboBox.Items.Add(unknownValue);
-                }
-                battleFunctionComboBox.SelectedItem = unknownValue;
-            }
-
-            itemParamsTabControl.Enabled = partyUseCheckBox.Checked;
-            PopulateItemPartyParamsUI();
-
-            var entry = itemNarcTable[currentLoadedFile.ID];
-
-            string iconID = entry.itemIcon.ToString("D4");
-            string paletteID = entry.itemPalette.ToString("D4");
+            string iconID = currentLoadedEntry.itemIcon.ToString("D4");
+            string paletteID = currentLoadedEntry.itemPalette.ToString("D4");
 
             if (imageComboBox.Items.Contains(iconID))
             {
@@ -416,12 +422,85 @@ namespace DSPRE.Editors
 
             SetUpIcon();
 
+            itemDataNumericUpDown.Value = currentLoadedEntry.itemData;
+
+            var stream = new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\" 
+                + currentLoadedEntry.itemData.ToString("D4"), FileMode.Open);
+
+            currentLoadedItemData = new ItemData(stream, (int)currentLoadedEntry.itemData);
+            PopulateAllFromCurrentItemData();
+            SetItemEntryDirty(false);
+            SetItemDataDirty(false);
+        }
+
+        private void PopulateAllFromCurrentItemData()
+        {
+            // Hold effects
+            holdEffectComboBox.SelectedIndex = (int)currentLoadedItemData.holdEffect;
+            holdEffectParameterNumericUpDown.Value = currentLoadedItemData.HoldEffectParam;
+
+            // Pockets
+            fieldPocketComboBox.SelectedIndex = (int)currentLoadedItemData.fieldPocket;
+            // Set the selected value for non sequential enums
+            UpdateBattlePocketCheckBoxes();
+
+            // Move Related
+            // Set the selected value for non sequential enums
+            NaturalGiftType naturalGiftType = (NaturalGiftType)currentLoadedItemData.naturalGiftType;
+            string naturalGiftTypeEnum = Enum.GetName(typeof(NaturalGiftType), naturalGiftType);
+            naturalGiftTypeComboBox.SelectedItem = naturalGiftTypeEnum;
+            naturalGiftPowerNumericUpDown.Value = currentLoadedItemData.NaturalGiftPower;
+            flingEffectNumericUpDown.Value = currentLoadedItemData.FlingEffect;
+            flingPowerNumericUpDown.Value = currentLoadedItemData.FlingPower;
+            pluckEffectNumericUpDown.Value = currentLoadedItemData.PluckEffect;
+
+            // Checks
+            preventTossCheckBox.Checked = currentLoadedItemData.PreventToss;
+            canSelectCheckBox.Checked = currentLoadedItemData.Selectable;
+            partyUseCheckBox.Checked = currentLoadedItemData.PartyUse == 1;
+
+            // Price
+            priceNumericUpDown.Value = currentLoadedItemData.price;
+
+            // Usage Functions
+            if (Enum.IsDefined(typeof(FieldUseFunc), currentLoadedItemData.fieldUseFunc))
+            {
+                fieldFunctionComboBox.SelectedIndex = (int)currentLoadedItemData.fieldUseFunc;
+            }
+            else
+            {
+                // Add the unknown value if it's not already in the list
+                string unknownValue = $"Unknown ({(int)currentLoadedItemData.fieldUseFunc})";
+                if (!fieldFunctionComboBox.Items.Contains(unknownValue))
+                {
+                    fieldFunctionComboBox.Items.Add(unknownValue);
+                }
+                fieldFunctionComboBox.SelectedItem = unknownValue;
+            }
+
+            if (Enum.IsDefined(typeof(BattleUseFunc), currentLoadedItemData.battleUseFunc))
+            {
+                battleFunctionComboBox.SelectedIndex = (int)currentLoadedItemData.battleUseFunc;
+            }
+            else
+            {
+                string unknownValue = $"Unknown ({(int)currentLoadedItemData.battleUseFunc})";
+                if (!battleFunctionComboBox.Items.Contains(unknownValue))
+                {
+                    battleFunctionComboBox.Items.Add(unknownValue);
+                }
+                battleFunctionComboBox.SelectedItem = unknownValue;
+            }
+
+            itemParamsTabControl.Enabled = partyUseCheckBox.Checked;
+            PopulateItemPartyParamsUI();
+
         }
 
         private void SetUpIcon()
         {
-            var itemIconId = itemNarcTable[currentLoadedFile.ID].itemIcon;
-            var itemPaletteId = itemNarcTable[currentLoadedFile.ID].itemPalette;
+            var itemIconId = currentLoadedEntry.itemIcon;
+            var itemPaletteId = currentLoadedEntry.itemPalette;
 
             string paletteFilename = itemPaletteId.ToString("D4");
             var itemPalette = new NCLR(gameDirs[DirNames.itemIcons].unpackedDir + "\\" + paletteFilename, (int)itemPaletteId, paletteFilename);
@@ -448,7 +527,7 @@ namespace DSPRE.Editors
         private void PopulateItemPartyParamsUI()
         {
             ResetItemPartyParamsUI();
-            ItemPartyUseParam param = currentLoadedFile.PartyUseParam;
+            ItemPartyUseParam param = currentLoadedItemData.PartyUseParam;
             slpHealCheckBox.Checked = param.SlpHeal;
             psnHealCheckBox.Checked = param.PsnHeal;
             brnHealCheckBox.Checked = param.BrnHeal;
@@ -562,11 +641,15 @@ namespace DSPRE.Editors
             Update();
         }
 
+        private int GetItemDataFileCount()
+        {
+            return Directory.GetFiles(RomInfo.gameDirs[DirNames.itemData].unpackedDir, "*", SearchOption.TopDirectoryOnly).Length;
+        }
 
         private void saveDataButton_Click(object sender, EventArgs e)
         {
-            currentLoadedFile.SaveToFileDefaultDir((int)itemNarcTable[currentLoadedFile.ID].itemData, true);
-            setDirty(false);
+            currentLoadedItemData.SaveToFileDefaultDir((int)currentLoadedEntry.itemData, false);
+            SetItemDataDirty(false);
         }
 
         private void itemNameInputComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -581,8 +664,8 @@ namespace DSPRE.Editors
             if (CheckDiscardChanges())
             {
                 int newId = itemNameInputComboBox.SelectedIndex;
-                AppLogger.Debug("ItemEditor: itemNameInputComboBox_SelectedIndexChanged: newId = " + newId);
-                itemNumberNumericUpDown.Value = newId;
+                itemIDNumericUpDown.Value = newId;
+                AppLogger.Debug("ItemEditor: itemNameInputComboBox_SelectedIndexChanged: newId = " + newId);                
                 ChangeLoadedFile(newId);
             }
 
@@ -600,7 +683,7 @@ namespace DSPRE.Editors
 
             if (CheckDiscardChanges())
             {
-                int newId = (int)itemNumberNumericUpDown.Value;
+                int newId = (int)itemIDNumericUpDown.Value;
                 itemNameInputComboBox.SelectedIndex = newId;
                 AppLogger.Debug("ItemEditor: itemNumberNumericUpDown_ValueChanged: newId = " + newId);
                 ChangeLoadedFile(newId);
@@ -611,8 +694,8 @@ namespace DSPRE.Editors
 
         private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string suggestedFilename = this.itemFileNames[currentLoadedId];
-            currentLoadedFile.SaveToFileExplorePath(suggestedFilename, true);
+            string suggestedFilename = this.itemNames[currentLoadedId];
+            currentLoadedItemData.SaveToFileExplorePath(suggestedFilename, true);
         }
 
         private void holdEffectComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -622,8 +705,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.holdEffect = (HoldEffect)holdEffectComboBox.SelectedIndex;
-            setDirty(true);
+            currentLoadedItemData.holdEffect = (HoldEffect)holdEffectComboBox.SelectedIndex;
+            SetItemDataDirty(true);
         }
 
         private void fieldPocketComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -633,8 +716,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.fieldPocket = (FieldPocket)fieldPocketComboBox.SelectedIndex;
-            setDirty(true);
+            currentLoadedItemData.fieldPocket = (FieldPocket)fieldPocketComboBox.SelectedIndex;
+            SetItemDataDirty(true);
         }
 
 
@@ -645,8 +728,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.price = (ushort)priceNumericUpDown.Value;
-            setDirty(true);
+            currentLoadedItemData.price = (ushort)priceNumericUpDown.Value;
+            SetItemDataDirty(true);
         }
 
         private void holdEffectParameterNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -656,8 +739,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.HoldEffectParam = (byte)holdEffectParameterNumericUpDown.Value;
-            setDirty(true);
+            currentLoadedItemData.HoldEffectParam = (byte)holdEffectParameterNumericUpDown.Value;
+            SetItemDataDirty(true);
         }
 
         private void naturalGiftTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -667,8 +750,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.naturalGiftType = (NaturalGiftType)Enum.Parse(typeof(NaturalGiftType), (string)naturalGiftTypeComboBox.SelectedItem);
-            setDirty(true);
+            currentLoadedItemData.naturalGiftType = (NaturalGiftType)Enum.Parse(typeof(NaturalGiftType), (string)naturalGiftTypeComboBox.SelectedItem);
+            SetItemDataDirty(true);
 
         }
 
@@ -679,8 +762,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.NaturalGiftPower = (byte)naturalGiftPowerNumericUpDown.Value;
-            setDirty(true);
+            currentLoadedItemData.NaturalGiftPower = (byte)naturalGiftPowerNumericUpDown.Value;
+            SetItemDataDirty(true);
         }
 
         private void pluckEffectNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -690,8 +773,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.PluckEffect = (byte)pluckEffectNumericUpDown.Value;
-            setDirty(true);
+            currentLoadedItemData.PluckEffect = (byte)pluckEffectNumericUpDown.Value;
+            SetItemDataDirty(true);
         }
 
         private void flingEffectNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -701,8 +784,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.FlingEffect = (byte)flingEffectNumericUpDown.Value;
-            setDirty(true);
+            currentLoadedItemData.FlingEffect = (byte)flingEffectNumericUpDown.Value;
+            SetItemDataDirty(true);
         }
 
         private void flingPowerNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -712,8 +795,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.FlingPower = (byte)flingPowerNumericUpDown.Value;
-            setDirty(true);
+            currentLoadedItemData.FlingPower = (byte)flingPowerNumericUpDown.Value;
+            SetItemDataDirty(true);
         }
 
         private void preventTossCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -723,8 +806,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.PreventToss = preventTossCheckBox.Checked;
-            setDirty(true);
+            currentLoadedItemData.PreventToss = preventTossCheckBox.Checked;
+            SetItemDataDirty(true);
         }
 
         private void canSelectCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -734,8 +817,8 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.Selectable = canSelectCheckBox.Checked;
-            setDirty(true);
+            currentLoadedItemData.Selectable = canSelectCheckBox.Checked;
+            SetItemDataDirty(true);
         }
 
         private void fieldFunctionComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -752,14 +835,14 @@ namespace DSPRE.Editors
                 string numericPart = selectedValue.Substring(8, selectedValue.Length - 9);
                 if (byte.TryParse(numericPart, out byte value))
                 {
-                    currentLoadedFile.fieldUseFunc = (FieldUseFunc)value;
+                    currentLoadedItemData.fieldUseFunc = (FieldUseFunc)value;
                 }
             }
             else
             {
-                currentLoadedFile.fieldUseFunc = (FieldUseFunc)fieldFunctionComboBox.SelectedIndex;
+                currentLoadedItemData.fieldUseFunc = (FieldUseFunc)fieldFunctionComboBox.SelectedIndex;
             }
-            setDirty(true);
+            SetItemDataDirty(true);
         }
 
         private void battleFunctionComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -776,14 +859,14 @@ namespace DSPRE.Editors
                 string numericPart = selectedValue.Substring(8, selectedValue.Length - 9);
                 if (byte.TryParse(numericPart, out byte value))
                 {
-                    currentLoadedFile.battleUseFunc = (BattleUseFunc)value;
+                    currentLoadedItemData.battleUseFunc = (BattleUseFunc)value;
                 }
             }
             else
             {
-                currentLoadedFile.battleUseFunc = (BattleUseFunc)battleFunctionComboBox.SelectedIndex;
+                currentLoadedItemData.battleUseFunc = (BattleUseFunc)battleFunctionComboBox.SelectedIndex;
             }
-            setDirty(true);
+            SetItemDataDirty(true);
         }
 
         private void partyUseCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -793,9 +876,9 @@ namespace DSPRE.Editors
                 return;
             }
 
-            currentLoadedFile.PartyUse = (byte)(partyUseCheckBox.Checked ? 1: 0);
+            currentLoadedItemData.PartyUse = (byte)(partyUseCheckBox.Checked ? 1: 0);
             itemParamsTabControl.Enabled = partyUseCheckBox.Checked;
-            setDirty(true);
+            SetItemDataDirty(true);
         }
 
         private void PartyParamsControlChanged(object sender, EventArgs e)
@@ -804,9 +887,9 @@ namespace DSPRE.Editors
             {
                 return;
             }
-            if (currentLoadedFile == null) return;
+            if (currentLoadedItemData == null) return;
 
-            ItemPartyUseParam param = currentLoadedFile.PartyUseParam;
+            ItemPartyUseParam param = currentLoadedItemData.PartyUseParam;
 
             // Status heals
             param.SlpHeal = slpHealCheckBox.Checked;
@@ -866,7 +949,7 @@ namespace DSPRE.Editors
             param.FriendshipMidValue = (sbyte)friendshipMidValueNumeric.Value;
             param.FriendshipHighValue = (sbyte)friendshipHighValueNumeric.Value;
 
-            setDirty(true);
+            SetItemDataDirty(true);
         }
 
 
@@ -875,10 +958,10 @@ namespace DSPRE.Editors
             if (Helpers.HandlersDisabled || imageComboBox.SelectedItem == null) return;
 
             uint newIconID = uint.Parse(imageComboBox.SelectedItem.ToString());
-            itemNarcTable[currentLoadedFile.ID].itemIcon = newIconID;
+            currentLoadedEntry.itemIcon = newIconID;
 
             SetUpIcon();
-            setDirty(true);
+            SetItemEntryDirty(true);
         }
 
         private void paletteComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -886,38 +969,69 @@ namespace DSPRE.Editors
             if (Helpers.HandlersDisabled || paletteComboBox.SelectedItem == null) return;
 
             uint newPaletteID = uint.Parse(paletteComboBox.SelectedItem.ToString());
-            itemNarcTable[currentLoadedFile.ID].itemPalette = newPaletteID;
+            currentLoadedEntry.itemPalette = newPaletteID;
 
             SetUpIcon();
-            setDirty(true);
+            SetItemEntryDirty(true);
         }
 
-        private void saveIconButton_Click(object sender, EventArgs e)
+        private void itemDataNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if(Helpers.HandlersDisabled)
+            if (Helpers.HandlersDisabled || itemDataNumericUpDown.Value < 0 || itemDataNumericUpDown.Value >= GetItemDataFileCount()) return;
+
+            Helpers.DisableHandlers();
+
+            if (!CheckDiscardItemDataChanges())
+            {
+                itemDataNumericUpDown.Value = currentLoadedId;
+                Helpers.EnableHandlers();
+                return;
+            }
+
+            uint newItemDataID = (uint)itemDataNumericUpDown.Value;
+            currentLoadedEntry.itemData = newItemDataID;
+
+            var stream = new FileStream(RomInfo.gameDirs[DirNames.itemData].unpackedDir + "\\"
+                + newItemDataID.ToString("D4"), FileMode.Open);
+            currentLoadedItemData = new ItemData(stream, (int)newItemDataID);
+            PopulateAllFromCurrentItemData();
+
+            SetItemEntryDirty(true);
+
+            Helpers.EnableHandlers();
+
+        }
+
+        private void saveItemButton_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled)
             {
                 return;
             }
 
-            for (int i = 0; i < itemNarcTable.Length; i++)
-            {
-                ItemNarcTableEntry itemNarcTableEntry = new ItemNarcTableEntry();
-                itemNarcTableEntry.itemData = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8));
-                itemNarcTableEntry.itemIcon = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 2));
-                if (itemNarcTable[i].itemIcon != itemNarcTableEntry.itemIcon)
-                {
-                    byte[] bytes = BitConverter.GetBytes((ushort)itemNarcTableEntry.itemIcon);
-                    ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedFile.ID * 8 + 2));
-                }   
-                itemNarcTableEntry.itemPalette = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 4));
-                if (itemNarcTable[i].itemPalette != itemNarcTableEntry.itemPalette)
-                {
-                    byte[] bytes = BitConverter.GetBytes((ushort)itemNarcTableEntry.itemPalette);
-                    ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedFile.ID * 8 + 4));
-                }
-                itemNarcTableEntry.itemAGB = ARM9.ReadWordLE((uint)(itemNarcTableOffset + i * 8 + 6));
-            }
-            setDirty(false);
+            // Write itemData
+            byte[] bytes = BitConverter.GetBytes((ushort)currentLoadedEntry.itemData);
+            ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedId * 8));
+
+            // Write itemIcon
+            bytes = BitConverter.GetBytes((ushort)currentLoadedEntry.itemIcon);
+            ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedId * 8 + 2));
+
+            // Write itemPalette
+            bytes = BitConverter.GetBytes((ushort)currentLoadedEntry.itemPalette);
+            ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedId * 8 + 4));
+
+            // Write itemAGB (Not currently editable, but write it anyway)
+            bytes = BitConverter.GetBytes((ushort)currentLoadedEntry.itemAGB);
+            ARM9.WriteBytes(bytes, itemNarcTableOffset + (uint)(currentLoadedId * 8 + 6));
+
+            SetItemEntryDirty(false);
+        }
+
+        private void saveAllButton_Click(object sender, EventArgs e)
+        {
+            saveItemButton_Click(sender, e);
+            saveDataButton_Click(sender, e);
         }
 
         private void BattlePocketCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -940,8 +1054,8 @@ namespace DSPRE.Editors
             if (ppRestoreBattlePocketCheck.Checked)
                 battlePocket |= BattlePocket.PpRestore;
 
-            currentLoadedFile.battlePocket = battlePocket;
-            setDirty(true);
+            currentLoadedItemData.battlePocket = battlePocket;
+            SetItemDataDirty(true);
         }
     }
 }

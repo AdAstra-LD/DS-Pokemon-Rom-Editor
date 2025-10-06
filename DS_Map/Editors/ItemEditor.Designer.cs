@@ -29,13 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.itemNumberNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.itemIDNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.holdEffectComboBox = new System.Windows.Forms.ComboBox();
             this.fieldPocketComboBox = new System.Windows.Forms.ComboBox();
             this.itemNameInputComboBox = new System.Windows.Forms.ComboBox();
             this.priceNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.saveDataButton = new System.Windows.Forms.Button();
             this.holdFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.holdGroupBox = new System.Windows.Forms.GroupBox();
             this.holdEffectParameterNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -135,15 +134,23 @@
             this.friendshipLowValueNumeric = new System.Windows.Forms.NumericUpDown();
             this.friendshipLowCheckBox = new System.Windows.Forms.CheckBox();
             this.itemEditorSelectedPictureFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.itemEditorSelectedPictureGroupBox = new System.Windows.Forms.GroupBox();
-            this.saveIconButton = new System.Windows.Forms.Button();
+            this.itemTableEntryGroupBox = new System.Windows.Forms.GroupBox();
+            this.itemDataLabel = new System.Windows.Forms.Label();
             this.paletteComboBox = new System.Windows.Forms.ComboBox();
+            this.itemDataNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.imageComboBox = new System.Windows.Forms.ComboBox();
             this.paletteLabel = new System.Windows.Forms.Label();
             this.imageLabel = new System.Windows.Forms.Label();
             this.itemEditorSelectedPictureBox = new System.Windows.Forms.PictureBox();
+            this.itemNamePanel = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.itemLabel = new System.Windows.Forms.Label();
+            this.saveButtonPanel = new System.Windows.Forms.Panel();
+            this.saveItemButton = new System.Windows.Forms.Button();
+            this.saveDataButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.itemNumberNumericUpDown)).BeginInit();
+            this.saveAllButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.itemIDNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.holdFlowLayoutPanel.SuspendLayout();
@@ -189,18 +196,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).BeginInit();
             this.itemEditorSelectedPictureFlowLayoutPanel.SuspendLayout();
-            this.itemEditorSelectedPictureGroupBox.SuspendLayout();
+            this.itemTableEntryGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.itemDataNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).BeginInit();
+            this.itemNamePanel.SuspendLayout();
+            this.saveButtonPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // itemNumberNumericUpDown
+            // itemIDNumericUpDown
             // 
-            this.itemNumberNumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.itemNumberNumericUpDown.Location = new System.Drawing.Point(605, 60);
-            this.itemNumberNumericUpDown.Name = "itemNumberNumericUpDown";
-            this.itemNumberNumericUpDown.Size = new System.Drawing.Size(120, 20);
-            this.itemNumberNumericUpDown.TabIndex = 0;
-            this.itemNumberNumericUpDown.ValueChanged += new System.EventHandler(this.itemNumberNumericUpDown_ValueChanged);
+            this.itemIDNumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.itemIDNumericUpDown.Location = new System.Drawing.Point(92, 49);
+            this.itemIDNumericUpDown.Name = "itemIDNumericUpDown";
+            this.itemIDNumericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.itemIDNumericUpDown.TabIndex = 0;
+            this.itemIDNumericUpDown.ValueChanged += new System.EventHandler(this.itemNumberNumericUpDown_ValueChanged);
             // 
             // holdEffectComboBox
             // 
@@ -224,9 +234,9 @@
             // 
             // itemNameInputComboBox
             // 
-            this.itemNameInputComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.itemNameInputComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.itemNameInputComboBox.FormattingEnabled = true;
-            this.itemNameInputComboBox.Location = new System.Drawing.Point(338, 59);
+            this.itemNameInputComboBox.Location = new System.Drawing.Point(91, 22);
             this.itemNameInputComboBox.Name = "itemNameInputComboBox";
             this.itemNameInputComboBox.Size = new System.Drawing.Size(121, 21);
             this.itemNameInputComboBox.TabIndex = 4;
@@ -248,9 +258,6 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Controls.Add(this.itemNumberNumericUpDown, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.itemNameInputComboBox, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.saveDataButton, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.holdFlowLayoutPanel, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.pocketFlowLayoutPanel, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.moveRelatedFlowLayoutPanel, 0, 2);
@@ -259,6 +266,8 @@
             this.tableLayoutPanel1.Controls.Add(this.functionsFlowLayoutPanel, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.itemParamsTabControl, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.itemEditorSelectedPictureFlowLayoutPanel, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.itemNamePanel, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.saveButtonPanel, 2, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -269,17 +278,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1065, 563);
             this.tableLayoutPanel1.TabIndex = 6;
-            // 
-            // saveDataButton
-            // 
-            this.saveDataButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.saveDataButton.Location = new System.Drawing.Point(869, 58);
-            this.saveDataButton.Name = "saveDataButton";
-            this.saveDataButton.Size = new System.Drawing.Size(125, 23);
-            this.saveDataButton.TabIndex = 10;
-            this.saveDataButton.Text = "Save Item Changes";
-            this.saveDataButton.UseVisualStyleBackColor = true;
-            this.saveDataButton.Click += new System.EventHandler(this.saveDataButton_Click);
             // 
             // holdFlowLayoutPanel
             // 
@@ -1284,52 +1282,60 @@
             // 
             // itemEditorSelectedPictureFlowLayoutPanel
             // 
-            this.itemEditorSelectedPictureFlowLayoutPanel.Controls.Add(this.itemEditorSelectedPictureGroupBox);
+            this.itemEditorSelectedPictureFlowLayoutPanel.Controls.Add(this.itemTableEntryGroupBox);
             this.itemEditorSelectedPictureFlowLayoutPanel.Location = new System.Drawing.Point(3, 3);
             this.itemEditorSelectedPictureFlowLayoutPanel.Name = "itemEditorSelectedPictureFlowLayoutPanel";
             this.itemEditorSelectedPictureFlowLayoutPanel.Size = new System.Drawing.Size(260, 134);
             this.itemEditorSelectedPictureFlowLayoutPanel.TabIndex = 19;
             // 
-            // itemEditorSelectedPictureGroupBox
+            // itemTableEntryGroupBox
             // 
-            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.saveIconButton);
-            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.paletteComboBox);
-            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.imageComboBox);
-            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.paletteLabel);
-            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.imageLabel);
-            this.itemEditorSelectedPictureGroupBox.Controls.Add(this.itemEditorSelectedPictureBox);
-            this.itemEditorSelectedPictureGroupBox.Location = new System.Drawing.Point(3, 3);
-            this.itemEditorSelectedPictureGroupBox.Name = "itemEditorSelectedPictureGroupBox";
-            this.itemEditorSelectedPictureGroupBox.Size = new System.Drawing.Size(257, 131);
-            this.itemEditorSelectedPictureGroupBox.TabIndex = 19;
-            this.itemEditorSelectedPictureGroupBox.TabStop = false;
-            this.itemEditorSelectedPictureGroupBox.Text = "Icon";
+            this.itemTableEntryGroupBox.Controls.Add(this.itemDataLabel);
+            this.itemTableEntryGroupBox.Controls.Add(this.paletteComboBox);
+            this.itemTableEntryGroupBox.Controls.Add(this.itemDataNumericUpDown);
+            this.itemTableEntryGroupBox.Controls.Add(this.imageComboBox);
+            this.itemTableEntryGroupBox.Controls.Add(this.paletteLabel);
+            this.itemTableEntryGroupBox.Controls.Add(this.imageLabel);
+            this.itemTableEntryGroupBox.Controls.Add(this.itemEditorSelectedPictureBox);
+            this.itemTableEntryGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.itemTableEntryGroupBox.Name = "itemTableEntryGroupBox";
+            this.itemTableEntryGroupBox.Size = new System.Drawing.Size(257, 131);
+            this.itemTableEntryGroupBox.TabIndex = 19;
+            this.itemTableEntryGroupBox.TabStop = false;
+            this.itemTableEntryGroupBox.Text = "Item Entry";
             // 
-            // saveIconButton
+            // itemDataLabel
             // 
-            this.saveIconButton.Location = new System.Drawing.Point(14, 102);
-            this.saveIconButton.Name = "saveIconButton";
-            this.saveIconButton.Size = new System.Drawing.Size(121, 23);
-            this.saveIconButton.TabIndex = 25;
-            this.saveIconButton.Text = "Save Icon Changes";
-            this.saveIconButton.UseVisualStyleBackColor = true;
-            this.saveIconButton.Click += new System.EventHandler(this.saveIconButton_Click);
+            this.itemDataLabel.AutoSize = true;
+            this.itemDataLabel.Location = new System.Drawing.Point(19, 107);
+            this.itemDataLabel.Name = "itemDataLabel";
+            this.itemDataLabel.Size = new System.Drawing.Size(67, 13);
+            this.itemDataLabel.TabIndex = 8;
+            this.itemDataLabel.Text = "Item Data ID";
             // 
             // paletteComboBox
             // 
             this.paletteComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.paletteComboBox.FormattingEnabled = true;
-            this.paletteComboBox.Location = new System.Drawing.Point(77, 60);
+            this.paletteComboBox.Location = new System.Drawing.Point(92, 61);
             this.paletteComboBox.Name = "paletteComboBox";
             this.paletteComboBox.Size = new System.Drawing.Size(58, 21);
             this.paletteComboBox.TabIndex = 24;
             this.paletteComboBox.SelectedIndexChanged += new System.EventHandler(this.paletteComboBox_SelectedIndexChanged);
             // 
+            // itemDataNumericUpDown
+            // 
+            this.itemDataNumericUpDown.Location = new System.Drawing.Point(92, 105);
+            this.itemDataNumericUpDown.Name = "itemDataNumericUpDown";
+            this.itemDataNumericUpDown.Size = new System.Drawing.Size(120, 20);
+            this.itemDataNumericUpDown.TabIndex = 6;
+            this.itemDataNumericUpDown.ValueChanged += new System.EventHandler(this.itemDataNumericUpDown_ValueChanged);
+            // 
             // imageComboBox
             // 
             this.imageComboBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.imageComboBox.FormattingEnabled = true;
-            this.imageComboBox.Location = new System.Drawing.Point(77, 18);
+            this.imageComboBox.Location = new System.Drawing.Point(92, 19);
             this.imageComboBox.Name = "imageComboBox";
             this.imageComboBox.Size = new System.Drawing.Size(58, 21);
             this.imageComboBox.TabIndex = 23;
@@ -1338,7 +1344,7 @@
             // paletteLabel
             // 
             this.paletteLabel.AutoSize = true;
-            this.paletteLabel.Location = new System.Drawing.Point(11, 63);
+            this.paletteLabel.Location = new System.Drawing.Point(19, 64);
             this.paletteLabel.Name = "paletteLabel";
             this.paletteLabel.Size = new System.Drawing.Size(40, 13);
             this.paletteLabel.TabIndex = 22;
@@ -1347,7 +1353,7 @@
             // imageLabel
             // 
             this.imageLabel.AutoSize = true;
-            this.imageLabel.Location = new System.Drawing.Point(11, 21);
+            this.imageLabel.Location = new System.Drawing.Point(19, 22);
             this.imageLabel.Name = "imageLabel";
             this.imageLabel.Size = new System.Drawing.Size(36, 13);
             this.imageLabel.TabIndex = 20;
@@ -1357,11 +1363,90 @@
             // 
             this.itemEditorSelectedPictureBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.itemEditorSelectedPictureBox.Image = global::DSPRE.Properties.Resources.IconItem;
-            this.itemEditorSelectedPictureBox.Location = new System.Drawing.Point(180, 54);
+            this.itemEditorSelectedPictureBox.Location = new System.Drawing.Point(187, 19);
             this.itemEditorSelectedPictureBox.Name = "itemEditorSelectedPictureBox";
             this.itemEditorSelectedPictureBox.Size = new System.Drawing.Size(47, 47);
             this.itemEditorSelectedPictureBox.TabIndex = 18;
             this.itemEditorSelectedPictureBox.TabStop = false;
+            // 
+            // itemNamePanel
+            // 
+            this.itemNamePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.itemNamePanel.AutoSize = true;
+            this.itemNamePanel.Controls.Add(this.label8);
+            this.itemNamePanel.Controls.Add(this.itemLabel);
+            this.itemNamePanel.Controls.Add(this.itemIDNumericUpDown);
+            this.itemNamePanel.Controls.Add(this.itemNameInputComboBox);
+            this.itemNamePanel.Location = new System.Drawing.Point(269, 3);
+            this.itemNamePanel.Name = "itemNamePanel";
+            this.itemNamePanel.Size = new System.Drawing.Size(260, 134);
+            this.itemNamePanel.TabIndex = 20;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(44, 51);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 13);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "Item ID";
+            // 
+            // itemLabel
+            // 
+            this.itemLabel.AutoSize = true;
+            this.itemLabel.Location = new System.Drawing.Point(44, 25);
+            this.itemLabel.Name = "itemLabel";
+            this.itemLabel.Size = new System.Drawing.Size(27, 13);
+            this.itemLabel.TabIndex = 5;
+            this.itemLabel.Text = "Item";
+            // 
+            // saveButtonPanel
+            // 
+            this.saveButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveButtonPanel.AutoSize = true;
+            this.saveButtonPanel.Controls.Add(this.saveAllButton);
+            this.saveButtonPanel.Controls.Add(this.saveItemButton);
+            this.saveButtonPanel.Controls.Add(this.saveDataButton);
+            this.saveButtonPanel.Location = new System.Drawing.Point(535, 3);
+            this.saveButtonPanel.Name = "saveButtonPanel";
+            this.saveButtonPanel.Size = new System.Drawing.Size(260, 134);
+            this.saveButtonPanel.TabIndex = 22;
+            // 
+            // saveItemButton
+            // 
+            this.saveItemButton.Location = new System.Drawing.Point(20, 15);
+            this.saveItemButton.Name = "saveItemButton";
+            this.saveItemButton.Size = new System.Drawing.Size(120, 46);
+            this.saveItemButton.TabIndex = 25;
+            this.saveItemButton.Text = "Save Item Entry Changes";
+            this.saveItemButton.UseVisualStyleBackColor = true;
+            this.saveItemButton.Click += new System.EventHandler(this.saveItemButton_Click);
+            // 
+            // saveDataButton
+            // 
+            this.saveDataButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.saveDataButton.Location = new System.Drawing.Point(20, 67);
+            this.saveDataButton.Name = "saveDataButton";
+            this.saveDataButton.Size = new System.Drawing.Size(120, 46);
+            this.saveDataButton.TabIndex = 10;
+            this.saveDataButton.Text = "Save Item Data Changes";
+            this.saveDataButton.UseVisualStyleBackColor = true;
+            this.saveDataButton.Click += new System.EventHandler(this.saveDataButton_Click);
+            // 
+            // saveAllButton
+            // 
+            this.saveAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveAllButton.Location = new System.Drawing.Point(152, 43);
+            this.saveAllButton.Name = "saveAllButton";
+            this.saveAllButton.Size = new System.Drawing.Size(100, 46);
+            this.saveAllButton.TabIndex = 26;
+            this.saveAllButton.Text = "Save All Item Changes";
+            this.saveAllButton.UseVisualStyleBackColor = true;
+            this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
             // 
             // ItemEditor
             // 
@@ -1371,9 +1456,10 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ItemEditor";
             this.Text = "ItemEditor";
-            ((System.ComponentModel.ISupportInitialize)(this.itemNumberNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemIDNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.holdFlowLayoutPanel.ResumeLayout(false);
             this.holdGroupBox.ResumeLayout(false);
             this.holdGroupBox.PerformLayout();
@@ -1429,16 +1515,20 @@
             ((System.ComponentModel.ISupportInitialize)(this.friendshipMidValueNumeric)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.friendshipLowValueNumeric)).EndInit();
             this.itemEditorSelectedPictureFlowLayoutPanel.ResumeLayout(false);
-            this.itemEditorSelectedPictureGroupBox.ResumeLayout(false);
-            this.itemEditorSelectedPictureGroupBox.PerformLayout();
+            this.itemTableEntryGroupBox.ResumeLayout(false);
+            this.itemTableEntryGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.itemDataNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemEditorSelectedPictureBox)).EndInit();
+            this.itemNamePanel.ResumeLayout(false);
+            this.itemNamePanel.PerformLayout();
+            this.saveButtonPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.NumericUpDown itemNumberNumericUpDown;
+        private System.Windows.Forms.NumericUpDown itemIDNumericUpDown;
         private System.Windows.Forms.ComboBox holdEffectComboBox;
         private System.Windows.Forms.ComboBox fieldPocketComboBox;
         private System.Windows.Forms.ComboBox itemNameInputComboBox;
@@ -1541,16 +1631,23 @@
         private System.Windows.Forms.CheckBox friendshipLowCheckBox;
         private System.Windows.Forms.PictureBox itemEditorSelectedPictureBox;
         private System.Windows.Forms.FlowLayoutPanel itemEditorSelectedPictureFlowLayoutPanel;
-        private System.Windows.Forms.GroupBox itemEditorSelectedPictureGroupBox;
+        private System.Windows.Forms.GroupBox itemTableEntryGroupBox;
         private System.Windows.Forms.Label paletteLabel;
         private System.Windows.Forms.Label imageLabel;
         private System.Windows.Forms.ComboBox paletteComboBox;
         private System.Windows.Forms.ComboBox imageComboBox;
-        private System.Windows.Forms.Button saveIconButton;
+        private System.Windows.Forms.Button saveItemButton;
         private System.Windows.Forms.CheckBox pokeBallsBattlePocketCheck;
         private System.Windows.Forms.CheckBox statusHealersBattlePocketCheck;
         private System.Windows.Forms.CheckBox hpRestoreBattlePocketCheck;
         private System.Windows.Forms.CheckBox ppRestoreBattlePocketCheck;
         private System.Windows.Forms.CheckBox battleItemsBattlePocketCheck;
+        private System.Windows.Forms.Panel itemNamePanel;
+        private System.Windows.Forms.Label itemLabel;
+        private System.Windows.Forms.NumericUpDown itemDataNumericUpDown;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label itemDataLabel;
+        private System.Windows.Forms.Panel saveButtonPanel;
+        private System.Windows.Forms.Button saveAllButton;
     }
 }
