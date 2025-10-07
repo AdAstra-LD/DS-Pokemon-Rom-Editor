@@ -394,11 +394,12 @@ namespace DSPRE.ROMFiles
                 writer.Write(NaturalGiftPower);
 
                 ushort bitfield = 0;
-                bitfield |= (ushort)((byte)naturalGiftType & 0b11111);
-                if (PreventToss) bitfield |= (1 << 5);
-                if (Selectable) bitfield |= (1 << 6);
-                bitfield |= (ushort)(((byte)fieldPocket & 0b1111) << 7);
-                bitfield |= (ushort)((bitfield & ~(0b11111 << 11)) | (((byte)battlePocket & 0b11111) << 11));
+                // Bitfield packing
+                bitfield |= (ushort)((byte)naturalGiftType & 0b1111);         // Bits 0-4: NaturalGiftType
+                if (PreventToss) bitfield |= (1 << 5);                        // Bit 5: PreventToss
+                if (Selectable) bitfield |= (1 << 6);                         // Bit 6: Selectable
+                bitfield |= (ushort)(((byte)fieldPocket & 0b1111) << 7);      // Bits 7-10: FieldPocket
+                bitfield |= (ushort)(((byte)battlePocket & 0b11111) << 11);   // Bits 11-15: BattlePocket
                 writer.Write(bitfield);
 
                 writer.Write((byte)fieldUseFunc);

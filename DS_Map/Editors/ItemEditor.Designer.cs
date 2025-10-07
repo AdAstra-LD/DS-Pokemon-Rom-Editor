@@ -146,10 +146,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.itemLabel = new System.Windows.Forms.Label();
             this.saveButtonPanel = new System.Windows.Forms.Panel();
+            this.saveAllButton = new System.Windows.Forms.Button();
             this.saveItemButton = new System.Windows.Forms.Button();
             this.saveDataButton = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.saveAllButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.itemIDNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.priceNumericUpDown)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -245,7 +245,7 @@
             // priceNumericUpDown
             // 
             this.priceNumericUpDown.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.priceNumericUpDown.Location = new System.Drawing.Point(122, 35);
+            this.priceNumericUpDown.Location = new System.Drawing.Point(120, 35);
             this.priceNumericUpDown.Name = "priceNumericUpDown";
             this.priceNumericUpDown.Size = new System.Drawing.Size(120, 20);
             this.priceNumericUpDown.TabIndex = 5;
@@ -365,6 +365,7 @@
             this.statusHealersBattlePocketCheck.TabIndex = 13;
             this.statusHealersBattlePocketCheck.Text = "Status Healers";
             this.statusHealersBattlePocketCheck.UseVisualStyleBackColor = true;
+            this.statusHealersBattlePocketCheck.CheckedChanged += new System.EventHandler(this.BattlePocketCheckBox_CheckedChanged);
             // 
             // hpRestoreBattlePocketCheck
             // 
@@ -375,6 +376,7 @@
             this.hpRestoreBattlePocketCheck.TabIndex = 12;
             this.hpRestoreBattlePocketCheck.Text = "HP Restore";
             this.hpRestoreBattlePocketCheck.UseVisualStyleBackColor = true;
+            this.hpRestoreBattlePocketCheck.CheckedChanged += new System.EventHandler(this.BattlePocketCheckBox_CheckedChanged);
             // 
             // ppRestoreBattlePocketCheck
             // 
@@ -385,6 +387,7 @@
             this.ppRestoreBattlePocketCheck.TabIndex = 11;
             this.ppRestoreBattlePocketCheck.Text = "PP Restore";
             this.ppRestoreBattlePocketCheck.UseVisualStyleBackColor = true;
+            this.ppRestoreBattlePocketCheck.CheckedChanged += new System.EventHandler(this.BattlePocketCheckBox_CheckedChanged);
             // 
             // battleItemsBattlePocketCheck
             // 
@@ -395,6 +398,7 @@
             this.battleItemsBattlePocketCheck.TabIndex = 10;
             this.battleItemsBattlePocketCheck.Text = "Battle Items";
             this.battleItemsBattlePocketCheck.UseVisualStyleBackColor = true;
+            this.battleItemsBattlePocketCheck.CheckedChanged += new System.EventHandler(this.BattlePocketCheckBox_CheckedChanged);
             // 
             // pokeBallsBattlePocketCheck
             // 
@@ -625,7 +629,7 @@
             this.priceGroupBox.Controls.Add(this.priceLabel);
             this.priceGroupBox.Location = new System.Drawing.Point(3, 3);
             this.priceGroupBox.Name = "priceGroupBox";
-            this.priceGroupBox.Size = new System.Drawing.Size(261, 131);
+            this.priceGroupBox.Size = new System.Drawing.Size(257, 131);
             this.priceGroupBox.TabIndex = 10;
             this.priceGroupBox.TabStop = false;
             this.priceGroupBox.Text = "Price";
@@ -634,7 +638,7 @@
             // 
             this.priceLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.priceLabel.AutoSize = true;
-            this.priceLabel.Location = new System.Drawing.Point(30, 37);
+            this.priceLabel.Location = new System.Drawing.Point(28, 37);
             this.priceLabel.Name = "priceLabel";
             this.priceLabel.Size = new System.Drawing.Size(34, 13);
             this.priceLabel.TabIndex = 9;
@@ -1416,6 +1420,17 @@
             this.saveButtonPanel.Size = new System.Drawing.Size(260, 134);
             this.saveButtonPanel.TabIndex = 22;
             // 
+            // saveAllButton
+            // 
+            this.saveAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.saveAllButton.Location = new System.Drawing.Point(152, 43);
+            this.saveAllButton.Name = "saveAllButton";
+            this.saveAllButton.Size = new System.Drawing.Size(100, 46);
+            this.saveAllButton.TabIndex = 26;
+            this.saveAllButton.Text = "Save All Item Changes";
+            this.saveAllButton.UseVisualStyleBackColor = true;
+            this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
+            // 
             // saveItemButton
             // 
             this.saveItemButton.Location = new System.Drawing.Point(20, 15);
@@ -1436,17 +1451,6 @@
             this.saveDataButton.Text = "Save Item Data Changes";
             this.saveDataButton.UseVisualStyleBackColor = true;
             this.saveDataButton.Click += new System.EventHandler(this.saveDataButton_Click);
-            // 
-            // saveAllButton
-            // 
-            this.saveAllButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveAllButton.Location = new System.Drawing.Point(152, 43);
-            this.saveAllButton.Name = "saveAllButton";
-            this.saveAllButton.Size = new System.Drawing.Size(100, 46);
-            this.saveAllButton.TabIndex = 26;
-            this.saveAllButton.Text = "Save All Item Changes";
-            this.saveAllButton.UseVisualStyleBackColor = true;
-            this.saveAllButton.Click += new System.EventHandler(this.saveAllButton_Click);
             // 
             // ItemEditor
             // 
