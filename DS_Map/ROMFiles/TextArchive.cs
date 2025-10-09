@@ -19,42 +19,209 @@ namespace DSPRE.ROMFiles
     /// </summary>
     public class TextArchive : RomFile
     {
-        #region Fields (2)
+        #region Fields
 
+        public int ID { get;}
         public List<string> messages;
-        public int initialKey;
+        private UInt16 key = 0;
 
-        #endregion Fields (2)
+        #endregion Fields
 
         #region Constructors (1)
 
-        public TextArchive(int ID, List<string> msg = null, bool discardLines = false)
+        public TextArchive(int ID, List<string> msg = null)
         {
+            this.ID = ID;
+
             if (msg != null)
             {
                 messages = msg;
                 return;
             }
 
-            string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
-            string expandedPath = Path.Combine(RomInfo.workDir, "expanded", "textArchives", $"{ID:D4}.txt");
-
-            TextEditor.ExpandTextFile(ID);
-
-            string rawText = File.ReadAllText(expandedPath);
-            // Replace all possible line endings with \r\n because f me thats why
-            rawText = rawText.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n");
-            messages = rawText.Split(new[] { "\r\n" }, StringSplitOptions.None).ToList();
-            // Get rid of trailing empty line if it exists
-            if (messages.Count > 0 && messages[messages.Count - 1] == "")
+            // First try to read from plain text file if it exists
+            if (TryReadPlainTextFile())
             {
-                messages.RemoveAt(messages.Count - 1);
+                return;
             }
+
+            // If not, extract from the .bin file
+            if (!ReadFromBinFile())
+            {
+                MessageBox.Show("Failed to read messages from .bin file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
         }
+
 
         #endregion Constructors (1)
 
         #region Methods (2)
+
+        public static (string binPath, string txtPath) GetFilePaths(int ID)
+        {
+            string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
+            string binPath = Path.Combine(baseDir, $"{ID:D4}");
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "textArchives");
+            string txtPath = Path.Combine(expandedDir, $"{ID:D4}.txt");
+            return (binPath, txtPath);
+        }
+
+        public static bool BuildRequiredBins()
+        {
+            var expandedTextFiles = Directory.GetFiles(Path.Combine(RomInfo.workDir, "expanded", "textArchives"), "*.txt", SearchOption.AllDirectories);
+            int newerBinCount = 0;
+
+            for (int i = 0; i < expandedTextFiles.Length; i++)
+            {
+                string expandedTextFile = expandedTextFiles[i];
+                string fileName = Path.GetFileNameWithoutExtension(expandedTextFile);
+
+                int archiveID;
+
+                try
+                {
+                    archiveID = int.Parse(fileName);
+                }
+                catch
+                {
+                    AppLogger.Error($"Skipping invalid text archive file name: {fileName}");
+                    continue;
+                }
+
+                string binPath = TextArchive.GetFilePaths(archiveID).binPath;
+
+                // Skip if .bin is newer than .txt
+                if (File.Exists(binPath) && File.GetLastWriteTimeUtc(binPath) > File.GetLastWriteTimeUtc(expandedTextFile))
+                {
+                    newerBinCount++;
+                    continue;
+                }
+
+                var textArchive = new TextArchive(archiveID);
+                textArchive.SaveToDefaultDir(archiveID, false);
+                // Update .txt last write time to prevent it being overwritten when reopening the ROM
+                File.SetLastWriteTimeUtc(expandedTextFile, DateTime.UtcNow);
+            }
+
+            AppLogger.Info($"Text Archive: {expandedTextFiles.Length - newerBinCount} .bin files built from .txt, {newerBinCount} .bin files skipped because they were newer than the .txt");
+
+            return true;
+        }
+
+        public List<string> GetSimpleTrainerNames()
+        {
+            List<string> simpleMessages = new List<string>();
+            foreach (string msg in messages)
+            {
+                string simpleMsg = TextConverter.GetSimpleTrainerName(msg);
+                simpleMessages.Add(simpleMsg);
+            }
+            return simpleMessages;
+        }
+
+        public bool SetSimpleTrainerName(int messageIndex, string newSimpleName)
+        {
+            if (messageIndex < 0)
+            {
+                AppLogger.Error($"Invalid message index {messageIndex} for Text Archive ID {ID:D4}");
+                return false;
+            }
+
+            if (messageIndex >= messages.Count)
+            {
+                messages.Add("{TRAINER_NAME:" + newSimpleName + "}");
+                return true;
+            }
+
+            string currentMessage = messages[messageIndex];
+            string updatedMessage = TextConverter.GetProperTrainerName(currentMessage, newSimpleName);
+            if (updatedMessage == currentMessage)
+            {
+                // No change made
+                return false;
+            }
+            messages[messageIndex] = updatedMessage;
+            return true;
+        }
+
+        private bool TryReadPlainTextFile()
+        {
+            string txtPath = GetFilePaths(ID).txtPath;
+            string binPath = GetFilePaths(ID).binPath;
+
+            if (!File.Exists(txtPath))
+            {
+                return false;
+            }
+
+            // If the .txt file is older than the .bin file, ignore it and re-extract from .bin
+            if (File.GetLastWriteTimeUtc(txtPath) < File.GetLastWriteTimeUtc(binPath))
+            {
+                return false;
+            }
+
+            try
+            {
+                List<string> lines = File.ReadAllLines(txtPath).ToList();
+                if (lines.Count == 0)
+                {
+                    AppLogger.Error($"Text file {txtPath} is empty. Bin file will be reextracted.");
+                    return false;
+                }
+
+                // First line should be the key
+                string firstLine = lines[0];
+                if (!firstLine.StartsWith("# Key: "))
+                {
+                    AppLogger.Error($"Text file {txtPath} is missing the key in the first line. Bin file will be reextracted.");
+                    return false;
+                }
+
+                string keyHex = firstLine.Substring(7).Trim();
+                if (!UInt16.TryParse(keyHex.Replace("0x", ""), System.Globalization.NumberStyles.HexNumber, null, out key))
+                {
+                    AppLogger.Error($"Text file {txtPath} has an invalid key format. Bin file will be reextracted.");
+                    return false;
+                }
+
+                // Remove the first line (the key) from the messages
+                lines.RemoveAt(0);
+
+                messages = lines;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Error reading text file {txtPath}: {ex.Message}. Bin file will be reextracted.");
+                return false;
+            }
+        }
+
+        private bool ReadFromBinFile()
+        {
+            string binPath = GetFilePaths(ID).binPath;
+            if (!File.Exists(binPath))
+            {
+                MessageBox.Show($"The .bin file for Text Archive ID {ID:D4} does not exist at the expected path: {binPath}", "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            try
+            {
+                using (FileStream fs = new FileStream(binPath, FileMode.Open, FileAccess.Read))
+                {
+                    messages = TextConverter.ReadMessageFromStream(fs, out key);
+                    fs.Close();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error reading .bin file {binPath}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
 
         public override string ToString()
         {
@@ -63,57 +230,36 @@ namespace DSPRE.ROMFiles
 
         public override byte[] ToByteArray()
         {
-            string tempTxt = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".txt");
-            string tempMsg = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".msg");
+            Stream stream = new MemoryStream();
+            TextConverter.WriteMessagesToStream(ref stream, messages, key);
 
-            try
-            {
-                // Write messages in the format expected by msgenc (text\n\ntext\n\n...)
-                File.WriteAllText(tempTxt, string.Join(Environment.NewLine + Environment.NewLine, messages));
-
-                string toolPath = Path.Combine(Application.StartupPath, "Tools", "msgenc.exe");
-                string charmapPath = Path.Combine("Tools", "charmap.txt");
-
-                Process process = new Process();
-                process.StartInfo.FileName = toolPath;
-                process.StartInfo.Arguments = $"-e -c \"{charmapPath}\" \"{tempTxt}\" \"{tempMsg}\"";
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                process.StartInfo.CreateNoWindow = true;
-                process.Start();
-                process.WaitForExit();
-
-                if (process.ExitCode != 0)
-                {
-                    throw new Exception("msgenc.exe failed to encode the text file.");
-                }
-
-                return File.ReadAllBytes(tempMsg);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error during encoding: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
-            finally
-            {
-                if (File.Exists(tempTxt)) File.Delete(tempTxt);
-                if (File.Exists(tempMsg)) File.Delete(tempMsg);
-            }
+            return ((MemoryStream)stream).ToArray();
         }
 
-        public void SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true)
+        public void SaveToExpandedDir(int IDtoReplace, bool showSuccessMessage = true)
         {
             string baseDir = gameDirs[DirNames.textArchives].unpackedDir;
             string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "textArchives");
-            string path = Path.Combine(expandedDir, $"{IDtoReplace:D4}.txt");
+
+            if (!Directory.Exists(expandedDir))
+            {
+                Directory.CreateDirectory(expandedDir);
+            }
+
+            string expandedPath = GetFilePaths(IDtoReplace).txtPath;
 
             var utf8WithoutBom = new UTF8Encoding(false);
-            File.WriteAllText(path, string.Join(Environment.NewLine, messages), utf8WithoutBom);
-            bool success = TextEditor.CompressTextFile(IDtoReplace);
-            if (showSuccessMessage && success)
-            {
-                MessageBox.Show("Saved successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+
+            string firstLine = $"# Key: 0x{key:X4}";
+            string textToSave = string.Join(Environment.NewLine, messages);
+            textToSave = firstLine + Environment.NewLine + textToSave;
+
+            File.WriteAllText(expandedPath, textToSave, utf8WithoutBom);
+        }
+
+        public void SaveToDefaultDir(int IDtoReplace, bool showSuccessMessage = true)
+        {
+            SaveToFileDefaultDir(DirNames.textArchives, IDtoReplace, showSuccessMessage);
         }
 
         public void SaveToFileExplorePath(string suggestedFileName, bool showSuccessMessage = true)

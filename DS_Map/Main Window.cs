@@ -13,6 +13,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static DSPRE.EditorPanels;
 using static DSPRE.Helpers;
@@ -998,9 +999,22 @@ namespace DSPRE
                 return;
             }
 
+            var dateBegin = DateTime.Now;
+
+            Helpers.statusLabelMessage("Repacking Expanded Files...");
+            Update();
+
+            // Turn expanded folders back into binary files
+            // ToDo: Better system for tracking expanded folders instead of hardcoding all of them
+            if (!TextArchive.BuildRequiredBins())
+            {
+                MessageBox.Show("An error occurred while rebuilding text archives. Save aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Helpers.statusLabelMessage("Repacking NARCS...");
             Update();
-            var dateBegin = DateTime.Now;
+            
 
             // Repack NARCs
             foreach (KeyValuePair<DirNames, (string packedDir, string unpackedDir)> kvp in RomInfo.gameDirs)
@@ -1011,7 +1025,6 @@ namespace DSPRE
                     Narc.FromFolder(kvp.Value.unpackedDir).Save(kvp.Value.packedDir); // Make new NARC from folder
                 }
             }
-
 
             if (ARM9.CheckCompressionMark())
             {

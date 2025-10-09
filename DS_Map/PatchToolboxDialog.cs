@@ -439,7 +439,7 @@ namespace DSPRE
 
                         pokeName.messages[i] = pokeName.messages[i].Replace(PokeDatabase.System.pokeNames[(ushort)i].ToUpper(), PokeDatabase.System.pokeNames[(ushort)i]);
                     });
-                    pokeName.SaveToFileDefaultDir(ID, showSuccessMessage: false);
+                    pokeName.SaveToExpandedDir(ID, showSuccessMessage: false);
                 });
                 //sentenceCaseCB.Visible = true;
                 MessageBox.Show("Pokémon names have been converted to Sentence Case.", "Operation successful", MessageBoxButtons.OK, MessageBoxIcon.Information);

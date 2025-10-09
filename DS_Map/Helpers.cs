@@ -236,8 +236,28 @@ namespace DSPRE {
 
         //Locate File - buttons
         public static void ExplorerSelect(string path) {
-            if (System.IO.File.Exists(path)) {
+            if (File.Exists(path)) {
                 Process.Start("explorer.exe", "/select" + "," + "\"" + path + "\"");
+            }
+        }
+
+        public static void OpenFileWithDefaultApp(string path)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(path))
+                {
+                    MessageBox.Show("Path is empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Use the system default app to open the file
+                Process.Start(new ProcessStartInfo("explorer.exe", $"\"{path}\""));                
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Failed to open '{path}' with default app: {ex.Message}");
+                MessageBox.Show($"Unable to open file with the default application:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -254,8 +274,8 @@ namespace DSPRE {
                 int classMessageID = BitConverter.ToUInt16(DSUtils.ReadFromFile(path, startOffset: 1, 2), 0);
                 string currentTrainerName;
 
-                if (i < trainerNames.messages.Count) {
-                    currentTrainerName = trainerNames.messages[i];
+                if (i < trainerNames.GetSimpleTrainerNames().Count) {
+                    currentTrainerName = trainerNames.GetSimpleTrainerNames()[i];
                 } else {
                     currentTrainerName = TrainerFile.NAME_NOT_FOUND;
                 }

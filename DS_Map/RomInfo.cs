@@ -1290,7 +1290,7 @@ namespace DSPRE
 
         public static List<string> GetLocationNames() => new TextArchive(locationNamesTextNumber).messages;
 
-        public static string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).messages.ToArray();
+        public static string[] GetSimpleTrainerNames() => new TextArchive(trainerNamesMessageNumber).GetSimpleTrainerNames().ToArray();
 
         public static string[] GetTrainerClassNames() => new TextArchive(trainerClassMessageNumber).messages.ToArray();
 

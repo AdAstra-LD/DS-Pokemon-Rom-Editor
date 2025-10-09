@@ -288,7 +288,7 @@ namespace DSPRE.Editors
             // OT Name
             tradeArchive.messages[tradeID + TradeData.GetTradeCount()] = otNameTextBox.Text;
 
-            tradeArchive.SaveToFileDefaultDir(GetTextBankIndex(), false);
+            tradeArchive.SaveToExpandedDir(GetTextBankIndex(), false);
 
             // Reset the text data group box and dirty flags
             textDataGroupBox.Text = "Text Data";
@@ -498,7 +498,7 @@ namespace DSPRE.Editors
             int lastNicknameIndex = TradeData.GetTradeCount() - 1;
             tradeArchive.messages.Insert(lastNicknameIndex, "Nickname");
             tradeArchive.messages.Add("OT Name");
-            tradeArchive.SaveToFileDefaultDir(GetTextBankIndex(), false);
+            tradeArchive.SaveToExpandedDir(GetTextBankIndex(), false);
 
             MessageBox.Show($"Added new trade with id {newTrade.id}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -537,7 +537,7 @@ namespace DSPRE.Editors
             {
                 tradeArchive.messages.RemoveAt(lastTradeID); // Remove Nickname
                 tradeArchive.messages.RemoveAt(tradeArchive.messages.Count - 1); // Remove OT Name
-                tradeArchive.SaveToFileDefaultDir(GetTextBankIndex(), false);
+                tradeArchive.SaveToExpandedDir(GetTextBankIndex(), false);
             }
 
         }

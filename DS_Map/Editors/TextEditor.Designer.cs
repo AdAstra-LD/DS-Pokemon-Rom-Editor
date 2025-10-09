@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextEditor));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.selectedLineMoveUpButton = new System.Windows.Forms.Button();
@@ -61,6 +62,7 @@
             this.messageColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.removeStringButton = new System.Windows.Forms.Button();
             this.addStringButton = new System.Windows.Forms.Button();
+            this.openCurrentTxtButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.LineNumbersFormatgroupBox.SuspendLayout();
             this.groupBox13.SuspendLayout();
@@ -77,7 +79,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -85,7 +87,6 @@
             this.tableLayoutPanel1.Controls.Add(this.label6, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.selectedLineMoveUpButton, 8, 1);
             this.tableLayoutPanel1.Controls.Add(this.selectTextFileComboBox, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.locateCurrentTextArchive, 6, 1);
             this.tableLayoutPanel1.Controls.Add(this.saveTextArchiveButton, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.importTextFileButton, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.exportTextFileButton, 2, 1);
@@ -93,6 +94,8 @@
             this.tableLayoutPanel1.Controls.Add(this.removeMessageFileButton, 5, 1);
             this.tableLayoutPanel1.Controls.Add(this.selectedLineMoveDownButton, 9, 1);
             this.tableLayoutPanel1.Controls.Add(this.LineNumbersFormatgroupBox, 11, 1);
+            this.tableLayoutPanel1.Controls.Add(this.locateCurrentTextArchive, 6, 1);
+            this.tableLayoutPanel1.Controls.Add(this.openCurrentTxtButton, 7, 1);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
@@ -114,7 +117,7 @@
             // selectedLineMoveUpButton
             // 
             this.selectedLineMoveUpButton.Image = global::DSPRE.Properties.Resources.arrowup;
-            this.selectedLineMoveUpButton.Location = new System.Drawing.Point(681, 16);
+            this.selectedLineMoveUpButton.Location = new System.Drawing.Point(709, 16);
             this.selectedLineMoveUpButton.Name = "selectedLineMoveUpButton";
             this.tableLayoutPanel1.SetRowSpan(this.selectedLineMoveUpButton, 2);
             this.selectedLineMoveUpButton.Size = new System.Drawing.Size(42, 40);
@@ -221,7 +224,7 @@
             // selectedLineMoveDownButton
             // 
             this.selectedLineMoveDownButton.Image = global::DSPRE.Properties.Resources.arrowdown;
-            this.selectedLineMoveDownButton.Location = new System.Drawing.Point(729, 16);
+            this.selectedLineMoveDownButton.Location = new System.Drawing.Point(757, 16);
             this.selectedLineMoveDownButton.Name = "selectedLineMoveDownButton";
             this.tableLayoutPanel1.SetRowSpan(this.selectedLineMoveDownButton, 2);
             this.selectedLineMoveDownButton.Size = new System.Drawing.Size(42, 40);
@@ -234,7 +237,7 @@
             // 
             this.LineNumbersFormatgroupBox.Controls.Add(this.decimalRadioButton);
             this.LineNumbersFormatgroupBox.Controls.Add(this.hexRadiobutton);
-            this.LineNumbersFormatgroupBox.Location = new System.Drawing.Point(797, 16);
+            this.LineNumbersFormatgroupBox.Location = new System.Drawing.Point(825, 16);
             this.LineNumbersFormatgroupBox.Name = "LineNumbersFormatgroupBox";
             this.tableLayoutPanel1.SetRowSpan(this.LineNumbersFormatgroupBox, 2);
             this.LineNumbersFormatgroupBox.Size = new System.Drawing.Size(134, 35);
@@ -477,6 +480,18 @@
             this.addStringButton.UseVisualStyleBackColor = true;
             this.addStringButton.Click += new System.EventHandler(this.addStringButton_Click);
             // 
+            // openCurrentTxtButton
+            // 
+            this.openCurrentTxtButton.Image = ((System.Drawing.Image)(resources.GetObject("openCurrentTxtButton.Image")));
+            this.openCurrentTxtButton.Location = new System.Drawing.Point(661, 16);
+            this.openCurrentTxtButton.Name = "openCurrentTxtButton";
+            this.tableLayoutPanel1.SetRowSpan(this.openCurrentTxtButton, 2);
+            this.openCurrentTxtButton.Size = new System.Drawing.Size(42, 40);
+            this.openCurrentTxtButton.TabIndex = 67;
+            this.openCurrentTxtButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.openCurrentTxtButton.UseVisualStyleBackColor = true;
+            this.openCurrentTxtButton.Click += new System.EventHandler(this.openCurrentTxtButton_Click);
+            // 
             // TextEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -533,5 +548,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn messageColumn;
         private System.Windows.Forms.Button removeStringButton;
         private System.Windows.Forms.Button addStringButton;
+        private System.Windows.Forms.Button openCurrentTxtButton;
     }
 }

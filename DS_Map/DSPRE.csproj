@@ -110,6 +110,7 @@
     <Compile Include="DSUtils\ModelUtils.cs" />
     <Compile Include="DSUtils\NSBUtils.cs" />
     <Compile Include="DSUtils\OverlayUtils.cs" />
+    <Compile Include="DSUtils\TextConverter.cs" />
     <Compile Include="DVCalculator\DVCalc.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -751,6 +752,9 @@
     <None Include="Resources\Graphics\Program Icons\exploreKit.png" />
     <None Include="Resources\Graphics\Program Icons\buildingEditorButton.png" />
     <None Include="Resources\alphabgCheckerboard.png" />
+    <Content Include="Tools\charmap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Tools\pokefatcs.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -881,12 +885,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\blz.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tools\charmap.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Tools\msgenc.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Tools\ndstool.exe">
