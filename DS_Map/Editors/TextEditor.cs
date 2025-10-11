@@ -656,7 +656,6 @@ namespace DSPRE.Editors
             DataGridView dgv = sender as DataGridView;
             if (Helpers.HandlersDisabled || dgv == null)
             {
-                AppLogger.Debug($"Handler skipped: HandlersDisabled={Helpers.HandlersDisabled}, dgv={dgv == null}");
                 selectedLineMoveUpButton.Enabled = false;
                 selectedLineMoveDownButton.Enabled = false;
                 selectedLineMoveUpButton.Refresh();

@@ -100,11 +100,13 @@ namespace DSPRE
             {
                 try
                 {
+                    // Read message count and key
                     UInt16 messageCount = reader.ReadUInt16();
                     key = reader.ReadUInt16();
 
                     var messageTable = new List<(int offset, int length)>(messageCount);
 
+                    // Read and decrypt message table to obtain offsets and lengths
                     for (int i = 0; i < messageCount; i++)
                     {
                         int offset = reader.ReadInt32();
@@ -121,6 +123,7 @@ namespace DSPRE
 
                     int msgIndex = 1;
 
+                    // Read, decrypt and decode each message
                     foreach (var (offset, length) in messageTable)
                     {
                         if (offset < 0 || length < 0 || offset + length * 2 > stream.Length)
@@ -141,14 +144,18 @@ namespace DSPRE
                         msgIndex++;
                     }
 
+                    // Get remaining bytes in the stream
+                    long remainingBytes = reader.BaseStream.Length - reader.BaseStream.Position;
+                    if (remainingBytes > 0)
+                    {
+                        AppLogger.Warn($"There are {remainingBytes} unread bytes remaining in the message stream. This indicates a possible issue with the message offsets/lengths.");
+                        throw new Exception("Unread bytes remaining in message stream.");
+                    }
+
                 }
                 catch (EndOfStreamException)
                 {
                     MessageBox.Show("Unexpected end of file while reading messages.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error reading messages: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -156,7 +163,7 @@ namespace DSPRE
 
         }
 
-        public static void WriteMessagesToStream(ref Stream stream, List<string> messages, UInt16 key)
+        public static bool WriteMessagesToStream(ref Stream stream, List<string> messages, UInt16 key)
         {
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
@@ -193,11 +200,14 @@ namespace DSPRE
                         writer.Write(offset);
                         writer.Write(length);
                     }
+
                     writer.Seek((int)endPos, SeekOrigin.Begin); // Move back to the end
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error writing messages: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
             }
         }

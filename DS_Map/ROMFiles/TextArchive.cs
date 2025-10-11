@@ -48,7 +48,8 @@ namespace DSPRE.ROMFiles
             // If not, extract from the .bin file
             if (!ReadFromBinFile())
             {
-                MessageBox.Show("Failed to read messages from .bin file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Failed to read messages from .bin file {ID:D4}. Contents were replaced with empty message!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                messages = new List<string> { "" };
                 return;
             }
 
@@ -186,6 +187,23 @@ namespace DSPRE.ROMFiles
                     return false;
                 }
 
+                // Check for newline character in last line and add a blank line if needed
+                // Since ReadAllLines() trims the newline, we read the last character of the file directly
+                // I hate this - Yako
+                using (FileStream fs = new FileStream(txtPath, FileMode.Open, FileAccess.Read))
+                {
+                    if (fs.Length > 0)
+                    {
+                        fs.Seek(-1, SeekOrigin.End);
+                        int lastByte = fs.ReadByte();
+                        if (lastByte == '\n' || lastByte == '\r')
+                        {
+                            lines.Add(string.Empty);
+                        }
+                    }
+                    fs.Close();
+                }
+
                 // Remove the first line (the key) from the messages
                 lines.RemoveAt(0);
 
@@ -218,7 +236,7 @@ namespace DSPRE.ROMFiles
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error reading .bin file {binPath}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                AppLogger.Error($"Error reading .bin file {binPath}: {ex.Message}");
                 return false;
             }
         }
@@ -231,7 +249,10 @@ namespace DSPRE.ROMFiles
         public override byte[] ToByteArray()
         {
             Stream stream = new MemoryStream();
-            TextConverter.WriteMessagesToStream(ref stream, messages, key);
+            if (!TextConverter.WriteMessagesToStream(ref stream, messages, key))
+            {
+                AppLogger.Error($"Failed to convert Text Archive ID {ID:D4} to byte array.");
+            }
 
             return ((MemoryStream)stream).ToArray();
         }
