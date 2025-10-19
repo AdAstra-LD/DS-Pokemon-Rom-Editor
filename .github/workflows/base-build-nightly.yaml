@@ -33,24 +33,24 @@ jobs:
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
     
     - name: Zip Release Files
-      run: Compress-Archive -Path ${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release -DestinationPath DSPRE-canary.zip
+      run: Compress-Archive -Path ${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release -DestinationPath DSPRE-canary.zip
 
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
 
-    - name: Update canary tag
-      run: |
-       git config user.name "github-actions[bot]"
-       git config user.email "github-actions[bot]@users.noreply.github.com"
-       git tag -f canary
-       git push -f origin canary
-    
     - name: Delete previous release
       run: |
-        gh release delete --yes canary
+        gh release delete --yes canary || true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
+
+    - name: Update canary tag
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -f canary -m "Canary build for commit ${{ github.sha }}"
+        git push -f origin canary
+    
     - name: Get current date
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
@@ -59,7 +59,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         tag_name: canary
-        name: DSPRE Canary Build ${{ steps.date.outputs.date }}
+        name: DSPRE Canary Build ${{ steps.date.outputs.date }} (${{ github.sha }})
         files: DSPRE-canary.zip
         token: ${{ secrets.GITHUB_TOKEN }}
         prerelease: true
