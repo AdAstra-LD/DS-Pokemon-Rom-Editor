@@ -32,8 +32,16 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
     
+    - name: Debug directory contents
+      run: |
+        dir "${{env.GITHUB_WORKSPACE}}\DS_Map"
+        dir "${{env.GITHUB_WORKSPACE}}\DS_Map\bin" || echo "bin directory not found"
+        dir "${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release" || echo "Release directory not found"
+      shell: cmd
+      continue-on-error: true
+
     - name: Zip Release Files
-      run: Compress-Archive -Path ${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release -DestinationPath DSPRE-canary.zip
+      run: Compress-Archive -Path "${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release\*" -DestinationPath DSPRE-canary.zip
 
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
