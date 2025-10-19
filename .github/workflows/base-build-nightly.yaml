@@ -15,7 +15,7 @@ env:
 
 jobs:
   build:
-    if: github.repository == 'DS-Pokemon-Rom-Editor/DS-Pokemon-Rom-Editor'
+    if: github.repository == 'DS-Pokemon-Rom-Editor/DSPRE'
     runs-on: windows-latest
 
     steps:
@@ -32,8 +32,16 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
     
+    - name: Debug directory contents
+      run: |
+        dir "${{env.GITHUB_WORKSPACE}}\DS_Map"
+        dir "${{env.GITHUB_WORKSPACE}}\DS_Map\bin" || echo "bin directory not found"
+        dir "${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release" || echo "Release directory not found"
+      shell: cmd
+      continue-on-error: true
+
     - name: Zip Release Files
-      run: Compress-Archive -Path ${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release -DestinationPath DSPRE-canary.zip
+      run: Compress-Archive -Path "${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release\*" -DestinationPath DSPRE-canary.zip
 
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
@@ -62,5 +70,20 @@ jobs:
         name: DSPRE Canary Build ${{ steps.date.outputs.date }} (${{ github.sha }})
         files: DSPRE-canary.zip
         token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+          ##  ⚠️ Canary Build Notice ⚠️
+          This is a Canary Build of DSPRE, meaning it is automatically generated from the latest pushed code. It includes the most recent changes, improvements, and experimental features, but may be unstable or contain bugs.
+          
+          ## 🚧 What does this mean?
+          This build reflects ongoing development and is not a stable release.
+          Features may be incomplete, subject to change, or cause unexpected issues.
+          Use at your own risk—expect potential crashes, broken functionality, or unpolished features.
+          
+          ## 💡 Who is this for?
+          Developers and testers who want to stay up-to-date with the latest progress.
+          Users willing to report issues and provide feedback on new changes.
+          If you’re looking for a more reliable version, consider using the latest Stable Release instead.
+        prerelease: true
+        generate_release_notes: true
         prerelease: true
         generate_release_notes: true

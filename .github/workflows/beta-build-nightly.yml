@@ -3,7 +3,8 @@ name: DSPRE Beta Canary Build
 on:
   push:
     branches:
-      - main  # Trigger only on pushes to the main branch
+      - dev # Trigger only for dev or beta branch
+      - beta 
 
 permissions:
   contents: write
@@ -15,7 +16,7 @@ env:
 
 jobs:
   build:
-    if: github.repository == 'DS-Pokemon-Rom-Editor/DS-Pokemon-Rom-Editor'
+    if: github.repository == 'DS-Pokemon-Rom-Editor/DSPRE'
     runs-on: windows-latest
 
     steps:
@@ -57,7 +58,7 @@ jobs:
 
     - name: Delete previous release
       run: |
-        gh release delete --yes beta_canary
+        gh release delete --yes beta_canary || true
 
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
