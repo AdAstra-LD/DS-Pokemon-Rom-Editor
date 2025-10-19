@@ -48,7 +48,7 @@ jobs:
       continue-on-error: true
 
     - name: Zip Release Files
-      run: Compress-Archive -Path "${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release\*" -DestinationPath DSPRE-canary.zip
+      run: Compress-Archive -Path "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\*" -DestinationPath DSPRE-canary.zip
 
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
