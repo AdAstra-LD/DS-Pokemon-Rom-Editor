@@ -34,9 +34,16 @@ jobs:
     
     - name: Debug directory contents
       run: |
-        dir "${{env.GITHUB_WORKSPACE}}\DS_Map"
+        echo "Listing repository root:"
+        dir "${{env.GITHUB_WORKSPACE}}"
+        echo "Listing DS_Map (if exists):"
+        dir "${{env.GITHUB_WORKSPACE}}\DS_Map" || echo "DS_Map directory not found"
+        echo "Listing DS_Map\bin (if exists):"
         dir "${{env.GITHUB_WORKSPACE}}\DS_Map\bin" || echo "bin directory not found"
+        echo "Listing DS_Map\bin\Release (if exists):"
         dir "${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release" || echo "Release directory not found"
+        echo "Searching for bin directories in repository:"
+        dir /s "${{env.GITHUB_WORKSPACE}}\bin" || echo "No bin directories found"
       shell: cmd
       continue-on-error: true
 
@@ -83,7 +90,5 @@ jobs:
           Developers and testers who want to stay up-to-date with the latest progress.
           Users willing to report issues and provide feedback on new changes.
           If you’re looking for a more reliable version, consider using the latest Stable Release instead.
-        prerelease: true
-        generate_release_notes: true
         prerelease: true
         generate_release_notes: true
