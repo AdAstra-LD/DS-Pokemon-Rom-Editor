@@ -1277,5 +1277,13 @@ namespace DSPRE.Editors
 
         }
 
+        private void reorderButton_Click(object sender, EventArgs e)
+        {
+            var reorderForm = new MonReorderForm(currentTrainerFile);
+            reorderForm.ShowDialog();
+
+            currentTrainerFile = reorderForm.trainerFile;
+            RefreshTrainerPartyGUI();
+        }
     }
 }

@@ -125,10 +125,11 @@
             this.exportTrainerButton = new System.Windows.Forms.Button();
             this.importTrainerButton = new System.Windows.Forms.Button();
             this.groupBox28 = new System.Windows.Forms.GroupBox();
+            this.reorderButton = new System.Windows.Forms.Button();
+            this.DVExplainButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.importReplacePartyButton = new System.Windows.Forms.Button();
             this.exportPartyButton = new System.Windows.Forms.Button();
-            this.DVExplainButton = new System.Windows.Forms.Button();
             this.label74 = new System.Windows.Forms.Label();
             this.party6GroupBox = new System.Windows.Forms.GroupBox();
             this.partyGender6ComboBox = new System.Windows.Forms.ComboBox();
@@ -1363,21 +1364,47 @@
             // 
             // groupBox28
             // 
-            this.groupBox28.Controls.Add(this.tableLayoutPanel6);
+            this.groupBox28.Controls.Add(this.reorderButton);
             this.groupBox28.Controls.Add(this.DVExplainButton);
+            this.groupBox28.Controls.Add(this.party1GroupBox);
+            this.groupBox28.Controls.Add(this.tableLayoutPanel6);
             this.groupBox28.Controls.Add(this.label74);
             this.groupBox28.Controls.Add(this.party6GroupBox);
             this.groupBox28.Controls.Add(this.party5GroupBox);
             this.groupBox28.Controls.Add(this.party4GroupBox);
             this.groupBox28.Controls.Add(this.party3GroupBox);
             this.groupBox28.Controls.Add(this.party2GroupBox);
-            this.groupBox28.Controls.Add(this.party1GroupBox);
             this.groupBox28.Location = new System.Drawing.Point(444, 8);
             this.groupBox28.Name = "groupBox28";
             this.groupBox28.Size = new System.Drawing.Size(731, 609);
             this.groupBox28.TabIndex = 53;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Party";
+            // 
+            // reorderButton
+            // 
+            this.reorderButton.AllowDrop = true;
+            this.reorderButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.reorderButton.Location = new System.Drawing.Point(142, 15);
+            this.reorderButton.Name = "reorderButton";
+            this.reorderButton.Size = new System.Drawing.Size(82, 23);
+            this.reorderButton.TabIndex = 15;
+            this.reorderButton.Text = "Reorder Party";
+            this.reorderButton.UseVisualStyleBackColor = true;
+            this.reorderButton.Click += new System.EventHandler(this.reorderButton_Click);
+            // 
+            // DVExplainButton
+            // 
+            this.DVExplainButton.Image = global::DSPRE.Properties.Resources.DV_Icon;
+            this.DVExplainButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.DVExplainButton.Location = new System.Drawing.Point(230, 11);
+            this.DVExplainButton.Name = "DVExplainButton";
+            this.DVExplainButton.Size = new System.Drawing.Size(130, 29);
+            this.DVExplainButton.TabIndex = 45;
+            this.DVExplainButton.Text = "Open DV Calculator";
+            this.DVExplainButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.DVExplainButton.UseVisualStyleBackColor = true;
+            this.DVExplainButton.Click += new System.EventHandler(this.DVExplainButton_Click);
             // 
             // tableLayoutPanel6
             // 
@@ -1422,19 +1449,6 @@
             this.exportPartyButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.exportPartyButton.UseVisualStyleBackColor = true;
             this.exportPartyButton.Click += new System.EventHandler(this.exportPartyButton_Click);
-            // 
-            // DVExplainButton
-            // 
-            this.DVExplainButton.Image = global::DSPRE.Properties.Resources.DV_Icon;
-            this.DVExplainButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.DVExplainButton.Location = new System.Drawing.Point(230, 11);
-            this.DVExplainButton.Name = "DVExplainButton";
-            this.DVExplainButton.Size = new System.Drawing.Size(130, 29);
-            this.DVExplainButton.TabIndex = 45;
-            this.DVExplainButton.Text = "Open DV Calculator";
-            this.DVExplainButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.DVExplainButton.UseVisualStyleBackColor = true;
-            this.DVExplainButton.Click += new System.EventHandler(this.DVExplainButton_Click);
             // 
             // label74
             // 
@@ -2537,5 +2551,6 @@
         private System.Windows.Forms.ListBox trainerClassListBox;
         public System.Windows.Forms.PictureBox trainerClassPicBox;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Button reorderButton;
     }
 }
