@@ -71,7 +71,15 @@ namespace DSPRE.ROMFiles
 
         public static bool BuildRequiredBins()
         {
-            var expandedTextFiles = Directory.GetFiles(Path.Combine(RomInfo.workDir, "expanded", "textArchives"), "*.txt", SearchOption.AllDirectories);
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "textArchives");
+
+            if (!Directory.Exists(expandedDir))
+            {
+                AppLogger.Info("Text Archive: No expanded text archive directory found, skipping .bin rebuild.");
+                return true;
+            }
+
+            var expandedTextFiles = Directory.GetFiles(expandedDir, "*.txt", SearchOption.AllDirectories);
             int newerBinCount = 0;
 
             for (int i = 0; i < expandedTextFiles.Length; i++)
