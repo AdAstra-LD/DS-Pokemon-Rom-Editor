@@ -82,4 +82,4 @@ jobs:
           dotnet tool install -g vpk
           vpk download github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GH_TOKEN }}
           vpk pack -u DSPRE -v ${{ steps.get_version.outputs.version }} -p publish --mainExe DSPRE.exe --channel win
-          vpk upload github --repoUrl https://github.com/${{ github.repository }} --releaseName "DSPRE ${{ steps.get_version.outputs.version }}" --tag v${{ steps.get_version.outputs.version }} --token ${{ secrets.GH_TOKEN }}
+          vpk upload github --publish --repoUrl https://github.com/${{ github.repository }} --releaseName "DSPRE ${{ steps.get_version.outputs.version }}" --tag v${{ steps.get_version.outputs.version }} --token ${{ secrets.GH_TOKEN }}

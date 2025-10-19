@@ -40,7 +40,7 @@ namespace DSPRE {
         public static void CheckForUpdates(bool silent = true)
         {
             AppLogger.Info("Checking for updates...");
-            var mgr = new UpdateManager(new GithubSource("https://github.com/Mixone-FinallyHere/DS-Pokemon-Rom-Editor", "", prerelease: false));
+            var mgr = new UpdateManager(new GithubSource("https://github.com/DS-Pokemon-Rom-Editor/DSPRE", "", prerelease: false));
 
             var newVersion = mgr.CheckForUpdates();
             if (newVersion == null)
