@@ -85,5 +85,3 @@ jobs:
           If you’re looking for a more reliable version, consider using the latest Stable Release instead.
         prerelease: true
         generate_release_notes: true
-        prerelease: true
-        generate_release_notes: true
