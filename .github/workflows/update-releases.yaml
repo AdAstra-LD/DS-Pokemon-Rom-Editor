@@ -70,10 +70,11 @@ jobs:
         if: ${{ needs.get_latest_tag.outputs.latest_tag != format('v{0}', steps.get_version.outputs.version) }}
         run: |
           mkdir -p publish
-          cp -r DS_Map/bin/${{env.BUILD_CONFIGURATION}}/* publish/
-          mkdir -p "publish/databases"
+          mkdir -p "publish/databases"  
           robocopy databases "publish/databases" /E /XD "databases\.git\objects\pack"
           if ($LASTEXITCODE -le 7) { exit 0 } else { exit 1 }
+          cp -r DS_Map/bin/${{env.BUILD_CONFIGURATION}}/* publish/
+          ls DS_Map/bin/${{env.BUILD_CONFIGURATION}}/
           ls publish/
 
       - name: Create Velopack Release
