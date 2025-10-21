@@ -18,29 +18,24 @@ namespace DSPRE.ROMFiles {
             this.id = id;
             cmdParams = parameterData;
 
+            var commandInfoDict = RomInfo.GetScriptCommandInfoDict();
+            ScriptCommandInfo cmdInfo = null;
+            commandInfoDict?.TryGetValue(id, out cmdInfo);
+
             // Get command name
-            if (!RomInfo.ScriptCommandNamesDict.TryGetValue(id, out name))
+            if (cmdInfo != null && !string.IsNullOrEmpty(cmdInfo.Name))
+            {
+                name = cmdInfo.Name;
+            }
+            else if (!RomInfo.ScriptCommandNamesDict.TryGetValue(id, out name))
             {
                 name = $"CMD_{id:X3}";
             }
 
-            // Get parameter types
-            List<ScriptParameter.ParameterType> paramTypes = null;
-            switch (RomInfo.gameFamily)
-            {
-                case RomInfo.GameFamilies.DP:
-                    ScriptDatabase.DPScrCmdParameterTypes.TryGetValue(id, out paramTypes);
-                    break;
-                case RomInfo.GameFamilies.Plat:
-                    ScriptDatabase.PlatScrCmdParameterTypes.TryGetValue(id, out paramTypes);
-                    break;
-                case RomInfo.GameFamilies.HGSS:
-                    ScriptDatabase.HGSSScrCmdParameterTypes.TryGetValue(id, out paramTypes);
-                    break;
-            }
+            List<ScriptParameter.ParameterType> paramTypes = cmdInfo?.ParameterTypes;
 
             // Format parameters based on their types
-            if (paramTypes != null && parameterData != null)
+            if (paramTypes != null && paramTypes.Count > 0 && parameterData != null)
             {
                 for (int i = 0; i < Math.Min(paramTypes.Count, parameterData.Count); i++)
                 {
@@ -407,6 +402,5 @@ namespace DSPRE.ROMFiles {
             return parameter;
         }
         
-
     }
 }

@@ -82,6 +82,7 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Tao.OpenGl, Version=2.1.0.12, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL">
@@ -351,6 +352,7 @@
       <DependentUpon>CustomScrcmdManager.cs</DependentUpon>
     </Compile>
     <Compile Include="Resources\ROMToolboxDB\ToolboxDB.cs" />
+    <Compile Include="Resources\ScriptCommandInfo.cs" />
     <Compile Include="Resources\ScriptDatabase.cs" />
     <Compile Include="ROMFiles\AreaData.cs" />
     <Compile Include="Resources\CommandsDatabase.cs">

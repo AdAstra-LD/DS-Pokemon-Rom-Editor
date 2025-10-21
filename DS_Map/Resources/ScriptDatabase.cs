@@ -1,4 +1,4 @@
-﻿using DSPRE;
+using DSPRE;
 using DSPRE.Resources;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,8 @@ using static DSPRE.RomInfo;
 public static class ScriptDatabaseJsonLoader
 {
     /// <summary>
-    /// Call this once at startup (before any script‐lookups).
+    /// Call this once at startup (before any script lookups).
+    /// Loads all script command metadata from JSON into unified objects.
     /// </summary>
     public static void InitializeFromJson(string jsonPath, GameVersions gameVersion)
     {
@@ -26,8 +27,9 @@ public static class ScriptDatabaseJsonLoader
                 .EnumerateObject()
                 .ToDictionary(
                     prop => Convert.ToUInt16(prop.Name.Substring(2), 16),
-                    prop => new MovementInfo
+                    prop => new MovementCommandInfo
                     {
+                        CommandId = Convert.ToUInt16(prop.Name.Substring(2), 16),
                         Name = prop.Value.GetProperty("name").GetString(),
                         DecompName = prop.Value.GetProperty("decomp_name").GetString(),
                         Description = prop.Value.GetProperty("description").GetString(),
@@ -58,29 +60,27 @@ public static class ScriptDatabaseJsonLoader
                     prop => prop.Value.GetString()
                 );
 
-            Dictionary<ushort, string> namesDict;
-            Dictionary<ushort, byte[]> paramsDict;
+            // Determine which dictionary to populate based on game version
+            Dictionary<ushort, ScriptCommandInfo> commandInfoDict;
 
             switch (gameVersion)
             {
                 case GameVersions.Platinum:
-                    namesDict = ScriptDatabase.PlatScrCmdNames;
-                    paramsDict = ScriptDatabase.PlatScrCmdParameters;
+                    commandInfoDict = ScriptDatabase.PlatScrCmdInfo;
                     break;
                 case GameVersions.Diamond:
                 case GameVersions.Pearl:
-                    namesDict = ScriptDatabase.DPScrCmdNames;
-                    paramsDict = ScriptDatabase.DPScrCmdParameters;
+                    commandInfoDict = ScriptDatabase.DPScrCmdInfo;
                     break;
                 case GameVersions.HeartGold:
                 case GameVersions.SoulSilver:
-                    namesDict = ScriptDatabase.HGSSScrCmdNames;
-                    paramsDict = ScriptDatabase.HGSSScrCmdParameters;
+                    commandInfoDict = ScriptDatabase.HGSSScrCmdInfo;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(gameVersion), gameVersion, "Unsupported game");
             }
 
+            // Load script commands
             JsonElement scrRoot;
             if (!root.TryGetProperty("scrcmd", out scrRoot))
                 throw new InvalidOperationException("JSON is missing the \"scrcmd\" key");
@@ -90,98 +90,70 @@ public static class ScriptDatabaseJsonLoader
                 ushort code = Convert.ToUInt16(prop.Name.Substring(2), 16);
                 JsonElement entry = prop.Value;
 
-                string name = entry.GetProperty("name").GetString();
-                namesDict[code] = name;
-
-                var arr = entry.GetProperty("parameters");
-                byte[] bytes = arr
-                    .EnumerateArray()
-                    .Select(x => (byte)x.GetInt32())
-                    .ToArray();
-                paramsDict[code] = bytes;
-            }
-
-            Dictionary<ushort, string> soundsDict = ScriptDatabase.soundNames;
-
-            JsonElement soundsRoot;
-            if (!root.TryGetProperty("sounds", out soundsRoot))
-                throw new InvalidOperationException("JSON is missing the \"sounds\" key");
-
-            foreach (JsonProperty prop in soundsRoot.EnumerateObject())
-            {
-                if (ushort.TryParse(prop.Name, out ushort id))
+                // Create unified command info object
+                var cmdInfo = new ScriptCommandInfo
                 {
-                    JsonElement entry = prop.Value;
-                    if (entry.TryGetProperty("name", out JsonElement nameElement))
-                    {
-                        string name = nameElement.GetString();
-                        if (!string.IsNullOrEmpty(name))
-                        {
-                            soundsDict[id] = name;
-                        }
-                    }
+                    CommandId = code,
+                    Name = entry.GetProperty("name").GetString(),
+                    DecompName = entry.TryGetProperty("decomp_name", out var decompElem) ? decompElem.GetString() : "",
+                    Description = entry.TryGetProperty("description", out var descElem) ? descElem.GetString() : "",
+                };
+
+                if (entry.TryGetProperty("parameters", out var paramsElem))
+                {
+                    cmdInfo.ParameterSizes = paramsElem
+                        .EnumerateArray()
+                        .Select(x => (byte)x.GetInt32())
+                        .ToArray();
                 }
-            }
 
-        }
-        finally
-        {
-            doc.Dispose();
-        }
-    }
-
-    public static void LoadParameterTypes(string jsonPath, GameVersions gameVersion)
-    {
-        Dictionary<ushort, List<ScriptParameter.ParameterType>> paramtypesDict;
-        switch (gameVersion)
-        {
-            case GameVersions.Platinum:
-                paramtypesDict = ScriptDatabase.PlatScrCmdParameterTypes;
-                break;
-            case GameVersions.Diamond:
-            case GameVersions.Pearl:
-                paramtypesDict = ScriptDatabase.DPScrCmdParameterTypes;
-                break;
-            case GameVersions.HeartGold:
-            case GameVersions.SoulSilver:
-                paramtypesDict = ScriptDatabase.HGSSScrCmdParameterTypes;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(gameVersion));
-        }
-
-        string text = File.ReadAllText(jsonPath);
-        JsonDocument doc = JsonDocument.Parse(text);
-
-        try
-        {
-            JsonElement root = doc.RootElement;
-            if (!root.TryGetProperty("scrcmd", out JsonElement scrRoot))
-            {
-                throw new InvalidOperationException("JSON is missing the \"scrcmd\" key");
-            }
-
-            foreach (JsonProperty prop in scrRoot.EnumerateObject())
-            {
-                ushort code = Convert.ToUInt16(prop.Name.Substring(2), 16);
-                JsonElement entry = prop.Value;
-
-                if (entry.TryGetProperty("parameter_types", out JsonElement paramTypesElement))
+                // Load parameter types
+                if (entry.TryGetProperty("parameter_types", out var paramTypesElem))
                 {
-                    List<ScriptParameter.ParameterType> paramTypes = new List<ScriptParameter.ParameterType>();
-                    foreach (JsonElement typeElement in paramTypesElement.EnumerateArray())
+                    cmdInfo.ParameterTypes = new List<ScriptParameter.ParameterType>();
+                    foreach (JsonElement typeElement in paramTypesElem.EnumerateArray())
                     {
                         string typeStr = typeElement.GetString();
                         if (!string.IsNullOrEmpty(typeStr))
                         {
                             var paramType = ScriptParameter.ParseTypeString(typeStr);
-                            paramTypes.Add(paramType);
+                            cmdInfo.ParameterTypes.Add(paramType);
                         }
                     }
+                }
 
-                    if (paramTypes.Count > 0)
+                // Load parameter names (for display/documentation)
+                if (entry.TryGetProperty("parameter_values", out var paramNamesElem))
+                {
+                    cmdInfo.ParameterNames = new List<string>();
+                    foreach (JsonElement nameElement in paramNamesElem.EnumerateArray())
                     {
-                        paramtypesDict[code] = paramTypes;
+                        string paramName = nameElement.GetString();
+                        cmdInfo.ParameterNames.Add(paramName ?? "");
+                    }
+                }
+
+                // Store in unified dictionary
+                commandInfoDict[code] = cmdInfo;
+            }
+
+            // Load sounds
+            if (root.TryGetProperty("sounds", out JsonElement soundsRoot))
+            {
+                Dictionary<ushort, string> soundsDict = ScriptDatabase.soundNames;
+                foreach (JsonProperty prop in soundsRoot.EnumerateObject())
+                {
+                    if (ushort.TryParse(prop.Name, out ushort id))
+                    {
+                        JsonElement entry = prop.Value;
+                        if (entry.TryGetProperty("name", out JsonElement nameElement))
+                        {
+                            string name = nameElement.GetString();
+                            if (!string.IsNullOrEmpty(name))
+                            {
+                                soundsDict[id] = name;
+                            }
+                        }
                     }
                 }
             }
@@ -191,52 +163,37 @@ public static class ScriptDatabaseJsonLoader
             doc.Dispose();
         }
     }
+
+
 }
 
-namespace DSPRE.Resources {
-    public class MovementInfo
+namespace DSPRE.Resources
+{
+    public static class ScriptDatabase
     {
-        public string Name { get; set; }
-        public string DecompName { get; set; }
-        public string Description { get; set; }
-    }
+        // New unified object-oriented dictionaries
+        public static Dictionary<ushort, ScriptCommandInfo> DPScrCmdInfo = new Dictionary<ushort, ScriptCommandInfo>();
+        public static Dictionary<ushort, ScriptCommandInfo> PlatScrCmdInfo = new Dictionary<ushort, ScriptCommandInfo>();
+        public static Dictionary<ushort, ScriptCommandInfo> HGSSScrCmdInfo = new Dictionary<ushort, ScriptCommandInfo>();
 
-    public class ScriptCommandInfo
-    {
-        public string Name { get; set; }
-        public string DecompName { get; set; }
-        public byte[] Parameters { get; set; }
-        public List<string> ParameterTypes { get; set; }
-        public string Description { get; set; }
-    }
-
-    public static class ScriptDatabase {  
-        public static Dictionary<ushort, string> comparisonOperatorsGenVappendix = new Dictionary<ushort, string>() {
+        public static Dictionary<ushort, string> comparisonOperatorsGenVappendix = new Dictionary<ushort, string>()
+        {
             /* GEN V ONLY */
             [6] = "OR",
             [7] = "AND",
             [0xFF] = "TRUEUP"
         };
 
-        // will all be populated from json at runtime
+        // Reference data - populated from JSON at runtime
         public static Dictionary<ushort, string> comparisonOperatorsDict = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> specialOverworlds = new Dictionary<ushort, string>();
         public static Dictionary<byte, string> overworldDirections = new Dictionary<byte, string>();
-        public static Dictionary<ushort, string> DPScrCmdNames = new Dictionary<ushort, string>();
-        public static Dictionary<ushort, byte[]> DPScrCmdParameters = new Dictionary<ushort, byte[]>();
-        public static Dictionary<ushort, List<ScriptParameter.ParameterType>> DPScrCmdParameterTypes = new Dictionary<ushort, List<ScriptParameter.ParameterType>>();
-        public static Dictionary<ushort, string> PlatScrCmdNames = new Dictionary<ushort, string>();
-        public static Dictionary<ushort, byte[]> PlatScrCmdParameters = new Dictionary<ushort, byte[]>();
-        public static Dictionary<ushort, List<ScriptParameter.ParameterType>> PlatScrCmdParameterTypes = new Dictionary<ushort, List<ScriptParameter.ParameterType>>();
-        public static Dictionary<ushort, string> HGSSScrCmdNames = new Dictionary<ushort, string>();
-        public static Dictionary<ushort, byte[]> HGSSScrCmdParameters = new Dictionary<ushort, byte[]>();
-        public static Dictionary<ushort, List<ScriptParameter.ParameterType>> HGSSScrCmdParameterTypes = new Dictionary<ushort, List<ScriptParameter.ParameterType>>();
         public static Dictionary<ushort, string> pokemonNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> itemNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> moveNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> soundNames = new Dictionary<ushort, string>();
         public static Dictionary<ushort, string> trainerNames = new Dictionary<ushort, string>();
-        public static Dictionary<ushort, MovementInfo> movementsDict = new Dictionary<ushort, MovementInfo>();
+        public static Dictionary<ushort, MovementCommandInfo> movementsDict = new Dictionary<ushort, MovementCommandInfo>();
         public static Dictionary<ushort, string> movementsDictIDName => movementsDict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Name);
 
         public static Dictionary<ushort, int> commandsWithRelativeJump = new Dictionary<ushort, int>()
@@ -268,7 +225,7 @@ namespace DSPRE.Resources {
             string[] names = GetPokemonNames();
             pokemonNames = names.Select((name, index) => new { name, index })
                              .ToDictionary(
-                                 x => (ushort)x.index, 
+                                 x => (ushort)x.index,
                                  x => "SPECIES_" + x.name.ToUpper().Replace(' ', '_')
                              );
         }
