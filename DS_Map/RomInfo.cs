@@ -256,64 +256,39 @@ namespace DSPRE
         public static void InitScriptDBs()
         {
             Helpers.InitializeScriptDatabase(projectName, gameFamily, gameVersion);
-            }
-
-        public static Dictionary<ushort, string> BuildCommandNamesDatabase(GameFamilies gameFam)
-        {
-            Dictionary<ushort, string> commonDictionaryNames;
-            Dictionary<ushort, string> specificDictionaryNames;
-
-            switch (gameFam)
-            {
-                case GameFamilies.DP:
-                    commonDictionaryNames = ScriptDatabase.DPScrCmdNames;
-                    specificDictionaryNames = new Dictionary<ushort, string>();
-                    break;
-
-                case GameFamilies.Plat:
-                    commonDictionaryNames = ScriptDatabase.PlatScrCmdNames;
-                    specificDictionaryNames = new Dictionary<ushort, string>();
-                    break;
-
-                default:
-                    commonDictionaryNames = ScriptDatabase.HGSSScrCmdNames;
-#if true
-                    specificDictionaryNames = new Dictionary<ushort, string>();
-#else
-                        specificDictionaryNames = ScriptDatabase.CustomScrCmdNames;
-#endif
-                    break;
-            }
-            return commonDictionaryNames.Concat(specificDictionaryNames).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
         }
 
-        public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(GameFamilies gameFam)
+        public static Dictionary<ushort, ScriptCommandInfo> GetScriptCommandInfoDict()
         {
-            Dictionary<ushort, byte[]> commonDictionaryParams;
-            Dictionary<ushort, byte[]> specificDictionaryParams;
-
-            switch (gameFam)
+            switch (gameFamily)
             {
                 case GameFamilies.DP:
-                    commonDictionaryParams = ScriptDatabase.DPScrCmdParameters;
-                    specificDictionaryParams = new Dictionary<ushort, byte[]>();
-                    break;
-
+                    return ScriptDatabase.DPScrCmdInfo;
                 case GameFamilies.Plat:
-                    commonDictionaryParams = ScriptDatabase.PlatScrCmdParameters;
-                    specificDictionaryParams = new Dictionary<ushort, byte[]>();
-                    break;
-
+                    return ScriptDatabase.PlatScrCmdInfo;
+                case GameFamilies.HGSS:
+                    return ScriptDatabase.HGSSScrCmdInfo;
                 default:
-                    commonDictionaryParams = ScriptDatabase.HGSSScrCmdParameters;
-#if true
-                    specificDictionaryParams = new Dictionary<ushort, byte[]>();
-#else
-                        specificDictionaryParams = ScriptDatabase.CustomScrCmdParameters;
-#endif
-                    break;
+                    return new Dictionary<ushort, ScriptCommandInfo>();
             }
-            return commonDictionaryParams.Concat(specificDictionaryParams).ToLookup(x => x.Key, x => x.Value).ToDictionary(x => x.Key, g => g.First());
+        }
+
+        /// <summary>
+        /// Builds the command names dictionary from ScriptCommandInfo objects.
+        /// </summary>
+        public static Dictionary<ushort, string> BuildCommandNamesDatabase(GameFamilies gameFam)
+        {
+            var cmdInfoDict = GetScriptCommandInfoDict();
+            return cmdInfoDict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Name);
+        }
+
+        /// <summary>
+        /// Builds the command parameters dictionary from ScriptCommandInfo objects.
+        /// </summary>
+        public static Dictionary<ushort, byte[]> BuildCommandParametersDatabase(GameFamilies gameFam)
+        {
+            var cmdInfoDict = GetScriptCommandInfoDict();
+            return cmdInfoDict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ParameterSizes);
         }
 
         public static Dictionary<ushort, string> BuildActionNamesDatabase(GameFamilies gameFam)
@@ -1118,8 +1093,10 @@ namespace DSPRE
                     break;
             }
         }
-        private static void SetMoveTextNumbers() {
-            switch (gameFamily) {
+        private static void SetMoveTextNumbers()
+        {
+            switch (gameFamily)
+            {
                 case GameFamilies.DP:
                     moveDescriptionsTextNumbers = 587;
                     moveNamesTextNumbers = 588;
@@ -1136,8 +1113,10 @@ namespace DSPRE
             }
         }
 
-        private static void SetTrainerFunnyScriptNumber() {
-            switch (gameFamily) {
+        private static void SetTrainerFunnyScriptNumber()
+        {
+            switch (gameFamily)
+            {
                 case GameFamilies.DP:
                     trainerFunnyScriptNumber = 851;
                     break;
@@ -1151,7 +1130,7 @@ namespace DSPRE
                     break;
             }
         }
-        
+
         private static void SetTypesTextNumber()
         {
             switch (gameFamily)
