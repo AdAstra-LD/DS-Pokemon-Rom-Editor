@@ -2,12 +2,7 @@ name: Bug Report
 description: Report a bug or issue with the DS Pokémon ROM Editor
 title: "[Bug] "
 labels: ["bug"]
-assignees: []
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thank you for reporting a bug! Please provide as much detail as possible to help us diagnose and fix the issue.
   - type: input
     id: base-rom
     attributes:
@@ -44,13 +39,14 @@ body:
         - Other
     validations:
       required: true
-  - type: checkboxes
+  - type: dropdown
     id: onedrive
     attributes:
       label: Is the ROM or editor stored in OneDrive?
+      description: Select whether the ROM or editor is stored in OneDrive.
       options:
-        - label: Yes
-        - label: No
+        - Yes
+        - No
     validations:
       required: true
   - type: textarea
@@ -77,7 +73,7 @@ body:
     id: screenshots
     attributes:
       label: Screenshots or Logs
-      description: If applicable, paste error logs or drag-and-drop screenshots here.
+      description: Paste error logs or drag-and-drop screenshots here, if applicable.
       placeholder: e.g., [Paste error log here or describe screenshot]
     validations:
       required: false

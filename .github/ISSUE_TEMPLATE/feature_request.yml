@@ -2,12 +2,7 @@ name: Feature Request
 description: Suggest a new feature or improvement for the DS Pokémon ROM Editor
 title: "[Feature] "
 labels: ["enhancement"]
-assignees: []
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thank you for suggesting a feature! Please provide details to help us understand your idea.
   - type: input
     id: base-rom
     attributes:
@@ -46,13 +41,14 @@ body:
         - Other
     validations:
       required: true
-  - type: checkboxes
+  - type: dropdown
     id: onedrive
     attributes:
       label: Does this feature relate to OneDrive usage?
+      description: Select whether this feature involves OneDrive usage.
       options:
-        - label: Yes
-        - label: No
+        - Yes
+        - No
     validations:
       required: true
   - type: textarea
