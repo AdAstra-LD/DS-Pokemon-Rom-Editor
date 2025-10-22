@@ -989,7 +989,7 @@ namespace DSPRE
                 personalDataEditorToolStripMenuItem.Visible = false; // Hide Personal Data Editor menu item for HGE
                 itemEditorToolStripMenuItem.Visible = false; // Hide Item Editor menu item for HGE
                 MessageBox.Show("HGE ROM detected.\nCertain editors have been disabled as they are not compatible with HGE ROMs.\nAdditionally the following information is important:"+
-                    "\n\n- Certain editors such as Move Data or Trade Editor seem to work without crashing but it is no gaurantee, use at your own peril. ALso, move data will always get overwritten by hg-engine."+
+                    "\n\n- Certain editors such as Move Data or Trade Editor seem to work without crashing but it is no gaurantee, use at your own peril. Also, move data will always get overwritten by hg-engine."+
                     "\n\n- Certain text files or script files that HGE edits will be overwritten, please make sure you are aware which are the ones you have to manage with hg-engine."+
                     "\n\n- After making edits in DSPRE and want to use as the new base rom for hg-engine make sure to run 'make clean' or otherwise hg-engine will just grab your old rom.nds data.",
                     "HGE Detected", MessageBoxButtons.OK, MessageBoxIcon.Information);
