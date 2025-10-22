@@ -1161,7 +1161,6 @@ namespace DSPRE.Editors
         {
             isLevelScript = false;
 
-            // Extract sections
             const string SCRIPTS_HEADER = "//===== SCRIPTS =====//";
             const string FUNCTIONS_HEADER = "//===== FUNCTIONS =====//";
             const string ACTIONS_HEADER = "//===== ACTIONS =====//";
@@ -1189,12 +1188,10 @@ namespace DSPRE.Editors
                 actionsStart + ACTIONS_HEADER.Length
             ).Trim();
 
-            // Directly dump text into text areas (no parsing!)
             ScriptTextArea.Text = scriptsSection;
             FunctionTextArea.Text = functionsSection;
             ActionTextArea.Text = actionsSection;
 
-            // Optionally populate navigation lists
             if (populateNavLists)
             {
                 PopulateNavListFromText(scriptsSection, scriptsNavListbox, "Script");
@@ -1202,7 +1199,6 @@ namespace DSPRE.Editors
                 PopulateNavListFromText(actionsSection, actionsNavListbox, "Action");
             }
 
-            // Check if it's a level script (no scripts, only functions)
             isLevelScript = string.IsNullOrWhiteSpace(scriptsSection) || !scriptsSection.Contains("Script ");
 
             return true;
