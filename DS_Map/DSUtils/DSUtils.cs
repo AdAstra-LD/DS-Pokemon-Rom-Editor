@@ -297,11 +297,10 @@ namespace DSPRE {
             string iconTablePath;
 
             int iconPalTableOffsetFromFileStart;
-            string ov129path = OverlayUtils.GetPath(129);
-            if (File.Exists(ov129path)) {
+            if (RomInfo.isHGE) {
                 // if overlay 129 exists, read it from there
                 iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - OverlayUtils.OverlayTable.GetRAMAddress(129));
-                iconTablePath = ov129path;
+                iconTablePath = OverlayUtils.GetPath(129);
             } else if ((int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress) >= 0) {
                 // if there is a synthetic overlay, read it from there
                 iconPalTableOffsetFromFileStart = (int)(RomInfo.monIconPalTableAddress - RomInfo.synthOverlayLoadAddress);
