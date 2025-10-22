@@ -1,4 +1,4 @@
-﻿using DSPRE.Resources;
+using DSPRE.Resources;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace DSPRE.ROMFiles {
-    public class ScriptCommand {
+namespace DSPRE.ROMFiles
+{
+    public class ScriptCommand
+    {
 
         public ushort? id;
         public List<byte[]> cmdParams;
@@ -52,7 +54,8 @@ namespace DSPRE.ROMFiles {
             }
         }
 
-        public ScriptCommand(string wholeLine, int lineNumber = 0) {
+        public ScriptCommand(string wholeLine, int lineNumber = 0)
+        {
             name = wholeLine;
             cmdParams = new List<byte[]>();
 
@@ -60,17 +63,26 @@ namespace DSPRE.ROMFiles {
             string[] nameParts = processedLine.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries); // Separate command code from parameters
             /* Get command id, which is always first in the description */
 
-            if (RomInfo.ScriptCommandNamesReverseDict.TryGetValue(nameParts[0].ToLower(), out ushort cmdID)) {
+            if (RomInfo.ScriptCommandNamesReverseDict.TryGetValue(nameParts[0].ToLower(), out ushort cmdID))
+            {
                 id = cmdID;
-            } else {
-                try {
+            }
+            else
+            {
+                try
+                {
                     id = ushort.Parse(nameParts[0].PurgeSpecial(ScriptFile.specialChars), nameParts[0].GetNumberStyle());
-                } catch {
+                }
+                catch
+                {
                     string details;
-                    if (wholeLine.Contains(':') && wholeLine.ContainsNumber()) {
+                    if (wholeLine.Contains(':') && wholeLine.ContainsNumber())
+                    {
                         details = "This probably means you forgot to \"End\" the Script or Function above it.";
                         details += Environment.NewLine + "Please, also note that only Functions can be terminated\nwith \"Return\".";
-                    } else {
+                    }
+                    else
+                    {
                         details = "Are you sure it's a proper Script Command?";
                     }
 
@@ -86,7 +98,8 @@ namespace DSPRE.ROMFiles {
             int paramLength = 0;
             int paramsProcessed = 0;
 
-            if (parametersSizeArr.Length > 0 && parametersSizeArr.First() == 0xFF) {
+            if (parametersSizeArr.Length > 0 && parametersSizeArr.First() == 0xFF)
+            {
                 int firstParamValue = int.Parse(nameParts[1].PurgeSpecial(ScriptFile.specialChars), nameParts[1].GetNumberStyle());
                 byte firstParamSize = parametersSizeArr[1];
 
@@ -97,25 +110,27 @@ namespace DSPRE.ROMFiles {
                 int optionsCount = 0;
 
                 bool found = false;
-                while (i < parametersSizeArr.Length) {
+                while (i < parametersSizeArr.Length)
+                {
                     paramLength = parametersSizeArr[i + 1];
 
-                    if (parametersSizeArr[i] == firstParamValue) {
+                    if (parametersSizeArr[i] == firstParamValue)
+                    {
                         //Firstly, build subarray of parameter sizes, starting from the chosen option [firstParamValue]
                         //FOR EXAMPLE: CMD 0x235 and firstParamValue = 5
 
-                        // { 0xFF, 2,  
-                        // 0, 1,   2,       
-                        // 1, 3,   2, 2, 2, 
-                        // 2, 0,            
-                        // 3, 3,   2, 2, 2, 
-                        // 4, 2,   2, 2,    
-                        // 5, 3,   (2, 2, 2) => this will be the parameters subarray 
+                        // { 0xFF, 2,
+                        // 0, 1,   2,
+                        // 1, 3,   2, 2, 2,
+                        // 2, 0,
+                        // 3, 3,   2, 2, 2,
+                        // 4, 2,   2, 2,
+                        // 5, 3,   (2, 2, 2) => this will be the parameters subarray
                         // 6, 1,   2
-                        // },      
+                        // },
                         byte[] subParametersSize = parametersSizeArr.SubArray(i + 2, paramLength++);
 
-                        //Create a slightly bigger temp array 
+                        //Create a slightly bigger temp array
                         byte[] temp = new byte[1 + subParametersSize.Length];
 
                         //Store the size of the firstParamValue there
@@ -134,33 +149,44 @@ namespace DSPRE.ROMFiles {
                     optionsCount++;
                 }
 
-                if (!found) {
+                if (!found)
+                {
                     MessageBox.Show($"Command {nameParts[0]} is a special Script Command.\n" +
                                     $"The value of the first parameter must be a number in the range [0 - {optionsCount}].\n\n" +
                                     $"Line {lineNumber}: {wholeLine}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     id = null;
                     return;
                 }
-            } else if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0) {
+            }
+            else if (parametersSizeArr.Length == 1 && parametersSizeArr.First() == 0)
+            {
                 paramLength = 0;
-            } else {
+            }
+            else
+            {
                 paramLength = parametersSizeArr.Length;
             }
 
-            if (nameParts.Length - 1 == paramLength) {
-                for (int i = paramsProcessed; i < paramLength; i++) {
-                    AppLogger.Debug($"Parameter #{i}: {nameParts[i + 1]}");
+            if (nameParts.Length - 1 == paramLength)
+            {
+                for (int i = paramsProcessed; i < paramLength; i++)
+                {
+                    //AppLogger.Debug($"Parameter #{i}: {nameParts[i + 1]}");
 
-                    if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID)) { //Check succeeds when command is like "asdfg LESS" or "asdfg DIFFERENT"
+                    if (RomInfo.ScriptComparisonOperatorsReverseDict.TryGetValue(nameParts[i + 1].ToLower(), out cmdID))
+                    { //Check succeeds when command is like "asdfg LESS" or "asdfg DIFFERENT"
                         cmdParams.Add(new byte[] { (byte)cmdID });
-                    } else { //Not a comparison
+                    }
+                    else
+                    { //Not a comparison
                         /* Convert strings of parameters to the correct datatypes */
                         NumberStyles numStyle = nameParts[i + 1].GetNumberStyle();
-                        if (!nameParts[i + 1].StartsWith("SEQ_") 
-                            && !nameParts[i + 1].StartsWith("SPECIES_") 
+                        if (!nameParts[i + 1].StartsWith("SEQ_")
+                            && !nameParts[i + 1].StartsWith("SPECIES_")
                             && !nameParts[i + 1].StartsWith("ITEM_")
                             && !nameParts[i + 1].StartsWith("MOVE_")
-                            && !nameParts[i + 1].StartsWith("TRAINER_")) {
+                            && !nameParts[i + 1].StartsWith("TRAINER_"))
+                        {
                             nameParts[i + 1] = nameParts[i + 1].PurgeSpecial(ScriptFile.specialChars);
                         }
 
@@ -251,12 +277,16 @@ namespace DSPRE.ROMFiles {
                         }
                         catch (OverflowException)
                         {
-                            MessageBox.Show($"Argument {nameParts[i + 1]} at line {lineNumber} is not in the range [0, {Math.Pow(2, 8 * parametersSizeArr[i]) - 1}].", "Argument error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            string errorMsg = $"Argument {nameParts[i + 1]} at line {lineNumber} is not in the range [0, {Math.Pow(2, 8 * parametersSizeArr[i]) - 1}].";
+                            AppLogger.Error($"ScriptCommand parse error: {errorMsg} | Command: {nameParts[0]} (ID: 0x{id:X3}) | Full line: {wholeLine} | Expected param size: {parametersSizeArr[i]} bytes | This may indicate a database error for conditional commands.");
+                            MessageBox.Show(errorMsg + $"\n\nCommand: {nameParts[0]} (ID: 0x{id:X3})\nFull line: {wholeLine}\n\nNote: If this is a conditional command like UnionGroup, check your script command database for parameter size errors.", "Argument error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             id = null;
                         }
                     }
                 }
-            } else {
+            }
+            else
+            {
                 MessageBox.Show($"Wrong number of parameters for command {nameParts[0]} at line {lineNumber}.\n" +
                                 $"Received: {nameParts.Length - 1}\n" +
                                 $"Expected: {paramLength}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -324,7 +354,8 @@ namespace DSPRE.ROMFiles {
             input = input.Trim('[', ']').Replace(" ", "").ToLower();
 
             var closest = possibilities
-                .Select(x => new {
+                .Select(x => new
+                {
                     Name = x,
                     Distance = LevenshteinDistance(
                         input,
@@ -401,6 +432,5 @@ namespace DSPRE.ROMFiles {
 
             return parameter;
         }
-        
     }
 }

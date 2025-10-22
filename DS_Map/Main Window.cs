@@ -1,4 +1,4 @@
-﻿using DSPRE.Editors;
+using DSPRE.Editors;
 using DSPRE.Editors.BtxEditor;
 using DSPRE.Resources;
 using DSPRE.ROMFiles;
@@ -982,6 +982,8 @@ namespace DSPRE
 
             Helpers.statusLabelMessage();
             this.Text += "  -  " + RomInfo.projectName;
+
+            ScriptFile.ExportAllScripts();
         }
 
         private void saveRom_Click(object sender, EventArgs e)
@@ -1009,6 +1011,12 @@ namespace DSPRE
             if (!TextArchive.BuildRequiredBins())
             {
                 MessageBox.Show("An error occurred while rebuilding text archives. Save aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!ScriptFile.BuildRequiredBins())
+            {
+                MessageBox.Show("An error occurred while rebuilding script files. Save aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -1270,12 +1278,12 @@ namespace DSPRE
                 case GameFamilies.Plat:
                     WildEditorDPPt wildEditorDppt = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(),
                         encToOpen, EditorPanels.headerEditor.internalNames.Count);
-                        wildEditorDppt.Show();
+                    wildEditorDppt.Show();
                     break;
                 default:
                     WildEditorHGSS wildEditorHgss = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(),
                         encToOpen, EditorPanels.headerEditor.internalNames.Count);
-                        wildEditorHgss.Show();
+                    wildEditorHgss.Show();
                     break;
             }
             Helpers.statusLabelMessage();
@@ -1730,7 +1738,7 @@ namespace DSPRE
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsWindow editor = new SettingsWindow();
-             editor.Show();
+            editor.Show();
         }
 
         private void pokemonDataEditorToolStripMenuItem_Click(object sender, EventArgs e)

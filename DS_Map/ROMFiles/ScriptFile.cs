@@ -14,6 +14,18 @@ namespace DSPRE.ROMFiles
     /// </summary>
     public class ScriptFile : RomFile
     {
+        // Cache for parsed plaintext scripts to avoid reparsing during search
+        private static Dictionary<string, (DateTime timestamp, ScriptFile cached)> plaintextCache = new Dictionary<string, (DateTime, ScriptFile)>();
+
+        /// <summary>
+        /// Clears the plaintext script cache. Useful when closing ROM or reloading.
+        /// </summary>
+        public static void ClearPlaintextCache()
+        {
+            plaintextCache.Clear();
+            AppLogger.Info("Script: Plaintext cache cleared.");
+        }
+
         public enum ContainerTypes
         {
             Function,
@@ -189,9 +201,24 @@ namespace DSPRE.ROMFiles
             }
         }
 
-        public ScriptFile(int fileID, bool readFunctions = true, bool readActions = true) : this(getFileStream(fileID), readFunctions, readActions)
+        public ScriptFile(int fileID, bool readFunctions = true, bool readActions = true)
         {
             this.fileID = fileID;
+
+            if (TryReadPlaintextIfNewer())
+            {
+                return;
+            }
+
+            using (var fs = getFileStream(fileID))
+            {
+                // Copy the logic from the Stream constructor
+                var tempScript = new ScriptFile(fs, readFunctions, readActions);
+                this.allScripts = tempScript.allScripts;
+                this.allFunctions = tempScript.allFunctions;
+                this.allActions = tempScript.allActions;
+                this.isLevelScript = tempScript.isLevelScript;
+            }
         }
 
         static FileStream getFileStream(int fileID)
@@ -199,6 +226,379 @@ namespace DSPRE.ROMFiles
             string path = Filesystem.GetScriptPath(fileID);
             return new FileStream(path, FileMode.OpenOrCreate);
         }
+
+        /// <summary>
+        /// Gets the file paths for both binary and plaintext versions of a script file
+        /// </summary>
+        public static (string binPath, string txtPath) GetFilePaths(int fileID)
+        {
+            string binPath = Filesystem.GetScriptPath(fileID);
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "scripts");
+            string txtPath = Path.Combine(expandedDir, $"{fileID:D4}.script");
+            return (binPath, txtPath);
+        }
+
+        /// <summary>
+        /// Tries to read the script file from plaintext ONLY if it's newer than the binary
+        /// This is used during batch operations (like search) to respect external edits without slowdown
+        /// Returns true if plaintext exists, is newer, and was successfully parsed
+        /// Uses caching to avoid reparsing the same file multiple times
+        /// </summary>
+        private bool TryReadPlaintextIfNewer()
+        {
+            if (fileID < 0)
+                return false;
+
+            string txtPath = GetFilePaths(fileID).txtPath;
+            string binPath = GetFilePaths(fileID).binPath;
+
+            if (!File.Exists(txtPath))
+            {
+                return false;
+            }
+
+            DateTime txtTimestamp = File.GetLastWriteTimeUtc(txtPath);
+
+            if (File.Exists(binPath) && txtTimestamp <= File.GetLastWriteTimeUtc(binPath))
+            {
+                return false;
+            }
+
+            if (plaintextCache.TryGetValue(txtPath, out var cached))
+            {
+                if (cached.timestamp == txtTimestamp && cached.cached != null)
+                {
+                    // Cache hit! Copy the parsed data
+                    this.allScripts = cached.cached.allScripts;
+                    this.allFunctions = cached.cached.allFunctions;
+                    this.allActions = cached.cached.allActions;
+                    this.isLevelScript = cached.cached.isLevelScript;
+                    return true;
+                }
+            }
+
+            bool success = TryReadPlainTextFileCore();
+
+            if (success)
+            {
+                var cacheEntry = new ScriptFile(this.allScripts, this.allFunctions, this.allActions, fileID);
+                cacheEntry.isLevelScript = this.isLevelScript;
+                plaintextCache[txtPath] = (txtTimestamp, cacheEntry);
+            }
+
+            return success;
+        }
+
+        /// <summary>
+        /// Core parsing logic for reading plaintext script files
+        /// </summary>
+        private bool TryReadPlainTextFileCore()
+        {
+            string txtPath = GetFilePaths(fileID).txtPath;
+
+            try
+            {
+                string content = File.ReadAllText(txtPath);
+
+                // Split content into sections
+                const string SCRIPTS_HEADER = "//===== SCRIPTS =====//";
+                const string FUNCTIONS_HEADER = "//===== FUNCTIONS =====//";
+                const string ACTIONS_HEADER = "//===== ACTIONS =====//";
+
+                int scriptsStart = content.IndexOf(SCRIPTS_HEADER);
+                int functionsStart = content.IndexOf(FUNCTIONS_HEADER);
+                int actionsStart = content.IndexOf(ACTIONS_HEADER);
+
+                if (scriptsStart == -1 || functionsStart == -1 || actionsStart == -1)
+                {
+                    AppLogger.Error($"Script file {fileID:D4} ({txtPath}) has invalid format. Missing section headers. Binary will be re-extracted.");
+                    return false;
+                }
+
+                // Extract each section
+                string scriptsSection = content.Substring(
+                    scriptsStart + SCRIPTS_HEADER.Length,
+                    functionsStart - scriptsStart - SCRIPTS_HEADER.Length
+                ).Trim();
+
+                string functionsSection = content.Substring(
+                    functionsStart + FUNCTIONS_HEADER.Length,
+                    actionsStart - functionsStart - FUNCTIONS_HEADER.Length
+                ).Trim();
+
+                string actionsSection = content.Substring(
+                    actionsStart + ACTIONS_HEADER.Length
+                ).Trim();
+
+                // Parse each section using existing logic
+                var scriptLines = scriptsSection.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                var functionLines = functionsSection.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                var actionLines = actionsSection.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+                // Use the existing string-based constructor
+                var tempScript = new ScriptFile(scriptLines, functionLines, actionLines, fileID);
+
+                // Check if parsing failed (constructor returns with null lists)
+                if (tempScript.allScripts == null)
+                {
+                    AppLogger.Error($"Script file {fileID:D4} ({txtPath}) failed to parse. Binary will be re-extracted.");
+                    return false;
+                }
+
+                // Copy parsed data to this instance
+                this.allScripts = tempScript.allScripts;
+                this.allFunctions = tempScript.allFunctions;
+                this.allActions = tempScript.allActions;
+                this.isLevelScript = tempScript.isLevelScript;
+
+                AppLogger.Info($"Script file {fileID:D4} loaded from plaintext: {txtPath}");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Script file {fileID:D4} ({txtPath}) - Exception: {ex.Message}. Binary will be re-extracted.");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Helper method to format script/function containers to plaintext (matches ScriptEditor.displayScriptFile logic)
+        /// </summary>
+        private static void AppendContainerList(StringBuilder content, List<ScriptCommandContainer> commandList, ScriptFile.ContainerTypes containerType)
+        {
+            for (int i = 0; i < commandList.Count; i++)
+            {
+                ScriptCommandContainer scriptCommandContainer = commandList[i];
+
+                /* Write header */
+                string header = containerType + " " + (i + 1);
+                content.Append(header + ':' + Environment.NewLine);
+
+                /* If current command is identical to another, print UseScript instead of commands */
+                if (scriptCommandContainer.usedScriptID < 0)
+                {
+                    for (int j = 0; j < scriptCommandContainer.commands.Count; j++)
+                    {
+                        ScriptCommand command = scriptCommandContainer.commands[j];
+                        if (!ScriptDatabase.endCodes.Contains(command.id))
+                        {
+                            content.Append('\t');
+                        }
+
+                        content.Append(command.name + Environment.NewLine);
+                    }
+                }
+                else
+                {
+                    content.Append('\t' + "UseScript_#" + scriptCommandContainer.usedScriptID + Environment.NewLine);
+                }
+
+                content.AppendLine();
+            }
+        }
+
+        /// <summary>
+        /// Helper method to format action containers to plaintext (matches ScriptEditor.displayScriptFileActions logic)
+        /// </summary>
+        private static void AppendActionList(StringBuilder content, List<ScriptActionContainer> commandList, ScriptFile.ContainerTypes containerType)
+        {
+            for (int i = 0; i < commandList.Count; i++)
+            {
+                ScriptActionContainer currentCommand = commandList[i];
+
+                string header = containerType + " " + (i + 1);
+                content.Append(header + ':' + Environment.NewLine);
+
+                for (int j = 0; j < currentCommand.commands.Count; j++)
+                {
+                    ScriptAction command = currentCommand.commands[j];
+                    if (!ScriptDatabase.movementEndCodes.Contains(command.id))
+                    {
+                        content.Append('\t');
+                    }
+
+                    content.Append(command.name + Environment.NewLine);
+                }
+
+                content.AppendLine();
+            }
+        }
+
+        /// <summary>
+        /// Writes the script file to plaintext .script format in expanded/scripts/
+        /// </summary>
+        public void WritePlainTextFile()
+        {
+            if (fileID < 0)
+                return;
+
+            string txtPath = GetFilePaths(fileID).txtPath;
+            Directory.CreateDirectory(Path.GetDirectoryName(txtPath));
+
+            try
+            {
+                StringBuilder content = new StringBuilder();
+
+                // Add file header
+                content.AppendLine("/*");
+                content.AppendLine(" * DSPRE Script File");
+
+                string romFileName = Path.GetFileNameWithoutExtension(RomInfo.projectName);
+                string romFileNameClean = romFileName.EndsWith("_DSPRE_contents")
+                    ? romFileName.Substring(0, romFileName.Length - "_DSPRE_contents".Length)
+                    : romFileName;
+                content.AppendLine(" * Rom ID: " + romFileNameClean);
+                content.AppendLine(" * Game: " + RomInfo.gameFamily);
+                content.AppendLine($" * File: {fileID:D4}");
+                content.AppendLine($" * Generated: {DateTime.Now}");
+                content.AppendLine(" */");
+                content.AppendLine();
+
+                // Add Scripts section
+                content.AppendLine("//===== SCRIPTS =====//");
+                AppendContainerList(content, allScripts, ScriptFile.ContainerTypes.Script);
+
+                // Add Functions section
+                content.AppendLine("//===== FUNCTIONS =====//");
+                AppendContainerList(content, allFunctions, ScriptFile.ContainerTypes.Function);
+
+                // Add Actions section
+                content.AppendLine("//===== ACTIONS =====//");
+                AppendActionList(content, allActions, ScriptFile.ContainerTypes.Action);
+
+                File.WriteAllText(txtPath, content.ToString());
+                AppLogger.Info($"Script file {fileID:D4} written to plaintext: {txtPath}");
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Failed to write plaintext script file {txtPath}: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Exports all script files from the ROM to expanded/scripts/ on initial load
+        /// This ensures the expanded directory is populated with plaintext versions
+        /// </summary>
+        public static void ExportAllScripts()
+        {
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "scripts");
+
+            // Skip if the directory already has script files (already exported previously)
+            if (Directory.Exists(expandedDir) && Directory.GetFiles(expandedDir, "*.script").Length > 0)
+            {
+                AppLogger.Info($"Script: expanded/scripts already exists with {Directory.GetFiles(expandedDir, "*.script").Length} files, skipping initial export.");
+                return;
+            }
+
+            Directory.CreateDirectory(expandedDir);
+
+            try
+            {
+                // Get count of script files
+                int scriptCount = Filesystem.GetScriptCount();
+                int exportedCount = 0;
+
+                AppLogger.Info($"Script: Beginning export of {scriptCount} script files to {expandedDir}...");
+
+                for (int i = 0; i < scriptCount; i++)
+                {
+                    try
+                    {
+                        // Load from binary only (don't try to read plaintext since we're creating it)
+                        using (var fs = getFileStream(i))
+                        {
+                            var scriptFile = new ScriptFile(fs, true, true);
+                            scriptFile.fileID = i;
+                            scriptFile.WritePlainTextFile();
+                            exportedCount++;
+                        }
+
+                        // Touch the binary file to make it "newer" than the plaintext
+                        // This ensures search performance isn't impacted (binary used unless plaintext is edited)
+                        string binPath = GetFilePaths(i).binPath;
+                        if (File.Exists(binPath))
+                        {
+                            File.SetLastWriteTimeUtc(binPath, DateTime.UtcNow.AddSeconds(1));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLogger.Error($"Failed to export script {i:D4}: {ex.Message}");
+                    }
+                }
+
+                AppLogger.Info($"Script: Exported {exportedCount} of {scriptCount} script files to {expandedDir}");
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Failed to export scripts: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Scans expanded/scripts/ directory and rebuilds binary script files that are older than their plaintext versions
+        /// Call this during ROM save, similar to TextArchive.BuildRequiredBins()
+        /// </summary>
+        public static bool BuildRequiredBins()
+        {
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "scripts");
+
+            if (!Directory.Exists(expandedDir))
+            {
+                AppLogger.Info("Script: No expanded scripts directory found, skipping .bin rebuild.");
+                return true;
+            }
+
+            var expandedScriptFiles = Directory.GetFiles(expandedDir, "*.script", SearchOption.AllDirectories);
+            int newerBinCount = 0;
+            int rebuiltCount = 0;
+
+            for (int i = 0; i < expandedScriptFiles.Length; i++)
+            {
+                string expandedScriptFile = expandedScriptFiles[i];
+                string fileName = Path.GetFileNameWithoutExtension(expandedScriptFile);
+
+                int scriptID;
+
+                try
+                {
+                    scriptID = int.Parse(fileName);
+                }
+                catch
+                {
+                    AppLogger.Error($"Skipping invalid script file name: {fileName}");
+                    continue;
+                }
+
+                string binPath = ScriptFile.GetFilePaths(scriptID).binPath;
+
+                // Skip if .bin is newer than .script
+                if (File.Exists(binPath) && File.GetLastWriteTimeUtc(binPath) > File.GetLastWriteTimeUtc(expandedScriptFile))
+                {
+                    newerBinCount++;
+                    continue;
+                }
+
+                try
+                {
+                    var scriptFile = new ScriptFile(scriptID);
+                    scriptFile.SaveToFileDefaultDir(scriptID, false);
+                    rebuiltCount++;
+
+                    // Update .script last write time to prevent it being overwritten when reopening the ROM
+                    File.SetLastWriteTimeUtc(expandedScriptFile, DateTime.UtcNow);
+                }
+                catch (Exception ex)
+                {
+                    AppLogger.Error($"Failed to rebuild script {scriptID:D4} from plaintext: {ex.Message}");
+                }
+            }
+
+            AppLogger.Info($"Script: {rebuiltCount} .bin files built from .script, {newerBinCount} .bin files skipped because they were newer than the .script");
+
+            return true;
+        }
+
         public override string ToString()
         {
             string prefix = isLevelScript ? "Level " : "";
@@ -1121,7 +1521,14 @@ namespace DSPRE.ROMFiles
 
         public bool SaveToFileDefaultDir(int IDtoReplace, bool showSuccessMessage = true)
         {
-            return SaveToFileDefaultDir(RomInfo.DirNames.scripts, IDtoReplace, showSuccessMessage);
+            bool success = SaveToFileDefaultDir(RomInfo.DirNames.scripts, IDtoReplace, showSuccessMessage);
+
+            if (success)
+            {
+                WritePlainTextFile();
+            }
+
+            return success;
         }
 
         public void SaveToFileExplorePath(string suggestedFileName, bool blindmode)

@@ -618,8 +618,7 @@ namespace DSPRE.Editors
             Helpers.DisableHandlers();
 
             ScriptFile lastScriptFile = currentScriptFile;
-            // currentScriptFile = (ScriptFile)selectScriptFileComboBox.SelectedItem;
-            currentScriptFile = new ScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
+            int fileID = selectScriptFileComboBox.SelectedIndex;
 
             ScriptTextArea.ClearAll();
             FunctionTextArea.ClearAll();
@@ -628,6 +627,18 @@ namespace DSPRE.Editors
             scriptsNavListbox.Items.Clear();
             functionsNavListbox.Items.Clear();
             actionsNavListbox.Items.Clear();
+
+            if (TryLoadPlaintextDirect(fileID, out bool isLevelScript))
+            {
+                // Create a minimal ScriptFile just to hold the fileID for saving later
+                currentScriptFile = new ScriptFile(new List<ScriptCommandContainer>(), new List<ScriptCommandContainer>(), new List<ScriptActionContainer>(), fileID);
+                currentScriptFile.isLevelScript = isLevelScript;
+            }
+            else
+            {
+                // Fallback: load and parse normally (binary or older plaintext)
+                currentScriptFile = new ScriptFile(fileID);
+            }
 
             //prevent buttons from flickering when the combobox selection changes
             bool typeChanged = true;
@@ -888,39 +899,11 @@ namespace DSPRE.Editors
                     {
                         string content = File.ReadAllText(of.FileName);
 
-                        // Split content into sections
-                        const string SCRIPTS_HEADER = "//===== SCRIPTS =====//";
-                        const string FUNCTIONS_HEADER = "//===== FUNCTIONS =====//";
-                        const string ACTIONS_HEADER = "//===== ACTIONS =====//";
-
-                        int scriptsStart = content.IndexOf(SCRIPTS_HEADER);
-                        int functionsStart = content.IndexOf(FUNCTIONS_HEADER);
-                        int actionsStart = content.IndexOf(ACTIONS_HEADER);
-
-                        if (scriptsStart == -1 || functionsStart == -1 || actionsStart == -1)
+                        // Use shared loading logic (don't populate nav lists - user will save/reload)
+                        if (!LoadPlaintextIntoEditor(content, false, out _))
                         {
                             throw new FormatException("Invalid script file format. Missing required section headers.");
                         }
-
-                        // Extract each section's content
-                        string scripts = content.Substring(
-                            scriptsStart + SCRIPTS_HEADER.Length,
-                            functionsStart - (scriptsStart + SCRIPTS_HEADER.Length)
-                        ).Trim();
-
-                        string functions = content.Substring(
-                            functionsStart + FUNCTIONS_HEADER.Length,
-                            actionsStart - (functionsStart + FUNCTIONS_HEADER.Length)
-                        ).Trim();
-
-                        string actions = content.Substring(
-                            actionsStart + ACTIONS_HEADER.Length
-                        ).Trim();
-
-                        // Update text areas
-                        ScriptTextArea.Text = scripts;
-                        FunctionTextArea.Text = functions;
-                        ActionTextArea.Text = actions;
 
                         MessageBox.Show("Script file imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -1127,33 +1110,158 @@ namespace DSPRE.Editors
                 searchInScriptsButton_Click(null, null);
             }
         }
+        /// <summary>
+        /// Tries to load plaintext directly without parsing for fast display.
+        /// Only works if plaintext exists and is newer than binary.
+        /// Returns true if successful, false if parsing is needed.
+        /// </summary>
+        private bool TryLoadPlaintextDirect(int fileID, out bool isLevelScript)
+        {
+            isLevelScript = false;
+
+            var (binPath, txtPath) = ScriptFile.GetFilePaths(fileID);
+
+            if (!File.Exists(txtPath))
+            {
+                return false;
+            }
+
+            if (File.Exists(binPath) && File.GetLastWriteTimeUtc(txtPath) < File.GetLastWriteTimeUtc(binPath))
+            {
+                return false;
+            }
+
+            try
+            {
+                string content = File.ReadAllText(txtPath);
+                if (!LoadPlaintextIntoEditor(content, true, out isLevelScript))
+                {
+                    return false;
+                }
+
+                AppLogger.Info($"Script file {fileID:D4} loaded directly from plaintext (fast path)");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Fast plaintext loading failed for {fileID:D4}: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Shared logic to load plaintext content into editor text areas.
+        /// Used by both auto-loading and manual import.
+        /// </summary>
+        /// <param name="content">The plaintext file content</param>
+        /// <param name="populateNavLists">Whether to populate navigation lists (true for load, false for import that's followed by reload)</param>
+        /// <param name="isLevelScript">Output: whether this is a level script</param>
+        /// <returns>True if successful, false if format is invalid</returns>
+        private bool LoadPlaintextIntoEditor(string content, bool populateNavLists, out bool isLevelScript)
+        {
+            isLevelScript = false;
+
+            // Extract sections
+            const string SCRIPTS_HEADER = "//===== SCRIPTS =====//";
+            const string FUNCTIONS_HEADER = "//===== FUNCTIONS =====//";
+            const string ACTIONS_HEADER = "//===== ACTIONS =====//";
+
+            int scriptsStart = content.IndexOf(SCRIPTS_HEADER);
+            int functionsStart = content.IndexOf(FUNCTIONS_HEADER);
+            int actionsStart = content.IndexOf(ACTIONS_HEADER);
+
+            if (scriptsStart == -1 || functionsStart == -1 || actionsStart == -1)
+            {
+                return false; // Invalid format
+            }
+
+            string scriptsSection = content.Substring(
+                scriptsStart + SCRIPTS_HEADER.Length,
+                functionsStart - scriptsStart - SCRIPTS_HEADER.Length
+            ).Trim();
+
+            string functionsSection = content.Substring(
+                functionsStart + FUNCTIONS_HEADER.Length,
+                actionsStart - functionsStart - FUNCTIONS_HEADER.Length
+            ).Trim();
+
+            string actionsSection = content.Substring(
+                actionsStart + ACTIONS_HEADER.Length
+            ).Trim();
+
+            // Directly dump text into text areas (no parsing!)
+            ScriptTextArea.Text = scriptsSection;
+            FunctionTextArea.Text = functionsSection;
+            ActionTextArea.Text = actionsSection;
+
+            // Optionally populate navigation lists
+            if (populateNavLists)
+            {
+                PopulateNavListFromText(scriptsSection, scriptsNavListbox, "Script");
+                PopulateNavListFromText(functionsSection, functionsNavListbox, "Function");
+                PopulateNavListFromText(actionsSection, actionsNavListbox, "Action");
+            }
+
+            // Check if it's a level script (no scripts, only functions)
+            isLevelScript = string.IsNullOrWhiteSpace(scriptsSection) || !scriptsSection.Contains("Script ");
+
+            return true;
+        }
+
+        /// <summary>
+        /// Populates navigation listbox by counting "Type X:" headers in text
+        /// </summary>
+        private void PopulateNavListFromText(string text, ListBox navListBox, string containerType)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            var lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            foreach (var line in lines)
+            {
+                string trimmed = line.Trim();
+                if (trimmed.StartsWith(containerType + " ", StringComparison.InvariantCultureIgnoreCase) && trimmed.Contains(':'))
+                {
+                    // Extract "Script 1:" or "Function 2:" etc.
+                    int colonIndex = trimmed.IndexOf(':');
+                    if (colonIndex > 0)
+                    {
+                        string header = trimmed.Substring(0, colonIndex);
+                        navListBox.Items.Add(header);
+                    }
+                }
+            }
+        }
+
         public List<ScriptFile> getScriptsToSearch()
         {
             List<ScriptFile> scriptsToSearch = new List<ScriptFile>();
             if (searchOnlyCurrentScriptCheckBox.Checked)
             {
-                this.UIThread(() => {
+                this.UIThread(() =>
+                {
                     searchProgressBar.Maximum = 1;
                 });
                 int i = selectScriptFileComboBox.SelectedIndex;
                 ScriptFile scriptFile = new ScriptFile(i);
-                AppLogger.Debug("Attempting to load script " + scriptFile.fileID);
                 scriptsToSearch.Add(scriptFile);
-                this.UIThread(() => {
+                this.UIThread(() =>
+                {
                     searchProgressBar.IncrementNoAnimation();
                 });
             }
             else
             {
-                this.UIThread(() => {
+                this.UIThread(() =>
+                {
                     searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
                 });
                 for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++)
                 {
                     ScriptFile scriptFile = new ScriptFile(i);
-                    AppLogger.Debug("Attempting to load script " + scriptFile.fileID);
                     scriptsToSearch.Add(scriptFile);
-                    this.UIThread(() => {
+                    this.UIThread(() =>
+                    {
                         searchProgressBar.IncrementNoAnimation();
                     });
                 }
@@ -1167,29 +1275,32 @@ namespace DSPRE.Editors
                 return;
             }
             BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += (_sender, args) => {
-            this.UIThread(() => {
-                searchInScriptsResultListBox.Items.Clear();
-                searchProgressBar.Value = 0;
-            });
-            List<ScriptFile> scriptsToSearch = getScriptsToSearch();
-
-            string searchString = searchInScriptsTextBox.Text;
-            Func<string, bool> searchCriteriaCS = (string s) => s.IndexOf(searchString, StringComparison.InvariantCulture) >= 0;
-            Func<string, bool> searchCriteriaCI = (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0;
-            Func<string, bool> searchCriteria = scriptSearchCaseSensitiveCheckBox.Checked ? searchCriteriaCS : searchCriteriaCI;
-
-            List<ScriptEditorSearchResult> results = new List<ScriptEditorSearchResult>();
-            foreach (ScriptFile scriptFile in scriptsToSearch)
+            bw.DoWork += (_sender, args) =>
             {
-                List<ScriptEditorSearchResult> scriptResults = SearchInScripts(scriptFile, scriptFile.allScripts, searchCriteria);
-                List<ScriptEditorSearchResult> functionResults = SearchInScripts(scriptFile, scriptFile.allFunctions, searchCriteria);
-                // List<ScriptEditorSearchResult> actionResults = SearchInScripts(scriptFile, scriptFile.allActions, searchCriteria);
-                results.AddRange(scriptResults);
-                results.AddRange(functionResults);
-                // results.AddRange(actionResults);
-            }
-                this.UIThread(() => {
+                this.UIThread(() =>
+                {
+                    searchInScriptsResultListBox.Items.Clear();
+                    searchProgressBar.Value = 0;
+                });
+                List<ScriptFile> scriptsToSearch = getScriptsToSearch();
+
+                string searchString = searchInScriptsTextBox.Text;
+                Func<string, bool> searchCriteriaCS = (string s) => s.IndexOf(searchString, StringComparison.InvariantCulture) >= 0;
+                Func<string, bool> searchCriteriaCI = (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0;
+                Func<string, bool> searchCriteria = scriptSearchCaseSensitiveCheckBox.Checked ? searchCriteriaCS : searchCriteriaCI;
+
+                List<ScriptEditorSearchResult> results = new List<ScriptEditorSearchResult>();
+                foreach (ScriptFile scriptFile in scriptsToSearch)
+                {
+                    List<ScriptEditorSearchResult> scriptResults = SearchInScripts(scriptFile, scriptFile.allScripts, searchCriteria);
+                    List<ScriptEditorSearchResult> functionResults = SearchInScripts(scriptFile, scriptFile.allFunctions, searchCriteria);
+                    // List<ScriptEditorSearchResult> actionResults = SearchInScripts(scriptFile, scriptFile.allActions, searchCriteria);
+                    results.AddRange(scriptResults);
+                    results.AddRange(functionResults);
+                    // results.AddRange(actionResults);
+                }
+                this.UIThread(() =>
+                {
                     searchInScriptsResultListBox.Items.AddRange(results.ToArray());
                     searchProgressBar.Value = 0;
                 });
@@ -1201,6 +1312,12 @@ namespace DSPRE.Editors
         private List<ScriptEditorSearchResult> SearchInScripts(ScriptFile scriptFile, List<ScriptCommandContainer> commandContainers, Func<string, bool> criteria)
         {
             List<ScriptEditorSearchResult> results = new List<ScriptEditorSearchResult>();
+
+            // Check if plaintext parsing failed
+            if (commandContainers == null)
+            {
+                return results;
+            }
 
             for (int j = 0; j < commandContainers.Count; j++)
             {
@@ -1278,7 +1395,8 @@ namespace DSPRE.Editors
 
     }
 
-    public class ScriptEditorSearchResult {
+    public class ScriptEditorSearchResult
+    {
         public readonly ScriptFile scriptFile;
         public readonly ScriptFile.ContainerTypes containerType;
         public readonly int commandNumber;
@@ -1286,7 +1404,8 @@ namespace DSPRE.Editors
 
         public const int ResultsPadding = 1;
 
-        public ScriptEditorSearchResult(ScriptFile scriptFile, ScriptFile.ContainerTypes containerType, int commandNumber, ScriptCommand scriptCommand) {
+        public ScriptEditorSearchResult(ScriptFile scriptFile, ScriptFile.ContainerTypes containerType, int commandNumber, ScriptCommand scriptCommand)
+        {
             this.scriptFile = scriptFile;
             this.containerType = containerType;
             this.commandNumber = commandNumber;
@@ -1295,7 +1414,8 @@ namespace DSPRE.Editors
 
         public string CommandBlockOpen { get { return $"{containerType} {commandNumber}:"; } }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"File {scriptFile.fileID} - {CommandBlockOpen} {scriptCommand.name}";
         }
     }
