@@ -45,8 +45,8 @@ body:
       label: Is the ROM or editor stored in OneDrive?
       description: Select whether the ROM or editor is stored in OneDrive.
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
     validations:
       required: true
   - type: textarea
