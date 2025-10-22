@@ -222,7 +222,7 @@ namespace DSPRE
                     using (DSUtils.EasyReader br = new DSUtils.EasyReader(ov129path))
                     {
                         string gameCode = Encoding.UTF8.GetString(br.ReadBytes(16));
-                        if (gameCode == "hg-engine")
+                        if (gameCode == "hg-engine rocks!")
                         {
                             isHGE = true;
                         }
