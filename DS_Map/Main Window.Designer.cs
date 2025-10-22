@@ -278,7 +278,9 @@
             // 
             // nsbtxEditorPopOutLabel
             // 
-            this.nsbtxEditorPopOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.nsbtxEditorPopOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.nsbtxEditorPopOutLabel.AutoSize = true;
             this.nsbtxEditorPopOutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nsbtxEditorPopOutLabel.Location = new System.Drawing.Point(444, 325);
@@ -333,7 +335,9 @@
             // 
             // eventEditorPopOutLabel
             // 
-            this.eventEditorPopOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventEditorPopOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.eventEditorPopOutLabel.AutoSize = true;
             this.eventEditorPopOutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.eventEditorPopOutLabel.Location = new System.Drawing.Point(468, 318);
@@ -377,7 +381,9 @@
             // 
             // scriptEditorPoppedOutLabel
             // 
-            this.scriptEditorPoppedOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.scriptEditorPoppedOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.scriptEditorPoppedOutLabel.AutoSize = true;
             this.scriptEditorPoppedOutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.scriptEditorPoppedOutLabel.Location = new System.Drawing.Point(423, 281);
@@ -422,7 +428,9 @@
             // 
             // LSEditorPoppedOutLabel
             // 
-            this.LSEditorPoppedOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.LSEditorPoppedOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.LSEditorPoppedOutLabel.AutoSize = true;
             this.LSEditorPoppedOutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LSEditorPoppedOutLabel.Location = new System.Drawing.Point(423, 281);
@@ -466,7 +474,9 @@
             // 
             // textEditorPoppedOutLabel
             // 
-            this.textEditorPoppedOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.textEditorPoppedOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textEditorPoppedOutLabel.AutoSize = true;
             this.textEditorPoppedOutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textEditorPoppedOutLabel.Location = new System.Drawing.Point(423, 281);
@@ -529,7 +539,9 @@
             // 
             // trainerEditorPoppedOutLabel
             // 
-            this.trainerEditorPoppedOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+            this.trainerEditorPoppedOutLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trainerEditorPoppedOutLabel.AutoSize = true;
             this.trainerEditorPoppedOutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trainerEditorPoppedOutLabel.Location = new System.Drawing.Point(423, 281);
@@ -569,7 +581,7 @@
             this.tabPageEncountersEditor.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageEncountersEditor.Size = new System.Drawing.Size(1185, 675);
             this.tabPageEncountersEditor.TabIndex = 12;
-            this.tabPageEncountersEditor.Text = "Encounters";
+            this.tabPageEncountersEditor.Text = "Sp. Encounters";
             this.tabPageEncountersEditor.UseVisualStyleBackColor = true;
             // 
             // encountersEditor
@@ -623,7 +635,12 @@
             this.menuStrip1.BackColor = System.Drawing.SystemColors.Window;
             this.menuStrip1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.fileToolStripMenuItem, this.aboutToolStripMenuItem, this.menuViewToolStripMenuItem, this.otherEditorsToolStripMenuItem, this.aboutToolStripMenuItem1 });
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.aboutToolStripMenuItem,
+            this.menuViewToolStripMenuItem,
+            this.otherEditorsToolStripMenuItem,
+            this.aboutToolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -633,7 +650,11 @@
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.openROMToolStripMenuItem, this.openFolderToolStripMenuItem, this.saveROMToolStripMenuItem, this.settingsToolStripMenuItem });
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openROMToolStripMenuItem,
+            this.openFolderToolStripMenuItem,
+            this.saveROMToolStripMenuItem,
+            this.settingsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -663,7 +684,8 @@
             this.saveROMToolStripMenuItem.Image = global::DSPRE.Properties.Resources.save_rom;
             this.saveROMToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveROMToolStripMenuItem.Name = "saveROMToolStripMenuItem";
-            this.saveROMToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) | System.Windows.Forms.Keys.S)));
+            this.saveROMToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
             this.saveROMToolStripMenuItem.Size = new System.Drawing.Size(233, 38);
             this.saveROMToolStripMenuItem.Text = "Save ROM";
             this.saveROMToolStripMenuItem.Click += new System.EventHandler(this.saveRom_Click);
@@ -681,9 +703,18 @@
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.romToolboxToolStripMenuItem, this.headerSearchToolStripMenuItem, this.addressHelperToolStripMenuItem, this.scriptCommandsDatabaseToolStripMenuItem, this.NarcUtilityToolStripMenuItem, this.listBasedBatchRenameToolStripMenuItem, this.listBuilderToolStripMenuItem, this.nSBMDUtilityToolStripMenuItem, this.generateCSVToolStripMenuItem });
+            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.romToolboxToolStripMenuItem,
+            this.headerSearchToolStripMenuItem,
+            this.addressHelperToolStripMenuItem,
+            this.scriptCommandsDatabaseToolStripMenuItem,
+            this.NarcUtilityToolStripMenuItem,
+            this.listBasedBatchRenameToolStripMenuItem,
+            this.listBuilderToolStripMenuItem,
+            this.nSBMDUtilityToolStripMenuItem,
+            this.generateCSVToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.aboutToolStripMenuItem.Text = "Tools";
             // 
             // romToolboxToolStripMenuItem
@@ -712,7 +743,11 @@
             // 
             // scriptCommandsDatabaseToolStripMenuItem
             // 
-            this.scriptCommandsDatabaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.diamondAndPearlToolStripMenuItem, this.platinumToolStripMenuItem, this.heartGoldAndSoulSilverToolStripMenuItem, this.manageDatabasesToolStripMenuItem });
+            this.scriptCommandsDatabaseToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.diamondAndPearlToolStripMenuItem,
+            this.platinumToolStripMenuItem,
+            this.heartGoldAndSoulSilverToolStripMenuItem,
+            this.manageDatabasesToolStripMenuItem});
             this.scriptCommandsDatabaseToolStripMenuItem.Name = "scriptCommandsDatabaseToolStripMenuItem";
             this.scriptCommandsDatabaseToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.scriptCommandsDatabaseToolStripMenuItem.Text = "Script Commands Database";
@@ -755,7 +790,9 @@
             // 
             // NarcUtilityToolStripMenuItem
             // 
-            this.NarcUtilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.buildFomFolderToolStripMenuItem, this.unpackToFolderToolStripMenuItem });
+            this.NarcUtilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.buildFomFolderToolStripMenuItem,
+            this.unpackToFolderToolStripMenuItem});
             this.NarcUtilityToolStripMenuItem.Name = "NarcUtilityToolStripMenuItem";
             this.NarcUtilityToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.NarcUtilityToolStripMenuItem.Text = "NARC Utility";
@@ -780,7 +817,9 @@
             // 
             // listBasedBatchRenameToolStripMenuItem
             // 
-            this.listBasedBatchRenameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.listBasedToolStripMenuItem, this.contentBasedToolStripMenuItem });
+            this.listBasedBatchRenameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listBasedToolStripMenuItem,
+            this.contentBasedToolStripMenuItem});
             this.listBasedBatchRenameToolStripMenuItem.Name = "listBasedBatchRenameToolStripMenuItem";
             this.listBasedBatchRenameToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.listBasedBatchRenameToolStripMenuItem.Text = "Batch Rename Utility";
@@ -805,7 +844,9 @@
             // 
             // listBuilderToolStripMenuItem
             // 
-            this.listBuilderToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.fromCEnumToolStripMenuItem, this.fromFolderContentsToolStripMenuItem });
+            this.listBuilderToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fromCEnumToolStripMenuItem,
+            this.fromFolderContentsToolStripMenuItem});
             this.listBuilderToolStripMenuItem.Name = "listBuilderToolStripMenuItem";
             this.listBuilderToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.listBuilderToolStripMenuItem.Text = "Folder-Based List Builder";
@@ -830,7 +871,10 @@
             // 
             // nSBMDUtilityToolStripMenuItem
             // 
-            this.nSBMDUtilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.texturizeNSBMDToolStripMenuItem, this.untexturizeToolStripMenuItem, this.extractNSBTXFromNSBMDToolStripMenuItem });
+            this.nSBMDUtilityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.texturizeNSBMDToolStripMenuItem,
+            this.untexturizeToolStripMenuItem,
+            this.extractNSBTXFromNSBMDToolStripMenuItem});
             this.nSBMDUtilityToolStripMenuItem.Name = "nSBMDUtilityToolStripMenuItem";
             this.nSBMDUtilityToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
             this.nSBMDUtilityToolStripMenuItem.Text = "NSBMD Utility";
@@ -840,7 +884,7 @@
             this.texturizeNSBMDToolStripMenuItem.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
             this.texturizeNSBMDToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.texturizeNSBMDToolStripMenuItem.Name = "texturizeNSBMDToolStripMenuItem";
-            this.texturizeNSBMDToolStripMenuItem.Size = new System.Drawing.Size(250, 38);
+            this.texturizeNSBMDToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
             this.texturizeNSBMDToolStripMenuItem.Text = "Add/Replace NSBMD textures";
             this.texturizeNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdAddTexButton_Click);
             // 
@@ -849,7 +893,7 @@
             this.untexturizeToolStripMenuItem.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
             this.untexturizeToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.untexturizeToolStripMenuItem.Name = "untexturizeToolStripMenuItem";
-            this.untexturizeToolStripMenuItem.Size = new System.Drawing.Size(250, 38);
+            this.untexturizeToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
             this.untexturizeToolStripMenuItem.Text = "Remove textures from NSBMD";
             this.untexturizeToolStripMenuItem.Click += new System.EventHandler(this.nsbmdRemoveTexButton_Click);
             // 
@@ -858,7 +902,7 @@
             this.extractNSBTXFromNSBMDToolStripMenuItem.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
             this.extractNSBTXFromNSBMDToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.extractNSBTXFromNSBMDToolStripMenuItem.Name = "extractNSBTXFromNSBMDToolStripMenuItem";
-            this.extractNSBTXFromNSBMDToolStripMenuItem.Size = new System.Drawing.Size(250, 38);
+            this.extractNSBTXFromNSBMDToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
             this.extractNSBTXFromNSBMDToolStripMenuItem.Text = "Save textures from NSBMD";
             this.extractNSBTXFromNSBMDToolStripMenuItem.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
             // 
@@ -871,7 +915,11 @@
             // 
             // menuViewToolStripMenuItem
             // 
-            this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.essentialToolStripMenuItem, this.simpleToolStripMenuItem, this.advancedStripMenuItem, this.fullViewToolStripMenuItem });
+            this.menuViewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.essentialToolStripMenuItem,
+            this.simpleToolStripMenuItem,
+            this.advancedStripMenuItem,
+            this.fullViewToolStripMenuItem});
             this.menuViewToolStripMenuItem.Name = "menuViewToolStripMenuItem";
             this.menuViewToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
             this.menuViewToolStripMenuItem.Text = "Menu View";
@@ -908,7 +956,15 @@
             // 
             // otherEditorsToolStripMenuItem
             // 
-            this.otherEditorsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.personalDataEditorToolStripMenuItem, this.overlayEditorToolStripMenuItem, this.spawnEditorToolStripMenuItem, this.moveDataEditorToolStripMenuItem, this.flyWarpEditorToolStripMenuItem, this.itemEditorToolStripMenuItem, this.overworldEditorToolStripMenuItem, this.tradeEditorToolStripMenuItem });
+            this.otherEditorsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.personalDataEditorToolStripMenuItem,
+            this.overlayEditorToolStripMenuItem,
+            this.spawnEditorToolStripMenuItem,
+            this.moveDataEditorToolStripMenuItem,
+            this.flyWarpEditorToolStripMenuItem,
+            this.itemEditorToolStripMenuItem,
+            this.overworldEditorToolStripMenuItem,
+            this.tradeEditorToolStripMenuItem});
             this.otherEditorsToolStripMenuItem.Enabled = false;
             this.otherEditorsToolStripMenuItem.Name = "otherEditorsToolStripMenuItem";
             this.otherEditorsToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
@@ -981,7 +1037,9 @@
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.statusLabel, this.toolStripProgressBar });
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel,
+            this.toolStripProgressBar});
             this.statusStrip1.Location = new System.Drawing.Point(0, 816);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1230, 22);
@@ -1006,7 +1064,34 @@
             this.mainToolStrip.BackColor = System.Drawing.SystemColors.Menu;
             this.mainToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.mainToolStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.loadRomButton, this.readDataFromFolderButton, this.saveRomButton, this.separator_AfterOpenSave, this.unpackAllButton, this.updateMapNarcsButton, this.separator_afterFolderUnpackers, this.buildNarcFromFolderToolStripButton, this.unpackNARCtoFolderToolStripButton, this.separator_afterNarcUtils, this.listBasedBatchRenameToolStripButton, this.contentBasedBatchRenameToolStripButton, this.separator_afterRenameUtils, this.enumBasedListBuilderToolStripButton, this.folderBasedListBuilderToolStriButton, this.separator_afterListUtils, this.nsbmdAddTexButton, this.nsbmdRemoveTexButton, this.nsbmdExportTexButton, this.separator_afterNsbmdUtils, this.buildingEditorButton, this.wildEditorButton, this.scriptCommandsButton, this.romToolboxToolStripButton, this.headerSearchToolStripButton, this.spawnEditorToolStripButton, this.separator_afterMiscButtons });
+            this.mainToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadRomButton,
+            this.readDataFromFolderButton,
+            this.saveRomButton,
+            this.separator_AfterOpenSave,
+            this.unpackAllButton,
+            this.updateMapNarcsButton,
+            this.separator_afterFolderUnpackers,
+            this.buildNarcFromFolderToolStripButton,
+            this.unpackNARCtoFolderToolStripButton,
+            this.separator_afterNarcUtils,
+            this.listBasedBatchRenameToolStripButton,
+            this.contentBasedBatchRenameToolStripButton,
+            this.separator_afterRenameUtils,
+            this.enumBasedListBuilderToolStripButton,
+            this.folderBasedListBuilderToolStriButton,
+            this.separator_afterListUtils,
+            this.nsbmdAddTexButton,
+            this.nsbmdRemoveTexButton,
+            this.nsbmdExportTexButton,
+            this.separator_afterNsbmdUtils,
+            this.buildingEditorButton,
+            this.wildEditorButton,
+            this.scriptCommandsButton,
+            this.romToolboxToolStripButton,
+            this.headerSearchToolStripButton,
+            this.spawnEditorToolStripButton,
+            this.separator_afterMiscButtons});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 24);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(1230, 44);
@@ -1370,6 +1455,7 @@
             this.mainToolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion

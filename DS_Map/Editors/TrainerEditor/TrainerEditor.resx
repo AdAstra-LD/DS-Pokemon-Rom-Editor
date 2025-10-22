@@ -121,18 +121,18 @@
   <data name="replacePropertiesButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAI1JREFUSEtjYBgFZALDkLT/MIwuR3MAsjRt000whjqgBV0NTQDMxzDLQdg8uQKO
-        bQu7cGJ0s0gC2CzGhssv/seKoQ4gPZQotZgiB1DDYoocAAK4QgDdAkKYbAdAQYtH47z/IIxuMLGYUgfA
-        AFaHwMTwYWo5AAbADkF2ANRwYjD1ALIPqW44CYA2vhtRAAAmDYpgT13R+wAAAABJRU5ErkJggg==
+        vAAADrwBlbxySQAAAI5JREFUSEtjGAXkAsOQtP8wDBWiHwBZmrbpJhhDHdACkaExgPkYZjkImydXwLFt
+        YRdODDWCPIDNYmy4/OJ/rBjqANJDiVKLYZgsB1DDYhimeghgswQfJtsBUNDi0TjvPwhjM5wYTKkDYACr
+        Q2Bi+DC1HAADYIcgOwAkRiSmHkD2IZBLXcNJALTx3QgCDAwAJg2KYP9PC1YAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="exportPropertiesButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAQCAYAAAB3AH1ZAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vAAADrwBlbxySQAAAJdJREFUSEtjYBgFFIA4Nav/MIwuRxcAsvh6XBcYU90RyL7DhRe6psEdAMItxoFg
-        jG4WWQDZd4Tw/4IlKJgqDgE54HZcN4Zl+CxGxxQ5BJ8D0C0ihMlyBDYHoBtMCCOFQAsUEw+QHYBuMCE8
-        0y4ejJEsJs1yEKg18YMbhA9T3WI0gGwQBkZ2ALUtJgoghwRdLUYD9PX1sAMAB89ugVJE7dUAAAAASUVO
-        RK5CYII=
+        vAAADrwBlbxySQAAAJ5JREFUSEtjGAWUgDg1q/8wDBWiLwBZfD2uC4yp7ghk3+HCC13T4A4A4RbjQDCG
+        GkEZAFmAbDg+/L9gCQqmikNADrgd143VQhhGtxgdU+QQfA7AZhk+TJYjsDkAm+H4MFIItEAx8QDZAdgM
+        x4dn2sWDMdAYmMWkWQ4CtSZ+cIPwYapbjAaQDcLAyA6gtsVEAZiP0SynO6Cvr4cZYGAAAAfPboEh2axl
+        AAAAAElFTkSuQmCC
 </value>
   </data>
   <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

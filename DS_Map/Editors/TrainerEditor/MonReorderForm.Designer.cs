@@ -52,9 +52,9 @@
             // saveButton
             // 
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(227, 173);
+            this.saveButton.Location = new System.Drawing.Point(227, 166);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(75, 23);
+            this.saveButton.Size = new System.Drawing.Size(75, 30);
             this.saveButton.TabIndex = 1;
             this.saveButton.Text = "Save";
             this.saveButton.UseVisualStyleBackColor = true;
@@ -84,12 +84,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(304, 201);
+            this.ClientSize = new System.Drawing.Size(309, 206);
             this.Controls.Add(this.moveDownButton);
             this.Controls.Add(this.moveUpButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.monListBox);
-            this.MinimumSize = new System.Drawing.Size(320, 240);
+            this.MinimumSize = new System.Drawing.Size(325, 245);
             this.Name = "MonReorderForm";
             this.Text = "Reorder Party";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MonReorderForm_FormClosing);

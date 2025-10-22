@@ -1151,9 +1151,9 @@
             this.trainerAI4CheckBox.AutoSize = true;
             this.trainerAI4CheckBox.Location = new System.Drawing.Point(10, 90);
             this.trainerAI4CheckBox.Name = "trainerAI4CheckBox";
-            this.trainerAI4CheckBox.Size = new System.Drawing.Size(56, 17);
+            this.trainerAI4CheckBox.Size = new System.Drawing.Size(54, 17);
             this.trainerAI4CheckBox.TabIndex = 3;
-            this.trainerAI4CheckBox.Text = "Status";
+            this.trainerAI4CheckBox.Text = "Setup";
             this.trainerAI4CheckBox.UseVisualStyleBackColor = true;
             // 
             // trainerAI5CheckBox
@@ -1161,9 +1161,9 @@
             this.trainerAI5CheckBox.AutoSize = true;
             this.trainerAI5CheckBox.Location = new System.Drawing.Point(10, 67);
             this.trainerAI5CheckBox.Name = "trainerAI5CheckBox";
-            this.trainerAI5CheckBox.Size = new System.Drawing.Size(47, 17);
+            this.trainerAI5CheckBox.Size = new System.Drawing.Size(52, 17);
             this.trainerAI5CheckBox.TabIndex = 4;
-            this.trainerAI5CheckBox.Text = "Risk";
+            this.trainerAI5CheckBox.Text = "Risky";
             this.trainerAI5CheckBox.UseVisualStyleBackColor = true;
             // 
             // trainerAI6CheckBox
@@ -1199,7 +1199,7 @@
             // trainerAI9CheckBox
             // 
             this.trainerAI9CheckBox.AutoSize = true;
-            this.trainerAI9CheckBox.Location = new System.Drawing.Point(191, 21);
+            this.trainerAI9CheckBox.Location = new System.Drawing.Point(184, 21);
             this.trainerAI9CheckBox.Name = "trainerAI9CheckBox";
             this.trainerAI9CheckBox.Size = new System.Drawing.Size(75, 17);
             this.trainerAI9CheckBox.TabIndex = 8;
@@ -1209,7 +1209,7 @@
             // trainerAI10CheckBox
             // 
             this.trainerAI10CheckBox.AutoSize = true;
-            this.trainerAI10CheckBox.Location = new System.Drawing.Point(191, 44);
+            this.trainerAI10CheckBox.Location = new System.Drawing.Point(184, 44);
             this.trainerAI10CheckBox.Name = "trainerAI10CheckBox";
             this.trainerAI10CheckBox.Size = new System.Drawing.Size(67, 17);
             this.trainerAI10CheckBox.TabIndex = 9;
@@ -1219,11 +1219,11 @@
             // trainerAI11CheckBox
             // 
             this.trainerAI11CheckBox.AutoSize = true;
-            this.trainerAI11CheckBox.Location = new System.Drawing.Point(191, 67);
+            this.trainerAI11CheckBox.Location = new System.Drawing.Point(184, 67);
             this.trainerAI11CheckBox.Name = "trainerAI11CheckBox";
-            this.trainerAI11CheckBox.Size = new System.Drawing.Size(44, 17);
+            this.trainerAI11CheckBox.Size = new System.Drawing.Size(82, 17);
             this.trainerAI11CheckBox.TabIndex = 10;
-            this.trainerAI11CheckBox.Text = "???";
+            this.trainerAI11CheckBox.Text = "Harassment";
             this.trainerAI11CheckBox.UseVisualStyleBackColor = true;
             // 
             // trainerItemsGroupBox
