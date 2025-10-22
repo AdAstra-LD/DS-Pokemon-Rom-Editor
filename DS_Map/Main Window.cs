@@ -95,6 +95,15 @@ namespace DSPRE
                 AppLogger.Debug("No stored ROM folder found on startup.");
             }
 
+            if (RomInfo.isHGE)
+            {
+                EditorPanels.trainerEditorTabPage.Parent = null; // Hide Trainer Editor for HGE
+                EditorPanels.tabPageEncountersEditor.Parent = null; // Hide Encounters Editor for HGE
+                wildEditorButton.Visible = false; // Hide Wild Editor button for HGE
+                personalDataEditorToolStripMenuItem.Visible = false; // Hide Personal Data Editor menu item for HGE
+                itemEditorToolStripMenuItem.Visible = false; // Hide Item Editor menu item for HGE
+            }
+
         }
 
         #region Program Window
