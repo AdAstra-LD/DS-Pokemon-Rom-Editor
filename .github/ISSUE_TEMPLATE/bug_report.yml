@@ -86,7 +86,7 @@ body:
     attributes:
       label: Editor Version
       description: Which version of the DS Pokémon ROM Editor are you using?
-      placeholder: e.g., v1.2.3
+      placeholder: e.g., v1.13.1
     validations:
       required: false
   - type: textarea
