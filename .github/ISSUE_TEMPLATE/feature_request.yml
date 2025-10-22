@@ -47,8 +47,8 @@ body:
       label: Does this feature relate to OneDrive usage?
       description: Select whether this feature involves OneDrive usage.
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
     validations:
       required: true
   - type: textarea
