@@ -679,7 +679,7 @@ namespace DSPRE.ROMFiles
                     switch (id)
                     {
                         case 0x16: //Jump
-                        case 0x1A: //Call 
+                        case 0x1A: //Call
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
                         case 0x17: //JumpIfObjID
@@ -836,7 +836,7 @@ namespace DSPRE.ROMFiles
                     switch (id)
                     {
                         case 0x16: //Jump
-                        case 0x1A: //Call 
+                        case 0x1A: //Call
                             ProcessRelativeJump(dataReader, ref parameterList, ref functionOffsets);
                             break;
                         case 0x17: //JumpIfObjID
@@ -1009,7 +1009,7 @@ namespace DSPRE.ROMFiles
                     }
                     else
                     {
-                        continue; 
+                        continue;
                     }
                 }
 
@@ -1367,7 +1367,7 @@ namespace DSPRE.ROMFiles
                         ContainerReference result;
 
                         if (refList[i].typeOfInvoked is ContainerTypes.Action)
-                        { //isApplyMovement 
+                        { //isApplyMovement
                             result = actionOffsets.Find(entry => entry.ID == refList[i].invokedID);
 
                             if (result.Equals(default(ContainerReference)))
@@ -1399,7 +1399,7 @@ namespace DSPRE.ROMFiles
                                     uninvokedFuncs.Remove(refList[i].invokedID);
                                 }
 
-                                //if (refList[i].callerType != containerTypes.Function || 
+                                //if (refList[i].callerType != containerTypes.Function ||
                                 //    (refList[i].callerType == refList[i].invokedType && refList[i].callerID == refList[i].invokedID) ||
                                 //    !uninvokedFuncs.Contains(refList[i].callerID)) { //remove reference if caller is a script, or if caller calls itself, or if caller is a function that's been invoked already
                                 //    uninvokedFuncs.Remove(refList[i].invokedID);
@@ -1482,7 +1482,7 @@ namespace DSPRE.ROMFiles
             if (!uninvokedFuncsSet.Contains(funcID))
             {
                 AppLogger.Debug("Function " + funcID + " has already been invoked before. Nothing to check.");
-                return true; //Abort 
+                return true; //Abort
             }
 
             if (refList is null || refList.Count <= 0)

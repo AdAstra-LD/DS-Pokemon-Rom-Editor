@@ -1,4 +1,4 @@
-﻿using DSPRE.Resources;
+using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using ScintillaNET;
 using ScintillaNET.Utils;
@@ -466,7 +466,7 @@ namespace DSPRE.Editors
             }
 
             scriptsDirty = true;
-            scriptsTabPage.Text = ScriptFile.ContainerTypes.Script.ToString() + "s" + "*";           
+            scriptsTabPage.Text = ScriptFile.ContainerTypes.Script.ToString() + "s" + "*";
         }
 
         private void OnTextChangedFunction(object sender, EventArgs e)
@@ -677,82 +677,82 @@ namespace DSPRE.Editors
             }
 
             if (!currentScriptFile.isLevelScript)
-                {
-                    displayScriptFile(ScriptFile.ContainerTypes.Script, currentScriptFile.allScripts, scriptsNavListbox, ScriptTextArea);
-                    displayScriptFile(ScriptFile.ContainerTypes.Function, currentScriptFile.allFunctions, functionsNavListbox, FunctionTextArea);
-                    displayScriptFileActions(ScriptFile.ContainerTypes.Action, currentScriptFile.allActions, actionsNavListbox, ActionTextArea);
-                }
-
-                ScriptEditorSetClean();
-                Helpers.statusLabelMessage();
-                Helpers.EnableHandlers();
-                return true;
+            {
+                displayScriptFile(ScriptFile.ContainerTypes.Script, currentScriptFile.allScripts, scriptsNavListbox, ScriptTextArea);
+                displayScriptFile(ScriptFile.ContainerTypes.Function, currentScriptFile.allFunctions, functionsNavListbox, FunctionTextArea);
+                displayScriptFileActions(ScriptFile.ContainerTypes.Action, currentScriptFile.allActions, actionsNavListbox, ActionTextArea);
             }
 
-            static void displayScriptFile(ScriptFile.ContainerTypes containerType, List<ScriptCommandContainer> commandList, ListBox navListBox, Scintilla textArea)
+            ScriptEditorSetClean();
+            Helpers.statusLabelMessage();
+            Helpers.EnableHandlers();
+            return true;
+        }
+
+        static void displayScriptFile(ScriptFile.ContainerTypes containerType, List<ScriptCommandContainer> commandList, ListBox navListBox, Scintilla textArea)
+        {
+            string buffer = "";
+            /* Add commands */
+            for (int i = 0; i < commandList.Count; i++)
             {
-                string buffer = "";
-                /* Add commands */
-                for (int i = 0; i < commandList.Count; i++)
+                ScriptCommandContainer scriptCommandContainer = commandList[i];
+
+                /* Write header */
+                string header = containerType + " " + (i + 1);
+                buffer += header + ':' + Environment.NewLine;
+                navListBox.Items.Add(header);
+
+                /* If current command is identical to another, print UseScript instead of commands */
+                if (scriptCommandContainer.usedScriptID < 0)
                 {
-                    ScriptCommandContainer scriptCommandContainer = commandList[i];
-
-                    /* Write header */
-                    string header = containerType + " " + (i + 1);
-                    buffer += header + ':' + Environment.NewLine;
-                    navListBox.Items.Add(header);
-
-                    /* If current command is identical to another, print UseScript instead of commands */
-                    if (scriptCommandContainer.usedScriptID < 0)
+                    for (int j = 0; j < scriptCommandContainer.commands.Count; j++)
                     {
-                        for (int j = 0; j < scriptCommandContainer.commands.Count; j++)
-                        {
-                            ScriptCommand command = scriptCommandContainer.commands[j];
-                            if (!ScriptDatabase.endCodes.Contains(command.id))
-                            {
-                                buffer += '\t';
-                            }
-
-                            buffer += command.name + Environment.NewLine;
-                        }
-                    }
-                    else
-                    {
-                        buffer += '\t' + "UseScript_#" + scriptCommandContainer.usedScriptID + Environment.NewLine;
-                    }
-
-                    textArea.AppendText(buffer + Environment.NewLine);
-                    buffer = "";
-                }
-            }
-
-            static void displayScriptFileActions(ScriptFile.ContainerTypes containerType, List<ScriptActionContainer> commandList, ListBox navListBox, Scintilla textArea)
-            {
-                /* Add movements */
-                string buffer = "";
-                for (int i = 0; i < commandList.Count; i++)
-                {
-                    ScriptActionContainer currentCommand = commandList[i];
-
-                    string header = containerType + " " + (i + 1);
-                    buffer += header + ':' + Environment.NewLine;
-                    navListBox.Items.Add(header);
-
-                    for (int j = 0; j < currentCommand.commands.Count; j++)
-                    {
-                        ScriptAction command = currentCommand.commands[j];
-                        if (!ScriptDatabase.movementEndCodes.Contains(command.id))
+                        ScriptCommand command = scriptCommandContainer.commands[j];
+                        if (!ScriptDatabase.endCodes.Contains(command.id))
                         {
                             buffer += '\t';
                         }
 
                         buffer += command.name + Environment.NewLine;
                     }
-
-                    textArea.AppendText(buffer + Environment.NewLine);
-                    buffer = "";
                 }
+                else
+                {
+                    buffer += '\t' + "UseScript_#" + scriptCommandContainer.usedScriptID + Environment.NewLine;
+                }
+
+                textArea.AppendText(buffer + Environment.NewLine);
+                buffer = "";
             }
+        }
+
+        static void displayScriptFileActions(ScriptFile.ContainerTypes containerType, List<ScriptActionContainer> commandList, ListBox navListBox, Scintilla textArea)
+        {
+            /* Add movements */
+            string buffer = "";
+            for (int i = 0; i < commandList.Count; i++)
+            {
+                ScriptActionContainer currentCommand = commandList[i];
+
+                string header = containerType + " " + (i + 1);
+                buffer += header + ':' + Environment.NewLine;
+                navListBox.Items.Add(header);
+
+                for (int j = 0; j < currentCommand.commands.Count; j++)
+                {
+                    ScriptAction command = currentCommand.commands[j];
+                    if (!ScriptDatabase.movementEndCodes.Contains(command.id))
+                    {
+                        buffer += '\t';
+                    }
+
+                    buffer += command.name + Environment.NewLine;
+                }
+
+                textArea.AppendText(buffer + Environment.NewLine);
+                buffer = "";
+            }
+        }
 
         private void scriptEditorZoomInButton_Click(object sender, EventArgs e)
         {
