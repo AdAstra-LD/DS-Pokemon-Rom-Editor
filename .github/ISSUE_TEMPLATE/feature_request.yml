@@ -1,0 +1,92 @@
+name: Feature Request
+description: Suggest a new feature or improvement for the DS Pokémon ROM Editor
+title: "[Feature] "
+labels: ["enhancement"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature! Please provide details to help us understand your idea.
+  - type: input
+    id: base-rom
+    attributes:
+      label: Base ROM Targeted
+      description: Which Pokémon ROM is this feature intended for? (e.g., Pokémon Diamond, Pearl, Platinum, HeartGold, SoulSilver)
+      placeholder: e.g., Pokémon Platinum
+    validations:
+      required: true
+  - type: dropdown
+    id: rom-language
+    attributes:
+      label: Language of ROM
+      description: What is the language of the ROM this feature applies to? (Select 'All' if language-agnostic)
+      options:
+        - All
+        - English
+        - Japanese
+        - Spanish
+        - French
+        - German
+        - Italian
+        - Korean
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      description: What OS are you using the editor on? (Select 'All' if feature is OS-agnostic)
+      options:
+        - All
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: checkboxes
+    id: onedrive
+    attributes:
+      label: Does this feature relate to OneDrive usage?
+      options:
+        - label: Yes
+        - label: No
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: Describe the feature or improvement you want. What should it do? Why is it useful?
+      placeholder: e.g., Add a tool to edit wild Pokémon encounter rates directly in the map editor.
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Explain how this feature would be used and who would benefit.
+      placeholder: e.g., ROM hackers creating custom wild encounters would save time.
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: false
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other details, such as related tools, existing workarounds, or specific ROM hack contexts.
+      placeholder: e.g., Inspired by a feature in [another tool], or needed for a specific hack project.
+    validations:
+      required: false
