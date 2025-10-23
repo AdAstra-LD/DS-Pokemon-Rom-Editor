@@ -93,10 +93,6 @@ namespace DSPRE.Editors
             if (scriptEditorIsReady && !force) { return; }
             scriptEditorIsReady = true;
             this._parent = parent;
-            ScriptDatabase.InitializePokemonNames();
-            ScriptDatabase.InitializeItemNames();
-            ScriptDatabase.InitializeMoveNames();
-            ScriptDatabase.InitializeTrainerNames();
             SetupScriptEditorTextAreas();
             /* Extract essential NARCs sub-archives*/
             Helpers.statusLabelMessage("Setting up Script Editor...");

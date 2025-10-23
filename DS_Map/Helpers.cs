@@ -1,3 +1,4 @@
+using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using Ekona.Images;
 using Images;
@@ -189,6 +190,12 @@ namespace DSPRE
             try
             {
                 ScriptDatabaseJsonLoader.InitializeFromJson(targetJsonPath, gameVersion);
+
+                // Initialize name dictionaries for script parameter parsing
+                ScriptDatabase.InitializePokemonNames();
+                ScriptDatabase.InitializeItemNames();
+                ScriptDatabase.InitializeMoveNames();
+                ScriptDatabase.InitializeTrainerNames();
             }
             catch (Exception ex)
             {
