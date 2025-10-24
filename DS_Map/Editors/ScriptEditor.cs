@@ -1147,6 +1147,63 @@ namespace DSPRE.Editors
             Helpers.ExplorerSelect(path);
 
         }
+
+        private void openInVSCode_Click(object sender, EventArgs e)
+        {
+            if (currentScriptFile == null)
+            {
+                MessageBox.Show("No script file is currently loaded.", "Cannot Open", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (currentScriptFile.parseFailedDueToInvalidCommand)
+            {
+                MessageBox.Show(
+                    "This script file could not be fully parsed due to unrecognized commands and is READ-ONLY.\n\n" +
+                    "Opening it in VSCode is disabled to prevent accidental editing of incomplete data.",
+                    "Cannot Open Incomplete Script",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            int fileID = selectScriptFileComboBox.SelectedIndex;
+            var (binPath, txtPath) = ScriptFile.GetFilePaths(fileID);
+
+            if (!File.Exists(txtPath))
+            {
+                MessageBox.Show(
+                    "Plaintext script file not found. This may be a level script or the file hasn't been exported yet.",
+                    "Cannot Open",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string scriptsFolder = Path.GetDirectoryName(txtPath);
+
+                var startInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = $"/c code \"{scriptsFolder}\" \"{txtPath}\"",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+                };
+
+                System.Diagnostics.Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to open VSCode. Make sure VSCode is installed and 'code' is in your PATH.\n\nError: {ex.Message}",
+                    "VSCode Launch Failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+        }
         private void findNext(SearchManager searchManager)
         {
             searchManager.Find(true, false);
