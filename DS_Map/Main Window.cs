@@ -982,8 +982,6 @@ namespace DSPRE
 
             Helpers.statusLabelMessage();
             this.Text += "  -  " + RomInfo.projectName;
-
-            ScriptFile.ExportAllScripts();
         }
 
         private void saveRom_Click(object sender, EventArgs e)

@@ -1,3 +1,4 @@
+using DSPRE.Editors.Utils;
 using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using ScintillaNET;
@@ -10,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace DSPRE.Editors
 {
@@ -98,9 +100,199 @@ namespace DSPRE.Editors
             Helpers.statusLabelMessage("Setting up Script Editor...");
             Update();
             DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts }); //12 = scripts Narc Dir
+
+            if (Resources.ScriptDatabase.pokemonNames == null)
+            {
+                // Unpack text archives first if not unpacked yet
+                DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.textArchives });
+
+                Resources.ScriptDatabase.InitializePokemonNames();
+                Resources.ScriptDatabase.InitializeItemNames();
+                Resources.ScriptDatabase.InitializeMoveNames();
+                Resources.ScriptDatabase.InitializeTrainerNames();
+            }
+
+            // Export scripts on first open with progress dialog, same as text archives
+            int scriptCount = Filesystem.GetScriptCount();
+            using (var loadingForm = new LoadingForm(scriptCount, "Loading script files..."))
+            {
+                loadingForm.Shown += (s, e) =>
+                {
+                    Task.Run(() =>
+                    {
+                        ROMFiles.ScriptFile.ExportAllScripts(
+                            suppressErrors: true,
+                            progressCallback: (current, total) =>
+                            {
+                                if (loadingForm.IsHandleCreated)
+                                {
+                                    loadingForm.Invoke((Action)(() => loadingForm.UpdateProgress(current)));
+                                }
+                            });
+
+                        if (loadingForm.IsHandleCreated)
+                        {
+                            loadingForm.Invoke((Action)(() => loadingForm.Close()));
+                        }
+                    });
+                };
+                loadingForm.ShowDialog();
+
+                var invalidCommands = ROMFiles.ScriptFile.GetInvalidCommands();
+                if (invalidCommands.Count > 0)
+                {
+                    HandleInvalidScriptCommands(invalidCommands);
+                }
+            }
+
             populate_selectScriptFileComboBox(0);
             UpdateScriptNumberCheckBox((NumberStyles)SettingsManager.Settings.scriptEditorFormatPreference);
             Helpers.statusLabelMessage();
+        }
+
+        private void HandleInvalidScriptCommands(List<(int fileID, ushort commandID, long offset)> invalidCommands)
+        {
+            var uniqueCommands = invalidCommands.Select(c => c.commandID).Distinct().OrderBy(x => x).ToList();
+            string commandList = string.Join(", ", uniqueCommands.Select(c => $"0x{c:X4}"));
+
+            var affectedFiles = invalidCommands.Select(c => c.fileID).Distinct().OrderBy(x => x).ToList();
+            string fileList = string.Join(", ", affectedFiles.Select(f => f.ToString("D4")));
+
+            var result = MessageBox.Show(
+                $"DSPRE could not interpret {invalidCommands.Count} script command(s) across {affectedFiles.Count} file(s).\n\n" +
+                $"Affected files: {fileList}\n" +
+                $"Unrecognized commands: {commandList}\n\n" +
+                $"This may happen if your project uses custom script commands. " +
+                $"Would you like to load a custom script command database for this project?\n\n" +
+                $"If you select 'Yes', DSPRE will reparse all scripts with the new database.\nIf you select 'No', the affected files will be incomplete and read-only to prevent data loss.",
+                "Invalid Script Commands Detected",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                LoadCustomScriptDatabase();
+            }
+        }
+
+        private void LoadCustomScriptDatabase()
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Title = "Select Custom Script Command Database";
+                dialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                dialog.InitialDirectory = Program.DatabasePath;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Helpers.statusLabelMessage("Loading custom script database...");
+                        Update();
+
+                        // Save database permanently to edited_databases
+                        string editedDatabasesDir = Path.Combine(Program.DatabasePath, "edited_databases");
+                        Directory.CreateDirectory(editedDatabasesDir);
+
+                        string baseFileName = Path.GetFileNameWithoutExtension(RomInfo.projectName);
+                        string romFileNameClean = baseFileName.EndsWith("_DSPRE_contents")
+                            ? baseFileName.Substring(0, baseFileName.Length - "_DSPRE_contents".Length)
+                            : baseFileName;
+
+                        string targetJsonPath = Path.Combine(editedDatabasesDir, $"{romFileNameClean}_scrcmd_database.json");
+
+                        File.Copy(dialog.FileName, targetJsonPath, overwrite: true);
+                        AppLogger.Info($"Script database saved permanently to: {targetJsonPath}");
+
+                        ScriptDatabaseJsonLoader.InitializeFromJson(targetJsonPath, RomInfo.gameVersion);
+
+                        // Rebuild command dictionaries
+                        RomInfo.ReloadScriptCommandDictionaries();
+
+                        // Reinitialize name dictionaries with the new database
+                        Resources.ScriptDatabase.InitializePokemonNames();
+                        Resources.ScriptDatabase.InitializeItemNames();
+                        Resources.ScriptDatabase.InitializeMoveNames();
+                        Resources.ScriptDatabase.InitializeTrainerNames();
+
+                        // Clear the expanded scripts directory to force re-export
+                        string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "scripts");
+                        if (Directory.Exists(expandedDir))
+                        {
+                            Directory.Delete(expandedDir, true);
+                        }
+
+                        // Re-export with new database and progress dialog
+                        int scriptCount = Filesystem.GetScriptCount();
+                        using (var loadingForm = new LoadingForm(scriptCount, "Reparsing scripts with new database..."))
+                        {
+                            // Start the background task after the form is shown
+                            loadingForm.Shown += (s, e) =>
+                            {
+                                Task.Run(() =>
+                                {
+                                    ROMFiles.ScriptFile.ExportAllScripts(
+                                        suppressErrors: false,
+                                        progressCallback: (current, total) =>
+                                        {
+                                            if (loadingForm.IsHandleCreated)
+                                            {
+                                                loadingForm.Invoke((Action)(() => loadingForm.UpdateProgress(current)));
+                                            }
+                                        });
+
+                                    // Close the form when done
+                                    if (loadingForm.IsHandleCreated)
+                                    {
+                                        loadingForm.Invoke((Action)(() => loadingForm.Close()));
+                                    }
+                                });
+                            };
+
+                            // ShowDialog to keep the form modal while allowing background processing
+                            loadingForm.ShowDialog();
+                        }
+
+                        // Refresh the script editor
+                        SetupScriptEditorTextAreas();
+                        populate_selectScriptFileComboBox(selectScriptFileComboBox.SelectedIndex);
+
+                        Helpers.statusLabelMessage();
+
+                        // Check if there are still errors after loading custom database
+                        var remainingInvalidCommands = ROMFiles.ScriptFile.GetInvalidCommands();
+                        if (remainingInvalidCommands.Count > 0)
+                        {
+                            var uniqueCommands = remainingInvalidCommands.Select(c => c.commandID).Distinct().OrderBy(x => x).ToList();
+                            string commandList = string.Join(", ", uniqueCommands.Select(c => $"0x{c:X4}"));
+
+                            var affectedFiles = remainingInvalidCommands.Select(c => c.fileID).Distinct().OrderBy(x => x).ToList();
+                            string fileList = string.Join(", ", affectedFiles.Select(f => f.ToString("D4")));
+
+                            MessageBox.Show(
+                                $"Script database loaded, but {remainingInvalidCommands.Count} script command(s) across {affectedFiles.Count} file(s) still could not be parsed.\n\n" +
+                                $"Affected files: {fileList}\n" +
+                                $"Unrecognized commands: {commandList}\n\n" +
+                                $"Affected script files were not exported to plaintext to prevent data loss. " +
+                                $"You can load a different database or manually fix the database file to add these commands.",
+                                "Partial Success",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Script database loaded successfully and all scripts have been reparsed.",
+                                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Helpers.statusLabelMessage();
+                        MessageBox.Show($"Failed to load custom script database:\n{ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
         public void OpenScriptEditor(MainProgram parent, int scriptFileID)
         {
@@ -411,6 +603,19 @@ namespace DSPRE.Editors
             /* Create new ScriptFile object using the values in the script editor */
             int fileID = currentScriptFile.fileID;
 
+            if (currentScriptFile.parseFailedDueToInvalidCommand)
+            {
+                MessageBox.Show(
+                    "This script file could not be fully parsed due to unrecognized commands and is READ-ONLY.\n\n" +
+                    "To fix this, load a custom script command database that includes all commands used in this script, " +
+                    "modify your db to include changes you made, " +
+                    "or restore the script file from a backup.",
+                    "Cannot Save Incomplete Script",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
             ScriptTextArea.ReadOnly = true;
             FunctionTextArea.ReadOnly = true;
             ActionTextArea.ReadOnly = true;
@@ -677,6 +882,28 @@ namespace DSPRE.Editors
                 displayScriptFile(ScriptFile.ContainerTypes.Script, currentScriptFile.allScripts, scriptsNavListbox, ScriptTextArea);
                 displayScriptFile(ScriptFile.ContainerTypes.Function, currentScriptFile.allFunctions, functionsNavListbox, FunctionTextArea);
                 displayScriptFileActions(ScriptFile.ContainerTypes.Action, currentScriptFile.allActions, actionsNavListbox, ActionTextArea);
+
+                if (currentScriptFile.parseFailedDueToInvalidCommand)
+                {
+                    MessageBox.Show(
+                        $"Warning: Script file {currentScriptFile.fileID:D4} could not be fully parsed due to unrecognized script commands.\n\n" +
+                        "The script shown below is INCOMPLETE and may be missing commands at the end.\n" +
+                        "This script is READ-ONLY to prevent data loss.\n\n" +
+                        "To fix this, load a custom script command database that includes all commands used in this script, modify your existing one to account for changes you made or try to restore this script file if it is corrupted.",
+                        "Incomplete Script File",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    ScriptTextArea.ReadOnly = true;
+                    FunctionTextArea.ReadOnly = true;
+                    ActionTextArea.ReadOnly = true;
+                }
+                else
+                {
+                    ScriptTextArea.ReadOnly = false;
+                    FunctionTextArea.ReadOnly = false;
+                    ActionTextArea.ReadOnly = false;
+                }
             }
 
             ScriptEditorSetClean();
@@ -701,15 +928,18 @@ namespace DSPRE.Editors
                 /* If current command is identical to another, print UseScript instead of commands */
                 if (scriptCommandContainer.usedScriptID < 0)
                 {
-                    for (int j = 0; j < scriptCommandContainer.commands.Count; j++)
+                    if (scriptCommandContainer.commands != null)
                     {
-                        ScriptCommand command = scriptCommandContainer.commands[j];
-                        if (!ScriptDatabase.endCodes.Contains(command.id))
+                        for (int j = 0; j < scriptCommandContainer.commands.Count; j++)
                         {
-                            buffer += '\t';
-                        }
+                            ScriptCommand command = scriptCommandContainer.commands[j];
+                            if (command.id != null && !ScriptDatabase.endCodes.Contains((ushort)command.id))
+                            {
+                                buffer += '\t';
+                            }
 
-                        buffer += command.name + Environment.NewLine;
+                            buffer += command.name + Environment.NewLine;
+                        }
                     }
                 }
                 else
