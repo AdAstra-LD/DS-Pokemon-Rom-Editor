@@ -71,8 +71,10 @@ namespace DSPRE.ROMFiles
 
         public static readonly char[] specialChars = { 'x', 'X', '#', '.', '_' };
 
-        public ScriptFile(Stream fs, bool readFunctions = true, bool readActions = true)
+        public ScriptFile(Stream fs, bool readFunctions = true, bool readActions = true, int fileID = -1)
         {
+            this.fileID = fileID;
+
             List<int> scriptOffsets = new List<int>();
             List<int> functionOffsets = new List<int>();
             List<int> movementOffsets = new List<int>();
@@ -257,7 +259,7 @@ namespace DSPRE.ROMFiles
             using (var fs = getFileStream(fileID))
             {
                 // Copy the logic from the Stream constructor
-                var tempScript = new ScriptFile(fs, readFunctions, readActions);
+                var tempScript = new ScriptFile(fs, readFunctions, readActions, fileID);
                 this.allScripts = tempScript.allScripts;
                 this.allFunctions = tempScript.allFunctions;
                 this.allActions = tempScript.allActions;
@@ -579,13 +581,9 @@ namespace DSPRE.ROMFiles
                         }
 
                         // Load from binary only (don't try to read plaintext since we're creating it)
-                        using (var fs = getFileStream(i))
-                        {
-                            var scriptFile = new ScriptFile(fs, true, true);
-                            scriptFile.fileID = i;
-                            scriptFile.WritePlainTextFile();
-                            exportedCount++;
-                        }
+                        ScriptFile scriptFile = new ScriptFile(i, true, true);
+                        scriptFile.WritePlainTextFile();
+                        exportedCount++;
 
                         // Touch the binary file to make it "newer" than the plaintext
                         // This ensures search performance isn't impacted (binary used unless plaintext is edited)
