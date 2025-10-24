@@ -204,35 +204,18 @@ namespace DSPRE.Editors
                         File.Copy(dialog.FileName, targetJsonPath, overwrite: true);
                         AppLogger.Info($"Script database saved permanently to: {targetJsonPath}");
 
-                        ScriptDatabaseJsonLoader.InitializeFromJson(targetJsonPath, RomInfo.gameVersion);
-
-                        // Rebuild command dictionaries
-                        RomInfo.ReloadScriptCommandDictionaries();
-
-                        // Reinitialize name dictionaries with the new database
-                        Resources.ScriptDatabase.InitializePokemonNames();
-                        Resources.ScriptDatabase.InitializeItemNames();
-                        Resources.ScriptDatabase.InitializeMoveNames();
-                        Resources.ScriptDatabase.InitializeTrainerNames();
-
-                        // Clear the expanded scripts directory to force re-export
-                        string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "scripts");
-                        if (Directory.Exists(expandedDir))
-                        {
-                            Directory.Delete(expandedDir, true);
-                        }
-
                         // Re-export with new database and progress dialog
                         int scriptCount = Filesystem.GetScriptCount();
+                        List<(int fileID, ushort commandID, long offset)> remainingInvalidCommands = null;
+
                         using (var loadingForm = new LoadingForm(scriptCount, "Reparsing scripts with new database..."))
                         {
-                            // Start the background task after the form is shown
                             loadingForm.Shown += (s, e) =>
                             {
                                 Task.Run(() =>
                                 {
-                                    ROMFiles.ScriptFile.ExportAllScripts(
-                                        suppressErrors: false,
+                                    remainingInvalidCommands = ROMFiles.ScriptFile.ReloadDatabaseAndReparseAll(
+                                        targetJsonPath,
                                         progressCallback: (current, total) =>
                                         {
                                             if (loadingForm.IsHandleCreated)
@@ -241,7 +224,6 @@ namespace DSPRE.Editors
                                             }
                                         });
 
-                                    // Close the form when done
                                     if (loadingForm.IsHandleCreated)
                                     {
                                         loadingForm.Invoke((Action)(() => loadingForm.Close()));
@@ -249,7 +231,6 @@ namespace DSPRE.Editors
                                 });
                             };
 
-                            // ShowDialog to keep the form modal while allowing background processing
                             loadingForm.ShowDialog();
                         }
 
@@ -260,7 +241,6 @@ namespace DSPRE.Editors
                         Helpers.statusLabelMessage();
 
                         // Check if there are still errors after loading custom database
-                        var remainingInvalidCommands = ROMFiles.ScriptFile.GetInvalidCommands();
                         if (remainingInvalidCommands.Count > 0)
                         {
                             var uniqueCommands = remainingInvalidCommands.Select(c => c.commandID).Distinct().OrderBy(x => x).ToList();

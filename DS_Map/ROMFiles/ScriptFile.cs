@@ -529,6 +529,60 @@ namespace DSPRE.ROMFiles
         }
 
         /// <summary>
+        /// Reloads script command database and reparses all scripts
+        /// used when loading a custom database or replacing database through DB Manager
+        /// </summary>
+        /// <param name="databasePath">Path to the JSON database file to load</param>
+        /// <param name="progressCallback">Optional callback to report progress during reparse</param>
+        /// <returns>List of remaining invalid commands after reload, empty if all successful</returns>
+        public static List<(int fileID, ushort commandID, long offset)> ReloadDatabaseAndReparseAll(string databasePath, Action<int, int> progressCallback = null)
+        {
+            ScriptDatabaseJsonLoader.InitializeFromJson(databasePath, RomInfo.gameVersion);
+
+            RomInfo.ReloadScriptCommandDictionaries();
+
+            Resources.ScriptDatabase.InitializePokemonNames();
+            Resources.ScriptDatabase.InitializeItemNames();
+            Resources.ScriptDatabase.InitializeMoveNames();
+            Resources.ScriptDatabase.InitializeTrainerNames();
+
+            string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "scripts");
+            if (Directory.Exists(expandedDir))
+            {
+                Directory.Delete(expandedDir, true);
+            }
+
+            ClearInvalidCommands();
+            ExportAllScripts(suppressErrors: true, progressCallback: progressCallback);
+
+            return GetInvalidCommands();
+        }
+
+        /// <summary>
+        /// Gets the hash of the current script command database to detect changes
+        /// </summary>
+        private static string GetDatabaseHash()
+        {
+            string baseFileName = Path.GetFileNameWithoutExtension(RomInfo.projectName);
+            string romFileNameClean = baseFileName.EndsWith("_DSPRE_contents")
+                ? baseFileName.Substring(0, baseFileName.Length - "_DSPRE_contents".Length)
+                : baseFileName;
+            string databasePath = Path.Combine(Program.DatabasePath, "edited_databases", $"{romFileNameClean}_scrcmd_database.json");
+
+            if (!File.Exists(databasePath))
+                return string.Empty;
+
+            using (var md5 = System.Security.Cryptography.MD5.Create())
+            {
+                using (var stream = File.OpenRead(databasePath))
+                {
+                    byte[] hash = md5.ComputeHash(stream);
+                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
+            }
+        }
+
+        /// <summary>
         /// Exports all script files from the ROM to expanded/scripts/ on initial load
         /// This ensures the expanded directory is populated with plaintext versions
         /// </summary>
@@ -538,23 +592,40 @@ namespace DSPRE.ROMFiles
         public static bool ExportAllScripts(bool suppressErrors = false, Action<int, int> progressCallback = null)
         {
             string expandedDir = Path.Combine(RomInfo.workDir, "expanded", "scripts");
+            string dbHashMarkerPath = Path.Combine(expandedDir, ".database_hash");
 
             if (Directory.Exists(expandedDir))
             {
                 var existingFiles = Directory.GetFiles(expandedDir, "*.script");
                 int scriptCount = Filesystem.GetScriptCount();
 
-                // If we have all script files, skip re-export
+                // If we have all script files, check if database has changed
                 if (existingFiles.Length >= scriptCount)
                 {
-                    AppLogger.Info($"Script: expanded/scripts already exists with {existingFiles.Length} files, skipping initial export.");
-                    return true;
+                    string currentDbHash = GetDatabaseHash();
+                    string lastDbHash = File.Exists(dbHashMarkerPath) ? File.ReadAllText(dbHashMarkerPath).Trim() : string.Empty;
+
+                    if (!string.IsNullOrEmpty(currentDbHash) && currentDbHash != lastDbHash)
+                    {
+                        AppLogger.Info($"Script: Database has changed since last export (hash mismatch). Re-exporting all scripts to sync with new database.");
+                        Directory.Delete(expandedDir, true);
+                        Directory.CreateDirectory(expandedDir);
+                    }
+                    else
+                    {
+                        AppLogger.Info($"Script: expanded/scripts already exists with {existingFiles.Length} files, skipping initial export.");
+                        return true;
+                    }
                 }
-
-                AppLogger.Info($"Script: expanded/scripts exists with only {existingFiles.Length}/{scriptCount} files. Re-exporting to fill in missing scripts.");
+                else
+                {
+                    AppLogger.Info($"Script: expanded/scripts exists with only {existingFiles.Length}/{scriptCount} files. Re-exporting to fill in missing scripts.");
+                }
             }
-
-            Directory.CreateDirectory(expandedDir);
+            else
+            {
+                Directory.CreateDirectory(expandedDir);
+            }
 
             ClearInvalidCommands();
             SetSuppressInvalidCommandErrors(suppressErrors);
@@ -602,6 +673,13 @@ namespace DSPRE.ROMFiles
                 }
 
                 AppLogger.Info($"Script: Exported {exportedCount} of {scriptCount} script files to {expandedDir}");
+
+                string currentDbHash = GetDatabaseHash();
+                if (!string.IsNullOrEmpty(currentDbHash))
+                {
+                    File.WriteAllText(dbHashMarkerPath, currentDbHash);
+                }
+
                 SetSuppressInvalidCommandErrors(false);
                 return true;
             }
