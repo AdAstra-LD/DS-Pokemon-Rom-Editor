@@ -129,6 +129,13 @@ Game-specific paths are defined in `RomInfo.gameDirs`.
 
 ## Development Guidelines
 
+### Code Style and Formatting
+
+**IMPORTANT: Avoid Useless Comments**
+- Do NOT write comments that simply restate what the code does
+- Comments should only explain "why" the code exists, not "what" it does
+- Only add comments when there's a non-obvious reason, tricky logic, or important context
+
 ### ROM File Editing Pattern
 When editing ROM data:
 1. Load ROM project (unpacks to working directory)

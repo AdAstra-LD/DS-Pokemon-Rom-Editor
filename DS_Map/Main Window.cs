@@ -1,4 +1,4 @@
-﻿using DSPRE.Editors;
+using DSPRE.Editors;
 using DSPRE.Editors.BtxEditor;
 using DSPRE.Resources;
 using DSPRE.ROMFiles;
@@ -636,12 +636,12 @@ namespace DSPRE
         }
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string message = "DS Pokémon ROM Editor Reloaded by AdAstra, Mixone, Kuha, Yako & Kalaay" 
-                + Environment.NewLine + "Version " + GetDSPREVersion() 
+            string message = "DS Pokémon ROM Editor Reloaded by AdAstra, Mixone, Kuha, Yako & Kalaay"
+                + Environment.NewLine + "Version " + GetDSPREVersion()
                 + Environment.NewLine
                 + Environment.NewLine + "Based on Nømura's DS Pokémon ROM Editor 1.0.4."
-                + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused." 
-                + Environment.NewLine + "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME." 
+                + Environment.NewLine + "Largely inspired by Markitus95's \"Spiky's DS Map Editor\" (SDSME), from which certain assets were also reused."
+                + Environment.NewLine + "Credits go to Markitus, Ark, Zark, Florian, and everyone else who deserves credit for SDSME."
                 + Environment.NewLine
                 + Environment.NewLine + "Special thanks to Trifindo, Mikelan98, JackHack96, Pleonex and BagBoy."
                 + Environment.NewLine + "Their help, research and expertise in many fields of NDS ROM Hacking made the development of this tool possible.";
@@ -865,7 +865,7 @@ namespace DSPRE
                 AppLogger.Warn("ROM path validation failed. Possibly invalid or on a restricted (OneDrive).");
                 return;
             }
-            
+
             DetectAndHandleWSL(romFolderPath);
 
             if (DSUtils.GetFolderType(romFolderPath) == -1)
@@ -1027,9 +1027,15 @@ namespace DSPRE
                 return;
             }
 
+            if (!ScriptFile.BuildRequiredBins())
+            {
+                MessageBox.Show("An error occurred while rebuilding script files. Save aborted.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Helpers.statusLabelMessage("Repacking NARCS...");
             Update();
-            
+
 
             // Repack NARCs
             foreach (KeyValuePair<DirNames, (string packedDir, string unpackedDir)> kvp in RomInfo.gameDirs)
@@ -1193,9 +1199,9 @@ namespace DSPRE
             CustomScrcmdManager editor = new CustomScrcmdManager();
             editor.Show();
         }
-        private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e) 
+        private void mainTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (mainTabControl.SelectedTab == headerEditorTabPage) 
+            if (mainTabControl.SelectedTab == headerEditorTabPage)
             {
                 headerEditor.SetupHeaderEditor(this);
             }
@@ -1250,7 +1256,7 @@ namespace DSPRE
 
         private void spawnEditorToolStripButton_Click(object sender, EventArgs e)
         {
-  
+
             matrixEditor.SetupMatrixEditor(this);
 
             using (SpawnEditor ed = new SpawnEditor(EditorPanels.headerEditor.headerListBoxNames))
@@ -1285,12 +1291,12 @@ namespace DSPRE
                 case GameFamilies.Plat:
                     WildEditorDPPt wildEditorDppt = new WildEditorDPPt(wildPokeUnpackedPath, RomInfo.GetPokemonNames(),
                         encToOpen, EditorPanels.headerEditor.internalNames.Count);
-                        wildEditorDppt.Show();
+                    wildEditorDppt.Show();
                     break;
                 default:
                     WildEditorHGSS wildEditorHgss = new WildEditorHGSS(wildPokeUnpackedPath, RomInfo.GetPokemonNames(),
                         encToOpen, EditorPanels.headerEditor.internalNames.Count);
-                        wildEditorHgss.Show();
+                    wildEditorHgss.Show();
                     break;
             }
             Helpers.statusLabelMessage();
@@ -1413,7 +1419,7 @@ namespace DSPRE
 
             int diff = files.Length - listLines.Length;
             if (diff < 0)
-            { //listLines.Length > files.Length 
+            { //listLines.Length > files.Length
                 tot = files.Length;
                 extra = "(Please note that the length of the chosen list [" + listLines.Length + " entries] " +
                     "exceeds the number of files in the folder.)" + "\n\n";
@@ -1745,7 +1751,7 @@ namespace DSPRE
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsWindow editor = new SettingsWindow();
-             editor.Show();
+            editor.Show();
         }
 
         private void pokemonDataEditorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1866,6 +1872,6 @@ namespace DSPRE
 
         #endregion
 
- 
+
     }
 }

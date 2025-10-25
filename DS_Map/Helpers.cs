@@ -1,3 +1,4 @@
+using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using Ekona.Images;
 using Images;
@@ -189,6 +190,7 @@ namespace DSPRE
             try
             {
                 ScriptDatabaseJsonLoader.InitializeFromJson(targetJsonPath, gameVersion);
+
             }
             catch (Exception ex)
             {

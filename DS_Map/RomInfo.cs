@@ -282,6 +282,17 @@ namespace DSPRE
             Helpers.InitializeScriptDatabase(projectName, gameFamily, gameVersion);
         }
 
+        public static void ReloadScriptCommandDictionaries()
+        {
+            ScriptCommandParametersDict = BuildCommandParametersDatabase(gameFamily);
+            ScriptCommandNamesDict = BuildCommandNamesDatabase(gameFamily);
+            ScriptActionNamesDict = BuildActionNamesDatabase(gameFamily);
+            ScriptComparisonOperatorsDict = BuildComparisonOperatorsDatabase(gameFamily);
+            ScriptCommandNamesReverseDict = ScriptCommandNamesDict.Reverse();
+            ScriptActionNamesReverseDict = ScriptActionNamesDict.Reverse();
+            ScriptComparisonOperatorsReverseDict = ScriptComparisonOperatorsDict.Reverse();
+        }
+
         public static Dictionary<ushort, ScriptCommandInfo> GetScriptCommandInfoDict()
         {
             switch (gameFamily)

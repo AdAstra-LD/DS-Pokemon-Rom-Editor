@@ -1,4 +1,5 @@
-﻿using DSPRE.Resources;
+using DSPRE.Editors.Utils;
+using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using ScintillaNET;
 using ScintillaNET.Utils;
@@ -10,6 +11,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace DSPRE.Editors
 {
@@ -93,18 +95,184 @@ namespace DSPRE.Editors
             if (scriptEditorIsReady && !force) { return; }
             scriptEditorIsReady = true;
             this._parent = parent;
-            ScriptDatabase.InitializePokemonNames();
-            ScriptDatabase.InitializeItemNames();
-            ScriptDatabase.InitializeMoveNames();
-            ScriptDatabase.InitializeTrainerNames();
             SetupScriptEditorTextAreas();
             /* Extract essential NARCs sub-archives*/
             Helpers.statusLabelMessage("Setting up Script Editor...");
             Update();
             DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts }); //12 = scripts Narc Dir
+
+            if (Resources.ScriptDatabase.pokemonNames == null)
+            {
+                // Unpack text archives first if not unpacked yet
+                DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.textArchives });
+
+                Resources.ScriptDatabase.InitializePokemonNames();
+                Resources.ScriptDatabase.InitializeItemNames();
+                Resources.ScriptDatabase.InitializeMoveNames();
+                Resources.ScriptDatabase.InitializeTrainerNames();
+            }
+
+            // Export scripts on first open with progress dialog, same as text archives
+            int scriptCount = Filesystem.GetScriptCount();
+            using (var loadingForm = new LoadingForm(scriptCount, "Loading script files..."))
+            {
+                loadingForm.Shown += (s, e) =>
+                {
+                    Task.Run(() =>
+                    {
+                        ROMFiles.ScriptFile.ExportAllScripts(
+                            suppressErrors: true,
+                            progressCallback: (current, total) =>
+                            {
+                                if (loadingForm.IsHandleCreated)
+                                {
+                                    loadingForm.Invoke((Action)(() => loadingForm.UpdateProgress(current)));
+                                }
+                            });
+
+                        if (loadingForm.IsHandleCreated)
+                        {
+                            loadingForm.Invoke((Action)(() => loadingForm.Close()));
+                        }
+                    });
+                };
+                loadingForm.ShowDialog();
+
+                var invalidCommands = ROMFiles.ScriptFile.GetInvalidCommands();
+                if (invalidCommands.Count > 0)
+                {
+                    HandleInvalidScriptCommands(invalidCommands);
+                }
+            }
+
             populate_selectScriptFileComboBox(0);
             UpdateScriptNumberCheckBox((NumberStyles)SettingsManager.Settings.scriptEditorFormatPreference);
             Helpers.statusLabelMessage();
+        }
+
+        private void HandleInvalidScriptCommands(List<(int fileID, ushort commandID, long offset)> invalidCommands)
+        {
+            var uniqueCommands = invalidCommands.Select(c => c.commandID).Distinct().OrderBy(x => x).ToList();
+            string commandList = string.Join(", ", uniqueCommands.Select(c => $"0x{c:X4}"));
+
+            var affectedFiles = invalidCommands.Select(c => c.fileID).Distinct().OrderBy(x => x).ToList();
+            string fileList = string.Join(", ", affectedFiles.Select(f => f.ToString("D4")));
+
+            var result = MessageBox.Show(
+                $"DSPRE could not interpret {invalidCommands.Count} script command(s) across {affectedFiles.Count} file(s).\n\n" +
+                $"Affected files: {fileList}\n" +
+                $"Unrecognized commands: {commandList}\n\n" +
+                $"This may happen if your project uses custom script commands. " +
+                $"Would you like to load a custom script command database for this project?\n\n" +
+                $"If you select 'Yes', DSPRE will reparse all scripts with the new database.\nIf you select 'No', the affected files will be incomplete and read-only to prevent data loss.",
+                "Invalid Script Commands Detected",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                LoadCustomScriptDatabase();
+            }
+        }
+
+        private void LoadCustomScriptDatabase()
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Title = "Select Custom Script Command Database";
+                dialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                dialog.InitialDirectory = Program.DatabasePath;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Helpers.statusLabelMessage("Loading custom script database...");
+                        Update();
+
+                        // Save database permanently to edited_databases
+                        string editedDatabasesDir = Path.Combine(Program.DatabasePath, "edited_databases");
+                        Directory.CreateDirectory(editedDatabasesDir);
+
+                        string baseFileName = Path.GetFileNameWithoutExtension(RomInfo.projectName);
+                        string romFileNameClean = baseFileName.EndsWith("_DSPRE_contents")
+                            ? baseFileName.Substring(0, baseFileName.Length - "_DSPRE_contents".Length)
+                            : baseFileName;
+
+                        string targetJsonPath = Path.Combine(editedDatabasesDir, $"{romFileNameClean}_scrcmd_database.json");
+
+                        File.Copy(dialog.FileName, targetJsonPath, overwrite: true);
+                        AppLogger.Info($"Script database saved permanently to: {targetJsonPath}");
+
+                        // Re-export with new database and progress dialog
+                        int scriptCount = Filesystem.GetScriptCount();
+                        List<(int fileID, ushort commandID, long offset)> remainingInvalidCommands = null;
+
+                        using (var loadingForm = new LoadingForm(scriptCount, "Reparsing scripts with new database..."))
+                        {
+                            loadingForm.Shown += (s, e) =>
+                            {
+                                Task.Run(() =>
+                                {
+                                    remainingInvalidCommands = ROMFiles.ScriptFile.ReloadDatabaseAndReparseAll(
+                                        targetJsonPath,
+                                        progressCallback: (current, total) =>
+                                        {
+                                            if (loadingForm.IsHandleCreated)
+                                            {
+                                                loadingForm.Invoke((Action)(() => loadingForm.UpdateProgress(current)));
+                                            }
+                                        });
+
+                                    if (loadingForm.IsHandleCreated)
+                                    {
+                                        loadingForm.Invoke((Action)(() => loadingForm.Close()));
+                                    }
+                                });
+                            };
+
+                            loadingForm.ShowDialog();
+                        }
+
+                        // Refresh the script editor
+                        SetupScriptEditorTextAreas();
+                        populate_selectScriptFileComboBox(selectScriptFileComboBox.SelectedIndex);
+
+                        Helpers.statusLabelMessage();
+
+                        // Check if there are still errors after loading custom database
+                        if (remainingInvalidCommands.Count > 0)
+                        {
+                            var uniqueCommands = remainingInvalidCommands.Select(c => c.commandID).Distinct().OrderBy(x => x).ToList();
+                            string commandList = string.Join(", ", uniqueCommands.Select(c => $"0x{c:X4}"));
+
+                            var affectedFiles = remainingInvalidCommands.Select(c => c.fileID).Distinct().OrderBy(x => x).ToList();
+                            string fileList = string.Join(", ", affectedFiles.Select(f => f.ToString("D4")));
+
+                            MessageBox.Show(
+                                $"Script database loaded, but {remainingInvalidCommands.Count} script command(s) across {affectedFiles.Count} file(s) still could not be parsed.\n\n" +
+                                $"Affected files: {fileList}\n" +
+                                $"Unrecognized commands: {commandList}\n\n" +
+                                $"Affected script files were not exported to plaintext to prevent data loss. " +
+                                $"You can load a different database or manually fix the database file to add these commands.",
+                                "Partial Success",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Script database loaded successfully and all scripts have been reparsed.",
+                                "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Helpers.statusLabelMessage();
+                        MessageBox.Show($"Failed to load custom script database:\n{ex.Message}",
+                            "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
         public void OpenScriptEditor(MainProgram parent, int scriptFileID)
         {
@@ -415,6 +583,19 @@ namespace DSPRE.Editors
             /* Create new ScriptFile object using the values in the script editor */
             int fileID = currentScriptFile.fileID;
 
+            if (currentScriptFile.parseFailedDueToInvalidCommand)
+            {
+                MessageBox.Show(
+                    "This script file could not be fully parsed due to unrecognized commands and is READ-ONLY.\n\n" +
+                    "To fix this, load a custom script command database that includes all commands used in this script, " +
+                    "modify your db to include changes you made, " +
+                    "or restore the script file from a backup.",
+                    "Cannot Save Incomplete Script",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
             ScriptTextArea.ReadOnly = true;
             FunctionTextArea.ReadOnly = true;
             ActionTextArea.ReadOnly = true;
@@ -466,7 +647,7 @@ namespace DSPRE.Editors
             }
 
             scriptsDirty = true;
-            scriptsTabPage.Text = ScriptFile.ContainerTypes.Script.ToString() + "s" + "*";           
+            scriptsTabPage.Text = ScriptFile.ContainerTypes.Script.ToString() + "s" + "*";
         }
 
         private void OnTextChangedFunction(object sender, EventArgs e)
@@ -618,8 +799,7 @@ namespace DSPRE.Editors
             Helpers.DisableHandlers();
 
             ScriptFile lastScriptFile = currentScriptFile;
-            // currentScriptFile = (ScriptFile)selectScriptFileComboBox.SelectedItem;
-            currentScriptFile = new ScriptFile(selectScriptFileComboBox.SelectedIndex); // Load script file
+            int fileID = selectScriptFileComboBox.SelectedIndex;
 
             ScriptTextArea.ClearAll();
             FunctionTextArea.ClearAll();
@@ -628,6 +808,18 @@ namespace DSPRE.Editors
             scriptsNavListbox.Items.Clear();
             functionsNavListbox.Items.Clear();
             actionsNavListbox.Items.Clear();
+
+            if (TryLoadPlaintextDirect(fileID, out bool isLevelScript))
+            {
+                // Create a minimal ScriptFile just to hold the fileID for saving later
+                currentScriptFile = new ScriptFile(new List<ScriptCommandContainer>(), new List<ScriptCommandContainer>(), new List<ScriptActionContainer>(), fileID);
+                currentScriptFile.isLevelScript = isLevelScript;
+            }
+            else
+            {
+                // Fallback: load and parse normally (binary or older plaintext)
+                currentScriptFile = new ScriptFile(fileID);
+            }
 
             //prevent buttons from flickering when the combobox selection changes
             bool typeChanged = true;
@@ -666,38 +858,62 @@ namespace DSPRE.Editors
             }
 
             if (!currentScriptFile.isLevelScript)
-                {
-                    displayScriptFile(ScriptFile.ContainerTypes.Script, currentScriptFile.allScripts, scriptsNavListbox, ScriptTextArea);
-                    displayScriptFile(ScriptFile.ContainerTypes.Function, currentScriptFile.allFunctions, functionsNavListbox, FunctionTextArea);
-                    displayScriptFileActions(ScriptFile.ContainerTypes.Action, currentScriptFile.allActions, actionsNavListbox, ActionTextArea);
-                }
+            {
+                displayScriptFile(ScriptFile.ContainerTypes.Script, currentScriptFile.allScripts, scriptsNavListbox, ScriptTextArea);
+                displayScriptFile(ScriptFile.ContainerTypes.Function, currentScriptFile.allFunctions, functionsNavListbox, FunctionTextArea);
+                displayScriptFileActions(ScriptFile.ContainerTypes.Action, currentScriptFile.allActions, actionsNavListbox, ActionTextArea);
 
-                ScriptEditorSetClean();
-                Helpers.statusLabelMessage();
-                Helpers.EnableHandlers();
-                return true;
+                if (currentScriptFile.parseFailedDueToInvalidCommand)
+                {
+                    MessageBox.Show(
+                        $"Warning: Script file {currentScriptFile.fileID:D4} could not be fully parsed due to unrecognized script commands.\n\n" +
+                        "The script shown below is INCOMPLETE and may be missing commands at the end.\n" +
+                        "This script is READ-ONLY to prevent data loss.\n\n" +
+                        "To fix this, load a custom script command database that includes all commands used in this script, modify your existing one to account for changes you made or try to restore this script file if it is corrupted.",
+                        "Incomplete Script File",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+
+                    ScriptTextArea.ReadOnly = true;
+                    FunctionTextArea.ReadOnly = true;
+                    ActionTextArea.ReadOnly = true;
+                }
+                else
+                {
+                    ScriptTextArea.ReadOnly = false;
+                    FunctionTextArea.ReadOnly = false;
+                    ActionTextArea.ReadOnly = false;
+                }
             }
 
-            static void displayScriptFile(ScriptFile.ContainerTypes containerType, List<ScriptCommandContainer> commandList, ListBox navListBox, Scintilla textArea)
+            ScriptEditorSetClean();
+            Helpers.statusLabelMessage();
+            Helpers.EnableHandlers();
+            return true;
+        }
+
+        static void displayScriptFile(ScriptFile.ContainerTypes containerType, List<ScriptCommandContainer> commandList, ListBox navListBox, Scintilla textArea)
+        {
+            string buffer = "";
+            /* Add commands */
+            for (int i = 0; i < commandList.Count; i++)
             {
-                string buffer = "";
-                /* Add commands */
-                for (int i = 0; i < commandList.Count; i++)
+                ScriptCommandContainer scriptCommandContainer = commandList[i];
+
+                /* Write header */
+                string header = containerType + " " + (i + 1);
+                buffer += header + ':' + Environment.NewLine;
+                navListBox.Items.Add(header);
+
+                /* If current command is identical to another, print UseScript instead of commands */
+                if (scriptCommandContainer.usedScriptID < 0)
                 {
-                    ScriptCommandContainer scriptCommandContainer = commandList[i];
-
-                    /* Write header */
-                    string header = containerType + " " + (i + 1);
-                    buffer += header + ':' + Environment.NewLine;
-                    navListBox.Items.Add(header);
-
-                    /* If current command is identical to another, print UseScript instead of commands */
-                    if (scriptCommandContainer.usedScriptID < 0)
+                    if (scriptCommandContainer.commands != null)
                     {
                         for (int j = 0; j < scriptCommandContainer.commands.Count; j++)
                         {
                             ScriptCommand command = scriptCommandContainer.commands[j];
-                            if (!ScriptDatabase.endCodes.Contains(command.id))
+                            if (command.id != null && !ScriptDatabase.endCodes.Contains((ushort)command.id))
                             {
                                 buffer += '\t';
                             }
@@ -705,43 +921,44 @@ namespace DSPRE.Editors
                             buffer += command.name + Environment.NewLine;
                         }
                     }
-                    else
-                    {
-                        buffer += '\t' + "UseScript_#" + scriptCommandContainer.usedScriptID + Environment.NewLine;
-                    }
-
-                    textArea.AppendText(buffer + Environment.NewLine);
-                    buffer = "";
                 }
-            }
-
-            static void displayScriptFileActions(ScriptFile.ContainerTypes containerType, List<ScriptActionContainer> commandList, ListBox navListBox, Scintilla textArea)
-            {
-                /* Add movements */
-                string buffer = "";
-                for (int i = 0; i < commandList.Count; i++)
+                else
                 {
-                    ScriptActionContainer currentCommand = commandList[i];
+                    buffer += '\t' + "UseScript_#" + scriptCommandContainer.usedScriptID + Environment.NewLine;
+                }
 
-                    string header = containerType + " " + (i + 1);
-                    buffer += header + ':' + Environment.NewLine;
-                    navListBox.Items.Add(header);
+                textArea.AppendText(buffer + Environment.NewLine);
+                buffer = "";
+            }
+        }
 
-                    for (int j = 0; j < currentCommand.commands.Count; j++)
+        static void displayScriptFileActions(ScriptFile.ContainerTypes containerType, List<ScriptActionContainer> commandList, ListBox navListBox, Scintilla textArea)
+        {
+            /* Add movements */
+            string buffer = "";
+            for (int i = 0; i < commandList.Count; i++)
+            {
+                ScriptActionContainer currentCommand = commandList[i];
+
+                string header = containerType + " " + (i + 1);
+                buffer += header + ':' + Environment.NewLine;
+                navListBox.Items.Add(header);
+
+                for (int j = 0; j < currentCommand.commands.Count; j++)
+                {
+                    ScriptAction command = currentCommand.commands[j];
+                    if (!ScriptDatabase.movementEndCodes.Contains(command.id))
                     {
-                        ScriptAction command = currentCommand.commands[j];
-                        if (!ScriptDatabase.movementEndCodes.Contains(command.id))
-                        {
-                            buffer += '\t';
-                        }
-
-                        buffer += command.name + Environment.NewLine;
+                        buffer += '\t';
                     }
 
-                    textArea.AppendText(buffer + Environment.NewLine);
-                    buffer = "";
+                    buffer += command.name + Environment.NewLine;
                 }
+
+                textArea.AppendText(buffer + Environment.NewLine);
+                buffer = "";
             }
+        }
 
         private void scriptEditorZoomInButton_Click(object sender, EventArgs e)
         {
@@ -888,39 +1105,11 @@ namespace DSPRE.Editors
                     {
                         string content = File.ReadAllText(of.FileName);
 
-                        // Split content into sections
-                        const string SCRIPTS_HEADER = "//===== SCRIPTS =====//";
-                        const string FUNCTIONS_HEADER = "//===== FUNCTIONS =====//";
-                        const string ACTIONS_HEADER = "//===== ACTIONS =====//";
-
-                        int scriptsStart = content.IndexOf(SCRIPTS_HEADER);
-                        int functionsStart = content.IndexOf(FUNCTIONS_HEADER);
-                        int actionsStart = content.IndexOf(ACTIONS_HEADER);
-
-                        if (scriptsStart == -1 || functionsStart == -1 || actionsStart == -1)
+                        // Use shared loading logic (don't populate nav lists - user will save/reload)
+                        if (!LoadPlaintextIntoEditor(content, false, out _))
                         {
                             throw new FormatException("Invalid script file format. Missing required section headers.");
                         }
-
-                        // Extract each section's content
-                        string scripts = content.Substring(
-                            scriptsStart + SCRIPTS_HEADER.Length,
-                            functionsStart - (scriptsStart + SCRIPTS_HEADER.Length)
-                        ).Trim();
-
-                        string functions = content.Substring(
-                            functionsStart + FUNCTIONS_HEADER.Length,
-                            actionsStart - (functionsStart + FUNCTIONS_HEADER.Length)
-                        ).Trim();
-
-                        string actions = content.Substring(
-                            actionsStart + ACTIONS_HEADER.Length
-                        ).Trim();
-
-                        // Update text areas
-                        ScriptTextArea.Text = scripts;
-                        FunctionTextArea.Text = functions;
-                        ActionTextArea.Text = actions;
 
                         MessageBox.Show("Script file imported successfully!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -957,6 +1146,63 @@ namespace DSPRE.Editors
             string path = Filesystem.GetScriptPath(selectScriptFileComboBox.SelectedIndex);
             Helpers.ExplorerSelect(path);
 
+        }
+
+        private void openInVSCode_Click(object sender, EventArgs e)
+        {
+            if (currentScriptFile == null)
+            {
+                MessageBox.Show("No script file is currently loaded.", "Cannot Open", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (currentScriptFile.parseFailedDueToInvalidCommand)
+            {
+                MessageBox.Show(
+                    "This script file could not be fully parsed due to unrecognized commands and is READ-ONLY.\n\n" +
+                    "Opening it in VSCode is disabled to prevent accidental editing of incomplete data.",
+                    "Cannot Open Incomplete Script",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            int fileID = selectScriptFileComboBox.SelectedIndex;
+            var (binPath, txtPath) = ScriptFile.GetFilePaths(fileID);
+
+            if (!File.Exists(txtPath))
+            {
+                MessageBox.Show(
+                    "Plaintext script file not found. This may be a level script or the file hasn't been exported yet.",
+                    "Cannot Open",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string scriptsFolder = Path.GetDirectoryName(txtPath);
+
+                var startInfo = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = "cmd.exe",
+                    Arguments = $"/c code \"{scriptsFolder}\" \"{txtPath}\"",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+                };
+
+                System.Diagnostics.Process.Start(startInfo);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Failed to open VSCode. Make sure VSCode is installed and 'code' is in your PATH.\n\nError: {ex.Message}",
+                    "VSCode Launch Failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
         private void findNext(SearchManager searchManager)
         {
@@ -1127,33 +1373,154 @@ namespace DSPRE.Editors
                 searchInScriptsButton_Click(null, null);
             }
         }
+        /// <summary>
+        /// Tries to load plaintext directly without parsing for fast display.
+        /// Only works if plaintext exists and is newer than binary.
+        /// Returns true if successful, false if parsing is needed.
+        /// </summary>
+        private bool TryLoadPlaintextDirect(int fileID, out bool isLevelScript)
+        {
+            isLevelScript = false;
+
+            var (binPath, txtPath) = ScriptFile.GetFilePaths(fileID);
+
+            if (!File.Exists(txtPath))
+            {
+                return false;
+            }
+
+            if (File.Exists(binPath) && File.GetLastWriteTimeUtc(txtPath) < File.GetLastWriteTimeUtc(binPath))
+            {
+                return false;
+            }
+
+            try
+            {
+                string content = File.ReadAllText(txtPath);
+                if (!LoadPlaintextIntoEditor(content, true, out isLevelScript))
+                {
+                    return false;
+                }
+
+                AppLogger.Info($"Script file {fileID:D4} loaded directly from plaintext (fast path)");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Fast plaintext loading failed for {fileID:D4}: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Shared logic to load plaintext content into editor text areas.
+        /// Used by both auto-loading and manual import.
+        /// </summary>
+        /// <param name="content">The plaintext file content</param>
+        /// <param name="populateNavLists">Whether to populate navigation lists (true for load, false for import that's followed by reload)</param>
+        /// <param name="isLevelScript">Output: whether this is a level script</param>
+        /// <returns>True if successful, false if format is invalid</returns>
+        private bool LoadPlaintextIntoEditor(string content, bool populateNavLists, out bool isLevelScript)
+        {
+            isLevelScript = false;
+
+            const string SCRIPTS_HEADER = "//===== SCRIPTS =====//";
+            const string FUNCTIONS_HEADER = "//===== FUNCTIONS =====//";
+            const string ACTIONS_HEADER = "//===== ACTIONS =====//";
+
+            int scriptsStart = content.IndexOf(SCRIPTS_HEADER);
+            int functionsStart = content.IndexOf(FUNCTIONS_HEADER);
+            int actionsStart = content.IndexOf(ACTIONS_HEADER);
+
+            if (scriptsStart == -1 || functionsStart == -1 || actionsStart == -1)
+            {
+                return false; // Invalid format
+            }
+
+            string scriptsSection = content.Substring(
+                scriptsStart + SCRIPTS_HEADER.Length,
+                functionsStart - scriptsStart - SCRIPTS_HEADER.Length
+            ).Trim();
+
+            string functionsSection = content.Substring(
+                functionsStart + FUNCTIONS_HEADER.Length,
+                actionsStart - functionsStart - FUNCTIONS_HEADER.Length
+            ).Trim();
+
+            string actionsSection = content.Substring(
+                actionsStart + ACTIONS_HEADER.Length
+            ).Trim();
+
+            ScriptTextArea.Text = scriptsSection;
+            FunctionTextArea.Text = functionsSection;
+            ActionTextArea.Text = actionsSection;
+
+            if (populateNavLists)
+            {
+                PopulateNavListFromText(scriptsSection, scriptsNavListbox, "Script");
+                PopulateNavListFromText(functionsSection, functionsNavListbox, "Function");
+                PopulateNavListFromText(actionsSection, actionsNavListbox, "Action");
+            }
+
+            isLevelScript = string.IsNullOrWhiteSpace(scriptsSection) || !scriptsSection.Contains("Script ");
+
+            return true;
+        }
+
+        /// <summary>
+        /// Populates navigation listbox by counting "Type X:" headers in text
+        /// </summary>
+        private void PopulateNavListFromText(string text, ListBox navListBox, string containerType)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            var lines = text.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            foreach (var line in lines)
+            {
+                string trimmed = line.Trim();
+                if (trimmed.StartsWith(containerType + " ", StringComparison.InvariantCultureIgnoreCase) && trimmed.Contains(':'))
+                {
+                    // Extract "Script 1:" or "Function 2:" etc.
+                    int colonIndex = trimmed.IndexOf(':');
+                    if (colonIndex > 0)
+                    {
+                        string header = trimmed.Substring(0, colonIndex);
+                        navListBox.Items.Add(header);
+                    }
+                }
+            }
+        }
+
         public List<ScriptFile> getScriptsToSearch()
         {
             List<ScriptFile> scriptsToSearch = new List<ScriptFile>();
             if (searchOnlyCurrentScriptCheckBox.Checked)
             {
-                this.UIThread(() => {
+                this.UIThread(() =>
+                {
                     searchProgressBar.Maximum = 1;
                 });
                 int i = selectScriptFileComboBox.SelectedIndex;
                 ScriptFile scriptFile = new ScriptFile(i);
-                AppLogger.Debug("Attempting to load script " + scriptFile.fileID);
                 scriptsToSearch.Add(scriptFile);
-                this.UIThread(() => {
+                this.UIThread(() =>
+                {
                     searchProgressBar.IncrementNoAnimation();
                 });
             }
             else
             {
-                this.UIThread(() => {
+                this.UIThread(() =>
+                {
                     searchProgressBar.Maximum = selectScriptFileComboBox.Items.Count;
                 });
                 for (int i = 0; i < selectScriptFileComboBox.Items.Count; i++)
                 {
                     ScriptFile scriptFile = new ScriptFile(i);
-                    AppLogger.Debug("Attempting to load script " + scriptFile.fileID);
                     scriptsToSearch.Add(scriptFile);
-                    this.UIThread(() => {
+                    this.UIThread(() =>
+                    {
                         searchProgressBar.IncrementNoAnimation();
                     });
                 }
@@ -1167,29 +1534,32 @@ namespace DSPRE.Editors
                 return;
             }
             BackgroundWorker bw = new BackgroundWorker();
-            bw.DoWork += (_sender, args) => {
-            this.UIThread(() => {
-                searchInScriptsResultListBox.Items.Clear();
-                searchProgressBar.Value = 0;
-            });
-            List<ScriptFile> scriptsToSearch = getScriptsToSearch();
-
-            string searchString = searchInScriptsTextBox.Text;
-            Func<string, bool> searchCriteriaCS = (string s) => s.IndexOf(searchString, StringComparison.InvariantCulture) >= 0;
-            Func<string, bool> searchCriteriaCI = (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0;
-            Func<string, bool> searchCriteria = scriptSearchCaseSensitiveCheckBox.Checked ? searchCriteriaCS : searchCriteriaCI;
-
-            List<ScriptEditorSearchResult> results = new List<ScriptEditorSearchResult>();
-            foreach (ScriptFile scriptFile in scriptsToSearch)
+            bw.DoWork += (_sender, args) =>
             {
-                List<ScriptEditorSearchResult> scriptResults = SearchInScripts(scriptFile, scriptFile.allScripts, searchCriteria);
-                List<ScriptEditorSearchResult> functionResults = SearchInScripts(scriptFile, scriptFile.allFunctions, searchCriteria);
-                // List<ScriptEditorSearchResult> actionResults = SearchInScripts(scriptFile, scriptFile.allActions, searchCriteria);
-                results.AddRange(scriptResults);
-                results.AddRange(functionResults);
-                // results.AddRange(actionResults);
-            }
-                this.UIThread(() => {
+                this.UIThread(() =>
+                {
+                    searchInScriptsResultListBox.Items.Clear();
+                    searchProgressBar.Value = 0;
+                });
+                List<ScriptFile> scriptsToSearch = getScriptsToSearch();
+
+                string searchString = searchInScriptsTextBox.Text;
+                Func<string, bool> searchCriteriaCS = (string s) => s.IndexOf(searchString, StringComparison.InvariantCulture) >= 0;
+                Func<string, bool> searchCriteriaCI = (string s) => s.IndexOf(searchString, StringComparison.InvariantCultureIgnoreCase) >= 0;
+                Func<string, bool> searchCriteria = scriptSearchCaseSensitiveCheckBox.Checked ? searchCriteriaCS : searchCriteriaCI;
+
+                List<ScriptEditorSearchResult> results = new List<ScriptEditorSearchResult>();
+                foreach (ScriptFile scriptFile in scriptsToSearch)
+                {
+                    List<ScriptEditorSearchResult> scriptResults = SearchInScripts(scriptFile, scriptFile.allScripts, searchCriteria);
+                    List<ScriptEditorSearchResult> functionResults = SearchInScripts(scriptFile, scriptFile.allFunctions, searchCriteria);
+                    // List<ScriptEditorSearchResult> actionResults = SearchInScripts(scriptFile, scriptFile.allActions, searchCriteria);
+                    results.AddRange(scriptResults);
+                    results.AddRange(functionResults);
+                    // results.AddRange(actionResults);
+                }
+                this.UIThread(() =>
+                {
                     searchInScriptsResultListBox.Items.AddRange(results.ToArray());
                     searchProgressBar.Value = 0;
                 });
@@ -1201,6 +1571,12 @@ namespace DSPRE.Editors
         private List<ScriptEditorSearchResult> SearchInScripts(ScriptFile scriptFile, List<ScriptCommandContainer> commandContainers, Func<string, bool> criteria)
         {
             List<ScriptEditorSearchResult> results = new List<ScriptEditorSearchResult>();
+
+            // Check if plaintext parsing failed
+            if (commandContainers == null)
+            {
+                return results;
+            }
 
             for (int j = 0; j < commandContainers.Count; j++)
             {
@@ -1278,7 +1654,8 @@ namespace DSPRE.Editors
 
     }
 
-    public class ScriptEditorSearchResult {
+    public class ScriptEditorSearchResult
+    {
         public readonly ScriptFile scriptFile;
         public readonly ScriptFile.ContainerTypes containerType;
         public readonly int commandNumber;
@@ -1286,7 +1663,8 @@ namespace DSPRE.Editors
 
         public const int ResultsPadding = 1;
 
-        public ScriptEditorSearchResult(ScriptFile scriptFile, ScriptFile.ContainerTypes containerType, int commandNumber, ScriptCommand scriptCommand) {
+        public ScriptEditorSearchResult(ScriptFile scriptFile, ScriptFile.ContainerTypes containerType, int commandNumber, ScriptCommand scriptCommand)
+        {
             this.scriptFile = scriptFile;
             this.containerType = containerType;
             this.commandNumber = commandNumber;
@@ -1295,7 +1673,8 @@ namespace DSPRE.Editors
 
         public string CommandBlockOpen { get { return $"{containerType} {commandNumber}:"; } }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             return $"File {scriptFile.fileID} - {CommandBlockOpen} {scriptCommand.name}";
         }
     }
