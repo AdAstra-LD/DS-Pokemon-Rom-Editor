@@ -23,7 +23,11 @@ jobs:
 
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v2
-
+      
+    - name: Clone Database Repository
+      run: |
+        git clone https://github.com/DS-Pokemon-Rom-Editor/scrcmd-database.git databases
+        
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
@@ -32,20 +36,11 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
     
-    - name: Debug directory contents
+    - name: Prepare Release Files
       run: |
-        echo "Listing repository root:"
-        dir "${{env.GITHUB_WORKSPACE}}"
-        echo "Listing DS_Map (if exists):"
-        dir "${{env.GITHUB_WORKSPACE}}\DS_Map" || echo "DS_Map directory not found"
-        echo "Listing DS_Map\bin (if exists):"
-        dir "${{env.GITHUB_WORKSPACE}}\DS_Map\bin" || echo "bin directory not found"
-        echo "Listing DS_Map\bin\Release (if exists):"
-        dir "${{env.GITHUB_WORKSPACE}}\DS_Map\bin\Release" || echo "Release directory not found"
-        echo "Searching for bin directories in repository:"
-        dir /s "${{env.GITHUB_WORKSPACE}}\bin" || echo "No bin directories found"
-      shell: cmd
-      continue-on-error: true
+        mkdir "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\databases"
+        robocopy databases "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\databases" /E /XD "databases\.git\objects\pack"
+        if ($LASTEXITCODE -le 7) { exit 0 } else { exit 1 }
 
     - name: Zip Release Files
       run: Compress-Archive -Path "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\*" -DestinationPath DSPRE-canary.zip
