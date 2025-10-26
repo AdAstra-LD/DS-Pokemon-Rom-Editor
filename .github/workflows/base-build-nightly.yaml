@@ -43,7 +43,7 @@ jobs:
         if ($LASTEXITCODE -le 7) { exit 0 } else { exit 1 }
 
     - name: Zip Release Files
-      run: Compress-Archive -Path "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\*" -DestinationPath DSPRE-canary.zip
+      run: Compress-Archive -Path "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\*" -DestinationPath DSPRE-canary-(${{ github.sha }}).zip
 
     - name: Fetch tags
       run: git fetch --prune --unshallow --tags
@@ -70,7 +70,7 @@ jobs:
       with:
         tag_name: canary
         name: DSPRE Canary Build ${{ steps.date.outputs.date }} (${{ github.sha }})
-        files: DSPRE-canary.zip
+        files: DSPRE-canary-(${{ github.sha }}).zip
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
           ##  ⚠️ Canary Build Notice ⚠️
