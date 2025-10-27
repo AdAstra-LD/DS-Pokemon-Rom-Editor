@@ -292,6 +292,40 @@ namespace DSPRE.ROMFiles
                                 $"Expected: {paramLength}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 id = null;
             }
+
+            if (id != null)
+            {
+                var commandInfoDict = RomInfo.GetScriptCommandInfoDict();
+                ScriptCommandInfo cmdInfo = null;
+                commandInfoDict?.TryGetValue((ushort)id, out cmdInfo);
+
+                if (cmdInfo != null && !string.IsNullOrEmpty(cmdInfo.Name))
+                {
+                    name = cmdInfo.Name;
+                }
+                else if (!RomInfo.ScriptCommandNamesDict.TryGetValue((ushort)id, out name))
+                {
+                    name = $"CMD_{id:X3}";
+                }
+
+                List<ScriptParameter.ParameterType> paramTypes = cmdInfo?.ParameterTypes;
+
+                if (paramTypes != null && paramTypes.Count > 0 && cmdParams != null)
+                {
+                    for (int i = 0; i < Math.Min(paramTypes.Count, cmdParams.Count); i++)
+                    {
+                        var param = new ScriptParameter(cmdParams[i], paramTypes[i]);
+                        name += " " + param.DisplayValue;
+                    }
+                }
+                else if (cmdParams != null)
+                {
+                    foreach (var param in cmdParams)
+                    {
+                        name += " " + new ScriptParameter(param, ScriptParameter.ParameterType.Integer).DisplayValue;
+                    }
+                }
+            }
         }
 
         private string ProcessBracketedItems(string line)

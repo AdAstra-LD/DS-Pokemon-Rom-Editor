@@ -763,6 +763,7 @@ namespace DSPRE.ROMFiles
 
         public ScriptFile(List<ScriptCommandContainer> scripts, List<ScriptCommandContainer> functions, List<ScriptActionContainer> movements, int fileID = -1)
         {
+            this.fileID = fileID;
             allScripts = scripts;
             allFunctions = functions;
             allActions = movements;
