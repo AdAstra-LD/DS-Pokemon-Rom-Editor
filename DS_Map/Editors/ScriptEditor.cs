@@ -34,6 +34,7 @@ namespace DSPRE.Editors
         private string altCaseKeywords = "";
         private ScriptFile currentScriptFile;
         MainProgram _parent;
+        private FileSystemWatcher scriptFileWatcher;
         /// <summary>
         /// the background color of the text area
         /// </summary>
@@ -95,13 +96,12 @@ namespace DSPRE.Editors
             if (scriptEditorIsReady && !force) { return; }
             scriptEditorIsReady = true;
             this._parent = parent;
-            SetupScriptEditorTextAreas();
             /* Extract essential NARCs sub-archives*/
             Helpers.statusLabelMessage("Setting up Script Editor...");
             Update();
             DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts }); //12 = scripts Narc Dir
 
-            if (Resources.ScriptDatabase.pokemonNames == null)
+            if (Resources.ScriptDatabase.pokemonNames.Count == 0)
             {
                 // Unpack text archives first if not unpacked yet
                 DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.textArchives });
@@ -111,6 +111,8 @@ namespace DSPRE.Editors
                 Resources.ScriptDatabase.InitializeMoveNames();
                 Resources.ScriptDatabase.InitializeTrainerNames();
             }
+
+            SetupScriptEditorTextAreas();
 
             // Export scripts on first open with progress dialog, same as text archives
             int scriptCount = Filesystem.GetScriptCount();
@@ -756,6 +758,7 @@ namespace DSPRE.Editors
             {
                 NumberStyles old = (NumberStyles)SettingsManager.Settings.scriptEditorFormatPreference; //Local Backup
                 SettingsManager.Settings.scriptEditorFormatPreference = (int)numberStyle;
+                ScriptFile.ClearPlaintextCache();
                 if (!DisplayScript())
                 {
                     UpdateScriptNumberCheckBox(old); //Restore old checkbox status! Script couldn't be redrawn
@@ -764,16 +767,53 @@ namespace DSPRE.Editors
         }
         private void UpdateScriptNumberFormatNoPref(object sender, EventArgs e)
         {
-            UpdateScriptNumberFormat(NumberStyles.None);
+            if (((RadioButton)sender).Checked)
+                UpdateScriptNumberFormat(NumberStyles.None);
         }
         private void UpdateScriptNumberFormatDec(object sender, EventArgs e)
         {
-            UpdateScriptNumberFormat(NumberStyles.Integer);
+            if (((RadioButton)sender).Checked)
+                UpdateScriptNumberFormat(NumberStyles.Integer);
         }
         private void UpdateScriptNumberFormatHex(object sender, EventArgs e)
         {
-            UpdateScriptNumberFormat(NumberStyles.HexNumber);
+            if (((RadioButton)sender).Checked)
+                UpdateScriptNumberFormat(NumberStyles.HexNumber);
         }
+
+        public void UpdateParameterDisplayCheckBox(ScriptParameter.ParameterDisplayMode toSet)
+        {
+            Helpers.DisableHandlers();
+            ScriptParameter.DisplayMode = toSet;
+            Helpers.EnableHandlers();
+        }
+
+        private void UpdateParameterDisplayMode(ScriptParameter.ParameterDisplayMode mode)
+        {
+            if (Helpers.HandlersEnabled)
+            {
+                ScriptParameter.ParameterDisplayMode old = ScriptParameter.DisplayMode;
+                ScriptParameter.DisplayMode = mode;
+                ScriptFile.ClearPlaintextCache();
+                if (!DisplayScript())
+                {
+                    UpdateParameterDisplayCheckBox(old);
+                }
+            }
+        }
+
+        private void ShowParameterNames(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+                UpdateParameterDisplayMode(ScriptParameter.ParameterDisplayMode.Names);
+        }
+
+        private void ShowParameterIDs(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+                UpdateParameterDisplayMode(ScriptParameter.ParameterDisplayMode.IDs);
+        }
+
         private bool DisplayScript()
         {
             AppLogger.Debug("Script Reload has been requested");
@@ -801,6 +841,11 @@ namespace DSPRE.Editors
             ScriptFile lastScriptFile = currentScriptFile;
             int fileID = selectScriptFileComboBox.SelectedIndex;
 
+            // Set ReadOnly to false before clearing, in case previous script was corrupted
+            ScriptTextArea.ReadOnly = false;
+            FunctionTextArea.ReadOnly = false;
+            ActionTextArea.ReadOnly = false;
+
             ScriptTextArea.ClearAll();
             FunctionTextArea.ClearAll();
             ActionTextArea.ClearAll();
@@ -809,17 +854,7 @@ namespace DSPRE.Editors
             functionsNavListbox.Items.Clear();
             actionsNavListbox.Items.Clear();
 
-            if (TryLoadPlaintextDirect(fileID, out bool isLevelScript))
-            {
-                // Create a minimal ScriptFile just to hold the fileID for saving later
-                currentScriptFile = new ScriptFile(new List<ScriptCommandContainer>(), new List<ScriptCommandContainer>(), new List<ScriptActionContainer>(), fileID);
-                currentScriptFile.isLevelScript = isLevelScript;
-            }
-            else
-            {
-                // Fallback: load and parse normally (binary or older plaintext)
-                currentScriptFile = new ScriptFile(fileID);
-            }
+            currentScriptFile = new ScriptFile(fileID);
 
             //prevent buttons from flickering when the combobox selection changes
             bool typeChanged = true;
@@ -889,6 +924,9 @@ namespace DSPRE.Editors
             ScriptEditorSetClean();
             Helpers.statusLabelMessage();
             Helpers.EnableHandlers();
+
+            SetupFileWatcher();
+
             return true;
         }
 
@@ -1182,12 +1220,52 @@ namespace DSPRE.Editors
 
             try
             {
+                // Detect if running on Wine/Linux
+                bool isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
+
+                // Check if VSCode 'code' command is available
+                var checkProcess = new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = isWindows ? "cmd.exe" : "/bin/sh",
+                    Arguments = isWindows ? "/c where code" : "-c \"which code\"",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
+                };
+
+                var whereResult = System.Diagnostics.Process.Start(checkProcess);
+                whereResult.WaitForExit();
+
+                if (whereResult.ExitCode != 0)
+                {
+                    string instructions = isWindows
+                        ? "To add VSCode to PATH:\n" +
+                          "1. Open VSCode\n" +
+                          "2. Press Ctrl+Shift+P\n" +
+                          "3. Type 'Shell Command: Install code command in PATH'\n" +
+                          "4. Select the command and restart DSPRE"
+                        : "On Linux, make sure the 'code' command is in your PATH.\n" +
+                          "You may need to create a symlink or add VSCode's bin directory to PATH.";
+
+                    MessageBox.Show(
+                        "Visual Studio Code (VSCode) could not be found.\n\n" +
+                        "Please make sure VSCode is installed and the 'code' command is available in your system PATH.\n\n" +
+                        instructions,
+                        "VSCode Not Found",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+                }
+
                 string scriptsFolder = Path.GetDirectoryName(txtPath);
 
                 var startInfo = new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = "cmd.exe",
-                    Arguments = $"/c code \"{scriptsFolder}\" \"{txtPath}\"",
+                    FileName = isWindows ? "cmd.exe" : "/bin/sh",
+                    Arguments = isWindows
+                        ? $"/c code \"{scriptsFolder}\" \"{txtPath}\""
+                        : $"-c \"code '{scriptsFolder}' '{txtPath}'\"",
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
@@ -1198,12 +1276,119 @@ namespace DSPRE.Editors
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    $"Failed to open VSCode. Make sure VSCode is installed and 'code' is in your PATH.\n\nError: {ex.Message}",
+                    $"Failed to open VSCode.\n\nError: {ex.Message}",
                     "VSCode Launch Failed",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
+        private void SetupFileWatcher()
+        {
+            // Dispose existing watcher if any
+            if (scriptFileWatcher != null)
+            {
+                scriptFileWatcher.EnableRaisingEvents = false;
+                scriptFileWatcher.Dispose();
+                scriptFileWatcher = null;
+            }
+
+            // Only watch if we have a current script file and it's not a level script
+            if (currentScriptFile == null || currentScriptFile.isLevelScript)
+                return;
+
+            var (binPath, txtPath) = ScriptFile.GetFilePaths((int)currentScriptFile.fileID);
+
+            if (!File.Exists(txtPath))
+                return;
+
+            string directory = Path.GetDirectoryName(txtPath);
+            string fileName = Path.GetFileName(txtPath);
+
+            scriptFileWatcher = new FileSystemWatcher
+            {
+                Path = directory,
+                Filter = fileName,
+                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
+            };
+
+            scriptFileWatcher.Changed += OnScriptFileChanged;
+            scriptFileWatcher.EnableRaisingEvents = true;
+        }
+
+        private void OnScriptFileChanged(object sender, FileSystemEventArgs e)
+        {
+            // Check if this control still exists and is not disposed
+            if (IsDisposed || !IsHandleCreated)
+                return;
+
+            // Invoke on UI thread
+            if (InvokeRequired)
+            {
+                try
+                {
+                    BeginInvoke(new Action(() => ReloadScriptFromDisk()));
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Control was disposed while invoking
+                    return;
+                }
+                return;
+            }
+
+            ReloadScriptFromDisk();
+        }
+
+        private void ReloadScriptFromDisk()
+        {
+            // Temporarily disable file watcher to prevent recursion
+            bool wasWatcherEnabled = false;
+            if (scriptFileWatcher != null)
+            {
+                wasWatcherEnabled = scriptFileWatcher.EnableRaisingEvents;
+                scriptFileWatcher.EnableRaisingEvents = false;
+            }
+
+            try
+            {
+                // Check if user has unsaved changes
+                if (scriptsDirty || functionsDirty || actionsDirty)
+                {
+                    DialogResult result = MessageBox.Show(
+                        $"Script file {currentScriptFile.fileID:D4} has been modified externally.\n\n" +
+                        "You have unsaved changes in the editor. Do you want to reload from disk and lose your changes?",
+                        "File Changed Externally",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning);
+
+                    if (result != DialogResult.Yes)
+                    {
+                        // User cancelled, re-enable watcher
+                        if (scriptFileWatcher != null && wasWatcherEnabled)
+                        {
+                            scriptFileWatcher.EnableRaisingEvents = true;
+                        }
+                        return;
+                    }
+                }
+
+                // Reload the script (this will call SetupFileWatcher() which recreates the watcher)
+                ScriptFile.ClearPlaintextCache();
+                DisplayScript();
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Error reloading script from disk: {ex.Message}");
+                MessageBox.Show($"Failed to reload script.\n\nError: {ex.Message}", "Reload Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Re-enable watcher on error
+                if (scriptFileWatcher != null && wasWatcherEnabled)
+                {
+                    scriptFileWatcher.EnableRaisingEvents = true;
+                }
+            }
+        }
+
         private void findNext(SearchManager searchManager)
         {
             searchManager.Find(true, false);

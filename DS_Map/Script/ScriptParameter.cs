@@ -1,11 +1,13 @@
-﻿using DSPRE;
+using DSPRE;
 using DSPRE.Resources;
 using DSPRE.ROMFiles;
 using System;
 using System.Globalization;
 
-public class ScriptParameter {
-    public enum ParameterType {
+public class ScriptParameter
+{
+    public enum ParameterType
+    {
         Integer,
         Variable,
         Flex,
@@ -22,6 +24,14 @@ public class ScriptParameter {
         Sound,
         Trainer
     }
+
+    public enum ParameterDisplayMode
+    {
+        Names,
+        IDs
+    }
+
+    public static ParameterDisplayMode DisplayMode { get; set; } = ParameterDisplayMode.Names;
 
     public static ParameterType ParseTypeString(string typeStr)
     {
@@ -59,9 +69,10 @@ public class ScriptParameter {
         RawData = BitConverter.GetBytes(targetOffset);
     }
 
-    // Get display representation
-    public string GetFormattedValue() {
-        if (Type == ParameterType.Function && !string.IsNullOrEmpty(TargetLabel)) {
+    public string GetFormattedValue()
+    {
+        if (Type == ParameterType.Function && !string.IsNullOrEmpty(TargetLabel))
+        {
             return TargetLabel;
         }
 
@@ -91,6 +102,18 @@ public class ScriptParameter {
                 throw new ArgumentException($"Unexpected parameter data length: {data.Length}");
         }
 
+        if (DisplayMode == ParameterDisplayMode.Names)
+        {
+            return FormatParameterWithNames(value, type);
+        }
+        else
+        {
+            return FormatParameterAsID(value, type);
+        }
+    }
+
+    private string FormatParameterWithNames(uint value, ParameterType type)
+    {
         switch (type)
         {
             case ParameterType.Pokemon:
@@ -137,7 +160,25 @@ public class ScriptParameter {
                 break;
         }
 
-        // Default number formatting based on settings
+        return FormatHexNumber(value);
+    }
+
+    private string FormatParameterAsID(uint value, ParameterType type)
+    {
+        switch (type)
+        {
+            case ParameterType.Function:
+                return $"Function#{value}";
+            case ParameterType.Action:
+                return $"Action#{value}";
+            case ParameterType.CMDNumber:
+                return $"CMD_{value:X3}";
+            case ParameterType.Overworld:
+                return value < 4000 ? $"{Event.EventType.Overworld}.{value}" : FormatHexNumber(value);
+            case ParameterType.OwMovementType:
+                return value < 4000 ? $"Move.{value}" : FormatHexNumber(value);
+        }
+
         return FormatHexNumber(value);
     }
 
