@@ -33,6 +33,14 @@ namespace DSPRE {
                 }
             }
 
+            public static void SetUncompressedSize(int ovNumber, UInt32 newSIze)
+            {
+                using (DSUtils.EasyWriter f = new EasyWriter(RomInfo.overlayTablePath, ovNumber * ENTRY_LEN + 8))
+                {
+                    f.Write(newSIze);
+                }
+            }
+
             /**
             * Gets number of overlays
             **/
@@ -54,7 +62,11 @@ namespace DSPRE {
          * Checks the actual size of the overlay file
          **/
         public static bool IsCompressed(int ovNumber) {
-            return (new FileInfo(GetPath(ovNumber)).Length < OverlayTable.GetUncompressedSize(ovNumber));
+            FileInfo info = new FileInfo(GetPath(ovNumber));
+            Console.WriteLine($"{ovNumber} check compress");
+            Console.WriteLine($"Current size: {info.Length}");
+            Console.WriteLine($"Uncompressed size {OverlayTable.GetUncompressedSize(ovNumber)}");
+            return (info.Length < OverlayTable.GetUncompressedSize(ovNumber));
         }
 
         public static void RestoreFromCompressedBackup(int overlayNumber, bool eventEditorIsReady) {
@@ -85,7 +97,11 @@ namespace DSPRE {
                     "Overlay not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return ERR_OVERLAY_NOTFOUND;
             }
-
+            FileInfo info = new FileInfo(GetPath(overlayNumber));
+            if (info.Length != OverlayTable.GetUncompressedSize(overlayNumber))
+            {
+                OverlayTable.SetUncompressedSize(overlayNumber, (uint)info.Length);
+            }
             Process compress = new Process();
             compress.StartInfo.FileName = @"Tools\blz.exe";
             compress.StartInfo.Arguments = "-en " + '"' + overlayFilePath + '"';
