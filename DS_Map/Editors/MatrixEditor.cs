@@ -134,6 +134,7 @@ namespace DSPRE.Editors
 
             if (!ReadColorTable(SettingsManager.Settings.lastColorTablePath, silent: true))
             {
+                AppLogger.Error($"Failed to load color table at path \"{SettingsManager.Settings.lastColorTablePath}\". Default will be used instead.");
                 _parent.romInfo.ResetMapCellsColorDictionary();
             }
             RomInfo.SetupSpawnSettings();
@@ -646,6 +647,16 @@ namespace DSPRE.Editors
         {
             if (string.IsNullOrWhiteSpace(fileName))
             {
+                return false;
+            }
+
+            if (!File.Exists(fileName))
+            {
+                if (!silent)
+                {
+                    MessageBox.Show($"Could not read color table at path \"{fileName}\"", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 return false;
             }
 
