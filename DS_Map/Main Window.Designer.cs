@@ -105,10 +105,10 @@
             this.advancedStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fullViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.otherEditorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.personalDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pokemonEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overlayEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spawnEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveDataEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flyWarpEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.itemEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overworldEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,23 +128,27 @@
             this.buildNarcFromFolderToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.unpackNARCtoFolderToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.separator_afterNarcUtils = new System.Windows.Forms.ToolStripSeparator();
+            this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.wildEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.pokemonEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.moveEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.tradeEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.itemEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.separator_afterEditors = new System.Windows.Forms.ToolStripSeparator();
+            this.scriptCommandsButton = new System.Windows.Forms.ToolStripButton();
+            this.romToolboxToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.headerSearchToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.separator_afterMiscButtons = new System.Windows.Forms.ToolStripSeparator();
+            this.nsbmdAddTexButton = new System.Windows.Forms.ToolStripButton();
+            this.nsbmdRemoveTexButton = new System.Windows.Forms.ToolStripButton();
+            this.nsbmdExportTexButton = new System.Windows.Forms.ToolStripButton();
+            this.separator_afterNsbmdUtils = new System.Windows.Forms.ToolStripSeparator();
             this.listBasedBatchRenameToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.contentBasedBatchRenameToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.separator_afterRenameUtils = new System.Windows.Forms.ToolStripSeparator();
             this.enumBasedListBuilderToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.folderBasedListBuilderToolStriButton = new System.Windows.Forms.ToolStripButton();
             this.separator_afterListUtils = new System.Windows.Forms.ToolStripSeparator();
-            this.nsbmdAddTexButton = new System.Windows.Forms.ToolStripButton();
-            this.nsbmdRemoveTexButton = new System.Windows.Forms.ToolStripButton();
-            this.nsbmdExportTexButton = new System.Windows.Forms.ToolStripButton();
-            this.separator_afterNsbmdUtils = new System.Windows.Forms.ToolStripSeparator();
-            this.buildingEditorButton = new System.Windows.Forms.ToolStripButton();
-            this.wildEditorButton = new System.Windows.Forms.ToolStripButton();
-            this.scriptCommandsButton = new System.Windows.Forms.ToolStripButton();
-            this.romToolboxToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.headerSearchToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.spawnEditorToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.separator_afterMiscButtons = new System.Windows.Forms.ToolStripSeparator();
             this.weatherMapEditor = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -957,10 +961,10 @@
             // otherEditorsToolStripMenuItem
             // 
             this.otherEditorsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.personalDataEditorToolStripMenuItem,
+            this.pokemonEditorToolStripMenuItem,
             this.overlayEditorToolStripMenuItem,
             this.spawnEditorToolStripMenuItem,
-            this.moveDataEditorToolStripMenuItem,
+            this.moveEditorToolStripMenuItem,
             this.flyWarpEditorToolStripMenuItem,
             this.itemEditorToolStripMenuItem,
             this.overworldEditorToolStripMenuItem,
@@ -970,12 +974,12 @@
             this.otherEditorsToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.otherEditorsToolStripMenuItem.Text = "Other Editors";
             // 
-            // personalDataEditorToolStripMenuItem
+            // pokemonEditorToolStripMenuItem
             // 
-            this.personalDataEditorToolStripMenuItem.Name = "personalDataEditorToolStripMenuItem";
-            this.personalDataEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.personalDataEditorToolStripMenuItem.Text = "Pokémon Editor";
-            this.personalDataEditorToolStripMenuItem.Click += new System.EventHandler(this.pokemonDataEditorToolStripMenuItem_Click);
+            this.pokemonEditorToolStripMenuItem.Name = "pokemonEditorToolStripMenuItem";
+            this.pokemonEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.pokemonEditorToolStripMenuItem.Text = "Pokémon Editor";
+            this.pokemonEditorToolStripMenuItem.Click += new System.EventHandler(this.pokemonEditorToolStripMenuItem_Click);
             // 
             // overlayEditorToolStripMenuItem
             // 
@@ -991,12 +995,12 @@
             this.spawnEditorToolStripMenuItem.Text = "Spawn Point Editor";
             this.spawnEditorToolStripMenuItem.Click += new System.EventHandler(this.spawnEditorToolStripButton_Click);
             // 
-            // moveDataEditorToolStripMenuItem
+            // moveEditorToolStripMenuItem
             // 
-            this.moveDataEditorToolStripMenuItem.Name = "moveDataEditorToolStripMenuItem";
-            this.moveDataEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.moveDataEditorToolStripMenuItem.Text = "Move Data Editor";
-            this.moveDataEditorToolStripMenuItem.Click += new System.EventHandler(this.moveDataEditorToolStripMenuItem_Click);
+            this.moveEditorToolStripMenuItem.Name = "moveEditorToolStripMenuItem";
+            this.moveEditorToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.moveEditorToolStripMenuItem.Text = "Move Editor";
+            this.moveEditorToolStripMenuItem.Click += new System.EventHandler(this.moveEditorToolStripMenuItem_Click);
             // 
             // flyWarpEditorToolStripMenuItem
             // 
@@ -1075,23 +1079,27 @@
             this.buildNarcFromFolderToolStripButton,
             this.unpackNARCtoFolderToolStripButton,
             this.separator_afterNarcUtils,
+            this.buildingEditorButton,
+            this.wildEditorButton,
+            this.pokemonEditorButton,
+            this.moveEditorButton,
+            this.itemEditorButton,
+            this.tradeEditorButton,
+            this.separator_afterEditors,
+            this.scriptCommandsButton,
+            this.romToolboxToolStripButton,
+            this.headerSearchToolStripButton,
+            this.separator_afterMiscButtons,
+            this.nsbmdAddTexButton,
+            this.nsbmdRemoveTexButton,
+            this.nsbmdExportTexButton,
+            this.separator_afterNsbmdUtils,
             this.listBasedBatchRenameToolStripButton,
             this.contentBasedBatchRenameToolStripButton,
             this.separator_afterRenameUtils,
             this.enumBasedListBuilderToolStripButton,
             this.folderBasedListBuilderToolStriButton,
-            this.separator_afterListUtils,
-            this.nsbmdAddTexButton,
-            this.nsbmdRemoveTexButton,
-            this.nsbmdExportTexButton,
-            this.separator_afterNsbmdUtils,
-            this.buildingEditorButton,
-            this.wildEditorButton,
-            this.scriptCommandsButton,
-            this.romToolboxToolStripButton,
-            this.headerSearchToolStripButton,
-            this.spawnEditorToolStripButton,
-            this.separator_afterMiscButtons});
+            this.separator_afterListUtils});
             this.mainToolStrip.Location = new System.Drawing.Point(0, 24);
             this.mainToolStrip.Name = "mainToolStrip";
             this.mainToolStrip.Size = new System.Drawing.Size(1230, 44);
@@ -1201,6 +1209,181 @@
             this.separator_afterNarcUtils.Name = "separator_afterNarcUtils";
             this.separator_afterNarcUtils.Size = new System.Drawing.Size(6, 44);
             // 
+            // buildingEditorButton
+            // 
+            this.buildingEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buildingEditorButton.Enabled = false;
+            this.buildingEditorButton.Image = global::DSPRE.Properties.Resources.buildingEditorButton;
+            this.buildingEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.buildingEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buildingEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.buildingEditorButton.Name = "buildingEditorButton";
+            this.buildingEditorButton.Size = new System.Drawing.Size(36, 36);
+            this.buildingEditorButton.Text = "Buildings Editor";
+            this.buildingEditorButton.ToolTipText = "Building Editor";
+            this.buildingEditorButton.Click += new System.EventHandler(this.buildingEditorButton_Click);
+            // 
+            // wildEditorButton
+            // 
+            this.wildEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.wildEditorButton.Enabled = false;
+            this.wildEditorButton.Image = global::DSPRE.Properties.Resources.wildEditorButton;
+            this.wildEditorButton.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.wildEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.wildEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.wildEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.wildEditorButton.Name = "wildEditorButton";
+            this.wildEditorButton.Size = new System.Drawing.Size(36, 36);
+            this.wildEditorButton.Text = "Wild Pokémon Editor";
+            this.wildEditorButton.Click += new System.EventHandler(this.wildEditorButton_Click);
+            // 
+            // pokemonEditorButton
+            // 
+            this.pokemonEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.pokemonEditorButton.Enabled = false;
+            this.pokemonEditorButton.Image = global::DSPRE.Properties.Resources.pokemon_editor_icon;
+            this.pokemonEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.pokemonEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pokemonEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.pokemonEditorButton.Name = "pokemonEditorButton";
+            this.pokemonEditorButton.Size = new System.Drawing.Size(36, 36);
+            this.pokemonEditorButton.Text = "Pokémon Data Editor";
+            this.pokemonEditorButton.Click += new System.EventHandler(this.pokemonEditorToolStripMenuItem_Click);
+            // 
+            // moveEditorButton
+            // 
+            this.moveEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.moveEditorButton.Enabled = false;
+            this.moveEditorButton.Image = global::DSPRE.Properties.Resources.move_editor_icon;
+            this.moveEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.moveEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.moveEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.moveEditorButton.Name = "moveEditorButton";
+            this.moveEditorButton.Size = new System.Drawing.Size(36, 36);
+            this.moveEditorButton.Text = "Move Editor";
+            this.moveEditorButton.Click += new System.EventHandler(this.moveEditorToolStripMenuItem_Click);
+            // 
+            // tradeEditorButton
+            // 
+            this.tradeEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tradeEditorButton.Enabled = false;
+            this.tradeEditorButton.Image = global::DSPRE.Properties.Resources.trade_editor_icon;
+            this.tradeEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tradeEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tradeEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.tradeEditorButton.Name = "tradeEditorButton";
+            this.tradeEditorButton.Size = new System.Drawing.Size(36, 36);
+            this.tradeEditorButton.Text = "Trade Editor";
+            this.tradeEditorButton.Click += new System.EventHandler(this.tradeEditorToolStripMenuItem_Click);
+            // 
+            // itemEditorButton
+            // 
+            this.itemEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.itemEditorButton.Enabled = false;
+            this.itemEditorButton.Image = global::DSPRE.Properties.Resources.item_editor_icon;
+            this.itemEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.itemEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.itemEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.itemEditorButton.Name = "itemEditorButton";
+            this.itemEditorButton.Size = new System.Drawing.Size(36, 36);
+            this.itemEditorButton.Text = "Item Editor";
+            this.itemEditorButton.Click += new System.EventHandler(this.itemEditorToolStripMenuItem_Click);
+            // 
+            // separator_afterEditors
+            // 
+            this.separator_afterEditors.Name = "separator_afterEditors";
+            this.separator_afterEditors.Size = new System.Drawing.Size(6, 44);
+            // 
+            // scriptCommandsButton
+            // 
+            this.scriptCommandsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.scriptCommandsButton.Enabled = false;
+            this.scriptCommandsButton.Image = global::DSPRE.Properties.Resources.scriptDBIcon;
+            this.scriptCommandsButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.scriptCommandsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.scriptCommandsButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.scriptCommandsButton.Name = "scriptCommandsButton";
+            this.scriptCommandsButton.Size = new System.Drawing.Size(36, 36);
+            this.scriptCommandsButton.Text = "Script Commands Database";
+            this.scriptCommandsButton.Click += new System.EventHandler(this.scriptCommandsDatabaseToolStripButton_Click);
+            // 
+            // romToolboxToolStripButton
+            // 
+            this.romToolboxToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.romToolboxToolStripButton.Enabled = false;
+            this.romToolboxToolStripButton.Image = global::DSPRE.Properties.Resources.exploreKit;
+            this.romToolboxToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.romToolboxToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.romToolboxToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.romToolboxToolStripButton.Name = "romToolboxToolStripButton";
+            this.romToolboxToolStripButton.Size = new System.Drawing.Size(36, 36);
+            this.romToolboxToolStripButton.Text = "Patch Toolbox";
+            this.romToolboxToolStripButton.ToolTipText = "Patch Toolbox";
+            this.romToolboxToolStripButton.Click += new System.EventHandler(this.romToolBoxToolStripMenuItem_Click);
+            // 
+            // headerSearchToolStripButton
+            // 
+            this.headerSearchToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.headerSearchToolStripButton.Enabled = false;
+            this.headerSearchToolStripButton.Image = global::DSPRE.Properties.Resources.wideLensImage;
+            this.headerSearchToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.headerSearchToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.headerSearchToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.headerSearchToolStripButton.Name = "headerSearchToolStripButton";
+            this.headerSearchToolStripButton.Size = new System.Drawing.Size(36, 36);
+            this.headerSearchToolStripButton.Text = "Advanced Search (Experimental)";
+            this.headerSearchToolStripButton.ToolTipText = "Search Header by Property";
+            this.headerSearchToolStripButton.Click += new System.EventHandler(this.headerSearchToolStripButton_Click);
+            // 
+            // separator_afterMiscButtons
+            // 
+            this.separator_afterMiscButtons.Name = "separator_afterMiscButtons";
+            this.separator_afterMiscButtons.Size = new System.Drawing.Size(6, 44);
+            // 
+            // nsbmdAddTexButton
+            // 
+            this.nsbmdAddTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nsbmdAddTexButton.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
+            this.nsbmdAddTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.nsbmdAddTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nsbmdAddTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.nsbmdAddTexButton.Name = "nsbmdAddTexButton";
+            this.nsbmdAddTexButton.Size = new System.Drawing.Size(36, 36);
+            this.nsbmdAddTexButton.Text = "Add texture to NSBMD";
+            this.nsbmdAddTexButton.ToolTipText = "Add textures to NSBMD";
+            this.nsbmdAddTexButton.Click += new System.EventHandler(this.nsbmdAddTexButton_Click);
+            // 
+            // nsbmdRemoveTexButton
+            // 
+            this.nsbmdRemoveTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nsbmdRemoveTexButton.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
+            this.nsbmdRemoveTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.nsbmdRemoveTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nsbmdRemoveTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.nsbmdRemoveTexButton.Name = "nsbmdRemoveTexButton";
+            this.nsbmdRemoveTexButton.Size = new System.Drawing.Size(36, 36);
+            this.nsbmdRemoveTexButton.Text = "Remove texture from NSBMD";
+            this.nsbmdRemoveTexButton.ToolTipText = "Remove textures from NSBMD";
+            this.nsbmdRemoveTexButton.Click += new System.EventHandler(this.nsbmdRemoveTexButton_Click);
+            // 
+            // nsbmdExportTexButton
+            // 
+            this.nsbmdExportTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.nsbmdExportTexButton.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
+            this.nsbmdExportTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.nsbmdExportTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.nsbmdExportTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.nsbmdExportTexButton.Name = "nsbmdExportTexButton";
+            this.nsbmdExportTexButton.Size = new System.Drawing.Size(36, 36);
+            this.nsbmdExportTexButton.Text = "Extract texture from NSBMD";
+            this.nsbmdExportTexButton.ToolTipText = "Extract textures from NSBMD";
+            this.nsbmdExportTexButton.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
+            // 
+            // separator_afterNsbmdUtils
+            // 
+            this.separator_afterNsbmdUtils.Name = "separator_afterNsbmdUtils";
+            this.separator_afterNsbmdUtils.Size = new System.Drawing.Size(6, 44);
+            // 
             // listBasedBatchRenameToolStripButton
             // 
             this.listBasedBatchRenameToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1258,137 +1441,6 @@
             // 
             this.separator_afterListUtils.Name = "separator_afterListUtils";
             this.separator_afterListUtils.Size = new System.Drawing.Size(6, 44);
-            // 
-            // nsbmdAddTexButton
-            // 
-            this.nsbmdAddTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdAddTexButton.Image = global::DSPRE.Properties.Resources.addTextureToNSBMD;
-            this.nsbmdAddTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.nsbmdAddTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nsbmdAddTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.nsbmdAddTexButton.Name = "nsbmdAddTexButton";
-            this.nsbmdAddTexButton.Size = new System.Drawing.Size(36, 36);
-            this.nsbmdAddTexButton.Text = "Add texture to NSBMD";
-            this.nsbmdAddTexButton.ToolTipText = "Add textures to NSBMD";
-            this.nsbmdAddTexButton.Click += new System.EventHandler(this.nsbmdAddTexButton_Click);
-            // 
-            // nsbmdRemoveTexButton
-            // 
-            this.nsbmdRemoveTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdRemoveTexButton.Image = global::DSPRE.Properties.Resources.removeTextureNSBMD;
-            this.nsbmdRemoveTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.nsbmdRemoveTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nsbmdRemoveTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.nsbmdRemoveTexButton.Name = "nsbmdRemoveTexButton";
-            this.nsbmdRemoveTexButton.Size = new System.Drawing.Size(36, 36);
-            this.nsbmdRemoveTexButton.Text = "Remove texture from NSBMD";
-            this.nsbmdRemoveTexButton.ToolTipText = "Remove textures from NSBMD";
-            this.nsbmdRemoveTexButton.Click += new System.EventHandler(this.nsbmdRemoveTexButton_Click);
-            // 
-            // nsbmdExportTexButton
-            // 
-            this.nsbmdExportTexButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.nsbmdExportTexButton.Image = global::DSPRE.Properties.Resources.saveTextureFromNSBMD;
-            this.nsbmdExportTexButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.nsbmdExportTexButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.nsbmdExportTexButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.nsbmdExportTexButton.Name = "nsbmdExportTexButton";
-            this.nsbmdExportTexButton.Size = new System.Drawing.Size(36, 36);
-            this.nsbmdExportTexButton.Text = "Extract texture from NSBMD";
-            this.nsbmdExportTexButton.ToolTipText = "Extract textures from NSBMD";
-            this.nsbmdExportTexButton.Click += new System.EventHandler(this.nsbmdExportTexButton_Click);
-            // 
-            // separator_afterNsbmdUtils
-            // 
-            this.separator_afterNsbmdUtils.Name = "separator_afterNsbmdUtils";
-            this.separator_afterNsbmdUtils.Size = new System.Drawing.Size(6, 44);
-            // 
-            // buildingEditorButton
-            // 
-            this.buildingEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.buildingEditorButton.Enabled = false;
-            this.buildingEditorButton.Image = global::DSPRE.Properties.Resources.buildingEditorButton;
-            this.buildingEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.buildingEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.buildingEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.buildingEditorButton.Name = "buildingEditorButton";
-            this.buildingEditorButton.Size = new System.Drawing.Size(36, 36);
-            this.buildingEditorButton.Text = "Buildings Editor";
-            this.buildingEditorButton.ToolTipText = "Building Editor";
-            this.buildingEditorButton.Click += new System.EventHandler(this.buildingEditorButton_Click);
-            // 
-            // wildEditorButton
-            // 
-            this.wildEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.wildEditorButton.Enabled = false;
-            this.wildEditorButton.Image = global::DSPRE.Properties.Resources.wildEditorButton;
-            this.wildEditorButton.ImageAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.wildEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.wildEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.wildEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.wildEditorButton.Name = "wildEditorButton";
-            this.wildEditorButton.Size = new System.Drawing.Size(36, 36);
-            this.wildEditorButton.Text = "Wild Pokémon Editor";
-            this.wildEditorButton.Click += new System.EventHandler(this.wildEditorButton_Click);
-            // 
-            // scriptCommandsButton
-            // 
-            this.scriptCommandsButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.scriptCommandsButton.Enabled = false;
-            this.scriptCommandsButton.Image = global::DSPRE.Properties.Resources.scriptDBIcon;
-            this.scriptCommandsButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.scriptCommandsButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.scriptCommandsButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.scriptCommandsButton.Name = "scriptCommandsButton";
-            this.scriptCommandsButton.Size = new System.Drawing.Size(36, 36);
-            this.scriptCommandsButton.Text = "Script Commands Database";
-            this.scriptCommandsButton.Click += new System.EventHandler(this.scriptCommandsDatabaseToolStripButton_Click);
-            // 
-            // romToolboxToolStripButton
-            // 
-            this.romToolboxToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.romToolboxToolStripButton.Enabled = false;
-            this.romToolboxToolStripButton.Image = global::DSPRE.Properties.Resources.exploreKit;
-            this.romToolboxToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.romToolboxToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.romToolboxToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.romToolboxToolStripButton.Name = "romToolboxToolStripButton";
-            this.romToolboxToolStripButton.Size = new System.Drawing.Size(36, 36);
-            this.romToolboxToolStripButton.Text = "Patch Toolbox";
-            this.romToolboxToolStripButton.ToolTipText = "Patch Toolbox";
-            this.romToolboxToolStripButton.Click += new System.EventHandler(this.romToolBoxToolStripMenuItem_Click);
-            // 
-            // headerSearchToolStripButton
-            // 
-            this.headerSearchToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.headerSearchToolStripButton.Enabled = false;
-            this.headerSearchToolStripButton.Image = global::DSPRE.Properties.Resources.wideLensImage;
-            this.headerSearchToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.headerSearchToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.headerSearchToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.headerSearchToolStripButton.Name = "headerSearchToolStripButton";
-            this.headerSearchToolStripButton.Size = new System.Drawing.Size(36, 36);
-            this.headerSearchToolStripButton.Text = "Advanced Search (Experimental)";
-            this.headerSearchToolStripButton.ToolTipText = "Search Header by Property";
-            this.headerSearchToolStripButton.Click += new System.EventHandler(this.headerSearchToolStripButton_Click);
-            // 
-            // spawnEditorToolStripButton
-            // 
-            this.spawnEditorToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.spawnEditorToolStripButton.Enabled = false;
-            this.spawnEditorToolStripButton.Image = global::DSPRE.Properties.Resources.spawnCoordsMatrixeditorIcon;
-            this.spawnEditorToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.spawnEditorToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.spawnEditorToolStripButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.spawnEditorToolStripButton.Name = "spawnEditorToolStripButton";
-            this.spawnEditorToolStripButton.Size = new System.Drawing.Size(57, 36);
-            this.spawnEditorToolStripButton.Text = "Spawn Point Editor";
-            this.spawnEditorToolStripButton.Click += new System.EventHandler(this.spawnEditorToolStripButton_Click);
-            // 
-            // separator_afterMiscButtons
-            // 
-            this.separator_afterMiscButtons.Name = "separator_afterMiscButtons";
-            this.separator_afterMiscButtons.Size = new System.Drawing.Size(6, 44);
             // 
             // weatherMapEditor
             // 
@@ -1493,7 +1545,6 @@
         private System.Windows.Forms.ToolStripMenuItem heartGoldAndSoulSilverToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageDatabasesToolStripMenuItem;
         private System.Windows.Forms.Label spriteIDlabel;
-        private System.Windows.Forms.ToolStripButton spawnEditorToolStripButton;
         private System.Windows.Forms.ToolStripButton nsbmdExportTexButton;
         private System.Windows.Forms.ToolStripButton nsbmdRemoveTexButton;
         private System.Windows.Forms.ToolStripButton nsbmdAddTexButton;
@@ -1569,7 +1620,7 @@
         private System.Windows.Forms.ToolStripMenuItem extractNSBTXFromNSBMDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem advancedStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem otherEditorsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem personalDataEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pokemonEditorToolStripMenuItem;
         public System.Windows.Forms.ToolStripStatusLabel statusLabel;
         public System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         public System.Windows.Forms.TabPage tabPageScriptEditor;
@@ -1578,7 +1629,7 @@
         public System.Windows.Forms.TabPage tabPageEncountersEditor;
         private System.Windows.Forms.ToolStripMenuItem overlayEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spawnEditorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem moveDataEditorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveEditorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton weatherMapEditor;
         private System.Windows.Forms.ToolStripMenuItem addressHelperToolStripMenuItem;
@@ -1620,6 +1671,11 @@
         private System.Windows.Forms.Label nsbtxEditorPopOutLabel;
         private System.Windows.Forms.Label eventEditorPopOutLabel;
         private System.Windows.Forms.Button popoutEventEditorButton;
+        private System.Windows.Forms.ToolStripButton pokemonEditorButton;
+        private System.Windows.Forms.ToolStripButton moveEditorButton;
+        private System.Windows.Forms.ToolStripSeparator separator_afterEditors;
+        private System.Windows.Forms.ToolStripButton itemEditorButton;
+        private System.Windows.Forms.ToolStripButton tradeEditorButton;
     }
 }
 

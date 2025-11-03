@@ -1253,6 +1253,16 @@ namespace DSPRE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap item_editor_icon {
+            get {
+                object obj = ResourceManager.GetObject("item_editor_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LeftClick {
             get {
                 object obj = ResourceManager.GetObject("LeftClick", resourceCulture);
@@ -1296,6 +1306,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap map_editor {
             get {
                 object obj = ResourceManager.GetObject("map_editor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap move_editor_icon {
+            get {
+                object obj = ResourceManager.GetObject("move_editor_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1376,6 +1396,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap pasteIcon {
             get {
                 object obj = ResourceManager.GetObject("pasteIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pokemon_editor_icon {
+            get {
+                object obj = ResourceManager.GetObject("pokemon_editor_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2066,6 +2096,16 @@ namespace DSPRE.Properties {
         internal static System.Drawing.Bitmap SurfIcon {
             get {
                 object obj = ResourceManager.GetObject("SurfIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap trade_editor_icon {
+            get {
+                object obj = ResourceManager.GetObject("trade_editor_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
