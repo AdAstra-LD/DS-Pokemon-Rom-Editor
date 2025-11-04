@@ -1,0 +1,92 @@
+name: DSPRE Final Release
+
+on:
+  push:
+    branches:
+      - main  # Trigger only on pushes to the main branch
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  SOLUTION_FILE_PATH: DS_Map.sln
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build:
+    if: github.repository == 'Mixone-FinallyHere/DS-Pokemon-Rom-Editor'
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Clone Database Repository
+      run: |
+        git clone https://github.com/DS-Pokemon-Rom-Editor/scrcmd-database.git databases
+        
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Build DSPRE
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+    
+    - name: Prepare Release Files
+      run: |
+        mkdir "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\databases"
+        robocopy databases "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\databases" /E /XD "databases\.git\objects\pack"
+        if ($LASTEXITCODE -le 7) { exit 0 } else { exit 1 }
+
+    - name: Zip Release Files
+      run: Compress-Archive -Path "${{env.GITHUB_WORKSPACE}}DS_Map\bin\Release\*" -DestinationPath DSPRE-1.14.0.zip
+
+    - name: Fetch tags
+      run: git fetch --prune --unshallow --tags
+
+    - name: Delete previous release if exists
+      run: |
+        gh release delete --yes 1.14.0 || true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create final version tag
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -a v1.14.0 -m "Final DSPRE release 1.14.0 - Repository transition"
+        git push origin v1.14.0
+    
+    - name: Create final release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v1.14.0
+        name: DSPRE Final Release 1.14.0
+        files: DSPRE-1.14.0.zip
+        token: ${{ secrets.GITHUB_TOKEN }}
+        body: |
+          # DSPRE Final Release 1.14.0
+          
+          ## Important Announcement: Repository Transition
+          
+          **This is the final release from this repository.** All future development, updates, and releases of DSPRE will continue at the new official repository:
+          
+          ### [DS-Pokemon-Rom-Editor/DSPRE](https://github.com/DS-Pokemon-Rom-Editor/DSPRE)
+          
+          ## What's Next?
+          - **This version (1.14.0) is stable and fully functional**
+          - **All future updates will be on the new repository**
+          - **Bug reports and issues** should be filed on the new repository
+          - **New features and improvements** will be developed on the new repository
+          
+          ## Thank You!
+          Thank you to everyone who has contributed, reported issues, and supported DSPRE's development. We look forward to continuing to improve the tool at our new home!
+          
+          **Remember to update your git remotes and watch the new repository for future updates!**
+        prerelease: false
+        draft: false
+        generate_release_notes: false
