@@ -1541,7 +1541,7 @@ namespace DSPRE
 
         private void flyWarpEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var flyEditor = new FlyEditor(gameFamily, EditorPanels.headerEditor.headerListBoxNames);
+            var flyEditor = new FlyEditor(gameFamily, gameLanguage, EditorPanels.headerEditor.headerListBoxNames);
             flyEditor.Show();
         }
 
