@@ -315,7 +315,6 @@
     <Compile Include="Editors\LearnsetEditor.designer.cs">
       <DependentUpon>LearnsetEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="MessageEnc\EncryptText.cs" />
     <Compile Include="Editors\OverlayEditor.cs">
       <SubType>Form</SubType>
     </Compile>
