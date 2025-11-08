@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CharMapManagerForm));
             this.aliasLabel = new System.Windows.Forms.Label();
             this.aliasListBox = new System.Windows.Forms.ListBox();
             this.reloadButton = new System.Windows.Forms.Button();
@@ -66,13 +67,13 @@
             this.aliasListBox.ItemHeight = 20;
             this.aliasListBox.Location = new System.Drawing.Point(6, 46);
             this.aliasListBox.Name = "aliasListBox";
-            this.aliasListBox.Size = new System.Drawing.Size(151, 224);
+            this.aliasListBox.Size = new System.Drawing.Size(204, 224);
             this.aliasListBox.TabIndex = 1;
             // 
             // reloadButton
             // 
             this.reloadButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.reloadButton.Image = global::DSPRE.Properties.Resources.resetIcon;
+            this.reloadButton.Image = ((System.Drawing.Image)(resources.GetObject("reloadButton.Image")));
             this.reloadButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.reloadButton.Location = new System.Drawing.Point(214, 163);
             this.reloadButton.Name = "reloadButton";
@@ -86,9 +87,9 @@
             // 
             // addAliasButton
             // 
-            this.addAliasButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.addAliasButton.Image = ((System.Drawing.Image)(resources.GetObject("addAliasButton.Image")));
             this.addAliasButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.addAliasButton.Location = new System.Drawing.Point(163, 132);
+            this.addAliasButton.Location = new System.Drawing.Point(219, 132);
             this.addAliasButton.Name = "addAliasButton";
             this.addAliasButton.Size = new System.Drawing.Size(151, 23);
             this.addAliasButton.TabIndex = 3;
@@ -100,7 +101,7 @@
             // 
             // newAliasTextBox
             // 
-            this.newAliasTextBox.Location = new System.Drawing.Point(163, 62);
+            this.newAliasTextBox.Location = new System.Drawing.Point(219, 62);
             this.newAliasTextBox.Name = "newAliasTextBox";
             this.newAliasTextBox.Size = new System.Drawing.Size(151, 20);
             this.newAliasTextBox.TabIndex = 4;
@@ -108,7 +109,7 @@
             // newAliasLabel
             // 
             this.newAliasLabel.AutoSize = true;
-            this.newAliasLabel.Location = new System.Drawing.Point(160, 46);
+            this.newAliasLabel.Location = new System.Drawing.Point(216, 46);
             this.newAliasLabel.Name = "newAliasLabel";
             this.newAliasLabel.Size = new System.Drawing.Size(29, 13);
             this.newAliasLabel.TabIndex = 5;
@@ -117,7 +118,7 @@
             // charLabel
             // 
             this.charLabel.AutoSize = true;
-            this.charLabel.Location = new System.Drawing.Point(160, 86);
+            this.charLabel.Location = new System.Drawing.Point(216, 86);
             this.charLabel.Name = "charLabel";
             this.charLabel.Size = new System.Drawing.Size(53, 13);
             this.charLabel.TabIndex = 6;
@@ -127,7 +128,7 @@
             // 
             this.codeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.codeComboBox.FormattingEnabled = true;
-            this.codeComboBox.Location = new System.Drawing.Point(163, 102);
+            this.codeComboBox.Location = new System.Drawing.Point(219, 102);
             this.codeComboBox.Name = "codeComboBox";
             this.codeComboBox.Size = new System.Drawing.Size(151, 24);
             this.codeComboBox.TabIndex = 7;
@@ -144,16 +145,16 @@
             this.aliasGroupBox.Controls.Add(this.newAliasTextBox);
             this.aliasGroupBox.Location = new System.Drawing.Point(12, 12);
             this.aliasGroupBox.Name = "aliasGroupBox";
-            this.aliasGroupBox.Size = new System.Drawing.Size(320, 280);
+            this.aliasGroupBox.Size = new System.Drawing.Size(380, 280);
             this.aliasGroupBox.TabIndex = 8;
             this.aliasGroupBox.TabStop = false;
             this.aliasGroupBox.Text = "Manage Aliases";
             // 
             // removeAliasButton
             // 
-            this.removeAliasButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.removeAliasButton.Image = ((System.Drawing.Image)(resources.GetObject("removeAliasButton.Image")));
             this.removeAliasButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.removeAliasButton.Location = new System.Drawing.Point(163, 161);
+            this.removeAliasButton.Location = new System.Drawing.Point(219, 161);
             this.removeAliasButton.Name = "removeAliasButton";
             this.removeAliasButton.Size = new System.Drawing.Size(151, 23);
             this.removeAliasButton.TabIndex = 8;
@@ -171,7 +172,7 @@
             this.charmapGroupBox.Controls.Add(this.createCustomMapButton);
             this.charmapGroupBox.Controls.Add(this.deleteCustomMapButton);
             this.charmapGroupBox.Controls.Add(this.reloadButton);
-            this.charmapGroupBox.Location = new System.Drawing.Point(338, 12);
+            this.charmapGroupBox.Location = new System.Drawing.Point(398, 12);
             this.charmapGroupBox.Name = "charmapGroupBox";
             this.charmapGroupBox.Size = new System.Drawing.Size(320, 280);
             this.charmapGroupBox.TabIndex = 9;
@@ -202,7 +203,7 @@
             // saveButton
             // 
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Image = global::DSPRE.Properties.Resources.save_rom;
+            this.saveButton.Image = ((System.Drawing.Image)(resources.GetObject("saveButton.Image")));
             this.saveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.saveButton.Location = new System.Drawing.Point(214, 219);
             this.saveButton.Name = "saveButton";
@@ -216,7 +217,7 @@
             // 
             // createCustomMapButton
             // 
-            this.createCustomMapButton.Image = global::DSPRE.Properties.Resources.addIcon;
+            this.createCustomMapButton.Image = ((System.Drawing.Image)(resources.GetObject("createCustomMapButton.Image")));
             this.createCustomMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.createCustomMapButton.Location = new System.Drawing.Point(214, 51);
             this.createCustomMapButton.Name = "createCustomMapButton";
@@ -230,7 +231,7 @@
             // 
             // deleteCustomMapButton
             // 
-            this.deleteCustomMapButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
+            this.deleteCustomMapButton.Image = ((System.Drawing.Image)(resources.GetObject("deleteCustomMapButton.Image")));
             this.deleteCustomMapButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.deleteCustomMapButton.Location = new System.Drawing.Point(214, 107);
             this.deleteCustomMapButton.Name = "deleteCustomMapButton";
@@ -246,7 +247,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(669, 303);
+            this.ClientSize = new System.Drawing.Size(726, 303);
             this.Controls.Add(this.charmapGroupBox);
             this.Controls.Add(this.aliasGroupBox);
             this.Name = "CharMapManagerForm";
