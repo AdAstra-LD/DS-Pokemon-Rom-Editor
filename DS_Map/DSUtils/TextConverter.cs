@@ -4,92 +4,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml.Linq;
+using DSPRE.CharMaps;
 
 namespace DSPRE
 {
     internal class TextConverter
     {
-
-        private static Dictionary<ushort, string> decodeMap;
-        private static Dictionary<string, ushort> encodeMap;
-        private static Dictionary<ushort, string> commandMap;
-
-        private static bool mapsInitialized = false;
-
-        public static Dictionary<ushort, string> GetDecodingMap()
-        {
-            if (!mapsInitialized)
-            {
-                InitializeCharMaps();
-            }
-            return decodeMap;
-        }
-
-        public static Dictionary<string, ushort> GetEncodingMap()
-        {
-            if (!mapsInitialized)
-            {
-                InitializeCharMaps();
-            }
-            return encodeMap;
-        }
-
-        private static void InitializeCharMaps()
-        {
-            decodeMap = new Dictionary<ushort, string>();
-            encodeMap = new Dictionary<string, ushort>();
-            commandMap = new Dictionary<ushort, string>();
-
-            string charmapPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Tools", "charmap.xml");
-            if (!File.Exists(charmapPath))
-                throw new FileNotFoundException("Charmap XML file not found.", charmapPath);
-
-            var xml = XDocument.Load(charmapPath, LoadOptions.PreserveWhitespace);
-
-            foreach (var entry in xml.Descendants("entry"))
-            {
-                var code = entry.Attribute("code")?.Value;
-                var kind = entry.Attribute("kind")?.Value;
-                var value = entry.Value;
-
-                if (code == null || kind == null || value == null)
-                {
-                    AppLogger.Error("Found charmap entry with null value.");
-                    continue;
-                }
-
-                ushort codeValue;
-                string codeKind = kind.ToLower();
-                string chars = value.ToString();
-
-                if (!ushort.TryParse(code, System.Globalization.NumberStyles.HexNumber, null, out codeValue))
-                {
-                    AppLogger.Error($"Invalid code value in charmap: {code}");
-                    continue;
-                }
-
-                if (codeKind == "char" || codeKind == "escape")
-                {
-                    decodeMap[codeValue] = chars;
-                    encodeMap[chars] = codeValue;
-                }
-                else if (codeKind == "alias")
-                {
-                    encodeMap[chars] = codeValue;
-                }
-                else if (codeKind == "command")
-                {
-                    commandMap[codeValue] = chars;
-                }
-                else
-                {
-                    AppLogger.Error($"Unknown kind '{kind}' in charmap entry.");
-                }
-            }
-
-            mapsInitialized = true;
-        }
 
         public static List<string> ReadMessageFromStream(Stream stream, out UInt16 key)
         {
@@ -248,9 +168,9 @@ namespace DSPRE
             {
                 ushort code = message[i];
                 // Regular characters and escape sequences
-                if (GetDecodingMap().ContainsKey(code))
+                if (CharMapManager.GetDecodingMap().ContainsKey(code))
                 {
-                    decodedMessage.Append(GetDecodingMap()[code]);
+                    decodedMessage.Append(CharMapManager.GetDecodingMap()[code]);
                     i++;
                 }
                 // Commands
@@ -294,9 +214,9 @@ namespace DSPRE
             while (i < message.Length)
             {
                 // Regular characters
-                if (GetEncodingMap().ContainsKey(message[i].ToString()))
+                if (CharMapManager.GetEncodingMap().ContainsKey(message[i].ToString()))
                 {
-                    encodedMessage.Add(GetEncodingMap()[message[i].ToString()]);
+                    encodedMessage.Add(CharMapManager.GetEncodingMap()[message[i].ToString()]);
                     i++;
                 }
                 // Escape sequences
@@ -317,9 +237,9 @@ namespace DSPRE
                     else if (i + 1 < message.Length)
                     {
                         string escapeSeq = message.Substring(i, 2);
-                        if (GetEncodingMap().ContainsKey(escapeSeq))
+                        if (CharMapManager.GetEncodingMap().ContainsKey(escapeSeq))
                         {
-                            encodedMessage.Add(GetEncodingMap()[escapeSeq]);
+                            encodedMessage.Add(CharMapManager.GetEncodingMap()[escapeSeq]);
                             i += 2;
                             continue;
                         }
@@ -363,9 +283,9 @@ namespace DSPRE
                     if (endIndex != -1)
                     {
                         string multiCharSeq = message.Substring(i, endIndex - i + 1);
-                        if (GetEncodingMap().ContainsKey(multiCharSeq))
+                        if (CharMapManager.GetEncodingMap().ContainsKey(multiCharSeq))
                         {
-                            encodedMessage.Add(GetEncodingMap()[multiCharSeq]);
+                            encodedMessage.Add(CharMapManager.GetEncodingMap()[multiCharSeq]);
                             i = endIndex + 1;
                             continue;
                         }
@@ -424,7 +344,7 @@ namespace DSPRE
             // Special case for string buffer vars that have 1 byte command ids
             int specialByte = 0;
             
-            if (!commandMap.ContainsKey(commandID) && commandMap.ContainsKey((ushort)(commandID & 0xFF00))) 
+            if (!CharMapManager.GetCommandMap().ContainsKey(commandID) && CharMapManager.GetCommandMap().ContainsKey((ushort)(commandID & 0xFF00))) 
             {
                 specialByte = (ushort)(commandID & 0x00FF);
                 commandID = (ushort)(commandID & 0xFF00);
@@ -434,9 +354,9 @@ namespace DSPRE
             StringBuilder sb = new StringBuilder();
 
             sb.Append("{");
-            if (commandMap.ContainsKey(commandID))
+            if (CharMapManager.GetCommandMap().ContainsKey(commandID))
             {
-                sb.Append($"{commandMap[commandID]}");
+                sb.Append($"{CharMapManager.GetCommandMap()[commandID]}");
                 sb.Append($", {specialByte}");
 
                 for (int i = 0; i < parameters.Length; i++)
@@ -492,9 +412,9 @@ namespace DSPRE
             encodedCommand.Add(0xFFFE);
 
             // Get ID from name or parse hex
-            if (commandMap.ContainsValue(commandName)) 
+            if (CharMapManager.GetCommandMap().ContainsValue(commandName)) 
             {
-                encodedCommand.Add(commandMap.Reverse()[commandName]);
+                encodedCommand.Add(CharMapManager.GetCommandMap().Reverse()[commandName]);
             }
             else if (ushort.TryParse(commandName, out ushort commandID))
             {
@@ -564,9 +484,9 @@ namespace DSPRE
                 if (curChar == 0x1FF)
                     break;
 
-                if (GetDecodingMap().ContainsKey(curChar))
+                if (CharMapManager.GetDecodingMap().ContainsKey(curChar))
                 {
-                    decoded.Append(GetDecodingMap()[curChar]);
+                    decoded.Append(CharMapManager.GetDecodingMap()[curChar]);
                 }
                 else
                 {
@@ -589,9 +509,9 @@ namespace DSPRE
             // Get list of characters to encode
             foreach (char c in nameContent)
             {
-                if (GetEncodingMap().ContainsKey(c.ToString()))
+                if (CharMapManager.GetEncodingMap().ContainsKey(c.ToString()))
                 {
-                    var code = GetEncodingMap()[c.ToString()];
+                    var code = CharMapManager.GetEncodingMap()[c.ToString()];
 
                     // Ensure code fits in 9 bits
                     if (code >> 9 != 0)

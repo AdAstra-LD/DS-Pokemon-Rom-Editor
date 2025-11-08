@@ -1908,6 +1908,12 @@ namespace DSPRE
             }
         }
 
+        private void openCharmapManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            CharMaps.CharMapManagerForm charMapManager = new CharMaps.CharMapManagerForm();
+            charMapManager.ShowDialog();
+        }
+
         #endregion
     }
 }

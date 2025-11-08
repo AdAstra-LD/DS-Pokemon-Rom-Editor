@@ -132,8 +132,8 @@
             this.wildEditorButton = new System.Windows.Forms.ToolStripButton();
             this.pokemonEditorButton = new System.Windows.Forms.ToolStripButton();
             this.moveEditorButton = new System.Windows.Forms.ToolStripButton();
-            this.tradeEditorButton = new System.Windows.Forms.ToolStripButton();
             this.itemEditorButton = new System.Windows.Forms.ToolStripButton();
+            this.tradeEditorButton = new System.Windows.Forms.ToolStripButton();
             this.separator_afterEditors = new System.Windows.Forms.ToolStripSeparator();
             this.scriptCommandsButton = new System.Windows.Forms.ToolStripButton();
             this.romToolboxToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -152,6 +152,7 @@
             this.weatherMapEditor = new System.Windows.Forms.ToolStripButton();
             this.versionLabel = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.openCharmapManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTabControl.SuspendLayout();
             this.headerEditorTabPage.SuspendLayout();
             this.matrixEditorTabPage.SuspendLayout();
@@ -716,6 +717,7 @@
             this.listBasedBatchRenameToolStripMenuItem,
             this.listBuilderToolStripMenuItem,
             this.nSBMDUtilityToolStripMenuItem,
+            this.openCharmapManagerToolStripMenuItem,
             this.generateCSVToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -1263,19 +1265,6 @@
             this.moveEditorButton.Text = "Move Editor";
             this.moveEditorButton.Click += new System.EventHandler(this.moveEditorToolStripMenuItem_Click);
             // 
-            // tradeEditorButton
-            // 
-            this.tradeEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tradeEditorButton.Enabled = false;
-            this.tradeEditorButton.Image = global::DSPRE.Properties.Resources.trade_editor_icon;
-            this.tradeEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tradeEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tradeEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
-            this.tradeEditorButton.Name = "tradeEditorButton";
-            this.tradeEditorButton.Size = new System.Drawing.Size(36, 36);
-            this.tradeEditorButton.Text = "Trade Editor";
-            this.tradeEditorButton.Click += new System.EventHandler(this.tradeEditorToolStripMenuItem_Click);
-            // 
             // itemEditorButton
             // 
             this.itemEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1288,6 +1277,19 @@
             this.itemEditorButton.Size = new System.Drawing.Size(36, 36);
             this.itemEditorButton.Text = "Item Editor";
             this.itemEditorButton.Click += new System.EventHandler(this.itemEditorToolStripMenuItem_Click);
+            // 
+            // tradeEditorButton
+            // 
+            this.tradeEditorButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tradeEditorButton.Enabled = false;
+            this.tradeEditorButton.Image = global::DSPRE.Properties.Resources.trade_editor_icon;
+            this.tradeEditorButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tradeEditorButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tradeEditorButton.Margin = new System.Windows.Forms.Padding(4, 6, 0, 2);
+            this.tradeEditorButton.Name = "tradeEditorButton";
+            this.tradeEditorButton.Size = new System.Drawing.Size(36, 36);
+            this.tradeEditorButton.Text = "Trade Editor";
+            this.tradeEditorButton.Click += new System.EventHandler(this.tradeEditorToolStripMenuItem_Click);
             // 
             // separator_afterEditors
             // 
@@ -1456,6 +1458,13 @@
             this.versionLabel.TabIndex = 9;
             this.versionLabel.Text = "ROM:";
             this.versionLabel.Visible = false;
+            // 
+            // openCharmapManagerToolStripMenuItem
+            // 
+            this.openCharmapManagerToolStripMenuItem.Name = "openCharmapManagerToolStripMenuItem";
+            this.openCharmapManagerToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.openCharmapManagerToolStripMenuItem.Text = "Open Charmap Manager";
+            this.openCharmapManagerToolStripMenuItem.Click += new System.EventHandler(this.openCharmapManagerToolStripMenuItem_Click);
             // 
             // MainProgram
             // 
@@ -1676,6 +1685,7 @@
         private System.Windows.Forms.ToolStripSeparator separator_afterEditors;
         private System.Windows.Forms.ToolStripButton itemEditorButton;
         private System.Windows.Forms.ToolStripButton tradeEditorButton;
+        private System.Windows.Forms.ToolStripMenuItem openCharmapManagerToolStripMenuItem;
     }
 }
 

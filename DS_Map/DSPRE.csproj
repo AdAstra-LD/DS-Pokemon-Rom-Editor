@@ -344,6 +344,13 @@
     <Compile Include="ReopenProjectConfirmation.Designer.cs">
       <DependentUpon>ReopenProjectConfirmation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Resources\CharMaps\CharMapManager.cs" />
+    <Compile Include="Resources\CharMaps\CharMapManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Resources\CharMaps\CharMapManagerForm.Designer.cs">
+      <DependentUpon>CharMapManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Resources\CustomScrcmdManager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -625,6 +632,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReopenProjectConfirmation.resx">
       <DependentUpon>ReopenProjectConfirmation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CharMaps\CharMapManagerForm.resx">
+      <DependentUpon>CharMapManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CustomScrcmdManager.resx">
       <DependentUpon>CustomScrcmdManager.cs</DependentUpon>
