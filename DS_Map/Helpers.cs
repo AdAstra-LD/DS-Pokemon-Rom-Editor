@@ -316,13 +316,15 @@ namespace DSPRE
             }
 
             string texturePath = Filesystem.GetPath(textureFolder, fileID);
-            model.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(System.IO.File.ReadAllBytes(texturePath)), out model.Textures, out model.Palettes);
+            
             try
             {
+                model.materials = NSBTXLoader.LoadNsbtx(new MemoryStream(System.IO.File.ReadAllBytes(texturePath)), out model.Textures, out model.Palettes);
                 model.MatchTextures();
             }
-            catch
+            catch (Exception ex)
             {
+                AppLogger.Error($"Failed to load model textures: {ex.Message}");
             }
         }
 

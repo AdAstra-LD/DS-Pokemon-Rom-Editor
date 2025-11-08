@@ -816,6 +816,7 @@ namespace DSPRE.Editors
         {
             EditorPanels.eventEditor.SetupEventEditor(_parent);
 
+            Helpers.DisableHandlers();
 
             if (matrixUpDown.Value != 0)
             {
@@ -833,7 +834,9 @@ namespace DSPRE.Editors
                 _parent.mainTabControl.SelectedTab = EditorPanels.eventEditorTabPage;
             }
 
-            EditorPanels.eventEditor.eventMatrixUpDown_ValueChanged(null, null);
+            Helpers.EnableHandlers();
+
+            EditorPanels.eventEditor.selectEventComboBox_SelectedIndexChanged(null, null);
         }
         private void openMatrixButton_Click(object sender, EventArgs e)
         {

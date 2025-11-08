@@ -375,16 +375,14 @@ namespace DSPRE.ROMFiles {
         public void LoadModelDataFromID(int modelID, string bmDir) {
             string modelPath = bmDir + "\\" + modelID.ToString("D4");
 
-            if (string.IsNullOrWhiteSpace(modelPath) || !File.Exists(modelPath)) {
-                MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + bmDir + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             try {
                 using (Stream fs = new FileStream(modelPath, FileMode.Open)) {
                     this.NSBMDFile = NSBMDLoader.LoadNSBMD(fs);
                 }
-            } catch (FileNotFoundException) {
-                MessageBox.Show("Building " + modelID + " could not be found in\n" + '"' + bmDir + '"', "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } catch (Exception ex) {
+                AppLogger.Error($"Error loading building model ID {modelID} from path \"{modelPath}\": {ex.Message}");
+                MessageBox.Show($"Building \"{modelID}\" could not be found at path \"{modelPath}\".\n" +
+                    $"Map may not display correctly.", "Building not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
