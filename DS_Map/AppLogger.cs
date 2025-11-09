@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace DSPRE
@@ -19,13 +20,15 @@ namespace DSPRE
         Fatal
     }
 
-    public static class AppLogger
+ public static class AppLogger
     {
         private static readonly object _fileLock = new object();
         private static readonly ConcurrentQueue<string> _recentLogBuffer = new ConcurrentQueue<string>();
         private static string _logFilePath;
         private static MainProgram _mainProgram;
-        private const int MaxInMemoryLines = 500;
+        private const int MaxLogFileLines = 500;
+        private static int _writesSinceLastTrim = 0;
+        private const int TrimInterval = 10; 
         public static LogLevel MinimumLevel { get; set; } = LogLevel.Debug;
 
 
@@ -49,10 +52,29 @@ namespace DSPRE
             lock (_fileLock)
             {
                 File.AppendAllText(_logFilePath, timestamped + Environment.NewLine);
+        
+                _writesSinceLastTrim++;
+                if (_writesSinceLastTrim >= TrimInterval)
+                {
+                    TrimLogFile();
+                    _writesSinceLastTrim = 0;
+                }
             }
 
             _recentLogBuffer.Enqueue(timestamped);
-            while (_recentLogBuffer.Count > MaxInMemoryLines && _recentLogBuffer.TryDequeue(out _)) { }
+            while (_recentLogBuffer.Count > MaxLogFileLines && _recentLogBuffer.TryDequeue(out _)) { }
+        }
+
+        private static void TrimLogFile()
+        {
+            if (!File.Exists(_logFilePath)) return;
+    
+            string[] lines = File.ReadAllLines(_logFilePath);
+            if (lines.Length > MaxLogFileLines)
+            {
+                var trimmedLines = lines.Skip(lines.Length - MaxLogFileLines);
+                File.WriteAllLines(_logFilePath, trimmedLines);
+            }
         }
 
         public static void Debug(string message) => Log(LogLevel.Debug, message);
