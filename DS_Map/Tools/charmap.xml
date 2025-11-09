@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <charmap>
   <header>
-    <comment>Character mapping for Pokémon HeartGold and SoulSilver</comment>
-    <comment>Version 2025.10.07</comment>
+    <description>Character mapping for Gen IV Pokémon games</description>
+    <version>2025.09.11</version>
   </header>
   <entry code="0000" kind="char">\x0000</entry>
   <entry code="0001" kind="char">　</entry>

@@ -67,22 +67,7 @@ namespace DSPRE.CharMaps
             encodeMap = new Dictionary<string, ushort>();
             commandMap = new Dictionary<ushort, string>();
 
-            string charmapPath = "";
-
-            if (File.Exists(customCharmapFilePath))
-            {
-                AppLogger.Info("Loading custom charmap from user data directory.");
-                charmapPath = customCharmapFilePath;
-            }
-            else if (File.Exists(charmapFilePath))
-            {
-                AppLogger.Info("Loading default charmap from application directory.");
-                charmapPath = charmapFilePath;
-            }
-            else
-            {
-                throw new FileNotFoundException("No charmap XML file found in application or user data directory.");
-            }
+            string charmapPath = GetCharMapPath();
 
             var xml = XDocument.Load(charmapPath, LoadOptions.PreserveWhitespace);
 
@@ -128,6 +113,75 @@ namespace DSPRE.CharMaps
             }
 
             mapsInitialized = true;
+        }
+
+        /// <summary>
+        /// Retrieves the file path of the character map XML file to be used by the application.
+        /// </summary>
+        /// <remarks>This method checks for the existence of a custom character map file in the user data
+        /// directory. If the custom file is not found, it falls back to the default character map file in the
+        /// application directory. If neither file is found, an exception is thrown.</remarks>
+        /// <returns>The file path of the character map XML file. This will be either the custom file path or the default file
+        /// path, depending on which file is available.</returns>
+        /// <exception cref="FileNotFoundException">Thrown if neither the custom character map file nor the default character map file exists.</exception>
+        public static string GetCharMapPath()
+        {
+            if (File.Exists(customCharmapFilePath))
+            {
+                AppLogger.Info("Loading custom charmap from user data directory.");
+                return customCharmapFilePath;
+            }
+            else if (File.Exists(charmapFilePath))
+            {
+                AppLogger.Info("Loading default charmap from application directory.");
+                return charmapFilePath;
+            }
+            else
+            {
+                throw new FileNotFoundException("No charmap XML file found in application or user data directory.");
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the version of the character map from the specified XML file.
+        /// </summary>
+        /// <remarks>The method reads the XML file at the specified path and looks for a "header" element
+        /// with a "version" attribute.  If the "version" attribute is present and valid, it is parsed into a <see
+        /// cref="Version"/> object and returned.  If the attribute is missing or invalid, a warning is logged, and the
+        /// default version 1.0 is returned.</remarks>
+        /// <param name="path">The file path to the XML document containing the character map.</param>
+        /// <returns>The version of the character map as specified in the XML file. If the version is not found or is invalid, 
+        /// returns a default version of <see cref="Version"/> 1.0.</returns>
+        public static Version GetCharMapVersion(string path)
+        {
+            var xml = XDocument.Load(path, LoadOptions.PreserveWhitespace);
+            var header = xml.Descendants("header").FirstOrDefault();
+            string version = header?.Attribute("version")?.Value;
+            
+            if (version != null && Version.TryParse(version, out Version ver))
+            {
+                return ver;
+            }
+            else
+            {
+                AppLogger.Warn("Charmap version not found or invalid, defaulting to 1.0");
+                return new Version(1, 0);
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the custom character map is outdated compared to the default character map.
+        /// </summary>
+        /// <remarks>This method compares the versions of the default and custom character maps to
+        /// determine if the custom map needs to be updated.</remarks>
+        /// <returns><see langword="true"/> if the version of the custom character map is older than the version of the default
+        /// character map; otherwise, <see langword="false"/>.</returns>
+        public static bool IsCustomMapOutdated()
+        {
+            var defaultVersion = GetCharMapVersion(charmapFilePath);
+            var customVersion = GetCharMapVersion(customCharmapFilePath);
+
+            return customVersion < defaultVersion;
         }
 
         /// <summary>
@@ -186,6 +240,14 @@ namespace DSPRE.CharMaps
             }
         }
 
+        /// <summary>
+        /// Saves the provided custom character map to a predefined file location.
+        /// </summary>
+        /// <remarks>This method attempts to save the provided XML document to a predefined file path.  If
+        /// the operation fails, an error is logged, and the method returns <see langword="false"/>.</remarks>
+        /// <param name="xml">The <see cref="XmlDocument"/> representing the custom character map to be saved.</param>
+        /// <returns><see langword="true"/> if the custom character map is successfully saved; otherwise, <see
+        /// langword="false"/>.</returns>
         public static bool SaveCustomCharMap(XmlDocument xml)
         {
             try

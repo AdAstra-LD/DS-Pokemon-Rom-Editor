@@ -238,6 +238,16 @@ namespace DSPRE
                 BeginInvoke(new Action(() => Application.Exit()));
                 return;
             }
+
+            // Check whether charmap is out of date
+            if (CharMaps.CharMapManager.IsCustomMapOutdated())
+            {
+                MessageBox.Show("Your custom character map is based on an outdated version of the default map.\n" +
+                    "Please update it to avoid potential issues when editing text.\n" +
+                    "You may need to manually copy or recreate your custom mappings.", 
+                    "Outdated Character Map", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
         }
 
         private void PaintGameIcon(object sender, PaintEventArgs e)
@@ -815,6 +825,11 @@ namespace DSPRE
             {
                 toolsMissing = true;
                 missingToolsList.Add("apicula.exe");
+            }
+            if (!File.Exists(CharMaps.CharMapManager.charmapFilePath))
+            {
+                toolsMissing = true;
+                missingToolsList.Add("charmap.xml");
             }
 
             if (toolsMissing)
