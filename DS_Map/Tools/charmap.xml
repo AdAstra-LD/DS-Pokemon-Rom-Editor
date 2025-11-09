@@ -2900,6 +2900,9 @@
   <entry code="FF01" kind="command">SIZE</entry>
   <entry code="FF02" kind="command">UNK_FF02</entry>
   <entry code="01B3" kind="alias">'</entry>
+  <entry code="01B4" kind="alias">["]</entry>
   <entry code="01B5" kind="alias">['']</entry>
   <entry code="01B6" kind="alias">[,,]</entry>
+  <entry code="01BB" kind="alias">[M]</entry>
+  <entry code="01BC" kind="alias">[F]</entry>
 </charmap>

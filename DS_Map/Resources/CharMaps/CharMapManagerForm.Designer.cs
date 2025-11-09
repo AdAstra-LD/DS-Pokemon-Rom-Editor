@@ -41,6 +41,8 @@
             this.aliasGroupBox = new System.Windows.Forms.GroupBox();
             this.removeAliasButton = new System.Windows.Forms.Button();
             this.charmapGroupBox = new System.Windows.Forms.GroupBox();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.searchTextBox = new System.Windows.Forms.TextBox();
             this.charmapLabel = new System.Windows.Forms.Label();
             this.charMapListBox = new System.Windows.Forms.ListBox();
             this.saveButton = new System.Windows.Forms.Button();
@@ -166,6 +168,8 @@
             // 
             // charmapGroupBox
             // 
+            this.charmapGroupBox.Controls.Add(this.searchButton);
+            this.charmapGroupBox.Controls.Add(this.searchTextBox);
             this.charmapGroupBox.Controls.Add(this.charmapLabel);
             this.charmapGroupBox.Controls.Add(this.charMapListBox);
             this.charmapGroupBox.Controls.Add(this.saveButton);
@@ -178,6 +182,25 @@
             this.charmapGroupBox.TabIndex = 9;
             this.charmapGroupBox.TabStop = false;
             this.charmapGroupBox.Text = "Manage Custom Charmap";
+            // 
+            // searchButton
+            // 
+            this.searchButton.Image = global::DSPRE.Properties.Resources.SearchMiniIcon;
+            this.searchButton.Location = new System.Drawing.Point(288, 16);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(28, 28);
+            this.searchButton.TabIndex = 15;
+            this.toolTip.SetToolTip(this.searchButton, "Search for character or code");
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // searchTextBox
+            // 
+            this.searchTextBox.Location = new System.Drawing.Point(214, 22);
+            this.searchTextBox.Name = "searchTextBox";
+            this.searchTextBox.Size = new System.Drawing.Size(68, 20);
+            this.searchTextBox.TabIndex = 14;
+            this.searchTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchTextBox_KeyDown);
             // 
             // charmapLabel
             // 
@@ -197,7 +220,8 @@
             this.charMapListBox.Name = "charMapListBox";
             this.charMapListBox.Size = new System.Drawing.Size(202, 224);
             this.charMapListBox.TabIndex = 12;
-            this.toolTip.SetToolTip(this.charMapListBox, "List of all mappings. Double-click to select character.\r\n");
+            this.toolTip.SetToolTip(this.charMapListBox, "List of all mappings. Double-click to select character and copy it to clipboard\r\n" +
+        "");
             this.charMapListBox.DoubleClick += new System.EventHandler(this.charMapListBox_DoubleClick);
             // 
             // saveButton
@@ -211,7 +235,7 @@
             this.saveButton.TabIndex = 11;
             this.saveButton.Text = "Save\r\nMappings";
             this.saveButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip.SetToolTip(this.saveButton, "Save edits to file.");
+            this.toolTip.SetToolTip(this.saveButton, "Save edits to file");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -225,7 +249,7 @@
             this.createCustomMapButton.TabIndex = 10;
             this.createCustomMapButton.Text = "Create Custom Charmap";
             this.createCustomMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip.SetToolTip(this.createCustomMapButton, "Create new custom charmap. Will overwrite existing map.");
+            this.toolTip.SetToolTip(this.createCustomMapButton, "Create new custom charmap. Will overwrite existing map");
             this.createCustomMapButton.UseVisualStyleBackColor = true;
             this.createCustomMapButton.Click += new System.EventHandler(this.createCustomMapButton_Click);
             // 
@@ -239,7 +263,7 @@
             this.deleteCustomMapButton.TabIndex = 9;
             this.deleteCustomMapButton.Text = "Delete Custom Charmap";
             this.deleteCustomMapButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip.SetToolTip(this.deleteCustomMapButton, "Delete charmap file. Once you close the editor this can not be undone.");
+            this.toolTip.SetToolTip(this.deleteCustomMapButton, "Delete charmap file. Once you close the editor this can not be undone");
             this.deleteCustomMapButton.UseVisualStyleBackColor = true;
             this.deleteCustomMapButton.Click += new System.EventHandler(this.deleteCustomMapButton_Click);
             // 
@@ -252,6 +276,7 @@
             this.Controls.Add(this.aliasGroupBox);
             this.Name = "CharMapManagerForm";
             this.Text = "Character Map Manager";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CharMapManagerForm_FormClosing);
             this.aliasGroupBox.ResumeLayout(false);
             this.aliasGroupBox.PerformLayout();
             this.charmapGroupBox.ResumeLayout(false);
@@ -279,5 +304,7 @@
         private System.Windows.Forms.Label charmapLabel;
         private System.Windows.Forms.ListBox charMapListBox;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Button searchButton;
+        private System.Windows.Forms.TextBox searchTextBox;
     }
 }

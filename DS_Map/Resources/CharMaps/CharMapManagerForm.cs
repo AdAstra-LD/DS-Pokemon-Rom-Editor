@@ -13,7 +13,7 @@ namespace DSPRE.CharMaps
 
         private XmlDocument currentMap;
         Dictionary<ushort, string> decodeDict = new Dictionary<ushort, string>();
-        Dictionary<string, ushort> encodeDict = new Dictionary<string, ushort>();
+        Dictionary<string, ushort> aliasDict = new Dictionary<string, ushort>();
 
         private bool dirty = false;
 
@@ -22,6 +22,7 @@ namespace DSPRE.CharMaps
             InitializeComponent();
             LoadCustomMap();
             ReadCurrentMap();
+            PopulateListsFromDict();
         }
 
         private void SetDirty(bool isDirty)
@@ -103,28 +104,37 @@ namespace DSPRE.CharMaps
                     continue;
                 }
 
-                if (kind == "command")
-                {
-                    // We don't display commands in this manager
-                    continue;
-                }
-
-                charMapListBox.Items.Add($"0x{code:X4} <-> {text} ({kind})");
-
                 if (kind == "char")
                 {
                     decodeDict[code] = text;
-                    codeComboBox.Items.Add($"0x{code:X4} <-> {text}");
-                } 
+                }
                 else if (kind == "alias")
                 {
-                    encodeDict[text] = code;
-                    // Get the original character this alias points to
-                    if (decodeDict.TryGetValue(code, out string originalValue))
-                    {
-                        // Add alias to listbox
-                        aliasListBox.Items.Add($"{text} -> {originalValue} <-> 0x{code:X4}");
-                    }
+                    aliasDict[text] = code;
+                }
+            }
+        }
+
+        private void PopulateListsFromDict()
+        {
+            charMapListBox.Items.Clear();
+            aliasListBox.Items.Clear();
+            codeComboBox.Items.Clear();
+            foreach (var kvp in decodeDict)
+            {
+                ushort code = kvp.Key;
+                string value = kvp.Value;
+                charMapListBox.Items.Add($"0x{code:X4} <-> {value}");
+                codeComboBox.Items.Add($"0x{code:X4} <-> {value}");
+            }
+            foreach (var kvp in aliasDict)
+            {
+                string alias = kvp.Key;
+                ushort code = kvp.Value;
+                if (decodeDict.TryGetValue(code, out string originalValue))
+                {
+                    charMapListBox.Items.Add($"0x{code:X4} <- {alias} (alias)");
+                    aliasListBox.Items.Add($"{alias} -> {originalValue} <-> 0x{code:X4}");
                 }
             }
         }
@@ -135,6 +145,29 @@ namespace DSPRE.CharMaps
             removeAliasButton.Enabled = enableControls;
             saveButton.Enabled = enableControls;
             deleteCustomMapButton.Enabled = enableControls;
+        }
+
+        private bool CheckUnsavedChanges()
+        {
+            if (dirty)
+            {
+                var result = MessageBox.Show("You have unsaved changes. Do you want to save them before proceeding?", "Unsaved Changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
+                {
+                    // For some reason perform click doesn't work here
+                    saveButton_Click(null, null);
+                    return true;
+                }
+                else if (result == DialogResult.No)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void addAliasButton_Click(object sender, EventArgs e)
@@ -173,7 +206,7 @@ namespace DSPRE.CharMaps
             }
 
             // Check if alias already exists
-            if (encodeDict.ContainsKey(alias))
+            if (aliasDict.ContainsKey(alias))
             {
                 MessageBox.Show("Alias already exists in the charmap.", "Duplicate Alias", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -234,7 +267,7 @@ namespace DSPRE.CharMaps
             }
 
             // Add alias to listbox and dictionary
-            encodeDict[alias] = selectedCode;
+            aliasDict[alias] = selectedCode;
             aliasListBox.Items.Add($"{alias} <-> 0x{selectedCode:X4}");
             aliasListBox.SelectedIndex = aliasListBox.Items.Count - 1;
 
@@ -293,7 +326,7 @@ namespace DSPRE.CharMaps
             aliasListBox.Items.Remove(aliasListBox.SelectedItem);
             aliasListBox.SelectedIndex = aliasListBox.Items.Count - 1;
 
-            encodeDict.Remove(aliasName);
+            aliasDict.Remove(aliasName);
 
             SetDirty(true);
         }
@@ -312,7 +345,7 @@ namespace DSPRE.CharMaps
             CharMapManager.CreateCustomCharMapFile();
             LoadCustomMap();
             ReadCurrentMap();
-
+            PopulateListsFromDict();
         }
 
         private void deleteCustomMapButton_Click(object sender, EventArgs e)
@@ -332,6 +365,7 @@ namespace DSPRE.CharMaps
             {
                 LoadCustomMap();
                 ReadCurrentMap();
+                PopulateListsFromDict();
             }
         }
 
@@ -369,6 +403,90 @@ namespace DSPRE.CharMaps
                 }
             }
 
+            // Copy value to clipboard
+            ushort code = ushort.Parse(codeStr.Substring(2), System.Globalization.NumberStyles.HexNumber);
+
+            if (selectedItemStr.Contains("(alias)"))
+            {
+                // It's an alias, copy the alias name
+                foreach (var kvp in aliasDict)
+                {
+                    if (kvp.Value == code)
+                    {
+                        Clipboard.SetText(kvp.Key);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                // It's a normal char, copy the value
+                if (decodeDict.TryGetValue(code, out string value))
+                {
+                    Clipboard.SetText(value);
+                }
+            }
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            string searchTerm = searchTextBox.Text.Trim();
+
+            // Remove any filter if search term is empty
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                PopulateListsFromDict();
+                return;
+            }
+
+            // Filter charmap list based on search term
+            charMapListBox.Items.Clear();
+            foreach (var kvp in decodeDict)
+            {
+                ushort code = kvp.Key;
+                string codeStr = $"0x{code.ToString("X4").ToLower()}";
+                string value = kvp.Value;
+
+                // If value contains search term or code matches, add to list
+                if (value.Contains(searchTerm) || codeStr.Equals(searchTerm.ToLower()))
+                {
+                    charMapListBox.Items.Add($"0x{code:X4} <-> {value}");
+                }
+            }
+
+            foreach (var kvp in aliasDict)
+            {
+                string alias = kvp.Key;
+                ushort code = kvp.Value;
+                if (decodeDict.TryGetValue(code, out string originalValue))
+                {
+                    string codeStr = $"0x{code.ToString("X4")}";
+                    // If alias or original value contains search term or code matches, add to list
+                    if (alias.Contains(searchTerm) || originalValue.Contains(searchTerm) || codeStr.Equals(searchTerm.ToLower()))
+                    {
+                        charMapListBox.Items.Add($"0x{code:X4} <- {alias} (alias)");
+                    }
+                }
+            }
+
+        }
+
+        private void searchTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                searchButton.PerformClick();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+            }
+        }
+
+        private void CharMapManagerForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!CheckUnsavedChanges())
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
