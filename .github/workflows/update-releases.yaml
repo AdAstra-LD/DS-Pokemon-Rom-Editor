@@ -26,6 +26,7 @@ jobs:
            id: get_latest_tag  # The step ID to refer to later.
 
   deploy_to_github_releases:
+    if: github.repository == 'DS-Pokemon-Rom-Editor/DSPRE'
     name: Deploy to GitHub Releases
     needs: get_latest_tag
     runs-on: windows-latest

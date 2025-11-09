@@ -1,5 +1,4 @@
 using DSPRE.Editors;
-using DSPRE.MessageEnc;
 using DSPRE.Resources;
 using System;
 using System.Collections.Generic;

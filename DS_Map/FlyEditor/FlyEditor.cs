@@ -10,13 +10,29 @@ namespace DSPRE.Editors
 {
     public partial class FlyEditor : Form
     {
-        private const uint DiamondPearlOffset = 0xF2224;
+        private const uint DPjpOffset = 0xF41D0;
+        private const uint DPusOffset = 0xF2224;
+        private const uint DPfrOffset = 0xF2264;
+        private const uint DPdeOffset = 0xF2234;
+        private const uint DPitOffset = 0xF21D8;
+        private const uint DPspOffset = 0xF2270;
         private const int DiamondPearlTableSize = 20;
-        private const uint HeartGoldSoulSilverOffset = 0xF9E82;
+        private const uint HGSSjpOffset = 0xF9632;
+        private const uint HGSSusOffset = 0xF9E82;
+        private const uint HGSSfrOffset = 0xF9E66;
+        private const uint HGSSdeOffset = 0xF9E36;
+        private const uint HGSSitOffset = 0xF9DFA;
+        private const uint HGSSspOffset = 0xF9E6A;
         private const int HeartGoldSoulSilverTableSize = 30;
-        private const uint PlatinumOffset = 0xE97B4;
+        private const uint PTjpOffset = 0xE8E88;
+        private const uint PTusOffset = 0xE97B4;
+        private const uint PTfrOffset = 0xE983C;
+        private const uint PTdeOffset = 0xE980C;
+        private const uint PTitOffset = 0xE97D0;
+        private const uint PTspOffset = 0xE9848;
         private const int PlatinumTableSize = 20;
         private static GameFamilies GameFamily;
+        private static GameLanguages GameLanguage;
         private List<string> Headers;
         private bool isFormClosing = false;
         private bool isValidInput = true;
@@ -24,9 +40,10 @@ namespace DSPRE.Editors
         private List<FlyTableRowDpPlat> TableDataDpPlat;
         private List<FlyTableRowHgss> TableDataHgss;
 
-        public FlyEditor(GameFamilies gameFamily, List<string> headers)
+        public FlyEditor(GameFamilies gameFamily, GameLanguages gameLanguage, List<string> headers)
         {
             GameFamily = gameFamily;
+            GameLanguage = gameLanguage;
             Headers = headers;
             TableDataHgss = new List<FlyTableRowHgss>();
             TableDataDpPlat = new List<FlyTableRowDpPlat>();
@@ -42,19 +59,47 @@ namespace DSPRE.Editors
                 switch (GameFamily)
                 {
                     case GameFamilies.DP:
-                        return DiamondPearlOffset;
+                        switch (GameLanguage)
+                        {
+                            case GameLanguages.Japanese: return DPjpOffset;
+                            case GameLanguages.English: return DPusOffset;
+                            case GameLanguages.French: return DPfrOffset;
+                            case GameLanguages.German: return DPdeOffset;
+                            case GameLanguages.Italian: return DPitOffset;
+                            case GameLanguages.Spanish: return DPspOffset;
+                            default: throw new ArgumentOutOfRangeException(nameof(GameLanguages), "Unknown language for Diamond/Pearl");
+                        }
 
                     case GameFamilies.Plat:
-                        return PlatinumOffset;
+                        switch (GameLanguage)
+                        {
+                            case GameLanguages.Japanese: return PTjpOffset;
+                            case GameLanguages.English: return PTusOffset;
+                            case GameLanguages.French: return PTfrOffset;
+                            case GameLanguages.German: return PTdeOffset;
+                            case GameLanguages.Italian: return PTitOffset;
+                            case GameLanguages.Spanish: return PTspOffset;
+                            default: throw new ArgumentOutOfRangeException(nameof(GameLanguages), "Unknown language for Platinum");
+                        }
 
                     case GameFamilies.HGSS:
-                        return HeartGoldSoulSilverOffset;
+                        switch (GameLanguage)
+                        {
+                            case GameLanguages.Japanese: return HGSSjpOffset;
+                            case GameLanguages.English: return HGSSusOffset;
+                            case GameLanguages.French: return HGSSfrOffset;
+                            case GameLanguages.German: return HGSSdeOffset;
+                            case GameLanguages.Italian: return HGSSitOffset;
+                            case GameLanguages.Spanish: return HGSSspOffset;
+                            default: throw new ArgumentOutOfRangeException(nameof(GameLanguages), "Unknown language for HG/SS");
+                        }
 
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(GameFamily), "Unknown game family");
+                        throw new ArgumentOutOfRangeException(nameof(GameFamily), "Unknown game family/language.");
                 }
             }
         }
+
 
         private static int TableSize
         {
@@ -212,7 +257,7 @@ namespace DSPRE.Editors
 
         private void AddComboBoxColumn(DataGridView dataGridView, string name, string headerText, List<string> dataSource)
         {
-              DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn
+            DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn
             {
                 Name = name,
                 HeaderText = headerText,
@@ -230,7 +275,7 @@ namespace DSPRE.Editors
                 {
                     if (cell.ErrorText != string.Empty)
                     {
-                        return false; 
+                        return false;
                     }
                 }
             }
@@ -340,7 +385,7 @@ namespace DSPRE.Editors
         private void PopulateColumns()
         {
             var trimmedHeaders = new List<string>();
-            foreach (var header in Headers) 
+            foreach (var header in Headers)
             {
                 string trimmedHeader = header.TrimEnd('\0');
                 trimmedHeaders.Add(trimmedHeader);
@@ -576,10 +621,10 @@ namespace DSPRE.Editors
                         writer.Write(isTeleportPos ? (byte)1 : (byte)0);
 
                         bool autoUnlock = (bool)dt_UnlockSettings.Rows[i].Cells[1].Value;
-                        writer.Write(autoUnlock ? (byte)1 : (byte)0); 
+                        writer.Write(autoUnlock ? (byte)1 : (byte)0);
 
                         ushort unlockId = (ushort)dt_UnlockSettings.Rows[i].Cells[2].Value;
-                        writer.Write(unlockId); 
+                        writer.Write(unlockId);
                     }
                 }
             }

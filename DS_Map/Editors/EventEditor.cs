@@ -429,6 +429,7 @@ namespace DSPRE.Editors
 
                     Helpers.RenderMap(ref eventMapRenderer, ref eventBuildingsRenderer, ref eventMapFile, 0f, 115.0f, 90f, 4f, eventOpenGlControl.Width, eventOpenGlControl.Height, true, true);
                 eventPictureBox.BackgroundImage = Helpers.GrabMapScreenshot(eventOpenGlControl.Width, eventOpenGlControl.Height);
+
             }
             eventPictureBox.Invalidate();
         }
@@ -1133,6 +1134,11 @@ namespace DSPRE.Editors
         }
         private void eventAreaDataUpDown_ValueChanged(object sender, EventArgs e)
         {
+            if (Helpers.HandlersDisabled)
+            {
+                return;
+            }
+
             DisplayEventMap(readGraphicsFromHeader: false);
         }
         private void eventPictureBox_Click(object sender, EventArgs e)
