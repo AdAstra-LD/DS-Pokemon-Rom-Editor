@@ -156,7 +156,7 @@ namespace DSPRE.CharMaps
         {
             var xml = XDocument.Load(path, LoadOptions.PreserveWhitespace);
             var header = xml.Descendants("header").FirstOrDefault();
-            string version = header?.Attribute("version")?.Value;
+            string version = header?.Element("version")?.Value;
             
             if (version != null && Version.TryParse(version, out Version ver))
             {

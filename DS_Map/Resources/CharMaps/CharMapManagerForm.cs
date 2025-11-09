@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DSPRE.ROMFiles;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -487,6 +488,11 @@ namespace DSPRE.CharMaps
             {
                 e.Cancel = true;
             }
+        }
+
+        private void openFileButton_Click(object sender, EventArgs e)
+        {
+            Helpers.OpenFileWithDefaultApp(CharMapManager.customCharmapFilePath);
         }
     }
 }

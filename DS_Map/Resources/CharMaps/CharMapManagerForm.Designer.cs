@@ -49,6 +49,7 @@
             this.createCustomMapButton = new System.Windows.Forms.Button();
             this.deleteCustomMapButton = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.openFileButton = new System.Windows.Forms.Button();
             this.aliasGroupBox.SuspendLayout();
             this.charmapGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -168,6 +169,7 @@
             // 
             // charmapGroupBox
             // 
+            this.charmapGroupBox.Controls.Add(this.openFileButton);
             this.charmapGroupBox.Controls.Add(this.searchButton);
             this.charmapGroupBox.Controls.Add(this.searchTextBox);
             this.charmapGroupBox.Controls.Add(this.charmapLabel);
@@ -267,6 +269,17 @@
             this.deleteCustomMapButton.UseVisualStyleBackColor = true;
             this.deleteCustomMapButton.Click += new System.EventHandler(this.deleteCustomMapButton_Click);
             // 
+            // openFileButton
+            // 
+            this.openFileButton.Location = new System.Drawing.Point(133, 20);
+            this.openFileButton.Name = "openFileButton";
+            this.openFileButton.Size = new System.Drawing.Size(75, 23);
+            this.openFileButton.TabIndex = 16;
+            this.openFileButton.Text = "Open File";
+            this.toolTip.SetToolTip(this.openFileButton, "Open file in default XML editor");
+            this.openFileButton.UseVisualStyleBackColor = true;
+            this.openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
+            // 
             // CharMapManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -306,5 +319,6 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Button searchButton;
         private System.Windows.Forms.TextBox searchTextBox;
+        private System.Windows.Forms.Button openFileButton;
     }
 }

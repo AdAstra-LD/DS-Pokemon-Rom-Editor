@@ -2,7 +2,7 @@
 <charmap>
   <header>
     <description>Character mapping for Gen IV Pokémon games</description>
-    <version>2025.09.11</version>
+    <version>2025.11.09</version>
   </header>
   <entry code="0000" kind="char">\x0000</entry>
   <entry code="0001" kind="char">　</entry>
