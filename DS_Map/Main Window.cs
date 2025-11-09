@@ -844,6 +844,8 @@ namespace DSPRE
                     "DSPRE will now close.";
                 MessageBox.Show(message, "Missing Tools", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                AppLogger.Fatal("Required tools missing: " + string.Join(", ", missingToolsList) + ". Aborting startup.");
+
                 // If the program somehow doesn't close after this, we also disable the buttons and hope this is enough to dissuade the user from using it.
                 this.loadRomButton.Enabled = false; // Disable Load ROM button
                 this.readDataFromFolderButton.Enabled = false; // Disable Read Data from Folder button
