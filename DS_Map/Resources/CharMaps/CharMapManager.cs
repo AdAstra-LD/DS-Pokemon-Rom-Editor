@@ -178,10 +178,46 @@ namespace DSPRE.CharMaps
         /// character map; otherwise, <see langword="false"/>.</returns>
         public static bool IsCustomMapOutdated()
         {
-            var defaultVersion = GetCharMapVersion(charmapFilePath);
-            var customVersion = GetCharMapVersion(customCharmapFilePath);
+            // Check if custom charmap file exists
+            if (!File.Exists(customCharmapFilePath))
+            {
+                AppLogger.Warn($"No custom charmap found at: {customCharmapFilePath}");
 
-            return customVersion < defaultVersion;
+                try
+                {
+                    // Ensure directory exists
+                    if (!Directory.Exists(Program.DspreDataPath))
+                    {
+                        Directory.CreateDirectory(Program.DspreDataPath);
+                    }
+
+                    // Copy default charmap to custom path
+                    File.Copy(charmapFilePath, customCharmapFilePath, false);
+                    AppLogger.Info($"Created custom charmap from default at: {customCharmapFilePath}");
+
+                    // Since we just created it, it's not outdated
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    AppLogger.Error($"Failed to create custom charmap: {ex.Message}");
+                    return false; // Don't treat as outdated if creation failed
+                }
+            }
+
+            // Both files exist, compare versions
+            try
+            {
+                var defaultVersion = GetCharMapVersion(charmapFilePath);
+                var customVersion = GetCharMapVersion(customCharmapFilePath);
+
+                return customVersion < defaultVersion;
+            }
+            catch (Exception ex)
+            {
+                AppLogger.Error($"Error comparing charmap versions: {ex.Message}");
+                return false; // Don't treat as outdated if comparison failed
+            }
         }
 
         /// <summary>
