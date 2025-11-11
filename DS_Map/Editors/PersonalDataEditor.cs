@@ -638,13 +638,13 @@ namespace DSPRE {
             if (n <= PokemonPersonalData.tmsCount)
             {
                 // TM
-                return $"TM{n:D3} - {moveName}";
+                return $"TM {n:D3} - {moveName}";
             }
             else
             {
                 // HM
                 int hmNumber = n - PokemonPersonalData.tmsCount;
-                return $"HM{hmNumber:D2} - {moveName}";
+                return $"HM {hmNumber:D2} - {moveName}";
             }
         }
 
@@ -677,8 +677,10 @@ namespace DSPRE {
         {
             // Split the machineName to get the prefix (TM or HM) and the number
             // Format: "TM001 - Focus Punch" or "HM01 - Cut"
-            string[] parts = machineName.Split(new char[] { ' ', '-' }, StringSplitOptions.RemoveEmptyEntries);
-
+            Console.WriteLine($"{machineName}");
+            string[] fullNameBroken = machineName.Split('-');
+            string[] parts = fullNameBroken[0].Split(' ');
+            Console.WriteLine(parts[0]);
             if (parts.Length >= 2)
             {
                 // Check if the first part is "TM" or "HM" (case-insensitive)
