@@ -677,10 +677,8 @@ namespace DSPRE {
         {
             // Split the machineName to get the prefix (TM or HM) and the number
             // Format: "TM001 - Focus Punch" or "HM01 - Cut"
-            Console.WriteLine($"{machineName}");
             string[] fullNameBroken = machineName.Split('-');
             string[] parts = fullNameBroken[0].Split(' ');
-            Console.WriteLine(parts[0]);
             if (parts.Length >= 2)
             {
                 // Check if the first part is "TM" or "HM" (case-insensitive)
