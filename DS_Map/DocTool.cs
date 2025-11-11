@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Forms;
 using static DSPRE.MoveData;
 using static DSPRE.RomInfo;
+using static Images.NCOB.sNCOB;
 
 namespace DSPRE
 {
@@ -29,7 +30,7 @@ namespace DSPRE
             string moveDataPath = Path.Combine(docsFolderPath, "MoveData.csv");
             string TMHMDataPath = Path.Combine(docsFolderPath, "TMHMData.csv");
 
-            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.trainerParty, DirNames.trainerProperties ,DirNames.moveData, DirNames.itemData});
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.evolutions, DirNames.trainerParty, DirNames.trainerProperties, DirNames.moveData, DirNames.itemData });
 
             string[] pokeNames = RomInfo.GetPokemonNames();
             string[] itemNames = RomInfo.GetItemNames();
@@ -82,8 +83,8 @@ namespace DSPRE
             {
                 curPersonalData = new PokemonPersonalData(i);
 
-                string type1String = (int) curPersonalData.type1 < typeNames.Length ? typeNames[(int)curPersonalData.type1] : "UnknownType_" + (int)curPersonalData.type1;
-                string type2String = (int) curPersonalData.type2 < typeNames.Length ? typeNames[(int)curPersonalData.type2] : "UnknownType_" + (int)curPersonalData.type2;
+                string type1String = (int)curPersonalData.type1 < typeNames.Length ? typeNames[(int)curPersonalData.type1] : "UnknownType_" + (int)curPersonalData.type1;
+                string type2String = (int)curPersonalData.type2 < typeNames.Length ? typeNames[(int)curPersonalData.type2] : "UnknownType_" + (int)curPersonalData.type2;
 
                 sw.WriteLine($"{i},{pokeNames[i]},{type1String},{type2String}," +
                     $"{curPersonalData.baseHP},{curPersonalData.baseAtk},{curPersonalData.baseDef}, " +
@@ -183,6 +184,81 @@ namespace DSPRE
 
         }
 
+        public static string ExportLearnsetDataToJSON()
+        {
+            string executablePath = AppDomain.CurrentDomain.BaseDirectory;
+            string docsFolderPath = Path.Combine(executablePath, "Docs");
+            string learnsetDataPath = Path.Combine(docsFolderPath, "LearnsetData.json");
+            ScriptDatabase.InitializeMoveNamesIfNeeded();
+            ScriptDatabase.InitializePokemonNamesIfNeeded();
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.moveData });
+
+            string[] pokeNames = RomInfo.GetPokemonNames();
+
+            // Handle Forms
+            int extraCount = RomInfo.GetPersonalFilesCount() - pokeNames.Length;
+            string[] extraNames = new string[extraCount];
+
+            for (int i = 0; i < extraCount; i++)
+            {
+                PokeDatabase.PersonalData.PersonalExtraFiles extraEntry = PokeDatabase.PersonalData.personalExtraFiles[i];
+                extraNames[i] = pokeNames[extraEntry.monId] + " - " + extraEntry.description;
+            }
+
+            pokeNames = pokeNames.Concat(extraNames).ToArray();
+
+            // Create the Docs folder if it doesn't exist
+            if (!Directory.Exists(docsFolderPath))
+            {
+                Directory.CreateDirectory(docsFolderPath);
+            }
+
+            // Create JSON structure
+            var learnsetJson = new Dictionary<string, object>();
+
+            for (int i = 0; i < RomInfo.GetLearnsetFilesCount(); i++)
+            {
+                var curLearnsetData = new LearnsetData(i);
+                string speciesName = "SPECIES_UNKNOWN";
+
+                if (ScriptDatabase.pokemonNames.ContainsKey((ushort)i))
+                {
+                    speciesName = $"{ScriptDatabase.pokemonNames[(ushort)i].ToUpper().Replace(" ", "_")}";
+                }
+
+                var levelMoves = new List<Dictionary<string, object>>();
+
+                foreach (var entry in curLearnsetData.list)
+                {
+                    if (entry.move == 0) continue; // Skip empty moves
+
+                    string moveName = "MOVE_UNKNOWN";
+
+                    if (ScriptDatabase.moveNames.ContainsKey(entry.move))
+                    {
+                        moveName = $"{ScriptDatabase.moveNames[entry.move].ToUpper().Replace(" ", "_")}";
+                    }
+
+                    levelMoves.Add(new Dictionary<string, object>
+                    {
+                        { "Level", entry.level },
+                        { "Move", moveName }
+                    });
+                }
+
+                learnsetJson[speciesName] = new Dictionary<string, object>
+                {
+                    { "LevelMoves", levelMoves }
+                };
+            }
+
+            // Write JSON to file
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(learnsetJson, Newtonsoft.Json.Formatting.Indented);
+            File.WriteAllText(learnsetDataPath, json);
+
+            return learnsetDataPath;
+        }
+
         private static void ExportEvolutionDataToCSV(string evolutionDataPath, string[] pokeNames, string[] itemNames, string[] moveNames)
         {
             // Write the Evolution Data to the CSV file
@@ -272,7 +348,7 @@ namespace DSPRE
                 string[] items = new string[partyPokemon.Length];
                 int[] levels = new int[partyPokemon.Length];
                 int[] ivs = new int[partyPokemon.Length];
-                string[][] moves = new string[partyPokemon.Length][];                
+                string[][] moves = new string[partyPokemon.Length][];
 
                 for (int j = 0; j < partyPokemon.Length; j++)
                 {
@@ -306,7 +382,7 @@ namespace DSPRE
                     {
                         moves[j] = partyPokemon[j].moves.Select(move => moveNames[move]).ToArray();
                     }
-                    
+
                 }
 
                 string[] monGenders = new string[partyPokemon.Length];
@@ -343,14 +419,14 @@ namespace DSPRE
                 // Lambda magic to select the flags that are set, skipping the first enum entry (no flags)
                 string moveFlagsString = string.Join("|", moveFlags.Skip(1).Select((flag, index)
                     => (curMoveDataFile.flagField & (1 << index)) != 0 ? flag : "").Where(flag => !string.IsNullOrEmpty(flag)));
-                
+
                 string attackRangeString = string.Join("|", attackRange.Skip(1).Select((range, index)
                     => (curMoveDataFile.target & (1 << index)) != 0 ? range : "").Where(range => !string.IsNullOrEmpty(range)));
 
-                string battleSeqDescString = curMoveDataFile.battleeffect < battleSeqDesc.Length ? 
+                string battleSeqDescString = curMoveDataFile.battleeffect < battleSeqDesc.Length ?
                     battleSeqDesc[curMoveDataFile.battleeffect] : "UnknownEffect_" + curMoveDataFile.battleeffect;
 
-                string typeString = (int)curMoveDataFile.movetype < typeNames.Length ? 
+                string typeString = (int)curMoveDataFile.movetype < typeNames.Length ?
                     typeNames[(int)curMoveDataFile.movetype] : "UnknownType_" + (int)curMoveDataFile.movetype;
 
                 sw.WriteLine($"{i},{moveNames[i]},{typeString},{curMoveDataFile.split}," +
@@ -358,7 +434,7 @@ namespace DSPRE
                              $"{curMoveDataFile.sideEffectProbability},{curMoveDataFile.pp}," +
                              $"[{attackRangeString}],[{moveFlagsString}],{battleSeqDescString}");
             }
-            
+
             sw.Close();
         }
 
@@ -447,7 +523,7 @@ namespace DSPRE
 
             sb.Append("\nAbility: " + ability);
             sb.Append("\nLevel: " + level);
-            sb.Append("\n"+ nature + " Nature");
+            sb.Append("\n" + nature + " Nature");
 
             sb.Append("\nIVs: " + string.Join(" / ", Enumerable.Repeat(ivs.ToString(), 6)));
 
@@ -475,7 +551,7 @@ namespace DSPRE
         private static void SetMonGendersAndAbilitiesAndNature(int trainerID, int trainerClassID, PartyPokemon[] partyPokemon,
             PartyPokemon.GenderAndAbilityFlags[] monFlags, ref string[] abilityNames,
             ref string[] monGenders, ref string[] abilities, ref string[] natures)
-        { 
+        {
             bool trainerMale = false;
 
             trainerMale = DVCalculator.TrainerClassGender.GetTrainerClassGender(trainerClassID);
@@ -486,9 +562,9 @@ namespace DSPRE
             {
 
                 byte baseGenderRatio = new PokemonPersonalData((int)partyPokemon[j].pokeID).genderVec;
-                byte genderOverride = (byte)((byte) monFlags[j] & 0x0F); // Get the lower 4 bits
+                byte genderOverride = (byte)((byte)monFlags[j] & 0x0F); // Get the lower 4 bits
                 byte abilityOverride = (byte)((byte)monFlags[j] >> 4); // Get the upper 4 bits
-                
+
                 uint PID = DVCalculator.generatePID((uint)trainerID, (uint)trainerClassID, (uint)partyPokemon[j].pokeID, (byte)partyPokemon[j].level, baseGenderRatio, genderOverride, abilityOverride, partyPokemon[j].difficulty);
                 natures[j] = DVCalculator.Natures[DVCalculator.getNatureFromPID(PID)].Split(':')[0];
 
