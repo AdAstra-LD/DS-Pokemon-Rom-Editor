@@ -238,6 +238,16 @@ namespace DSPRE
                 BeginInvoke(new Action(() => Application.Exit()));
                 return;
             }
+
+            // Check whether charmap is out of date
+            if (CharMaps.CharMapManager.IsCustomMapOutdated())
+            {
+                MessageBox.Show("Your custom character map is based on an outdated version of the default map.\n" +
+                    "Please update it to avoid potential issues when editing text.\n" +
+                    "You may need to manually copy or recreate your custom mappings.", 
+                    "Outdated Character Map", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
         }
 
         private void PaintGameIcon(object sender, PaintEventArgs e)
@@ -816,6 +826,11 @@ namespace DSPRE
                 toolsMissing = true;
                 missingToolsList.Add("apicula.exe");
             }
+            if (!File.Exists(CharMaps.CharMapManager.charmapFilePath))
+            {
+                toolsMissing = true;
+                missingToolsList.Add("charmap.xml");
+            }
 
             if (toolsMissing)
             {
@@ -828,6 +843,8 @@ namespace DSPRE
                     "   - Your Antivirus software has removed critical files\n\n" +
                     "DSPRE will now close.";
                 MessageBox.Show(message, "Missing Tools", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                AppLogger.Fatal("Required tools missing: " + string.Join(", ", missingToolsList) + ". Aborting startup.");
 
                 // If the program somehow doesn't close after this, we also disable the buttons and hope this is enough to dissuade the user from using it.
                 this.loadRomButton.Enabled = false; // Disable Load ROM button
@@ -1906,6 +1923,12 @@ namespace DSPRE
                 Helpers.PopOutEditor(cfg.Control, currentTab.Text, cfg.PlaceholderLabel, cfg.PopoutButton,
                     mainTabImageList.Images[currentTab.ImageIndex]);
             }
+        }
+
+        private void openCharmapManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {            
+            CharMaps.CharMapManagerForm charMapManager = new CharMaps.CharMapManagerForm();
+            charMapManager.ShowDialog();
         }
 
         #endregion
