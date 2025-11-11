@@ -225,6 +225,12 @@ namespace DSPRE
                 {
                     speciesName = $"{ScriptDatabase.pokemonNames[(ushort)i].ToUpper().Replace(" ", "_")}";
                 }
+                else if (i < pokeNames.Length)
+                {
+                    // Fall back to the pokeNames array for forms and other Pokemon not in ScriptDatabase
+                    speciesName = $"SPECIES_{pokeNames[i].ToUpper().Replace(" ", "_").Replace("-", "_").Replace("__", "_")}";
+                }
+
 
                 var levelMoves = new List<Dictionary<string, object>>();
 
