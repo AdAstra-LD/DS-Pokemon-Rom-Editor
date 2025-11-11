@@ -17,6 +17,8 @@ namespace DSPRE.Editors
         private ToolStrip toolStrip;
         private StatusStrip statusStrip;
         private ContextMenuStrip contextMenu;
+        private bool isDirty = false;
+        private bool changesSaved = false;
 
         public LearnsetBulkEditor(BindingList<LearnsetEntry> learnsetData, string[] pokemonNames, string[] moveNames)
         {
@@ -28,15 +30,37 @@ namespace DSPRE.Editors
 
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (isDirty && !changesSaved)
+            {
+                var result = MessageBox.Show(
+                    "You have unsaved changes. Are you sure you want to exit?",
+                    "Unsaved Changes",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.No)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            base.OnFormClosing(e);
+        }
+
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
+            this.DialogResult = changesSaved ? DialogResult.OK : DialogResult.Cancel;
             base.OnFormClosed(e);
         }
+
         private void SetupControls()
         {
             this.Size = new Size(1000, 700);
             this.Text = "Bulk Learnset Editor";
+            UpdateWindowTitle();
 
             dataGridView = new DataGridView
             {
@@ -150,11 +174,42 @@ namespace DSPRE.Editors
             dataGridView.DataError += DataGridView_DataError;
             dataGridView.SelectionChanged += DataGridView_SelectionChanged;
             dataGridView.MouseClick += DataGridView_MouseClick;
+            dataGridView.UserAddedRow += DataGridView_UserAddedRow;
+            dataGridView.UserDeletedRow += DataGridView_UserDeletedRow;
 
             UpdateStatus();
 
             // Probably should move all this to winforms designer later
         }
+
+        #region Dirty Tracking Methods
+        private void SetDirty()
+        {
+            if (!isDirty)
+            {
+                isDirty = true;
+                changesSaved = false;
+                UpdateWindowTitle();
+            }
+        }
+
+        private void SetClean()
+        {
+            if (isDirty)
+            {
+                isDirty = false;
+                changesSaved = true;
+                UpdateWindowTitle();
+            }
+        }
+
+        private void UpdateWindowTitle()
+        {
+            string baseTitle = "Bulk Learnset Editor";
+            this.Text = isDirty ? $"{baseTitle} *" : baseTitle;
+        }
+        #endregion
+
         #region Event Handlers
         private void DataGridView_MouseClick(object sender, MouseEventArgs e)
         {
@@ -179,13 +234,24 @@ namespace DSPRE.Editors
             if (entry.Level < 1) entry.Level = 1;
             if (entry.Level > 100) entry.Level = 100;
 
-            if (e.ColumnIndex == 3) // MoveID colum, maybe can be set as a constant
+            if (e.ColumnIndex == 3) // MoveID column, maybe can be set as a constant
             {
                 entry.MoveName = moveNames[entry.MoveID];
             }
 
             dataGridView.InvalidateRow(e.RowIndex);
             UpdateStatus();
+            SetDirty();
+        }
+
+        private void DataGridView_UserAddedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            SetDirty();
+        }
+
+        private void DataGridView_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+            SetDirty();
         }
 
         private void DataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -200,6 +266,7 @@ namespace DSPRE.Editors
             UpdateStatus();
         }
         #endregion
+
         #region Bulk Operations
         private void AddMoveToSelectedPokemon()
         {
@@ -228,9 +295,9 @@ namespace DSPRE.Editors
                     }
                     UpdateStatus();
                     SortAllLearnsets();
+                    SetDirty();
                 }
             }
-            
         }
 
         private void DeleteSelectedMoves()
@@ -247,15 +314,18 @@ namespace DSPRE.Editors
                         learnsetData.RemoveAt(row.Index);
                 }
                 UpdateStatus();
+                SetDirty();
             }
         }
 
         private void SortAllLearnsets()
         {
-            // Group by Pokemon and sort each learnset by level
-            // Need to make sure this keeps order intact for BindingList
-            // To be tested by darm or soemthing
-            var grouped = learnsetData.GroupBy(x => x.PokemonID).ToList();
+            // Group by Pokemon and sort each learnset by level, maintaining Pokemon order
+            var grouped = learnsetData
+                .GroupBy(x => x.PokemonID)
+                .OrderBy(g => g.Key) // Sort by Pokemon ID to maintain order
+                .ToList();
+
             learnsetData.Clear();
 
             foreach (var group in grouped)
@@ -266,6 +336,9 @@ namespace DSPRE.Editors
                     learnsetData.Add(entry);
                 }
             }
+
+            UpdateStatus();
+            SetDirty();
         }
 
         private void FilterData(string filterText)
@@ -306,6 +379,7 @@ namespace DSPRE.Editors
                     learnset.SaveToFileDefaultDir(group.Key, false);
                 }
 
+                SetClean();
                 UpdateStatus("All changes saved successfully!");
                 MessageBox.Show("All learnset changes have been saved.", "Save Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -355,7 +429,20 @@ namespace DSPRE.Editors
                         }
                     }
 
+                    // Re-sort the entire list to maintain Pokemon ID order
+                    var sortedEntries = learnsetData
+                        .OrderBy(x => x.PokemonID)
+                        .ThenBy(x => x.Level)
+                        .ToList();
+
+                    learnsetData.Clear();
+                    foreach (var entry in sortedEntries)
+                    {
+                        learnsetData.Add(entry);
+                    }
+
                     UpdateStatus($"Copied learnset from {pokemonNames[sourcePokemon]} to {form.SelectedPokemonIds.Count} Pokemon.");
+                    SetDirty();
                 }
             }
         }
@@ -386,6 +473,7 @@ namespace DSPRE.Editors
                         }
 
                         UpdateStatus($"Removed {moveName} from {movesToRemove.Count} learnsets.");
+                        SetDirty();
                     }
                 }
             }
@@ -428,6 +516,7 @@ namespace DSPRE.Editors
 
                     dataGridView.Refresh();
                     UpdateStatus($"Adjusted levels for {dataGridView.SelectedRows.Count} moves.");
+                    SetDirty();
                 }
             }
         }
@@ -458,6 +547,7 @@ namespace DSPRE.Editors
 
                         dataGridView.Refresh();
                         UpdateStatus($"Replaced {oldMoveName} with {newMoveName} in {affectedMoves.Count} learnsets.");
+                        SetDirty();
                     }
                 }
             }
@@ -497,7 +587,8 @@ namespace DSPRE.Editors
 
             statusStrip.Items[0].Text =
                 $"{totalCount} moves across {pokemonCount} Pokemon. " +
-                $"{(selectedCount > 0 ? $"{selectedCount} selected." : "")}";
+                $"{(selectedCount > 0 ? $"{selectedCount} selected." : "")}" +
+                $"{(isDirty ? " [Unsaved Changes]" : "")}";
         }
         #endregion
     }
