@@ -262,5 +262,21 @@ namespace DSPRE.Resources
                             .Replace("&", "AND")
             );
         }
+
+        internal static void InitializePokemonNamesIfNeeded()
+        {
+            if(pokemonNames.Count == 0)
+            {
+                InitializePokemonNames();
+            }
+        }
+
+        internal static void InitializeMoveNamesIfNeeded()
+        {
+            if(moveNames.Count == 0)
+            {
+                InitializeMoveNames();
+            }   
+        }
     }
 }
