@@ -49,7 +49,6 @@ namespace DSPRE {
             this.moveNames = moveNames;
             this.pokenames = RomInfo.GetPokemonNames();
             this.fileNames = GetFileNames();
-
             InitDataRanges();
 
             /* ---------------- */
@@ -593,10 +592,106 @@ namespace DSPRE {
 
         private void exportLearnsetButton_Click(object sender, EventArgs e)
         {
-            AppLogger.Info("Exporting learnset data to CSV...");
-            string learnsetPath = DocTool.ExportEditableLearnsetDataToCSV();
-            AppLogger.Info("Learnset data export completed.");
-            MessageBox.Show(this, "Learnset data exported to:\n" + learnsetPath, "Learnset Editor - Export completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            using (var formatDialog = new Form())
+            {
+                formatDialog.Text = "Export Learnset Data";
+                formatDialog.Size = new Size(350, 250);
+                formatDialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+                formatDialog.StartPosition = FormStartPosition.CenterParent;
+                formatDialog.MaximizeBox = false;
+                formatDialog.MinimizeBox = false;
+
+                var tableLayout = new TableLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    ColumnCount = 1,
+                    RowCount = 4,
+                    Padding = new Padding(20)
+                };
+                // Fix row heights - make the last row auto-size for buttons
+                tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));  // Label
+                tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));  // CSV radio
+                tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));  // JSON radio  
+                tableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));  // Buttons (fixed height)
+
+                // Label
+                var label = new Label
+                {
+                    Text = "Select export format:",
+                    Dock = DockStyle.Fill,
+                    TextAlign = ContentAlignment.MiddleLeft,
+                    Font = new Font(this.Font, FontStyle.Bold)
+                };
+
+                // Radio buttons
+                var rbCSV = new RadioButton
+                {
+                    Text = "CSV Format (Editable spreadsheet)",
+                    Checked = true,
+                    Dock = DockStyle.Fill
+                };
+
+                var rbJSON = new RadioButton
+                {
+                    Text = "JSON Format (Project structure)",
+                    Dock = DockStyle.Fill
+                };
+
+                // Buttons - use a panel with fixed height
+                var buttonPanel = new Panel
+                {
+                    Dock = DockStyle.Fill,
+                    Height = 40
+                };
+
+                var flowLayout = new FlowLayoutPanel
+                {
+                    Dock = DockStyle.Fill,
+                    FlowDirection = FlowDirection.RightToLeft,
+                    Padding = new Padding(0, 10, 0, 0)
+                };
+
+                var btnCancel = new Button { Text = "Cancel", DialogResult = DialogResult.Cancel, Size = new Size(75, 25) };
+                var btnOK = new Button { Text = "Export", DialogResult = DialogResult.OK, Size = new Size(75, 25) };
+
+                flowLayout.Controls.AddRange(new Control[] { btnOK, btnCancel });
+                buttonPanel.Controls.Add(flowLayout);
+
+                // Add controls to table
+                tableLayout.Controls.Add(label, 0, 0);
+                tableLayout.Controls.Add(rbCSV, 0, 1);
+                tableLayout.Controls.Add(rbJSON, 0, 2);
+                tableLayout.Controls.Add(buttonPanel, 0, 3);
+
+                formatDialog.Controls.Add(tableLayout);
+                formatDialog.AcceptButton = btnOK;
+                formatDialog.CancelButton = btnCancel;
+
+                var result = formatDialog.ShowDialog(this);
+
+                if (result == DialogResult.OK)
+                {
+                    string learnsetPath;
+                    if (rbCSV.Checked)
+                    {
+                        AppLogger.Info("Exporting learnset data to CSV...");
+                        learnsetPath = DocTool.ExportEditableLearnsetDataToCSV();
+                        AppLogger.Info("Learnset data CSV export completed.");
+                    }
+                    else
+                    {
+                        AppLogger.Info("Exporting learnset data to JSON...");
+                        learnsetPath = DocTool.ExportLearnsetDataToJSON();
+                        AppLogger.Info("Learnset data JSON export completed.");
+                    }
+
+                    MessageBox.Show(this, "Learnset data exported to:\n" + learnsetPath, "Learnset Editor - Export completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    AppLogger.Info("Learnset data export cancelled.");
+                }
+            }
         }
 
         #endregion
