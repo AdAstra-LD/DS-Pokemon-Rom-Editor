@@ -112,6 +112,9 @@
     <Compile Include="DSUtils\NSBUtils.cs" />
     <Compile Include="DSUtils\OverlayUtils.cs" />
     <Compile Include="DSUtils\TextConverter.cs" />
+    <Compile Include="Editors\LearnsetBulkEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Editors\TrainerEditor\DVCalculator\DVCalc.cs">
       <SubType>Form</SubType>
     </Compile>

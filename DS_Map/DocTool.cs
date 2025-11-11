@@ -119,6 +119,70 @@ namespace DSPRE
             sw.Close();
         }
 
+        public static string ExportEditableLearnsetDataToCSV()
+        {
+            string executablePath = AppDomain.CurrentDomain.BaseDirectory;
+            string docsFolderPath = Path.Combine(executablePath, "Docs");
+
+            string learnsetDataPath = Path.Combine(docsFolderPath, "LearnsetData.csv");
+
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.moveData });
+
+            string[] pokeNames = RomInfo.GetPokemonNames();
+            string[] moveNames = RomInfo.GetAttackNames();
+
+            // Handle Forms
+            int extraCount = RomInfo.GetPersonalFilesCount() - pokeNames.Length;
+            string[] extraNames = new string[extraCount];
+
+            for (int i = 0; i < extraCount; i++)
+            {
+                PokeDatabase.PersonalData.PersonalExtraFiles extraEntry = PokeDatabase.PersonalData.personalExtraFiles[i];
+                extraNames[i] = pokeNames[extraEntry.monId] + " - " + extraEntry.description;
+            }
+
+            pokeNames = pokeNames.Concat(extraNames).ToArray();
+
+            // Create the Docs folder if it doesn't exist
+            if (!Directory.Exists(docsFolderPath))
+            {
+                Directory.CreateDirectory(docsFolderPath);
+            }
+
+            // Write the Editable Learnset Data to the CSV file
+            LearnsetData curLearnsetData = null;
+            StreamWriter sw = new StreamWriter(learnsetDataPath);
+
+            // Write CSV header
+            sw.WriteLine("ID,Name,Level,Move");
+
+            for (int i = 0; i < RomInfo.GetLearnsetFilesCount(); i++)
+            {
+                curLearnsetData = new LearnsetData(i);
+                string pokemonName = pokeNames[i];
+
+                // If there are no moves in the learnset, still write one row for the Pokemon
+                if (curLearnsetData.list.Count == 0)
+                {
+                    sw.WriteLine($"{i},{pokemonName},,");
+                }
+                else
+                {
+                    // Write one row for each move/level combination
+                    foreach (var entry in curLearnsetData.list)
+                    {
+                        string moveName = moveNames[entry.move];
+                        sw.WriteLine($"{i},{pokemonName},{entry.level},{moveName}");
+                    }
+                }
+            }
+
+            sw.Close();
+
+            return learnsetDataPath;
+
+        }
+
         private static void ExportEvolutionDataToCSV(string evolutionDataPath, string[] pokeNames, string[] itemNames, string[] moveNames)
         {
             // Write the Evolution Data to the CSV file
