@@ -32,7 +32,7 @@ namespace DSPRE {
             this.Size = parent.Size;
             this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             Helpers.DisableHandlers();
-
+            ScriptDatabase.InitializeMoveNamesIfNeeded();
             BindingList<string> listItemNames = new BindingList<string>(itemNames);
             item1InputComboBox.DataSource = new BindingSource(listItemNames, string.Empty);
             item2InputComboBox.DataSource = new BindingSource(listItemNames, string.Empty);
@@ -615,25 +615,84 @@ namespace DSPRE {
             }
         }
 
-        private static string MachineNameFromZeroBasedIndex(int n) {
-            //0-91 --> TMs
-            //>=92 --> HM
+        private static string MachineNameFromZeroBasedIndex(int n)
+        {
+            //0-91 --> TMs (TM001-TM092)
+            //>=92 --> HMs (HM01-HM08)
+
+            string moveName = "Unknown";
+
+            // Get the move name from the machine moves array
+            if (n < MachineMoves.Length)
+            {
+                int moveId = MachineMoves[n];
+                if (ScriptDatabase.moveNames.ContainsKey((ushort)moveId))
+                {
+                    string moveKey = ScriptDatabase.moveNames[(ushort)moveId];
+                    // Convert MOVE_LEECH_SEED to Leech Seed
+                    moveName = MoveKeyToHumanReadable(moveKey);
+                }
+            }
+
             n += 1;
-            int diff = n - PokemonPersonalData.tmsCount;
-            string item = diff > 0 ? "HM " + diff : "TM " + n;
-            return item;
+            if (n <= PokemonPersonalData.tmsCount)
+            {
+                // TM
+                return $"TM{n:D3} - {moveName}";
+            }
+            else
+            {
+                // HM
+                int hmNumber = n - PokemonPersonalData.tmsCount;
+                return $"HM{hmNumber:D2} - {moveName}";
+            }
         }
-        private static int ZeroBasedIndexFromMachineName(string machineName) {
+
+        private static string MoveKeyToHumanReadable(string moveKey)
+        {
+            if (string.IsNullOrEmpty(moveKey))
+                return "Unknown";
+
+            // Remove "MOVE_" prefix if present
+            if (moveKey.StartsWith("MOVE_"))
+            {
+                moveKey = moveKey.Substring(5);
+            }
+
+            // Split by underscores and capitalize each word
+            string[] words = moveKey.Split('_');
+            for (int i = 0; i < words.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(words[i]))
+                {
+                    // Capitalize first letter, lowercase the rest
+                    words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+                }
+            }
+
+            return string.Join(" ", words);
+        }
+
+        private static int ZeroBasedIndexFromMachineName(string machineName)
+        {
             // Split the machineName to get the prefix (TM or HM) and the number
-            string[] parts = machineName.Split(' ');
+            // Format: "TM001 - Focus Punch" or "HM01 - Cut"
+            string[] parts = machineName.Split(new char[] { ' ', '-' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (parts.Length == 2) {
-                // Check if the first part is "TM" (case-insensitive)
+            if (parts.Length >= 2)
+            {
+                // Check if the first part is "TM" or "HM" (case-insensitive)
                 bool isTM = parts[0].Equals("TM", StringComparison.OrdinalIgnoreCase);
+                bool isHM = parts[0].Equals("HM", StringComparison.OrdinalIgnoreCase);
 
-                if (isTM || parts[0].Equals("HM", StringComparison.OrdinalIgnoreCase)) {
-                    if (int.TryParse(parts[1], out int number)) {
-                        number--;
+                if (isTM || isHM)
+                {
+                    // Extract just the number part (remove any leading zeros if needed)
+                    string numberPart = parts[1];
+                    if (int.TryParse(numberPart, out int number))
+                    {
+                        number--; // Convert to zero-based
+
                         // Calculate the index based on the prefix (TM or HM)
                         int index = isTM ? number : number + PokemonPersonalData.tmsCount;
                         return index;
@@ -644,5 +703,112 @@ namespace DSPRE {
             // Return -1 to indicate an invalid input or failure to parse
             return -1;
         }
+
+        private static readonly int[] MachineMoves = new int[]
+        {
+            // TMs 001-092
+            264, // MOVE_FOCUS_PUNCH - TM001
+            337, // MOVE_DRAGON_CLAW - TM002
+            352, // MOVE_WATER_PULSE - TM003
+            347, // MOVE_CALM_MIND - TM004
+            46,  // MOVE_ROAR - TM005
+            92,  // MOVE_TOXIC - TM006
+            258, // MOVE_HAIL - TM007
+            339, // MOVE_BULK_UP - TM008
+            331, // MOVE_BULLET_SEED - TM009
+            237, // MOVE_HIDDEN_POWER - TM010
+            241, // MOVE_SUNNY_DAY - TM011
+            269, // MOVE_TAUNT - TM012
+            58,  // MOVE_ICE_BEAM - TM013
+            59,  // MOVE_BLIZZARD - TM014
+            63,  // MOVE_HYPER_BEAM - TM015
+            113, // MOVE_LIGHT_SCREEN - TM016
+            182, // MOVE_PROTECT - TM017
+            240, // MOVE_RAIN_DANCE - TM018
+            202, // MOVE_GIGA_DRAIN - TM019
+            219, // MOVE_SAFEGUARD - TM020
+            218, // MOVE_FRUSTRATION - TM021
+            76,  // MOVE_SOLAR_BEAM - TM022
+            231, // MOVE_IRON_TAIL - TM023
+            85,  // MOVE_THUNDERBOLT - TM024
+            87,  // MOVE_THUNDER - TM025
+            89,  // MOVE_EARTHQUAKE - TM026
+            216, // MOVE_RETURN - TM027
+            91,  // MOVE_DIG - TM028
+            94,  // MOVE_PSYCHIC - TM029
+            247, // MOVE_SHADOW_BALL - TM030
+            280, // MOVE_BRICK_BREAK - TM031
+            104, // MOVE_DOUBLE_TEAM - TM032
+            115, // MOVE_REFLECT - TM033
+            351, // MOVE_SHOCK_WAVE - TM034
+            53,  // MOVE_FLAMETHROWER - TM035
+            188, // MOVE_SLUDGE_BOMB - TM036
+            201, // MOVE_SANDSTORM - TM037
+            126, // MOVE_FIRE_BLAST - TM038
+            317, // MOVE_ROCK_TOMB - TM039
+            332, // MOVE_AERIAL_ACE - TM040
+            259, // MOVE_TORMENT - TM041
+            263, // MOVE_FACADE - TM042
+            290, // MOVE_SECRET_POWER - TM043
+            156, // MOVE_REST - TM044
+            213, // MOVE_ATTRACT - TM045
+            168, // MOVE_THIEF - TM046
+            211, // MOVE_STEEL_WING - TM047
+            285, // MOVE_SKILL_SWAP - TM048
+            289, // MOVE_SNATCH - TM049
+            315, // MOVE_OVERHEAT - TM050
+            355, // MOVE_ROOST - TM051
+            411, // MOVE_FOCUS_BLAST - TM052
+            412, // MOVE_ENERGY_BALL - TM053
+            206, // MOVE_FALSE_SWIPE - TM054
+            362, // MOVE_BRINE - TM055
+            374, // MOVE_FLING - TM056
+            451, // MOVE_CHARGE_BEAM - TM057
+            203, // MOVE_ENDURE - TM058
+            406, // MOVE_DRAGON_PULSE - TM059
+            409, // MOVE_DRAIN_PUNCH - TM060
+            261, // MOVE_WILL_O_WISP - TM061
+            318, // MOVE_SILVER_WIND - TM062
+            373, // MOVE_EMBARGO - TM063
+            153, // MOVE_EXPLOSION - TM064
+            421, // MOVE_SHADOW_CLAW - TM065
+            371, // MOVE_PAYBACK - TM066
+            278, // MOVE_RECYCLE - TM067
+            416, // MOVE_GIGA_IMPACT - TM068
+            397, // MOVE_ROCK_POLISH - TM069
+            148, // MOVE_FLASH - TM070
+            444, // MOVE_STONE_EDGE - TM071
+            419, // MOVE_AVALANCHE - TM072
+            86,  // MOVE_THUNDER_WAVE - TM073
+            360, // MOVE_GYRO_BALL - TM074
+            14,  // MOVE_SWORDS_DANCE - TM075
+            446, // MOVE_STEALTH_ROCK - TM076
+            244, // MOVE_PSYCH_UP - TM077
+            445, // MOVE_CAPTIVATE - TM078
+            399, // MOVE_DARK_PULSE - TM079
+            157, // MOVE_ROCK_SLIDE - TM080
+            404, // MOVE_X_SCISSOR - TM081
+            214, // MOVE_SLEEP_TALK - TM082
+            363, // MOVE_NATURAL_GIFT - TM083
+            398, // MOVE_POISON_JAB - TM084
+            138, // MOVE_DREAM_EATER - TM085
+            447, // MOVE_GRASS_KNOT - TM086
+            207, // MOVE_SWAGGER - TM087
+            365, // MOVE_PLUCK - TM088
+            369, // MOVE_U_TURN - TM089
+            164, // MOVE_SUBSTITUTE - TM090
+            430, // MOVE_FLASH_CANNON - TM091
+            433, // MOVE_TRICK_ROOM - TM092
+
+            // HMs 01-08
+            15,  // MOVE_CUT - HM01
+            19,  // MOVE_FLY - HM02
+            57,  // MOVE_SURF - HM03
+            70,  // MOVE_STRENGTH - HM04
+            250, // MOVE_WHIRLPOOL - HM05
+            249, // MOVE_ROCK_SMASH - HM06
+            127, // MOVE_WATERFALL - HM07
+            431, // MOVE_ROCK_CLIMB - HM08
+        };
     }
 }
