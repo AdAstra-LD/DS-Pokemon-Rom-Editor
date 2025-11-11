@@ -39,11 +39,13 @@
             this.deleteMoveButton = new System.Windows.Forms.Button();
             this.editMoveButton = new System.Windows.Forms.Button();
             this.levelNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.descriptorLabel = new System.Windows.Forms.Label();
-            this.entryCountLabel = new System.Windows.Forms.Label();
+            this.moveInputComboBox = new DSPRE.InputComboBox();
             this.levelLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
-            this.moveInputComboBox = new DSPRE.InputComboBox();
+            this.descriptorLabel = new System.Windows.Forms.Label();
+            this.entryCountLabel = new System.Windows.Forms.Label();
+            this.exportLearnsetButton = new System.Windows.Forms.Button();
+            this.bulkEditLearnsets = new System.Windows.Forms.Button();
             this.pokemonNameInputComboBox = new DSPRE.InputComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pokemonPictureBox)).BeginInit();
@@ -162,9 +164,9 @@
             // editLayoutPanel
             // 
             this.editLayoutPanel.ColumnCount = 3;
-            this.editLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33112F));
-            this.editLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33444F));
-            this.editLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33444F));
+            this.editLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.78378F));
+            this.editLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.78378F));
+            this.editLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.88288F));
             this.editLayoutPanel.Controls.Add(this.moveDownButton, 1, 4);
             this.editLayoutPanel.Controls.Add(this.moveUpButton, 0, 4);
             this.editLayoutPanel.Controls.Add(this.addMoveButton, 0, 5);
@@ -172,23 +174,26 @@
             this.editLayoutPanel.Controls.Add(this.editMoveButton, 1, 5);
             this.editLayoutPanel.Controls.Add(this.levelNumericUpDown, 1, 2);
             this.editLayoutPanel.Controls.Add(this.moveInputComboBox, 0, 0);
-            this.editLayoutPanel.Controls.Add(this.entryCountLabel, 0, 6);
             this.editLayoutPanel.Controls.Add(this.levelLabel, 0, 2);
             this.editLayoutPanel.Controls.Add(this.statusLabel, 0, 3);
             this.editLayoutPanel.Controls.Add(this.descriptorLabel, 0, 1);
+            this.editLayoutPanel.Controls.Add(this.entryCountLabel, 0, 7);
+            this.editLayoutPanel.Controls.Add(this.exportLearnsetButton, 0, 6);
+            this.editLayoutPanel.Controls.Add(this.bulkEditLearnsets, 1, 6);
             this.editLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.editLayoutPanel.Location = new System.Drawing.Point(3, 16);
             this.editLayoutPanel.Margin = new System.Windows.Forms.Padding(2);
             this.editLayoutPanel.Name = "editLayoutPanel";
             this.editLayoutPanel.Padding = new System.Windows.Forms.Padding(2);
-            this.editLayoutPanel.RowCount = 7;
+            this.editLayoutPanel.RowCount = 8;
             this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.editLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.editLayoutPanel.Size = new System.Drawing.Size(226, 357);
             this.editLayoutPanel.TabIndex = 0;
             // 
@@ -198,7 +203,7 @@
             this.moveDownButton.Enabled = false;
             this.moveDownButton.Image = global::DSPRE.Properties.Resources.arrowdown;
             this.moveDownButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.moveDownButton.Location = new System.Drawing.Point(77, 151);
+            this.moveDownButton.Location = new System.Drawing.Point(78, 151);
             this.moveDownButton.Margin = new System.Windows.Forms.Padding(2);
             this.moveDownButton.Name = "moveDownButton";
             this.moveDownButton.Size = new System.Drawing.Size(70, 32);
@@ -217,7 +222,7 @@
             this.moveUpButton.Location = new System.Drawing.Point(4, 151);
             this.moveUpButton.Margin = new System.Windows.Forms.Padding(2);
             this.moveUpButton.Name = "moveUpButton";
-            this.moveUpButton.Size = new System.Drawing.Size(69, 32);
+            this.moveUpButton.Size = new System.Drawing.Size(70, 32);
             this.moveUpButton.TabIndex = 10;
             this.moveUpButton.Text = "Move";
             this.moveUpButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -233,7 +238,7 @@
             this.addMoveButton.Location = new System.Drawing.Point(4, 201);
             this.addMoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.addMoveButton.Name = "addMoveButton";
-            this.addMoveButton.Size = new System.Drawing.Size(69, 32);
+            this.addMoveButton.Size = new System.Drawing.Size(70, 32);
             this.addMoveButton.TabIndex = 1;
             this.addMoveButton.Text = "Add";
             this.addMoveButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -246,10 +251,10 @@
             this.deleteMoveButton.Enabled = false;
             this.deleteMoveButton.Image = global::DSPRE.Properties.Resources.deleteIcon;
             this.deleteMoveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.deleteMoveButton.Location = new System.Drawing.Point(151, 201);
+            this.deleteMoveButton.Location = new System.Drawing.Point(152, 201);
             this.deleteMoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.deleteMoveButton.Name = "deleteMoveButton";
-            this.deleteMoveButton.Size = new System.Drawing.Size(71, 32);
+            this.deleteMoveButton.Size = new System.Drawing.Size(70, 32);
             this.deleteMoveButton.TabIndex = 2;
             this.deleteMoveButton.Text = "Delete";
             this.deleteMoveButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -262,7 +267,7 @@
             this.editMoveButton.Enabled = false;
             this.editMoveButton.Image = global::DSPRE.Properties.Resources.RenameIcon;
             this.editMoveButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.editMoveButton.Location = new System.Drawing.Point(77, 201);
+            this.editMoveButton.Location = new System.Drawing.Point(78, 201);
             this.editMoveButton.Margin = new System.Windows.Forms.Padding(2);
             this.editMoveButton.Name = "editMoveButton";
             this.editMoveButton.Size = new System.Drawing.Size(70, 32);
@@ -276,12 +281,47 @@
             // 
             this.levelNumericUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.editLayoutPanel.SetColumnSpan(this.levelNumericUpDown, 2);
-            this.levelNumericUpDown.Location = new System.Drawing.Point(77, 82);
+            this.levelNumericUpDown.Location = new System.Drawing.Point(78, 82);
             this.levelNumericUpDown.Margin = new System.Windows.Forms.Padding(2);
             this.levelNumericUpDown.Name = "levelNumericUpDown";
-            this.levelNumericUpDown.Size = new System.Drawing.Size(145, 20);
+            this.levelNumericUpDown.Size = new System.Drawing.Size(144, 20);
             this.levelNumericUpDown.TabIndex = 4;
             this.levelNumericUpDown.ValueChanged += new System.EventHandler(this.levelNumericUpDown_ValueChanged);
+            // 
+            // moveInputComboBox
+            // 
+            this.moveInputComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.moveInputComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.moveInputComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.editLayoutPanel.SetColumnSpan(this.moveInputComboBox, 3);
+            this.moveInputComboBox.FormattingEnabled = true;
+            this.moveInputComboBox.Location = new System.Drawing.Point(4, 11);
+            this.moveInputComboBox.Margin = new System.Windows.Forms.Padding(2);
+            this.moveInputComboBox.Name = "moveInputComboBox";
+            this.moveInputComboBox.Size = new System.Drawing.Size(218, 21);
+            this.moveInputComboBox.TabIndex = 6;
+            this.moveInputComboBox.SelectedIndexChanged += new System.EventHandler(this.moveInputComboBox_SelectedIndexChanged);
+            // 
+            // levelLabel
+            // 
+            this.levelLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.levelLabel.AutoSize = true;
+            this.levelLabel.Location = new System.Drawing.Point(5, 85);
+            this.levelLabel.Name = "levelLabel";
+            this.levelLabel.Size = new System.Drawing.Size(36, 13);
+            this.levelLabel.TabIndex = 5;
+            this.levelLabel.Text = "Level:";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.statusLabel.AutoSize = true;
+            this.editLayoutPanel.SetColumnSpan(this.statusLabel, 3);
+            this.statusLabel.Location = new System.Drawing.Point(5, 129);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(37, 13);
+            this.statusLabel.TabIndex = 7;
+            this.statusLabel.Text = "Status";
             // 
             // descriptorLabel
             // 
@@ -308,40 +348,35 @@
             this.entryCountLabel.Text = "Entry Count: ";
             this.entryCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // levelLabel
+            // exportLearnsetButton
             // 
-            this.levelLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.levelLabel.AutoSize = true;
-            this.levelLabel.Location = new System.Drawing.Point(5, 85);
-            this.levelLabel.Name = "levelLabel";
-            this.levelLabel.Size = new System.Drawing.Size(36, 13);
-            this.levelLabel.TabIndex = 5;
-            this.levelLabel.Text = "Level:";
+            this.exportLearnsetButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.exportLearnsetButton.Image = global::DSPRE.Properties.Resources.exportArrow;
+            this.exportLearnsetButton.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.exportLearnsetButton.Location = new System.Drawing.Point(4, 250);
+            this.exportLearnsetButton.Margin = new System.Windows.Forms.Padding(2);
+            this.exportLearnsetButton.Name = "exportLearnsetButton";
+            this.exportLearnsetButton.Size = new System.Drawing.Size(70, 32);
+            this.exportLearnsetButton.TabIndex = 12;
+            this.exportLearnsetButton.Text = "Export";
+            this.exportLearnsetButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.exportLearnsetButton.UseVisualStyleBackColor = true;
+            this.exportLearnsetButton.Click += new System.EventHandler(this.exportLearnsetButton_Click);
             // 
-            // statusLabel
+            // bulkEditLearnsets
             // 
-            this.statusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.statusLabel.AutoSize = true;
-            this.editLayoutPanel.SetColumnSpan(this.statusLabel, 3);
-            this.statusLabel.Location = new System.Drawing.Point(5, 129);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(37, 13);
-            this.statusLabel.TabIndex = 7;
-            this.statusLabel.Text = "Status";
-            // 
-            // moveInputComboBox
-            // 
-            this.moveInputComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.moveInputComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.moveInputComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.editLayoutPanel.SetColumnSpan(this.moveInputComboBox, 3);
-            this.moveInputComboBox.FormattingEnabled = true;
-            this.moveInputComboBox.Location = new System.Drawing.Point(4, 11);
-            this.moveInputComboBox.Margin = new System.Windows.Forms.Padding(2);
-            this.moveInputComboBox.Name = "moveInputComboBox";
-            this.moveInputComboBox.Size = new System.Drawing.Size(218, 21);
-            this.moveInputComboBox.TabIndex = 6;
-            this.moveInputComboBox.SelectedIndexChanged += new System.EventHandler(this.moveInputComboBox_SelectedIndexChanged);
+            this.bulkEditLearnsets.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.bulkEditLearnsets.Image = global::DSPRE.Properties.Resources.copyIcon_small;
+            this.bulkEditLearnsets.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.bulkEditLearnsets.Location = new System.Drawing.Point(78, 250);
+            this.bulkEditLearnsets.Margin = new System.Windows.Forms.Padding(2);
+            this.bulkEditLearnsets.Name = "bulkEditLearnsets";
+            this.bulkEditLearnsets.Size = new System.Drawing.Size(70, 32);
+            this.bulkEditLearnsets.TabIndex = 13;
+            this.bulkEditLearnsets.Text = "Bulk Edit";
+            this.bulkEditLearnsets.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bulkEditLearnsets.UseVisualStyleBackColor = true;
+            this.bulkEditLearnsets.Click += new System.EventHandler(this.bulkEditLearnsets_Click);
             // 
             // pokemonNameInputComboBox
             // 
@@ -403,5 +438,7 @@
         private System.Windows.Forms.Label entryCountLabel;
         private System.Windows.Forms.Button moveUpButton;
         private System.Windows.Forms.Button moveDownButton;
+        private System.Windows.Forms.Button exportLearnsetButton;
+        private System.Windows.Forms.Button bulkEditLearnsets;
     }
 }

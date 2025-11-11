@@ -1,10 +1,13 @@
-﻿using DSPRE.Resources;
+﻿using DSPRE.Editors;
+using DSPRE.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using static DSPRE.RomInfo;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace DSPRE {
@@ -536,6 +539,64 @@ namespace DSPRE {
             UpdateMovesListFromFile();
             movesListBox.SelectedIndex = sel+1;            
             SetDirty(true);
+        }
+
+        private void bulkEditLearnsets_Click(object sender, EventArgs e)
+        {
+            // Ensure ROM files are unpacked, they probably already are, since needed for LEanrnsetEditor anyway, better to check though
+            DSUtils.TryUnpackNarcs(new List<DirNames> { DirNames.personalPokeData, DirNames.learnsets, DirNames.moveData });
+
+            string[] pokeNames = RomInfo.GetPokemonNames();
+            string[] moveNames = RomInfo.GetAttackNames();
+
+            int extraCount = RomInfo.GetPersonalFilesCount() - pokeNames.Length;
+            string[] extraNames = new string[extraCount];
+
+            for (int i = 0; i < extraCount; i++)
+            {
+                PokeDatabase.PersonalData.PersonalExtraFiles extraEntry = PokeDatabase.PersonalData.personalExtraFiles[i];
+                extraNames[i] = pokeNames[extraEntry.monId] + " - " + extraEntry.description;
+            }
+
+            pokeNames = pokeNames.Concat(extraNames).ToArray();
+
+            var learnsetData = new BindingList<LearnsetEntry>();
+
+            for (int pokemonId = 0; pokemonId < RomInfo.GetLearnsetFilesCount(); pokemonId++)
+            {
+                var learnset = new LearnsetData(pokemonId);
+                foreach (var entry in learnset.list)
+                {
+                    if (entry.move == 0) continue; // Skip empty moves
+
+                    learnsetData.Add(new LearnsetEntry
+                    {
+                        PokemonID = pokemonId,
+                        PokemonName = pokeNames[pokemonId],
+                        Level = entry.level,
+                        MoveID = entry.move,
+                        MoveName = moveNames[entry.move]
+                    });
+                }
+            }
+
+            // Open bulk editor with the prepared data
+            using (var bulkEditor = new LearnsetBulkEditor(learnsetData, pokeNames, moveNames))
+            {
+                if (bulkEditor.ShowDialog() == DialogResult.OK)
+                {
+                    ChangeLoadedFile(currentLoadedId); // Reload current file to reflect any changes
+                    MessageBox.Show("Learnset changes applied successfully!");
+                }
+            }
+        }
+
+        private void exportLearnsetButton_Click(object sender, EventArgs e)
+        {
+            AppLogger.Info("Exporting learnset data to CSV...");
+            string learnsetPath = DocTool.ExportEditableLearnsetDataToCSV();
+            AppLogger.Info("Learnset data export completed.");
+            MessageBox.Show(this, "Learnset data exported to:\n" + learnsetPath, "Learnset Editor - Export completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         #endregion
