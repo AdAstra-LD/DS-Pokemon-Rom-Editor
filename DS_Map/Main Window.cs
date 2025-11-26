@@ -981,19 +981,21 @@ namespace DSPRE {
             currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
             ReloadHeaderEditorLocationsList(currentTextArchive.messages);
 
+            areaIconComboBox.Items.Clear();
+            cameraComboBox.Items.Clear();
+            areaSettingsComboBox.Items.Clear();
+            musicDayComboBox.Items.Clear();
+            musicNightComboBox.Items.Clear();
+            weatherComboBox.Items.Clear();
+
             switch (RomInfo.gameFamily) {
                 case GameFamilies.DP:
                     areaIconComboBox.Enabled = false;
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
-                    areaSettingsLabel.Text = "Show nametag:";
-                    cameraComboBox.Items.Clear();
-                    musicDayComboBox.Items.Clear();
-                    musicNightComboBox.Items.Clear();
-                    areaSettingsComboBox.Items.Clear();
                     cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraDict.Values.ToArray());
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.HeaderTypes.DPHeaderTypes);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.DPWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
 
@@ -1001,18 +1003,11 @@ namespace DSPRE {
                     battleBackgroundUpDown.Location = new Point(battleBackgroundUpDown.Location.X - 25, battleBackgroundUpDown.Location.Y - 8);
                     break;
                 case GameFamilies.Plat:
-                    areaSettingsLabel.Text = "Show nametag:";
-                    areaIconComboBox.Items.Clear();
-                    cameraComboBox.Items.Clear();
-                    musicDayComboBox.Items.Clear();
-                    musicNightComboBox.Items.Clear();
-                    areaSettingsComboBox.Items.Clear();
-                    weatherComboBox.Items.Clear();
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
                     cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraDict.Values.ToArray());
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.HeaderTypes.PtHGSSHeaderTypes);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.PtWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
 
@@ -1020,16 +1015,9 @@ namespace DSPRE {
                     battleBackgroundUpDown.Location = new Point(battleBackgroundUpDown.Location.X - 25, battleBackgroundUpDown.Location.Y - 8);
                     break;
                 default:
-                    areaSettingsLabel.Text = "Area Settings:";
-                    areaIconComboBox.Items.Clear();
-                    cameraComboBox.Items.Clear();
-                    areaSettingsComboBox.Items.Clear();
-                    musicDayComboBox.Items.Clear();
-                    musicNightComboBox.Items.Clear();
-                    weatherComboBox.Items.Clear();
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconsDict.Values.ToArray());
                     cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraDict.Values.ToArray());
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaProperties);
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.HeaderTypes.PtHGSSHeaderTypes);
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.HGSSWeatherDict.Values.ToArray());
@@ -1043,9 +1031,6 @@ namespace DSPRE {
                     flag6CheckBox.Visible = true;
                     flag5CheckBox.Visible = true;
                     flag4CheckBox.Visible = true;
-                    flag6CheckBox.Text = "Flag ?";
-                    flag5CheckBox.Text = "Flag ?";
-                    flag4CheckBox.Text = "Flag ?";
 
                     worldmapCoordsGroupBox.Enabled = true;
                     break;
@@ -1229,9 +1214,7 @@ namespace DSPRE {
             cameraUpDown.Value = currentHeader.cameraAngleID;
             battleBackgroundUpDown.Value = currentHeader.battleBackground;
 
-            if (RomInfo.gameFamily == GameFamilies.HGSS) {
-                areaSettingsComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationType;
-            }
+            areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D2}");
 
             openWildEditorWithIdButton.Enabled = currentHeader.wildPokemon != RomInfo.nullEncounterID;
 
@@ -1244,7 +1227,6 @@ namespace DSPRE {
                             locationNameComboBox.SelectedIndex = h.locationName;
                             musicDayUpDown.Value = h.musicDayID;
                             musicNightUpDown.Value = h.musicNightID;
-                            areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
                             break;
                         }
                     case GameFamilies.Plat: {
@@ -1254,7 +1236,6 @@ namespace DSPRE {
                             locationNameComboBox.SelectedIndex = h.locationName;
                             musicDayUpDown.Value = h.musicDayID;
                             musicNightUpDown.Value = h.musicNightID;
-                            areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
                             break;
                         }
                     default: {
@@ -1848,16 +1829,7 @@ namespace DSPRE {
                 return;
             }
 
-            switch (RomInfo.gameFamily) {
-                case GameFamilies.DP:
-                case GameFamilies.Plat:
-                    currentHeader.locationSpecifier = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 3));
-                    break;
-                case GameFamilies.HGSS:
-                    HeaderHGSS ch = (HeaderHGSS)currentHeader;
-                    ch.locationType = (byte)areaSettingsComboBox.SelectedIndex;
-                    break;
-            }
+            currentHeader.locationSpecifier = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 1));
         }
         private void textFileUpDown_ValueChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) {
@@ -1950,7 +1922,6 @@ namespace DSPRE {
         int locationNameCopy;
         string internalNameCopy;
         decimal encountersIDCopy;
-        int shownameCopy;
         int areaIconCopy;
 
         int musicdayCopy;
@@ -1978,7 +1949,6 @@ namespace DSPRE {
         private void copyHeaderButton_Click(object sender, EventArgs e) {
             locationNameCopy = locationNameComboBox.SelectedIndex;
             internalNameCopy = internalNameBox.Text;
-            shownameCopy = areaSettingsComboBox.SelectedIndex;
             areaIconCopy = areaIconComboBox.SelectedIndex;
             areaSettingsCopy = areaSettingsComboBox.SelectedIndex;
             encountersIDCopy = wildPokeUpDown.Value;
@@ -2117,16 +2087,7 @@ namespace DSPRE {
             locationNameComboBox.SelectedIndex = locationNameCopy;
             internalNameBox.Text = internalNameCopy;
             wildPokeUpDown.Value = encountersIDCopy;
-
-            switch (RomInfo.gameFamily) {
-                case GameFamilies.DP:
-                case GameFamilies.Plat:
-                    areaSettingsComboBox.SelectedIndex = shownameCopy;
-                    break;
-                case GameFamilies.HGSS:
-                    areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
-                    break;
-            }
+            areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
             areaIconComboBox.SelectedIndex = areaIconCopy;
 
             musicDayComboBox.SelectedIndex = musicdayCopy;
@@ -2155,7 +2116,7 @@ namespace DSPRE {
             locationNameComboBox.SelectedIndex = locationNameCopy;
         }
         private void pasteAreaSettingsButton_Click(object sender, EventArgs e) {
-            areaSettingsComboBox.SelectedIndex = shownameCopy;
+            areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
         }
         private void pasteAreaIconButton_Click(object sender, EventArgs e) {
             if (areaIconComboBox.Enabled) {

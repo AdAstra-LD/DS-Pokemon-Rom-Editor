@@ -2422,7 +2422,7 @@
             this.flag1CheckBox.Name = "flag1CheckBox";
             this.flag1CheckBox.Size = new System.Drawing.Size(46, 17);
             this.flag1CheckBox.TabIndex = 30;
-            this.flag1CheckBox.Text = "Run";
+            this.flag1CheckBox.Text = "Unused";
             this.flag1CheckBox.UseVisualStyleBackColor = true;
             this.flag1CheckBox.CheckedChanged += new System.EventHandler(this.headerFlagsCheckBoxes_CheckedChanged);
             // 
@@ -2441,7 +2441,7 @@
             // 
             this.flag6CheckBox.AutoSize = true;
             this.flag6CheckBox.Location = new System.Drawing.Point(92, 28);
-            this.flag6CheckBox.Name = "flag6CheckBox";
+            this.flag6CheckBox.Name = "Radio";
             this.flag6CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag6CheckBox.TabIndex = 35;
             this.flag6CheckBox.UseVisualStyleBackColor = true;
@@ -2452,7 +2452,7 @@
             // 
             this.flag5CheckBox.AutoSize = true;
             this.flag5CheckBox.Location = new System.Drawing.Point(92, 54);
-            this.flag5CheckBox.Name = "flag5CheckBox";
+            this.flag5CheckBox.Name = "Inbound Calls";
             this.flag5CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag5CheckBox.TabIndex = 32;
             this.flag5CheckBox.UseVisualStyleBackColor = true;
@@ -2463,7 +2463,7 @@
             // 
             this.flag4CheckBox.AutoSize = true;
             this.flag4CheckBox.Location = new System.Drawing.Point(92, 80);
-            this.flag4CheckBox.Name = "flag4CheckBox";
+            this.flag4CheckBox.Name = "Outbound Calls";
             this.flag4CheckBox.Size = new System.Drawing.Size(15, 14);
             this.flag4CheckBox.TabIndex = 33;
             this.flag4CheckBox.UseVisualStyleBackColor = true;

@@ -1,85 +1,7 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using static DSPRE.RomInfo;
 
-namespace DSPRE.ROMFiles {
-    /* ---------------------- HEADER DATA STRUCTURE (DPPt):----------------------------
-        
-       0x0  //  byte:       Area data value
-       0x1  //  byte:       Unknown value
-       0x2  //  ushort:     Matrix number
-       0x4  //  ushort:     Script file number
-       0x6  //  ushort:     Level script file number
-       0x8  //  ushort:     Text Archive number
-       0xA  //  ushort:     Day music track number
-       0xC  //  ushort:     Night music track number
-       0xE  //  ushort:     Wild Pokémon file number
-       0x10 //  ushort:     Event file number
-
-       * D/P:
-       0x12 //  ushort:     Index of map name in Text Archive #382 (US version)   
-       
-       * Plat:
-       0x12 //  byte:       Index of map name in Text Archive #382 (US version)
-       0x13 //  byte:       Map name textbox type value
-
-       0x14 //  byte:       Weather value
-       0x15 //  byte:       Camera value
-       0x16 //  byte:       Boolean flag: show name when entering map
-       0x17 //  byte:       Bitwise permission flags:
-
-       -----------------    1: Allow Fly
-       -----------------    2: ?
-       -----------------    3: ?
-       -----------------    4: Allow Bike usage
-       -----------------    5: ?
-       -----------------    6: ?
-       -----------------    7: Esc. Rope
-       -----------------    8: ?
-
-    /* ---------------------- HEADER DATA STRUCTURE (HGSS):----------------------------
-        
-       0x0  //  byte:       Wild Pokémon file number
-       0x1  //  byte:       Area data value
-       0x2  //  byte:       ?
-       0x3  //  byte:       ?
-       0x4  //  ushort:     Matrix number
-       0x6  //  ushort:     Script file number
-       0x8  //  ushort:     Level script file
-       0xA  //  ushort:     Text Archive number
-       0xC  //  ushort:     Day music track number
-       0xE  //  ushort:     Night music track number
-       0x10 //  ushort:     Event file number
-       0x12 //  byte:       Index of map name in Text Archive #382 (US version)
-       0x13 //  byte:       Map name textbox type value
-       0x14 //  byte:       Weather value
-       0x15 //  byte:       Camera value
-       0x16 //  byte:       Follow mode (for the Pokémon following hero)
-       0x17 //  byte:       Bitwise permission flags:
-
-        DPPT
-       -----------------    1: Allow Fly
-       -----------------    2: Allow Esc. Rope
-       -----------------    3: Allow Running
-       -----------------    4: Allow Bike 
-       -----------------    5: Battle BG b4
-       -----------------    6: Battle BG b3
-       -----------------    7: Battle BG b2
-       -----------------    8: Battle BG b1
-
-        HGSS
-       -----------------    1: ?
-       -----------------    2: ?
-       -----------------    3: ?
-       -----------------    4: Allow Fly 
-       -----------------    5: Allow Esc. Rope
-       -----------------    6: ?
-       -----------------    7: Allow Bicycle
-       -----------------    8: ?
-
-    ----------------------------------------------------------------------------------*/
-
+namespace DSPRE.ROMFiles { 
     /// <summary>
     /// General class to store common map header data across all Gen IV Pokémon NDS games
     /// </summary>
@@ -112,6 +34,7 @@ namespace DSPRE.ROMFiles {
 
         #region Fields (10)
         public byte areaDataID { get; set; }
+        public byte preloadedSpritesList { get; set; }
         public byte cameraAngleID { get; set; }
         public ushort eventFileID { get; set; }
         public ushort levelScriptID { get; set; }
@@ -214,7 +137,6 @@ namespace DSPRE.ROMFiles {
     /// </summary>
     public class HeaderDP : MapHeader {
         #region Fields (5)
-        public byte unknown1 { get; set; }
         public ushort locationName { get; set; }
         #endregion Fields
 
@@ -223,7 +145,7 @@ namespace DSPRE.ROMFiles {
             this.ID = headerNumber;
             using (BinaryReader reader = new BinaryReader(data)) {
                 areaDataID = reader.ReadByte();
-                unknown1 = reader.ReadByte();
+                preloadedSpritesList = reader.ReadByte();
                 matrixID = reader.ReadUInt16();
                 scriptFileID = reader.ReadUInt16();
                 levelScriptID = reader.ReadUInt16();
@@ -249,7 +171,7 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(areaDataID);
-                writer.Write(unknown1);
+                writer.Write(preloadedSpritesList);
                 writer.Write(matrixID);
                 writer.Write(scriptFileID);
                 writer.Write(levelScriptID);
@@ -278,7 +200,6 @@ namespace DSPRE.ROMFiles {
         #region Fields (5)
         public byte areaIcon { get; set; }
         public byte locationName { get; set; }
-        public byte unknown1 { get; set; }
         #endregion Fields
 
         #region Constructors (1)
@@ -287,7 +208,7 @@ namespace DSPRE.ROMFiles {
             using (BinaryReader reader = new BinaryReader(data)) {
                 try {
                     areaDataID = reader.ReadByte();
-                    unknown1 = reader.ReadByte();
+                    preloadedSpritesList = reader.ReadByte();
                     matrixID = reader.ReadUInt16();
                     scriptFileID = reader.ReadUInt16();
                     levelScriptID = reader.ReadUInt16();
@@ -318,7 +239,7 @@ namespace DSPRE.ROMFiles {
             MemoryStream newData = new MemoryStream();
             using (BinaryWriter writer = new BinaryWriter(newData)) {
                 writer.Write(areaDataID);
-                writer.Write(unknown1);
+                writer.Write(preloadedSpritesList);
                 writer.Write(matrixID);
                 writer.Write(scriptFileID);
                 writer.Write(levelScriptID);
@@ -348,9 +269,7 @@ namespace DSPRE.ROMFiles {
         public byte areaIcon { get; set; }
         public byte followMode { get; set; }
         public byte locationName { get; set; }
-        public byte locationType { get; set; }  //4 bits only
-        public byte unknown0 { get; set; } //4 bits only
-        public byte unknown1 { get; set; } //4 bits only
+        public byte pokegearLocationID { get; set; } //4 bits only
         public byte worldmapX { get; set; } //6 bits only
         public byte worldmapY { get; set; } //6 bits only
         public bool kantoFlag { get; set; }
@@ -365,7 +284,7 @@ namespace DSPRE.ROMFiles {
                     areaDataID = reader.ReadByte();
 
                     ushort coords = reader.ReadUInt16();
-                    unknown0 = (byte)(coords & 0b_1111); //get 4 bits
+                    preloadedSpritesList = (byte)(coords & 0b_1111); //get 4 bits
                     worldmapX = (byte)((coords >> 4) & 0b_1111_11); //get 6 bits after the first 4
                     worldmapY = (byte)((coords >> 10) & 0b_1111_11); //get 6 bits after the first 10
 
@@ -380,13 +299,13 @@ namespace DSPRE.ROMFiles {
                     
                     byte areaProperties = reader.ReadByte();
                     areaIcon = (byte)(areaProperties & 0b_1111); //get 4 bits
-                    unknown1 = (byte)((areaProperties >> 4) & 0b_1111); //get 4 bits after the first 4
+                    pokegearLocationID = (byte)((areaProperties >> 4) & 0b_1111); //get 4 bits after the first 4
 
                     uint last32 = reader.ReadUInt32();
                     kantoFlag = (last32 & 0b_1) == 1; //get 1 bit
                     weatherID = (byte)((last32 >> 1) & 0b_1111_111); //get 7 bits after the first one
 
-                    locationType = (byte)((last32 >> 8) & 0b_1111); //get 4 bits after the first 8
+                    locationSpecifier = (byte)((last32 >> 8) & 0b_1111); //get 4 bits after the first 8
                     cameraAngleID = (byte)((last32 >> 12) & 0b_1111_11); //get 6 bits after the first 12
                     followMode = (byte)((last32 >> 18) & 0b_11); //get 2 bits after the first 17
                     battleBackground = (byte)((last32 >> 20) & 0b_1111_1); //get 5 bits after the first 19
@@ -407,7 +326,7 @@ namespace DSPRE.ROMFiles {
                 writer.Write((byte)wildPokemon);
                 writer.Write(areaDataID);
 
-                ushort worldMapCoordinates = (ushort)((unknown0 & 0b_1111) + ((worldmapX & 0b_1111_11) << 4) + ((worldmapY & 0b_1111_11) << 10));
+                ushort worldMapCoordinates = (ushort)((preloadedSpritesList & 0b_1111) + ((worldmapX & 0b_1111_11) << 4) + ((worldmapY & 0b_1111_11) << 10));
                 writer.Write(worldMapCoordinates);
 
                 writer.Write(matrixID);
@@ -419,11 +338,11 @@ namespace DSPRE.ROMFiles {
                 writer.Write(eventFileID);
                 writer.Write(locationName);
 
-                byte areaProperties = (byte)((areaIcon & 0b_1111) + ((unknown1 & 0b_1111) << 4));
+                byte areaProperties = (byte)((areaIcon & 0b_1111) + ((pokegearLocationID & 0b_1111) << 4));
                 writer.Write(areaProperties);
 
                 uint last32 = (uint)(((weatherID & 0b_1111_111) << 1) +
-                    ((locationType & 0b_1111) << 8) +
+                    ((locationSpecifier & 0b_1111) << 8) +
                     ((cameraAngleID & 0b_1111_1) << 12) +
                     ((followMode & 0b_11) << 18) +
                     ((battleBackground & 0b_1111_1) << 20) +
