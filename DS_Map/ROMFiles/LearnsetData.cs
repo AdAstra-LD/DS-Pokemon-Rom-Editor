@@ -8,6 +8,7 @@ namespace DSPRE {
     internal class LearnsetData : RomFile {
         public static readonly int bitsMove = 9;
         public static readonly int bitsLevel = 7;
+        public static readonly int VanillaLimit = 20;
 
         public readonly UniqueList<(byte level, ushort move)> list;
 

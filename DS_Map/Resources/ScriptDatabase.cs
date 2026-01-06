@@ -337,6 +337,7 @@ namespace DSPRE.Resources {
             [0x00AF] = "RecordMixingUnion",
 
             [0x00B0] = "EndGameScreen",
+            [0x00B1] = "PCHallOfFameScreen",
 
             [0x00B4] = "StarterSelectionScreen",
             [0x00B5] = "EndStarterSelectionScreen",
@@ -491,7 +492,7 @@ namespace DSPRE.Resources {
             [0x0182] = "SetBerryMulch",
             [0x0183] = "SetBerrySpecies",
             [0x0184] = "WateringAnimation",
-            [0x0185] = "TakeBerries",
+            [0x0185] = "HarvestBerries",
             [0x0186] = "SetOWDefaultPosition",
             [0x0187] = "SetOWPosition",
             [0x0188] = "SetOWDefaultMovement",
@@ -622,12 +623,16 @@ namespace DSPRE.Resources {
 
             [0x0246] = "CheckVersion",
             [0x0247] = "FirstPokemonInParty",
+            [0x0248] = "GetPartyPokemonTypes",
 
             [0x024E] = "GetLottoNumber",
             [0x024F] = "CheckWinLotto",
             [0x0250] = "InitLotto",
 
             [0x0252] = "CountPCFreeSpace",
+
+            [0x0258] = "SetPlayerSavingForm",
+            [0x0259] = "ResetPlayerForm",
 
             [0x0261] = "TextAccessory",
             [0x0262] = "CheckPokemonInParty",
@@ -891,7 +896,7 @@ namespace DSPRE.Resources {
             [0x00C7] = new byte[] { 2 },
             [0x00C8] = new byte[] { 1 },
             [0x00C9] = new byte[] { 1 },
-            [0x00CA] = new byte[1] { 0 },
+            [0x00CA] = new byte[] { 2 },
             [0x00CB] = new byte[] { 2 },
             [0x00CC] = new byte[1] { 0 },
             [0x00CD] = new byte[] { 1 },
@@ -1654,11 +1659,11 @@ namespace DSPRE.Resources {
             [0x0336] = new byte[] { 2 },
 
             //International release exclusive
-            [0x0337] = new byte[1] { 0 },
+            [0x0337] = new byte[] { 2, 2 },
             [0x0338] = new byte[1] { 0 },
             [0x0339] = new byte[1] { 0 },
             [0x033A] = new byte[] { 1 },
-            [0x033B] = new byte[1] { 0 },
+            [0x033B] = new byte[] { 1 },
             [0x033C] = new byte[] { 1, 2 },
             [0x033D] = new byte[] { 1, 2 },
             [0x033E] = new byte[] { 1, 2 },
@@ -1822,6 +1827,7 @@ namespace DSPRE.Resources {
             [0x009D] = "WorldMapScreen",
 
             [0x00A3] = "EndGameScreen",
+            [0x00A4] = "PCHallOfFameScreen",
 
             [0x00A7] = "StarterSelectionScreen",
 
@@ -1976,7 +1982,7 @@ namespace DSPRE.Resources {
             [0x017E] = "GetPokemonHappiness",
             [0x017F] = "AddHappiness",
             [0x0180] = "SubHappiness",
-
+            [0x0181] = "TextDaycareMonData",
             [0x0182] = "GetPlayerDirection",
 
             [0x0185] = "CheckBornPokemonInParty",
@@ -2041,12 +2047,16 @@ namespace DSPRE.Resources {
 
             [0x01EF] = "CheckVersion",
             [0x01F0] = "FirstPokemonInParty",
+            [0x01F1] = "GetPartyPokemonTypes",
 
             [0x01F7] = "GetLottoNumber",
             [0x01F8] = "CheckWinLotto",
             [0x01F9] = "InitLotto",
 
             [0x01FB] = "CountPCFreeSpace",
+
+            [0x0200] = "SetPlayerSavingForm",
+            [0x0201] = "ResetPlayerForm",
 
             [0x0204] = "TextAccessory",
             [0x0205] = "CheckPokemonInParty",
@@ -2095,13 +2105,17 @@ namespace DSPRE.Resources {
             [0x025E] = "BallResetFollowingPoke",
             [0x025F] = "NoBallResetFollowingPoke",
             [0x0260] = "SendOutFollowingPoke",
-            [0x0261] = "MecScript",
+            [0x0261] = "ResetFollowingPoke",
 
             [0x0267] = "TakePhoto",
 
             [0x026A] = "CheckAlbumPhoto",
 
             [0x026E] = "GetOWDirection",
+            [0x026F] = "HarvestApricorn",
+            [0x0270] = "GetApricornColor",
+            [0x0271] = "GiveApricorn",
+            [0x0272] = "TextApricorn",
 
             [0x0289] = "ScratchOffScreen",
             [0x028A] = "ReleaseScriptApp",
@@ -2323,7 +2337,7 @@ namespace DSPRE.Resources {
             [0x00A1] = new byte[1] { 0 },
             [0x00A2] = new byte[1] { 0 },
             [0x00A3] = new byte[] { 2 },
-            [0x00A4] = new byte[] { 2, 2, 2, 2 },
+            [0x00A4] = new byte[] { 0 },
             [0x00A5] = new byte[] { 2, 2 },
             [0x00A6] = new byte[] { 2 },
             [0x00A7] = new byte[1] { 0 },
@@ -2506,7 +2520,7 @@ namespace DSPRE.Resources {
             [0x0158] = new byte[] { 2, 2 },
             [0x0159] = new byte[1] { 0 },
             [0x015A] = new byte[1] { 0 },
-            [0x015B] = new byte[] { 2, 2 },
+            [0x015B] = new byte[] { 2 },
             [0x015C] = new byte[] { 2 },
             [0x015D] = new byte[1] { 0 },
             [0x015E] = new byte[1] { 0 },
@@ -2544,7 +2558,7 @@ namespace DSPRE.Resources {
             [0x017E] = new byte[] { 2, 2 },
             [0x017F] = new byte[] { 2, 2 },
             [0x0180] = new byte[] { 2, 2 },
-            [0x0181] = new byte[] { 2, 2 },
+            [0x0181] = new byte[] { 2, 2, 2, 2 },
             [0x0182] = new byte[] { 2 },
             [0x0183] = new byte[] { 2 },
             [0x0184] = new byte[] { 2 },
@@ -2630,7 +2644,7 @@ namespace DSPRE.Resources {
             [0x01C4] = new byte[] { 2, 2 },
             [0x01C5] = new byte[1] { 0 },
             [0x01C6] = new byte[1] { 0 },
-            [0x01C7] = new byte[] { 2 },
+            [0x01C7] = new byte[1] { 0 },
             [0x01C8] = new byte[] { 2, 2 },
             [0x01C9] = new byte[] { 2, 2 },
             [0x01CA] = new byte[] { 2, 2, 2 },
@@ -2706,8 +2720,8 @@ namespace DSPRE.Resources {
             [0x01FD] = new byte[] { 2 },
             [0x01FE] = new byte[1] { 0 },
             [0x01FF] = new byte[] { 2, 2 },
-            [0x0200] = new byte[] { 2 },
-            [0x0201] = new byte[] { 2, 2, 2 },
+            [0x0200] = new byte[] { 0 },
+            [0x0201] = new byte[] { 0 },
             [0x0202] = new byte[] { 2 },
             [0x0203] = new byte[] { 2 },
             [0x0204] = new byte[] { 1, 2 },

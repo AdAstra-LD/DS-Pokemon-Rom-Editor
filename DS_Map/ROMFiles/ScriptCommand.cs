@@ -43,7 +43,7 @@ namespace DSPRE.ROMFiles {
                     name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_ID)} {FormatNumber(parametersList[1])}";
                     break;
                 case 0x0019: // JumpIfPlayerDir
-                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_DIRECTION)} {FormatNumber(parametersList[1], ParamTypeEnum.ACTION_ID)}";
+                    name += $" {FormatNumber(parametersList[0], ParamTypeEnum.OW_DIRECTION)} {FormatNumber(parametersList[1], ParamTypeEnum.FUNCTION_ID)}";
                     break;
                 case 0x001C: // JumpIf
                 case 0x001D: // CallIf

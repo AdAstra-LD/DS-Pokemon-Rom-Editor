@@ -31,47 +31,23 @@ namespace DSPRE.Resources {
                 [08] = "Lake",
                 [09] = "Gray"
             };
-
-            public static string[] HGSSAreaProperties = new string[] {
-                "[00] Mystery Zone",
-                "[01] City/Town",
+        }
+        public static class HeaderTypes {
+            public static string[] DPHeaderTypes = new string[] {
+                "[00] Show Nametag",
+                "[01] Show Nametag",
+                "[02] Show Nametag",
+                "[03] Show Nametag",
+                "[04] No Nametag"
+            };
+            public static string[] PtHGSSHeaderTypes = new string[] {
+                "[00] Unknown",
+                "[01] Town/City",
                 "[02] Route",
                 "[03] Cave",
-                "[04] Interior [Hide Name]",
-                "[05] Pokémon Center",
+                "[04] Interior",
+                "[05] Unused",
                 "[06] Underground",
-                "[07] Unknown/Unused",
-                "[08] Unknown/Unused",
-                "[09] Unknown/Unused",
-                "[10] Unknown/Unused",
-                "[11] Unknown/Unused",
-                "[12] Unknown/Unused",
-                "[13] Unknown/Unused",
-                "[14] Unknown/Unused",
-                "[15] Unknown/Unused",
-                "[16] Unknown/Unused",
-            };
-        }
-        public static class ShowName {
-            public static string[] DPShowNameValues = new string[] {
-                "[000] Show",
-                "[001] Show",
-                "[002] Show",
-                "[003] Show",
-                "[004] Don't show"
-            };
-            public static string[] PtShowNameValues = new string[] {
-                "[000] Show",
-                "[001] Show",
-                "[002] Show",
-                "[003] Show",
-                "[004] Don't show",
-                "[128] Don't show",
-                "[129] Show",
-                "[130] Show",
-                "[131] Show",
-                "[132] Don't show",
-                "[134] Show"
             };
         }
         public static class Weather {

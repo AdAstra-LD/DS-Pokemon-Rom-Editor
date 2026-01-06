@@ -98,13 +98,16 @@ namespace DSPRE.Editors {
         }
 
         public void SetupScriptEditor(MainProgram parent, bool force = false) {
-            if (scriptEditorIsReady && !force) { return; }
+            if (scriptEditorIsReady && !force) { 
+                return; 
+            }
             scriptEditorIsReady = true;
+            /* Extract essential NARCs sub-archives*/
+            Helpers.statusLabelMessage("Setting up Script Editor...");
+
             this._parent = parent;
             SetupScriptEditorTextAreas();
 
-            /* Extract essential NARCs sub-archives*/
-            Helpers.statusLabelMessage("Setting up Script Editor...");
             Update();
 
             DSUtils.TryUnpackNarcs(new List<RomInfo.DirNames> { RomInfo.DirNames.scripts }); //12 = scripts Narc Dir
