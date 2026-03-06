@@ -72,11 +72,11 @@
             this.label8 = new System.Windows.Forms.Label();
             this.walkingGroupBox = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.Night = new System.Windows.Forms.Label();
             this.walkingRateUpDown = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.Day = new System.Windows.Forms.Label();
+            this.Morning = new System.Windows.Forms.Label();
             this.nightOneSecondComboBox = new DSPRE.InputComboBox();
             this.nightOneFirstComboBox = new DSPRE.InputComboBox();
             this.nightFourSecondComboBox = new DSPRE.InputComboBox();
@@ -102,40 +102,40 @@
             this.dayTwentySecondComboBox = new DSPRE.InputComboBox();
             this.dayTwentyFirstComboBox = new DSPRE.InputComboBox();
             this.oneSecondLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label79 = new System.Windows.Forms.Label();
+            this.Second1 = new System.Windows.Forms.Label();
             this.morningOneSecondComboBox = new DSPRE.InputComboBox();
             this.oneFirstLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label80 = new System.Windows.Forms.Label();
+            this.First1 = new System.Windows.Forms.Label();
             this.morningOneFirstComboBox = new DSPRE.InputComboBox();
             this.fourSecondLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label81 = new System.Windows.Forms.Label();
+            this.Second4 = new System.Windows.Forms.Label();
             this.morningFourSecondComboBox = new DSPRE.InputComboBox();
             this.fourFirstLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label82 = new System.Windows.Forms.Label();
+            this.First4 = new System.Windows.Forms.Label();
             this.morningFourFirstComboBox = new DSPRE.InputComboBox();
             this.fiveSecondLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label83 = new System.Windows.Forms.Label();
+            this.Second5 = new System.Windows.Forms.Label();
             this.morningFiveSecondComboBox = new DSPRE.InputComboBox();
             this.fiveFirstLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label84 = new System.Windows.Forms.Label();
+            this.First5 = new System.Windows.Forms.Label();
             this.morningFiveFirstComboBox = new DSPRE.InputComboBox();
             this.tenFourthLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label85 = new System.Windows.Forms.Label();
+            this.Fourth10 = new System.Windows.Forms.Label();
             this.morningTenFourthComboBox = new DSPRE.InputComboBox();
             this.tenThirdLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label86 = new System.Windows.Forms.Label();
+            this.Third10 = new System.Windows.Forms.Label();
             this.morningTenThirdComboBox = new DSPRE.InputComboBox();
             this.tenSecondLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label87 = new System.Windows.Forms.Label();
+            this.Second10 = new System.Windows.Forms.Label();
             this.morningTenSecondComboBox = new DSPRE.InputComboBox();
             this.tenFirstLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label88 = new System.Windows.Forms.Label();
+            this.First10 = new System.Windows.Forms.Label();
             this.morningTenFirstComboBox = new DSPRE.InputComboBox();
             this.twentySecondLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label89 = new System.Windows.Forms.Label();
+            this.Second20 = new System.Windows.Forms.Label();
             this.morningTwentySecondComboBox = new DSPRE.InputComboBox();
             this.twentyFirstLevelUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label90 = new System.Windows.Forms.Label();
+            this.First20 = new System.Windows.Forms.Label();
             this.morningTwentyFirstComboBox = new DSPRE.InputComboBox();
             this.waterTabPage = new System.Windows.Forms.TabPage();
             this.surfPicture = new System.Windows.Forms.PictureBox();
@@ -780,11 +780,11 @@
             // walkingGroupBox
             // 
             this.walkingGroupBox.Controls.Add(this.label4);
-            this.walkingGroupBox.Controls.Add(this.label3);
+            this.walkingGroupBox.Controls.Add(this.Night);
             this.walkingGroupBox.Controls.Add(this.walkingRateUpDown);
             this.walkingGroupBox.Controls.Add(this.label14);
-            this.walkingGroupBox.Controls.Add(this.label2);
-            this.walkingGroupBox.Controls.Add(this.label1);
+            this.walkingGroupBox.Controls.Add(this.Day);
+            this.walkingGroupBox.Controls.Add(this.Morning);
             this.walkingGroupBox.Controls.Add(this.nightOneSecondComboBox);
             this.walkingGroupBox.Controls.Add(this.nightOneFirstComboBox);
             this.walkingGroupBox.Controls.Add(this.nightFourSecondComboBox);
@@ -810,40 +810,40 @@
             this.walkingGroupBox.Controls.Add(this.dayTwentySecondComboBox);
             this.walkingGroupBox.Controls.Add(this.dayTwentyFirstComboBox);
             this.walkingGroupBox.Controls.Add(this.oneSecondLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label79);
+            this.walkingGroupBox.Controls.Add(this.Second1);
             this.walkingGroupBox.Controls.Add(this.morningOneSecondComboBox);
             this.walkingGroupBox.Controls.Add(this.oneFirstLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label80);
+            this.walkingGroupBox.Controls.Add(this.First1);
             this.walkingGroupBox.Controls.Add(this.morningOneFirstComboBox);
             this.walkingGroupBox.Controls.Add(this.fourSecondLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label81);
+            this.walkingGroupBox.Controls.Add(this.Second4);
             this.walkingGroupBox.Controls.Add(this.morningFourSecondComboBox);
             this.walkingGroupBox.Controls.Add(this.fourFirstLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label82);
+            this.walkingGroupBox.Controls.Add(this.First4);
             this.walkingGroupBox.Controls.Add(this.morningFourFirstComboBox);
             this.walkingGroupBox.Controls.Add(this.fiveSecondLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label83);
+            this.walkingGroupBox.Controls.Add(this.Second5);
             this.walkingGroupBox.Controls.Add(this.morningFiveSecondComboBox);
             this.walkingGroupBox.Controls.Add(this.fiveFirstLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label84);
+            this.walkingGroupBox.Controls.Add(this.First5);
             this.walkingGroupBox.Controls.Add(this.morningFiveFirstComboBox);
             this.walkingGroupBox.Controls.Add(this.tenFourthLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label85);
+            this.walkingGroupBox.Controls.Add(this.Fourth10);
             this.walkingGroupBox.Controls.Add(this.morningTenFourthComboBox);
             this.walkingGroupBox.Controls.Add(this.tenThirdLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label86);
+            this.walkingGroupBox.Controls.Add(this.Third10);
             this.walkingGroupBox.Controls.Add(this.morningTenThirdComboBox);
             this.walkingGroupBox.Controls.Add(this.tenSecondLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label87);
+            this.walkingGroupBox.Controls.Add(this.Second10);
             this.walkingGroupBox.Controls.Add(this.morningTenSecondComboBox);
             this.walkingGroupBox.Controls.Add(this.tenFirstLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label88);
+            this.walkingGroupBox.Controls.Add(this.First10);
             this.walkingGroupBox.Controls.Add(this.morningTenFirstComboBox);
             this.walkingGroupBox.Controls.Add(this.twentySecondLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label89);
+            this.walkingGroupBox.Controls.Add(this.Second20);
             this.walkingGroupBox.Controls.Add(this.morningTwentySecondComboBox);
             this.walkingGroupBox.Controls.Add(this.twentyFirstLevelUpDown);
-            this.walkingGroupBox.Controls.Add(this.label90);
+            this.walkingGroupBox.Controls.Add(this.First20);
             this.walkingGroupBox.Controls.Add(this.morningTwentyFirstComboBox);
             this.walkingGroupBox.Location = new System.Drawing.Point(12, 7);
             this.walkingGroupBox.Name = "walkingGroupBox";
@@ -861,14 +861,15 @@
             this.label4.TabIndex = 225;
             this.label4.Text = "Level";
             // 
-            // label3
+            // Night
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(288, 51);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 13);
-            this.label3.TabIndex = 224;
-            this.label3.Text = "Night";
+            this.Night.AutoSize = true;
+            this.Night.Location = new System.Drawing.Point(288, 51);
+            this.Night.Name = "Night";
+            this.Night.Size = new System.Drawing.Size(32, 13);
+            this.Night.TabIndex = 224;
+            this.Night.Text = "Night";
+            this.Night.Click += new System.EventHandler(this.Night_Click);
             // 
             // walkingRateUpDown
             // 
@@ -887,23 +888,25 @@
             this.label14.TabIndex = 100;
             this.label14.Text = "Encounter Rate";
             // 
-            // label2
+            // Day
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(161, 51);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(26, 13);
-            this.label2.TabIndex = 223;
-            this.label2.Text = "Day";
+            this.Day.AutoSize = true;
+            this.Day.Location = new System.Drawing.Point(161, 51);
+            this.Day.Name = "Day";
+            this.Day.Size = new System.Drawing.Size(26, 13);
+            this.Day.TabIndex = 223;
+            this.Day.Text = "Day";
+            this.Day.Click += new System.EventHandler(this.Day_Click);
             // 
-            // label1
+            // Morning
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 13);
-            this.label1.TabIndex = 222;
-            this.label1.Text = "Morning";
+            this.Morning.AutoSize = true;
+            this.Morning.Location = new System.Drawing.Point(34, 51);
+            this.Morning.Name = "Morning";
+            this.Morning.Size = new System.Drawing.Size(45, 13);
+            this.Morning.TabIndex = 222;
+            this.Morning.Text = "Morning";
+            this.Morning.Click += new System.EventHandler(this.Morning_Click);
             // 
             // nightOneSecondComboBox
             // 
@@ -913,7 +916,7 @@
             this.nightOneSecondComboBox.Location = new System.Drawing.Point(291, 364);
             this.nightOneSecondComboBox.Name = "nightOneSecondComboBox";
             this.nightOneSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightOneSecondComboBox.TabIndex = 221;
+            this.nightOneSecondComboBox.TabIndex = 208;
             this.nightOneSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.nightOneSecondComboBox_SelectedIndexChanged);
             // 
             // nightOneFirstComboBox
@@ -924,7 +927,7 @@
             this.nightOneFirstComboBox.Location = new System.Drawing.Point(291, 337);
             this.nightOneFirstComboBox.Name = "nightOneFirstComboBox";
             this.nightOneFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightOneFirstComboBox.TabIndex = 220;
+            this.nightOneFirstComboBox.TabIndex = 204;
             this.nightOneFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.nightOneFirstComboBox_SelectedIndexChanged);
             // 
             // nightFourSecondComboBox
@@ -935,7 +938,7 @@
             this.nightFourSecondComboBox.Location = new System.Drawing.Point(291, 310);
             this.nightFourSecondComboBox.Name = "nightFourSecondComboBox";
             this.nightFourSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightFourSecondComboBox.TabIndex = 219;
+            this.nightFourSecondComboBox.TabIndex = 200;
             this.nightFourSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.nightFourSecondComboBox_SelectedIndexChanged);
             // 
             // nightFourFirstComboBox
@@ -946,7 +949,7 @@
             this.nightFourFirstComboBox.Location = new System.Drawing.Point(291, 283);
             this.nightFourFirstComboBox.Name = "nightFourFirstComboBox";
             this.nightFourFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightFourFirstComboBox.TabIndex = 218;
+            this.nightFourFirstComboBox.TabIndex = 196;
             this.nightFourFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.nightFourFirstComboBox_SelectedIndexChanged);
             // 
             // nightFiveSecondComboBox
@@ -957,7 +960,7 @@
             this.nightFiveSecondComboBox.Location = new System.Drawing.Point(291, 256);
             this.nightFiveSecondComboBox.Name = "nightFiveSecondComboBox";
             this.nightFiveSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightFiveSecondComboBox.TabIndex = 217;
+            this.nightFiveSecondComboBox.TabIndex = 192;
             this.nightFiveSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.nightFiveSecondComboBox_SelectedIndexChanged);
             // 
             // nightFiveFirstComboBox
@@ -968,7 +971,7 @@
             this.nightFiveFirstComboBox.Location = new System.Drawing.Point(291, 229);
             this.nightFiveFirstComboBox.Name = "nightFiveFirstComboBox";
             this.nightFiveFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightFiveFirstComboBox.TabIndex = 216;
+            this.nightFiveFirstComboBox.TabIndex = 188;
             this.nightFiveFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.nightFiveFirstComboBox_SelectedIndexChanged);
             // 
             // nightTenFourthComboBox
@@ -979,7 +982,7 @@
             this.nightTenFourthComboBox.Location = new System.Drawing.Point(291, 202);
             this.nightTenFourthComboBox.Name = "nightTenFourthComboBox";
             this.nightTenFourthComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightTenFourthComboBox.TabIndex = 215;
+            this.nightTenFourthComboBox.TabIndex = 184;
             this.nightTenFourthComboBox.SelectedIndexChanged += new System.EventHandler(this.nightTenFourthComboBox_SelectedIndexChanged);
             // 
             // nightTenThirdComboBox
@@ -990,7 +993,7 @@
             this.nightTenThirdComboBox.Location = new System.Drawing.Point(291, 175);
             this.nightTenThirdComboBox.Name = "nightTenThirdComboBox";
             this.nightTenThirdComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightTenThirdComboBox.TabIndex = 214;
+            this.nightTenThirdComboBox.TabIndex = 180;
             this.nightTenThirdComboBox.SelectedIndexChanged += new System.EventHandler(this.nightTenThirdComboBox_SelectedIndexChanged);
             // 
             // nightTenSecondComboBox
@@ -1001,7 +1004,7 @@
             this.nightTenSecondComboBox.Location = new System.Drawing.Point(291, 148);
             this.nightTenSecondComboBox.Name = "nightTenSecondComboBox";
             this.nightTenSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightTenSecondComboBox.TabIndex = 213;
+            this.nightTenSecondComboBox.TabIndex = 176;
             this.nightTenSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.nightTenSecondComboBox_SelectedIndexChanged);
             // 
             // nightTenFirstComboBox
@@ -1012,7 +1015,7 @@
             this.nightTenFirstComboBox.Location = new System.Drawing.Point(291, 121);
             this.nightTenFirstComboBox.Name = "nightTenFirstComboBox";
             this.nightTenFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightTenFirstComboBox.TabIndex = 212;
+            this.nightTenFirstComboBox.TabIndex = 172;
             this.nightTenFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.nightTenFirstComboBox_SelectedIndexChanged);
             // 
             // nightTwentySecondComboBox
@@ -1023,7 +1026,7 @@
             this.nightTwentySecondComboBox.Location = new System.Drawing.Point(291, 94);
             this.nightTwentySecondComboBox.Name = "nightTwentySecondComboBox";
             this.nightTwentySecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightTwentySecondComboBox.TabIndex = 211;
+            this.nightTwentySecondComboBox.TabIndex = 168;
             this.nightTwentySecondComboBox.SelectedIndexChanged += new System.EventHandler(this.nightTwentySecondComboBox_SelectedIndexChanged);
             // 
             // nightTwentyFirstComboBox
@@ -1034,7 +1037,7 @@
             this.nightTwentyFirstComboBox.Location = new System.Drawing.Point(291, 67);
             this.nightTwentyFirstComboBox.Name = "nightTwentyFirstComboBox";
             this.nightTwentyFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.nightTwentyFirstComboBox.TabIndex = 210;
+            this.nightTwentyFirstComboBox.TabIndex = 164;
             this.nightTwentyFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.nightTwentyFirstComboBox_SelectedIndexChanged);
             // 
             // dayOneSecondComboBox
@@ -1045,7 +1048,7 @@
             this.dayOneSecondComboBox.Location = new System.Drawing.Point(164, 364);
             this.dayOneSecondComboBox.Name = "dayOneSecondComboBox";
             this.dayOneSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayOneSecondComboBox.TabIndex = 209;
+            this.dayOneSecondComboBox.TabIndex = 207;
             this.dayOneSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.dayOneSecondComboBox_SelectedIndexChanged);
             // 
             // dayOneFirstComboBox
@@ -1056,7 +1059,7 @@
             this.dayOneFirstComboBox.Location = new System.Drawing.Point(164, 337);
             this.dayOneFirstComboBox.Name = "dayOneFirstComboBox";
             this.dayOneFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayOneFirstComboBox.TabIndex = 208;
+            this.dayOneFirstComboBox.TabIndex = 203;
             this.dayOneFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.dayOneFirstComboBox_SelectedIndexChanged);
             // 
             // dayFourSecondComboBox
@@ -1067,7 +1070,7 @@
             this.dayFourSecondComboBox.Location = new System.Drawing.Point(164, 310);
             this.dayFourSecondComboBox.Name = "dayFourSecondComboBox";
             this.dayFourSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayFourSecondComboBox.TabIndex = 207;
+            this.dayFourSecondComboBox.TabIndex = 199;
             this.dayFourSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.dayFourSecondComboBox_SelectedIndexChanged);
             // 
             // dayFourFirstComboBox
@@ -1078,7 +1081,7 @@
             this.dayFourFirstComboBox.Location = new System.Drawing.Point(164, 283);
             this.dayFourFirstComboBox.Name = "dayFourFirstComboBox";
             this.dayFourFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayFourFirstComboBox.TabIndex = 206;
+            this.dayFourFirstComboBox.TabIndex = 195;
             this.dayFourFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.dayFourFirstComboBox_SelectedIndexChanged);
             // 
             // dayFiveSecondComboBox
@@ -1089,7 +1092,7 @@
             this.dayFiveSecondComboBox.Location = new System.Drawing.Point(164, 256);
             this.dayFiveSecondComboBox.Name = "dayFiveSecondComboBox";
             this.dayFiveSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayFiveSecondComboBox.TabIndex = 205;
+            this.dayFiveSecondComboBox.TabIndex = 191;
             this.dayFiveSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.dayFiveSecondComboBox_SelectedIndexChanged);
             // 
             // dayFiveFirstComboBox
@@ -1100,7 +1103,7 @@
             this.dayFiveFirstComboBox.Location = new System.Drawing.Point(164, 229);
             this.dayFiveFirstComboBox.Name = "dayFiveFirstComboBox";
             this.dayFiveFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayFiveFirstComboBox.TabIndex = 204;
+            this.dayFiveFirstComboBox.TabIndex = 187;
             this.dayFiveFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.dayFiveFirstComboBox_SelectedIndexChanged);
             // 
             // dayTenFourthComboBox
@@ -1111,7 +1114,7 @@
             this.dayTenFourthComboBox.Location = new System.Drawing.Point(164, 202);
             this.dayTenFourthComboBox.Name = "dayTenFourthComboBox";
             this.dayTenFourthComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayTenFourthComboBox.TabIndex = 203;
+            this.dayTenFourthComboBox.TabIndex = 183;
             this.dayTenFourthComboBox.SelectedIndexChanged += new System.EventHandler(this.dayTenFourthComboBox_SelectedIndexChanged);
             // 
             // dayTenThirdComboBox
@@ -1122,7 +1125,7 @@
             this.dayTenThirdComboBox.Location = new System.Drawing.Point(164, 175);
             this.dayTenThirdComboBox.Name = "dayTenThirdComboBox";
             this.dayTenThirdComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayTenThirdComboBox.TabIndex = 202;
+            this.dayTenThirdComboBox.TabIndex = 179;
             this.dayTenThirdComboBox.SelectedIndexChanged += new System.EventHandler(this.dayTenThirdComboBox_SelectedIndexChanged);
             // 
             // dayTenSecondComboBox
@@ -1133,7 +1136,7 @@
             this.dayTenSecondComboBox.Location = new System.Drawing.Point(164, 148);
             this.dayTenSecondComboBox.Name = "dayTenSecondComboBox";
             this.dayTenSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayTenSecondComboBox.TabIndex = 201;
+            this.dayTenSecondComboBox.TabIndex = 175;
             this.dayTenSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.dayTenSecondComboBox_SelectedIndexChanged);
             // 
             // dayTenFirstComboBox
@@ -1144,7 +1147,7 @@
             this.dayTenFirstComboBox.Location = new System.Drawing.Point(164, 121);
             this.dayTenFirstComboBox.Name = "dayTenFirstComboBox";
             this.dayTenFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayTenFirstComboBox.TabIndex = 200;
+            this.dayTenFirstComboBox.TabIndex = 171;
             this.dayTenFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.dayTenFirstComboBox_SelectedIndexChanged);
             // 
             // dayTwentySecondComboBox
@@ -1155,7 +1158,7 @@
             this.dayTwentySecondComboBox.Location = new System.Drawing.Point(164, 94);
             this.dayTwentySecondComboBox.Name = "dayTwentySecondComboBox";
             this.dayTwentySecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayTwentySecondComboBox.TabIndex = 199;
+            this.dayTwentySecondComboBox.TabIndex = 167;
             this.dayTwentySecondComboBox.SelectedIndexChanged += new System.EventHandler(this.dayTwentySecondComboBox_SelectedIndexChanged);
             // 
             // dayTwentyFirstComboBox
@@ -1166,7 +1169,7 @@
             this.dayTwentyFirstComboBox.Location = new System.Drawing.Point(164, 67);
             this.dayTwentyFirstComboBox.Name = "dayTwentyFirstComboBox";
             this.dayTwentyFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dayTwentyFirstComboBox.TabIndex = 198;
+            this.dayTwentyFirstComboBox.TabIndex = 163;
             this.dayTwentyFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.dayTwentyFirstComboBox_SelectedIndexChanged);
             // 
             // oneSecondLevelUpDown
@@ -1174,18 +1177,19 @@
             this.oneSecondLevelUpDown.Location = new System.Drawing.Point(418, 365);
             this.oneSecondLevelUpDown.Name = "oneSecondLevelUpDown";
             this.oneSecondLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oneSecondLevelUpDown.TabIndex = 197;
+            this.oneSecondLevelUpDown.TabIndex = 209;
             this.oneSecondLevelUpDown.ValueChanged += new System.EventHandler(this.oneSecondLevelUpDown_ValueChanged);
             // 
-            // label79
+            // Second1
             // 
-            this.label79.AutoSize = true;
-            this.label79.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label79.Location = new System.Drawing.Point(10, 367);
-            this.label79.Name = "label79";
-            this.label79.Size = new System.Drawing.Size(21, 13);
-            this.label79.TabIndex = 196;
-            this.label79.Text = "1%";
+            this.Second1.AutoSize = true;
+            this.Second1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Second1.Location = new System.Drawing.Point(10, 367);
+            this.Second1.Name = "Second1";
+            this.Second1.Size = new System.Drawing.Size(21, 13);
+            this.Second1.TabIndex = 196;
+            this.Second1.Text = "1%";
+            this.Second1.Click += new System.EventHandler(this.Second1_Click);
             // 
             // morningOneSecondComboBox
             // 
@@ -1195,7 +1199,7 @@
             this.morningOneSecondComboBox.Location = new System.Drawing.Point(37, 364);
             this.morningOneSecondComboBox.Name = "morningOneSecondComboBox";
             this.morningOneSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningOneSecondComboBox.TabIndex = 195;
+            this.morningOneSecondComboBox.TabIndex = 206;
             this.morningOneSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.morningOneSecondComboBox_SelectedIndexChanged);
             // 
             // oneFirstLevelUpDown
@@ -1203,18 +1207,19 @@
             this.oneFirstLevelUpDown.Location = new System.Drawing.Point(418, 338);
             this.oneFirstLevelUpDown.Name = "oneFirstLevelUpDown";
             this.oneFirstLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.oneFirstLevelUpDown.TabIndex = 194;
+            this.oneFirstLevelUpDown.TabIndex = 205;
             this.oneFirstLevelUpDown.ValueChanged += new System.EventHandler(this.oneFirstLevelUpDown_ValueChanged);
             // 
-            // label80
+            // First1
             // 
-            this.label80.AutoSize = true;
-            this.label80.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label80.Location = new System.Drawing.Point(10, 340);
-            this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(21, 13);
-            this.label80.TabIndex = 193;
-            this.label80.Text = "1%";
+            this.First1.AutoSize = true;
+            this.First1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.First1.Location = new System.Drawing.Point(10, 340);
+            this.First1.Name = "First1";
+            this.First1.Size = new System.Drawing.Size(21, 13);
+            this.First1.TabIndex = 193;
+            this.First1.Text = "1%";
+            this.First1.Click += new System.EventHandler(this.First1_Click);
             // 
             // morningOneFirstComboBox
             // 
@@ -1224,7 +1229,7 @@
             this.morningOneFirstComboBox.Location = new System.Drawing.Point(37, 337);
             this.morningOneFirstComboBox.Name = "morningOneFirstComboBox";
             this.morningOneFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningOneFirstComboBox.TabIndex = 192;
+            this.morningOneFirstComboBox.TabIndex = 202;
             this.morningOneFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.morningOneFirstComboBox_SelectedIndexChanged);
             // 
             // fourSecondLevelUpDown
@@ -1232,18 +1237,19 @@
             this.fourSecondLevelUpDown.Location = new System.Drawing.Point(418, 311);
             this.fourSecondLevelUpDown.Name = "fourSecondLevelUpDown";
             this.fourSecondLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.fourSecondLevelUpDown.TabIndex = 191;
+            this.fourSecondLevelUpDown.TabIndex = 201;
             this.fourSecondLevelUpDown.ValueChanged += new System.EventHandler(this.fourSecondLevelUpDown_ValueChanged);
             // 
-            // label81
+            // Second4
             // 
-            this.label81.AutoSize = true;
-            this.label81.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label81.Location = new System.Drawing.Point(10, 313);
-            this.label81.Name = "label81";
-            this.label81.Size = new System.Drawing.Size(21, 13);
-            this.label81.TabIndex = 190;
-            this.label81.Text = "4%";
+            this.Second4.AutoSize = true;
+            this.Second4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Second4.Location = new System.Drawing.Point(10, 313);
+            this.Second4.Name = "Second4";
+            this.Second4.Size = new System.Drawing.Size(21, 13);
+            this.Second4.TabIndex = 190;
+            this.Second4.Text = "4%";
+            this.Second4.Click += new System.EventHandler(this.Second4_Click);
             // 
             // morningFourSecondComboBox
             // 
@@ -1253,7 +1259,7 @@
             this.morningFourSecondComboBox.Location = new System.Drawing.Point(37, 310);
             this.morningFourSecondComboBox.Name = "morningFourSecondComboBox";
             this.morningFourSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningFourSecondComboBox.TabIndex = 189;
+            this.morningFourSecondComboBox.TabIndex = 198;
             this.morningFourSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.morningFourSecondComboBox_SelectedIndexChanged);
             // 
             // fourFirstLevelUpDown
@@ -1261,18 +1267,19 @@
             this.fourFirstLevelUpDown.Location = new System.Drawing.Point(418, 284);
             this.fourFirstLevelUpDown.Name = "fourFirstLevelUpDown";
             this.fourFirstLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.fourFirstLevelUpDown.TabIndex = 188;
+            this.fourFirstLevelUpDown.TabIndex = 197;
             this.fourFirstLevelUpDown.ValueChanged += new System.EventHandler(this.fourFirstLevelUpDown_ValueChanged);
             // 
-            // label82
+            // First4
             // 
-            this.label82.AutoSize = true;
-            this.label82.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label82.Location = new System.Drawing.Point(10, 286);
-            this.label82.Name = "label82";
-            this.label82.Size = new System.Drawing.Size(21, 13);
-            this.label82.TabIndex = 187;
-            this.label82.Text = "4%";
+            this.First4.AutoSize = true;
+            this.First4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.First4.Location = new System.Drawing.Point(10, 286);
+            this.First4.Name = "First4";
+            this.First4.Size = new System.Drawing.Size(21, 13);
+            this.First4.TabIndex = 187;
+            this.First4.Text = "4%";
+            this.First4.Click += new System.EventHandler(this.First4_Click);
             // 
             // morningFourFirstComboBox
             // 
@@ -1282,7 +1289,7 @@
             this.morningFourFirstComboBox.Location = new System.Drawing.Point(37, 283);
             this.morningFourFirstComboBox.Name = "morningFourFirstComboBox";
             this.morningFourFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningFourFirstComboBox.TabIndex = 186;
+            this.morningFourFirstComboBox.TabIndex = 194;
             this.morningFourFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.morningFourFirstComboBox_SelectedIndexChanged);
             // 
             // fiveSecondLevelUpDown
@@ -1290,18 +1297,19 @@
             this.fiveSecondLevelUpDown.Location = new System.Drawing.Point(418, 257);
             this.fiveSecondLevelUpDown.Name = "fiveSecondLevelUpDown";
             this.fiveSecondLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.fiveSecondLevelUpDown.TabIndex = 185;
+            this.fiveSecondLevelUpDown.TabIndex = 193;
             this.fiveSecondLevelUpDown.ValueChanged += new System.EventHandler(this.fiveSecondLevelUpDown_ValueChanged);
             // 
-            // label83
+            // Second5
             // 
-            this.label83.AutoSize = true;
-            this.label83.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label83.Location = new System.Drawing.Point(10, 259);
-            this.label83.Name = "label83";
-            this.label83.Size = new System.Drawing.Size(21, 13);
-            this.label83.TabIndex = 184;
-            this.label83.Text = "5%";
+            this.Second5.AutoSize = true;
+            this.Second5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Second5.Location = new System.Drawing.Point(10, 259);
+            this.Second5.Name = "Second5";
+            this.Second5.Size = new System.Drawing.Size(21, 13);
+            this.Second5.TabIndex = 184;
+            this.Second5.Text = "5%";
+            this.Second5.Click += new System.EventHandler(this.Second5_Click);
             // 
             // morningFiveSecondComboBox
             // 
@@ -1311,7 +1319,7 @@
             this.morningFiveSecondComboBox.Location = new System.Drawing.Point(37, 256);
             this.morningFiveSecondComboBox.Name = "morningFiveSecondComboBox";
             this.morningFiveSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningFiveSecondComboBox.TabIndex = 183;
+            this.morningFiveSecondComboBox.TabIndex = 190;
             this.morningFiveSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.morningFiveSecondComboBox_SelectedIndexChanged);
             // 
             // fiveFirstLevelUpDown
@@ -1319,18 +1327,19 @@
             this.fiveFirstLevelUpDown.Location = new System.Drawing.Point(418, 230);
             this.fiveFirstLevelUpDown.Name = "fiveFirstLevelUpDown";
             this.fiveFirstLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.fiveFirstLevelUpDown.TabIndex = 182;
+            this.fiveFirstLevelUpDown.TabIndex = 189;
             this.fiveFirstLevelUpDown.ValueChanged += new System.EventHandler(this.fiveFirstLevelUpDown_ValueChanged);
             // 
-            // label84
+            // First5
             // 
-            this.label84.AutoSize = true;
-            this.label84.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label84.Location = new System.Drawing.Point(10, 232);
-            this.label84.Name = "label84";
-            this.label84.Size = new System.Drawing.Size(21, 13);
-            this.label84.TabIndex = 181;
-            this.label84.Text = "5%";
+            this.First5.AutoSize = true;
+            this.First5.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.First5.Location = new System.Drawing.Point(10, 232);
+            this.First5.Name = "First5";
+            this.First5.Size = new System.Drawing.Size(21, 13);
+            this.First5.TabIndex = 181;
+            this.First5.Text = "5%";
+            this.First5.Click += new System.EventHandler(this.First5_Click);
             // 
             // morningFiveFirstComboBox
             // 
@@ -1340,7 +1349,7 @@
             this.morningFiveFirstComboBox.Location = new System.Drawing.Point(37, 229);
             this.morningFiveFirstComboBox.Name = "morningFiveFirstComboBox";
             this.morningFiveFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningFiveFirstComboBox.TabIndex = 180;
+            this.morningFiveFirstComboBox.TabIndex = 186;
             this.morningFiveFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.morningFiveFirstComboBox_SelectedIndexChanged);
             // 
             // tenFourthLevelUpDown
@@ -1348,18 +1357,19 @@
             this.tenFourthLevelUpDown.Location = new System.Drawing.Point(418, 203);
             this.tenFourthLevelUpDown.Name = "tenFourthLevelUpDown";
             this.tenFourthLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.tenFourthLevelUpDown.TabIndex = 179;
+            this.tenFourthLevelUpDown.TabIndex = 185;
             this.tenFourthLevelUpDown.ValueChanged += new System.EventHandler(this.tenFourthLevelUpDown_ValueChanged);
             // 
-            // label85
+            // Fourth10
             // 
-            this.label85.AutoSize = true;
-            this.label85.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label85.Location = new System.Drawing.Point(4, 205);
-            this.label85.Name = "label85";
-            this.label85.Size = new System.Drawing.Size(27, 13);
-            this.label85.TabIndex = 178;
-            this.label85.Text = "10%";
+            this.Fourth10.AutoSize = true;
+            this.Fourth10.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Fourth10.Location = new System.Drawing.Point(4, 205);
+            this.Fourth10.Name = "Fourth10";
+            this.Fourth10.Size = new System.Drawing.Size(27, 13);
+            this.Fourth10.TabIndex = 178;
+            this.Fourth10.Text = "10%";
+            this.Fourth10.Click += new System.EventHandler(this.Fourth10_Click);
             // 
             // morningTenFourthComboBox
             // 
@@ -1369,7 +1379,7 @@
             this.morningTenFourthComboBox.Location = new System.Drawing.Point(37, 202);
             this.morningTenFourthComboBox.Name = "morningTenFourthComboBox";
             this.morningTenFourthComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningTenFourthComboBox.TabIndex = 177;
+            this.morningTenFourthComboBox.TabIndex = 182;
             this.morningTenFourthComboBox.SelectedIndexChanged += new System.EventHandler(this.morningTenFourthComboBox_SelectedIndexChanged);
             // 
             // tenThirdLevelUpDown
@@ -1377,18 +1387,19 @@
             this.tenThirdLevelUpDown.Location = new System.Drawing.Point(418, 176);
             this.tenThirdLevelUpDown.Name = "tenThirdLevelUpDown";
             this.tenThirdLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.tenThirdLevelUpDown.TabIndex = 176;
+            this.tenThirdLevelUpDown.TabIndex = 181;
             this.tenThirdLevelUpDown.ValueChanged += new System.EventHandler(this.tenThirdLevelUpDown_ValueChanged);
             // 
-            // label86
+            // Third10
             // 
-            this.label86.AutoSize = true;
-            this.label86.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label86.Location = new System.Drawing.Point(4, 178);
-            this.label86.Name = "label86";
-            this.label86.Size = new System.Drawing.Size(27, 13);
-            this.label86.TabIndex = 175;
-            this.label86.Text = "10%";
+            this.Third10.AutoSize = true;
+            this.Third10.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Third10.Location = new System.Drawing.Point(4, 178);
+            this.Third10.Name = "Third10";
+            this.Third10.Size = new System.Drawing.Size(27, 13);
+            this.Third10.TabIndex = 175;
+            this.Third10.Text = "10%";
+            this.Third10.Click += new System.EventHandler(this.Third10_Click);
             // 
             // morningTenThirdComboBox
             // 
@@ -1398,7 +1409,7 @@
             this.morningTenThirdComboBox.Location = new System.Drawing.Point(37, 175);
             this.morningTenThirdComboBox.Name = "morningTenThirdComboBox";
             this.morningTenThirdComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningTenThirdComboBox.TabIndex = 174;
+            this.morningTenThirdComboBox.TabIndex = 178;
             this.morningTenThirdComboBox.SelectedIndexChanged += new System.EventHandler(this.morningTenThirdComboBox_SelectedIndexChanged);
             // 
             // tenSecondLevelUpDown
@@ -1406,18 +1417,19 @@
             this.tenSecondLevelUpDown.Location = new System.Drawing.Point(418, 149);
             this.tenSecondLevelUpDown.Name = "tenSecondLevelUpDown";
             this.tenSecondLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.tenSecondLevelUpDown.TabIndex = 173;
+            this.tenSecondLevelUpDown.TabIndex = 177;
             this.tenSecondLevelUpDown.ValueChanged += new System.EventHandler(this.tenSecondLevelUpDown_ValueChanged);
             // 
-            // label87
+            // Second10
             // 
-            this.label87.AutoSize = true;
-            this.label87.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label87.Location = new System.Drawing.Point(4, 151);
-            this.label87.Name = "label87";
-            this.label87.Size = new System.Drawing.Size(27, 13);
-            this.label87.TabIndex = 172;
-            this.label87.Text = "10%";
+            this.Second10.AutoSize = true;
+            this.Second10.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Second10.Location = new System.Drawing.Point(4, 151);
+            this.Second10.Name = "Second10";
+            this.Second10.Size = new System.Drawing.Size(27, 13);
+            this.Second10.TabIndex = 172;
+            this.Second10.Text = "10%";
+            this.Second10.Click += new System.EventHandler(this.Second10_Click);
             // 
             // morningTenSecondComboBox
             // 
@@ -1427,7 +1439,7 @@
             this.morningTenSecondComboBox.Location = new System.Drawing.Point(37, 148);
             this.morningTenSecondComboBox.Name = "morningTenSecondComboBox";
             this.morningTenSecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningTenSecondComboBox.TabIndex = 171;
+            this.morningTenSecondComboBox.TabIndex = 174;
             this.morningTenSecondComboBox.SelectedIndexChanged += new System.EventHandler(this.morningTenSecondComboBox_SelectedIndexChanged);
             // 
             // tenFirstLevelUpDown
@@ -1435,18 +1447,19 @@
             this.tenFirstLevelUpDown.Location = new System.Drawing.Point(418, 122);
             this.tenFirstLevelUpDown.Name = "tenFirstLevelUpDown";
             this.tenFirstLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.tenFirstLevelUpDown.TabIndex = 170;
+            this.tenFirstLevelUpDown.TabIndex = 173;
             this.tenFirstLevelUpDown.ValueChanged += new System.EventHandler(this.tenFirstLevelUpDown_ValueChanged);
             // 
-            // label88
+            // First10
             // 
-            this.label88.AutoSize = true;
-            this.label88.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label88.Location = new System.Drawing.Point(4, 124);
-            this.label88.Name = "label88";
-            this.label88.Size = new System.Drawing.Size(27, 13);
-            this.label88.TabIndex = 169;
-            this.label88.Text = "10%";
+            this.First10.AutoSize = true;
+            this.First10.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.First10.Location = new System.Drawing.Point(4, 124);
+            this.First10.Name = "First10";
+            this.First10.Size = new System.Drawing.Size(27, 13);
+            this.First10.TabIndex = 169;
+            this.First10.Text = "10%";
+            this.First10.Click += new System.EventHandler(this.First10_Click);
             // 
             // morningTenFirstComboBox
             // 
@@ -1456,7 +1469,7 @@
             this.morningTenFirstComboBox.Location = new System.Drawing.Point(37, 121);
             this.morningTenFirstComboBox.Name = "morningTenFirstComboBox";
             this.morningTenFirstComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningTenFirstComboBox.TabIndex = 168;
+            this.morningTenFirstComboBox.TabIndex = 170;
             this.morningTenFirstComboBox.SelectedIndexChanged += new System.EventHandler(this.morningTenFirstComboBox_SelectedIndexChanged);
             // 
             // twentySecondLevelUpDown
@@ -1464,18 +1477,19 @@
             this.twentySecondLevelUpDown.Location = new System.Drawing.Point(418, 95);
             this.twentySecondLevelUpDown.Name = "twentySecondLevelUpDown";
             this.twentySecondLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.twentySecondLevelUpDown.TabIndex = 167;
+            this.twentySecondLevelUpDown.TabIndex = 169;
             this.twentySecondLevelUpDown.ValueChanged += new System.EventHandler(this.twentySecondLevelUpDown_ValueChanged);
             // 
-            // label89
+            // Second20
             // 
-            this.label89.AutoSize = true;
-            this.label89.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label89.Location = new System.Drawing.Point(4, 97);
-            this.label89.Name = "label89";
-            this.label89.Size = new System.Drawing.Size(27, 13);
-            this.label89.TabIndex = 166;
-            this.label89.Text = "20%";
+            this.Second20.AutoSize = true;
+            this.Second20.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Second20.Location = new System.Drawing.Point(4, 97);
+            this.Second20.Name = "Second20";
+            this.Second20.Size = new System.Drawing.Size(27, 13);
+            this.Second20.TabIndex = 166;
+            this.Second20.Text = "20%";
+            this.Second20.Click += new System.EventHandler(this.Second20_Click);
             // 
             // morningTwentySecondComboBox
             // 
@@ -1485,7 +1499,7 @@
             this.morningTwentySecondComboBox.Location = new System.Drawing.Point(37, 94);
             this.morningTwentySecondComboBox.Name = "morningTwentySecondComboBox";
             this.morningTwentySecondComboBox.Size = new System.Drawing.Size(121, 21);
-            this.morningTwentySecondComboBox.TabIndex = 165;
+            this.morningTwentySecondComboBox.TabIndex = 166;
             this.morningTwentySecondComboBox.SelectedIndexChanged += new System.EventHandler(this.morningTwentySecondComboBox_SelectedIndexChanged);
             // 
             // twentyFirstLevelUpDown
@@ -1493,18 +1507,19 @@
             this.twentyFirstLevelUpDown.Location = new System.Drawing.Point(418, 68);
             this.twentyFirstLevelUpDown.Name = "twentyFirstLevelUpDown";
             this.twentyFirstLevelUpDown.Size = new System.Drawing.Size(42, 20);
-            this.twentyFirstLevelUpDown.TabIndex = 164;
+            this.twentyFirstLevelUpDown.TabIndex = 165;
             this.twentyFirstLevelUpDown.ValueChanged += new System.EventHandler(this.twentyFirstLevelUpDown_ValueChanged);
             // 
-            // label90
+            // First20
             // 
-            this.label90.AutoSize = true;
-            this.label90.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label90.Location = new System.Drawing.Point(4, 70);
-            this.label90.Name = "label90";
-            this.label90.Size = new System.Drawing.Size(27, 13);
-            this.label90.TabIndex = 163;
-            this.label90.Text = "20%";
+            this.First20.AutoSize = true;
+            this.First20.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.First20.Location = new System.Drawing.Point(4, 70);
+            this.First20.Name = "First20";
+            this.First20.Size = new System.Drawing.Size(27, 13);
+            this.First20.TabIndex = 163;
+            this.First20.Text = "20%";
+            this.First20.Click += new System.EventHandler(this.First20_Click);
             // 
             // morningTwentyFirstComboBox
             // 
@@ -2847,8 +2862,8 @@
         private System.Windows.Forms.Label label66;
         private DSPRE.InputComboBox surfSixtyComboBox;
         private System.Windows.Forms.GroupBox walkingGroupBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label Day;
+        private System.Windows.Forms.Label Morning;
         private DSPRE.InputComboBox nightOneSecondComboBox;
         private DSPRE.InputComboBox nightOneFirstComboBox;
         private DSPRE.InputComboBox nightFourSecondComboBox;
@@ -2874,42 +2889,42 @@
         private DSPRE.InputComboBox dayTwentySecondComboBox;
         private DSPRE.InputComboBox dayTwentyFirstComboBox;
         private System.Windows.Forms.NumericUpDown oneSecondLevelUpDown;
-        private System.Windows.Forms.Label label79;
+        private System.Windows.Forms.Label Second1;
         private DSPRE.InputComboBox morningOneSecondComboBox;
         private System.Windows.Forms.NumericUpDown oneFirstLevelUpDown;
-        private System.Windows.Forms.Label label80;
+        private System.Windows.Forms.Label First1;
         private DSPRE.InputComboBox morningOneFirstComboBox;
         private System.Windows.Forms.NumericUpDown fourSecondLevelUpDown;
-        private System.Windows.Forms.Label label81;
+        private System.Windows.Forms.Label Second4;
         private DSPRE.InputComboBox morningFourSecondComboBox;
         private System.Windows.Forms.NumericUpDown fourFirstLevelUpDown;
-        private System.Windows.Forms.Label label82;
+        private System.Windows.Forms.Label First4;
         private DSPRE.InputComboBox morningFourFirstComboBox;
         private System.Windows.Forms.NumericUpDown fiveSecondLevelUpDown;
-        private System.Windows.Forms.Label label83;
+        private System.Windows.Forms.Label Second5;
         private DSPRE.InputComboBox morningFiveSecondComboBox;
         private System.Windows.Forms.NumericUpDown fiveFirstLevelUpDown;
-        private System.Windows.Forms.Label label84;
+        private System.Windows.Forms.Label First5;
         private DSPRE.InputComboBox morningFiveFirstComboBox;
         private System.Windows.Forms.NumericUpDown tenFourthLevelUpDown;
-        private System.Windows.Forms.Label label85;
+        private System.Windows.Forms.Label Fourth10;
         private DSPRE.InputComboBox morningTenFourthComboBox;
         private System.Windows.Forms.NumericUpDown tenThirdLevelUpDown;
-        private System.Windows.Forms.Label label86;
+        private System.Windows.Forms.Label Third10;
         private DSPRE.InputComboBox morningTenThirdComboBox;
         private System.Windows.Forms.NumericUpDown tenSecondLevelUpDown;
-        private System.Windows.Forms.Label label87;
+        private System.Windows.Forms.Label Second10;
         private DSPRE.InputComboBox morningTenSecondComboBox;
         private System.Windows.Forms.NumericUpDown tenFirstLevelUpDown;
-        private System.Windows.Forms.Label label88;
+        private System.Windows.Forms.Label First10;
         private DSPRE.InputComboBox morningTenFirstComboBox;
         private System.Windows.Forms.NumericUpDown twentySecondLevelUpDown;
-        private System.Windows.Forms.Label label89;
+        private System.Windows.Forms.Label Second20;
         private DSPRE.InputComboBox morningTwentySecondComboBox;
         private System.Windows.Forms.NumericUpDown twentyFirstLevelUpDown;
-        private System.Windows.Forms.Label label90;
+        private System.Windows.Forms.Label First20;
         private DSPRE.InputComboBox morningTwentyFirstComboBox;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label Night;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox swarmsGroupBox;
         private DSPRE.InputComboBox superRodSwarmComboBox;

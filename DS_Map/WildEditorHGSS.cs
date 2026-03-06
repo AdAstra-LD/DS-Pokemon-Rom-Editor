@@ -9,6 +9,7 @@ using static DSPRE.RomInfo;
 namespace DSPRE {
     public partial class WildEditorHGSS : Form {
         public string encounterFileFolder { get; private set; }
+        private bool _skipBulkEditConfirmation = false;
         EncounterFileHGSS currentFile;
 
         public WildEditorHGSS(string dirPath, string[] names, int encToOpen, int totalNumHeaderFiles) {
@@ -1138,6 +1139,226 @@ namespace DSPRE {
 
                 MessageBox.Show("All repairable fields have been fixed.", "Operation completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private bool ConfirmBulkEdit()
+        {
+            if (_skipBulkEditConfirmation)
+                return true;
+
+            using (var form = new ConfirmBulkEditForm())
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    if (form.DoNotAskAgain)
+                    {
+                        _skipBulkEditConfirmation = true;
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+
+        private void First20_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[0] = (ushort)morningTwentyFirstComboBox.SelectedIndex;
+            dayTwentyFirstComboBox.SelectedItem = morningTwentyFirstComboBox.SelectedItem;
+
+            currentFile.nightPokemon[0] = (ushort)morningTwentyFirstComboBox.SelectedIndex;
+            nightTwentyFirstComboBox.SelectedItem = morningTwentyFirstComboBox.SelectedItem;
+        }
+
+        private void Second20_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[1] = (ushort)morningTwentySecondComboBox.SelectedIndex;
+            dayTwentySecondComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+
+            currentFile.nightPokemon[1] = (ushort)morningTwentySecondComboBox.SelectedIndex;
+            nightTwentySecondComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+        }
+
+        private void First10_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[2] = (ushort)morningTenFirstComboBox.SelectedIndex;
+            dayTenFirstComboBox.SelectedItem = morningTenFirstComboBox.SelectedItem;
+
+            currentFile.nightPokemon[2] = (ushort)morningTenFirstComboBox.SelectedIndex;
+            nightTenFirstComboBox.SelectedItem = morningTenFirstComboBox.SelectedItem;
+        }
+
+        private void Second10_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[3] = (ushort)morningTenSecondComboBox.SelectedIndex;
+            dayTenSecondComboBox.SelectedItem = morningTenSecondComboBox.SelectedItem;
+
+            currentFile.nightPokemon[3] = (ushort)morningTenSecondComboBox.SelectedIndex;
+            nightTenSecondComboBox.SelectedItem = morningTenSecondComboBox.SelectedItem;
+        }
+
+        private void Third10_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[4] = (ushort)morningTenThirdComboBox.SelectedIndex;
+            dayTenThirdComboBox.SelectedItem = morningTenThirdComboBox.SelectedItem;
+
+            currentFile.nightPokemon[4] = (ushort)morningTenThirdComboBox.SelectedIndex;
+            nightTenThirdComboBox.SelectedItem = morningTenThirdComboBox.SelectedItem;
+        }
+
+        private void Fourth10_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[5] = (ushort)morningTenFourthComboBox.SelectedIndex;
+            dayTenFourthComboBox.SelectedItem = morningTenFourthComboBox.SelectedItem;
+
+            currentFile.nightPokemon[5] = (ushort)morningTenFourthComboBox.SelectedIndex;
+            nightTenFourthComboBox.SelectedItem = morningTenFourthComboBox.SelectedItem;
+        }
+
+        private void First5_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[6] = (ushort)morningFiveFirstComboBox.SelectedIndex;
+            dayFiveFirstComboBox.SelectedItem = morningFiveFirstComboBox.SelectedItem;
+
+            currentFile.nightPokemon[6] = (ushort)morningFiveFirstComboBox.SelectedIndex;
+            nightFiveFirstComboBox.SelectedItem = morningFiveFirstComboBox.SelectedItem;
+        }
+
+        private void Second5_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[7] = (ushort)morningFiveSecondComboBox.SelectedIndex;
+            dayFiveSecondComboBox.SelectedItem = morningFiveSecondComboBox.SelectedItem;
+
+            currentFile.nightPokemon[7] = (ushort)morningFiveSecondComboBox.SelectedIndex;
+            nightFiveSecondComboBox.SelectedItem = morningFiveSecondComboBox.SelectedItem;
+        }
+
+        private void First4_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[8] = (ushort)morningFourFirstComboBox.SelectedIndex;
+            dayFourFirstComboBox.SelectedItem = morningFourFirstComboBox.SelectedItem;
+
+            currentFile.nightPokemon[8] = (ushort)morningFourFirstComboBox.SelectedIndex;
+            nightFourFirstComboBox.SelectedItem = morningFourFirstComboBox.SelectedItem;
+        }
+
+        private void Second4_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[9] = (ushort)morningFourSecondComboBox.SelectedIndex;
+            dayFourSecondComboBox.SelectedItem = morningFourSecondComboBox.SelectedItem;
+
+            currentFile.nightPokemon[9] = (ushort)morningFourSecondComboBox.SelectedIndex;
+            nightFourSecondComboBox.SelectedItem = morningFourSecondComboBox.SelectedItem;
+        }
+
+        private void First1_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[10] = (ushort)morningOneFirstComboBox.SelectedIndex;
+            dayOneFirstComboBox.SelectedItem = morningOneFirstComboBox.SelectedItem;
+
+            currentFile.nightPokemon[10] = (ushort)morningOneFirstComboBox.SelectedIndex;
+            nightOneFirstComboBox.SelectedItem = morningOneFirstComboBox.SelectedItem;
+        }
+
+        private void Second1_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            currentFile.dayPokemon[11] = (ushort)morningOneSecondComboBox.SelectedIndex;
+            dayOneSecondComboBox.SelectedItem = morningOneSecondComboBox.SelectedItem;
+
+            currentFile.nightPokemon[11] = (ushort)morningOneSecondComboBox.SelectedIndex;
+            nightOneSecondComboBox.SelectedItem = morningOneSecondComboBox.SelectedItem;
+        }
+
+
+        private void Morning_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            for (int i = 0; i < currentFile.morningPokemon.Length; i++)
+            {
+                currentFile.morningPokemon[i] = (ushort)morningTwentyFirstComboBox.SelectedIndex;
+            }
+            morningTwentySecondComboBox.SelectedItem = morningTwentyFirstComboBox.SelectedItem;
+            morningTenFirstComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningTenSecondComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningTenThirdComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningTenFourthComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningFiveFirstComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningFiveSecondComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningFourFirstComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningFourSecondComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningOneFirstComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+            morningOneSecondComboBox.SelectedItem = morningTwentySecondComboBox.SelectedItem;
+        }
+
+        private void Day_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            for (int i = 0; i < currentFile.dayPokemon.Length; i++)
+            {
+                currentFile.dayPokemon[i] = (ushort)dayTwentyFirstComboBox.SelectedIndex;
+            }
+            dayTwentySecondComboBox.SelectedItem = dayTwentyFirstComboBox.SelectedItem;
+            dayTenFirstComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayTenSecondComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayTenThirdComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayTenFourthComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayFiveFirstComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayFiveSecondComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayFourFirstComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayFourSecondComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayOneFirstComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+            dayOneSecondComboBox.SelectedItem = dayTwentySecondComboBox.SelectedItem;
+        }
+
+        private void Night_Click(object sender, EventArgs e)
+        {
+            if (Helpers.HandlersDisabled || !ConfirmBulkEdit()) return;
+
+            for (int i = 0; i < currentFile.nightPokemon.Length; i++)
+            {
+                currentFile.nightPokemon[i] = (ushort)nightTwentyFirstComboBox.SelectedIndex;
+            }
+
+            nightTwentySecondComboBox.SelectedItem = nightTwentyFirstComboBox.SelectedItem;
+            nightTenFirstComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightTenSecondComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightTenThirdComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightTenFourthComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightFiveFirstComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightFiveSecondComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightFourFirstComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightFourSecondComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightOneFirstComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
+            nightOneSecondComboBox.SelectedItem = nightTwentySecondComboBox.SelectedItem;
         }
     }
 }

@@ -32,7 +32,18 @@ namespace DSPRE {
 
 
     public partial class MainProgram : Form {
+        private List<string> _allTrainerNames { get; set; } = new List<string>();
+        private string _searchText;
 
+        public string SearchText
+        {
+            get => _searchText;
+            private set
+            {
+                _searchText = value;
+                FilterTrainers();
+            }
+        }
         public MainProgram() {
             InitializeComponent();
             EditorPanels.Initialize(this);
@@ -981,21 +992,19 @@ namespace DSPRE {
             currentTextArchive = new TextArchive(RomInfo.locationNamesTextNumber);
             ReloadHeaderEditorLocationsList(currentTextArchive.messages);
 
-            areaIconComboBox.Items.Clear();
-            cameraComboBox.Items.Clear();
-            areaSettingsComboBox.Items.Clear();
-            musicDayComboBox.Items.Clear();
-            musicNightComboBox.Items.Clear();
-            weatherComboBox.Items.Clear();
-
             switch (RomInfo.gameFamily) {
                 case GameFamilies.DP:
                     areaIconComboBox.Enabled = false;
                     areaIconPictureBox.Image = (Image)Properties.Resources.ResourceManager.GetObject("dpareaicon");
+                    areaSettingsLabel.Text = "Show nametag:";
+                    cameraComboBox.Items.Clear();
+                    musicDayComboBox.Items.Clear();
+                    musicNightComboBox.Items.Clear();
+                    areaSettingsComboBox.Items.Clear();
                     cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraDict.Values.ToArray());
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.DPMusicDict.Values.ToArray());
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.HeaderTypes.DPHeaderTypes);
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.DPShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.DPWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
 
@@ -1003,11 +1012,18 @@ namespace DSPRE {
                     battleBackgroundUpDown.Location = new Point(battleBackgroundUpDown.Location.X - 25, battleBackgroundUpDown.Location.Y - 8);
                     break;
                 case GameFamilies.Plat:
+                    areaSettingsLabel.Text = "Show nametag:";
+                    areaIconComboBox.Items.Clear();
+                    cameraComboBox.Items.Clear();
+                    musicDayComboBox.Items.Clear();
+                    musicNightComboBox.Items.Clear();
+                    areaSettingsComboBox.Items.Clear();
+                    weatherComboBox.Items.Clear();
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.PtAreaIconValues);
                     cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.DPPtCameraDict.Values.ToArray());
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.PtMusicDict.Values.ToArray());
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.HeaderTypes.PtHGSSHeaderTypes);
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.ShowName.PtShowNameValues);
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.PtWeatherDict.Values.ToArray());
                     wildPokeUpDown.Maximum = 65535;
 
@@ -1015,9 +1031,16 @@ namespace DSPRE {
                     battleBackgroundUpDown.Location = new Point(battleBackgroundUpDown.Location.X - 25, battleBackgroundUpDown.Location.Y - 8);
                     break;
                 default:
+                    areaSettingsLabel.Text = "Area Settings:";
+                    areaIconComboBox.Items.Clear();
+                    cameraComboBox.Items.Clear();
+                    areaSettingsComboBox.Items.Clear();
+                    musicDayComboBox.Items.Clear();
+                    musicNightComboBox.Items.Clear();
+                    weatherComboBox.Items.Clear();
                     areaIconComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaIconsDict.Values.ToArray());
                     cameraComboBox.Items.AddRange(PokeDatabase.CameraAngles.HGSSCameraDict.Values.ToArray());
-                    areaSettingsComboBox.Items.AddRange(PokeDatabase.HeaderTypes.PtHGSSHeaderTypes);
+                    areaSettingsComboBox.Items.AddRange(PokeDatabase.Area.HGSSAreaProperties);
                     musicDayComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
                     musicNightComboBox.Items.AddRange(PokeDatabase.MusicDB.HGSSMusicDict.Values.ToArray());
                     weatherComboBox.Items.AddRange(PokeDatabase.Weather.HGSSWeatherDict.Values.ToArray());
@@ -1031,6 +1054,9 @@ namespace DSPRE {
                     flag6CheckBox.Visible = true;
                     flag5CheckBox.Visible = true;
                     flag4CheckBox.Visible = true;
+                    flag6CheckBox.Text = "Flag ?";
+                    flag5CheckBox.Text = "Flag ?";
+                    flag4CheckBox.Text = "Flag ?";
 
                     worldmapCoordsGroupBox.Enabled = true;
                     break;
@@ -1214,7 +1240,9 @@ namespace DSPRE {
             cameraUpDown.Value = currentHeader.cameraAngleID;
             battleBackgroundUpDown.Value = currentHeader.battleBackground;
 
-            areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D2}");
+            if (RomInfo.gameFamily == GameFamilies.HGSS) {
+                areaSettingsComboBox.SelectedIndex = ((HeaderHGSS)currentHeader).locationType;
+            }
 
             openWildEditorWithIdButton.Enabled = currentHeader.wildPokemon != RomInfo.nullEncounterID;
 
@@ -1227,6 +1255,7 @@ namespace DSPRE {
                             locationNameComboBox.SelectedIndex = h.locationName;
                             musicDayUpDown.Value = h.musicDayID;
                             musicNightUpDown.Value = h.musicNightID;
+                            areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
                             break;
                         }
                     case GameFamilies.Plat: {
@@ -1236,6 +1265,7 @@ namespace DSPRE {
                             locationNameComboBox.SelectedIndex = h.locationName;
                             musicDayUpDown.Value = h.musicDayID;
                             musicNightUpDown.Value = h.musicNightID;
+                            areaSettingsComboBox.SelectedIndex = areaSettingsComboBox.FindString("[" + $"{currentHeader.locationSpecifier:D3}");
                             break;
                         }
                     default: {
@@ -1829,7 +1859,16 @@ namespace DSPRE {
                 return;
             }
 
-            currentHeader.locationSpecifier = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 1));
+            switch (RomInfo.gameFamily) {
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
+                    currentHeader.locationSpecifier = Byte.Parse(areaSettingsComboBox.SelectedItem.ToString().Substring(1, 3));
+                    break;
+                case GameFamilies.HGSS:
+                    HeaderHGSS ch = (HeaderHGSS)currentHeader;
+                    ch.locationType = (byte)areaSettingsComboBox.SelectedIndex;
+                    break;
+            }
         }
         private void textFileUpDown_ValueChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) {
@@ -1922,6 +1961,7 @@ namespace DSPRE {
         int locationNameCopy;
         string internalNameCopy;
         decimal encountersIDCopy;
+        int shownameCopy;
         int areaIconCopy;
 
         int musicdayCopy;
@@ -1949,6 +1989,7 @@ namespace DSPRE {
         private void copyHeaderButton_Click(object sender, EventArgs e) {
             locationNameCopy = locationNameComboBox.SelectedIndex;
             internalNameCopy = internalNameBox.Text;
+            shownameCopy = areaSettingsComboBox.SelectedIndex;
             areaIconCopy = areaIconComboBox.SelectedIndex;
             areaSettingsCopy = areaSettingsComboBox.SelectedIndex;
             encountersIDCopy = wildPokeUpDown.Value;
@@ -2087,7 +2128,16 @@ namespace DSPRE {
             locationNameComboBox.SelectedIndex = locationNameCopy;
             internalNameBox.Text = internalNameCopy;
             wildPokeUpDown.Value = encountersIDCopy;
-            areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
+
+            switch (RomInfo.gameFamily) {
+                case GameFamilies.DP:
+                case GameFamilies.Plat:
+                    areaSettingsComboBox.SelectedIndex = shownameCopy;
+                    break;
+                case GameFamilies.HGSS:
+                    areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
+                    break;
+            }
             areaIconComboBox.SelectedIndex = areaIconCopy;
 
             musicDayComboBox.SelectedIndex = musicdayCopy;
@@ -2116,7 +2166,7 @@ namespace DSPRE {
             locationNameComboBox.SelectedIndex = locationNameCopy;
         }
         private void pasteAreaSettingsButton_Click(object sender, EventArgs e) {
-            areaSettingsComboBox.SelectedIndex = areaSettingsCopy;
+            areaSettingsComboBox.SelectedIndex = shownameCopy;
         }
         private void pasteAreaIconButton_Click(object sender, EventArgs e) {
             if (areaIconComboBox.Enabled) {
@@ -5338,6 +5388,7 @@ namespace DSPRE {
             eventEditorHeaderLocationNameLabel.Text = "";
 
             string[] trainerNames = GetTrainerNames();
+            _allTrainerNames = trainerNames.ToList();
             toolStripProgressBar.Maximum = (int)(eventCount + RomInfo.OverworldTable.Keys.Max() + trainerNames.Length);
             toolStripProgressBar.Value = 0;
             Update();
@@ -7890,7 +7941,8 @@ namespace DSPRE {
 
             int trainerCount = Directory.GetFiles(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir).Length;
             trainerComboBox.Items.Clear();
-            trainerComboBox.Items.AddRange(GetTrainerNames());
+            _allTrainerNames = GetTrainerNames().ToList();
+            trainerComboBox.Items.AddRange(_allTrainerNames.ToArray());
 
             string[] classNames = RomInfo.GetTrainerClassNames();
             trainerClassListBox.Items.Clear();
@@ -7973,20 +8025,44 @@ namespace DSPRE {
             trainerComboBox_SelectedIndexChanged(null, null);
             Helpers.statusLabelMessage();
         }
+
+        private void trainerComboBox_TextChanged(object sender, EventArgs e)
+        {
+            var combo = sender as ComboBox;
+
+            string search = combo.Text.ToLower();
+
+            var filtered = _allTrainerNames
+                .Where(x => x.ToLower().Contains(search) || search.Trim() == string.Empty)
+                .ToList();
+
+            combo.Items.Clear();
+            combo.Items.AddRange(filtered.ToArray());
+
+            combo.SelectionStart = combo.Text.Length;
+            combo.DroppedDown = true;
+        }
+
         private void trainerComboBox_SelectedIndexChanged(object sender, EventArgs e) {
             if (Helpers.HandlersDisabled) {
                 return;
             }
             Helpers.DisableHandlers();
 
-            int currentIndex = trainerComboBox.SelectedIndex;
+            int currentIndex = _allTrainerNames.IndexOf(trainerComboBox.SelectedItem.ToString());
+            if(currentIndex == -1)//fail silently. Not sure why this sometimes happens. It gets the .selectedItem's name wrong or something
+            {
+                Helpers.EnableHandlers();
+                return;
+            }
             string suffix = "\\" + currentIndex.ToString("D4");
+            var search = SearchText?.ToLower();
             string[] trNames = RomInfo.GetSimpleTrainerNames();
 
             bool error = currentIndex >= trNames.Length;
             currentTrainerFile = new TrainerFile(
                 new TrainerProperties(
-                    (ushort)trainerComboBox.SelectedIndex,
+                    (ushort)currentIndex,
                     new FileStream(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + suffix, FileMode.Open)
                 ),
                 new FileStream(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + suffix, FileMode.Open),
@@ -8004,6 +8080,8 @@ namespace DSPRE {
                     "Trainer name not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+
 
         public void RefreshTrainerPropertiesGUI() {
             trainerNameTextBox.Text = currentTrainerFile.name;
@@ -8274,7 +8352,8 @@ namespace DSPRE {
             }
 
             /*Write to File*/
-            string indexStr = "\\" + trainerComboBox.SelectedIndex.ToString("D4");
+            var selectedIndex = _allTrainerNames.IndexOf(trainerComboBox.SelectedItem.ToString()).ToString("D4");
+            string indexStr = "\\" + selectedIndex;
             File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerProperties].unpackedDir + indexStr, currentTrainerFile.trp.ToByteArray());
             File.WriteAllBytes(RomInfo.gameDirs[DirNames.trainerParty].unpackedDir + indexStr, currentTrainerFile.party.ToByteArray());
 
@@ -9870,6 +9949,26 @@ namespace DSPRE {
 
             Helpers.statusLabelMessage();
             Update();
+        }
+
+        private void trainerSearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            SearchText = trainerSearchTextBox.Text;
+        }
+
+        private void FilterTrainers()
+        {
+            string search = SearchText.ToLower();
+
+            trainerComboBox.BeginUpdate();
+
+            var filtered = _allTrainerNames
+                .Where(x => x.ToLower().Contains(search) || search.Trim() == string.Empty)
+                .ToList();
+
+            trainerComboBox.Items.Clear();
+            trainerComboBox.Items.AddRange(filtered.ToArray());
+            trainerComboBox.EndUpdate();
         }
     }
 }
