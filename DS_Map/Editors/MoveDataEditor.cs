@@ -26,6 +26,7 @@ namespace DSPRE {
             this.moveDescriptions = moveDescriptions;
 
             InitializeComponent();
+            InitializeUtilityMenu();
 
             disableHandlers = true;
 
@@ -69,6 +70,26 @@ namespace DSPRE {
 
             moveNameInputComboBox.SelectedIndex = 1;
         }
+        private void InitializeUtilityMenu() {
+            MenuStrip menuStrip = new MenuStrip {
+                Dock = DockStyle.Top
+            };
+
+            ToolStripMenuItem utilitiesMenuItem = new ToolStripMenuItem("Utilities");
+            ToolStripMenuItem readFromFileMenuItem = new ToolStripMenuItem("Read from File...");
+            ToolStripMenuItem saveToFileMenuItem = new ToolStripMenuItem("Save to File...");
+
+            readFromFileMenuItem.Click += readFromFileToolStripMenuItem_Click;
+            saveToFileMenuItem.Click += saveToFileToolStripMenuItem_Click;
+
+            utilitiesMenuItem.DropDownItems.Add(readFromFileMenuItem);
+            utilitiesMenuItem.DropDownItems.Add(saveToFileMenuItem);
+            menuStrip.Items.Add(utilitiesMenuItem);
+
+            MainMenuStrip = menuStrip;
+            Controls.Add(menuStrip);
+            menuStrip.BringToFront();
+        }
         private void setDirty(bool status) {
             if (status) {
                 dirty = true;
@@ -97,6 +118,11 @@ namespace DSPRE {
         private void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
             currentLoadedFile = new MoveData(toLoad);
+            PopulateAllFromCurrentFile();
+            setDirty(false);
+        }
+        private void LoadFileFromPath(string filePath) {
+            currentLoadedFile = new MoveData(filePath);
             PopulateAllFromCurrentFile();
             setDirty(false);
         }
@@ -198,8 +224,23 @@ namespace DSPRE {
                 moveNameInputComboBox.SelectedIndex = newNumber;
                 ChangeLoadedFile(newNumber);
             }
-            
+
             disableHandlers = false;
+        }
+
+        private void readFromFileToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (!CheckDiscardChanges()) {
+                return;
+            }
+
+            OpenFileDialog openFileDialog = new OpenFileDialog {
+                Filter = "Gen IV Move Data (*.bin)|*.bin",
+                Title = "Select a Move Data file"
+            };
+
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK) {
+                LoadFileFromPath(openFileDialog.FileName);
+            }
         }
 
         private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e) {

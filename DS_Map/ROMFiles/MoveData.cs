@@ -83,6 +83,7 @@ namespace DSPRE {
         }
 
         public MoveData(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.moveData].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
+        public MoveData(string filePath) : this(new FileStream(filePath, FileMode.Open)) { }
 
         public override byte[] ToByteArray() {
             using (MemoryStream memoryStream = new MemoryStream()) {
