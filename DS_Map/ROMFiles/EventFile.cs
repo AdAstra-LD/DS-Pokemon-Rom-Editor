@@ -256,8 +256,8 @@ namespace DSPRE.ROMFiles {
         public ushort sightRange;
         public ushort unknown1;
         public ushort unknown2;
-        public ushort xRange;
-        public ushort yRange;
+        public short xRange;
+        public short yRange;
         public bool is3D = new bool();
         #endregion
 
@@ -275,8 +275,8 @@ namespace DSPRE.ROMFiles {
                 sightRange = reader.ReadUInt16();
                 unknown1 = reader.ReadUInt16();
                 unknown2 = reader.ReadUInt16();
-                xRange = reader.ReadUInt16();
-                yRange = reader.ReadUInt16();
+                xRange = reader.ReadInt16();
+                yRange = reader.ReadInt16();
 
                 /* Decompose x-y coordinates in matrix and map positions */
                 int xPosition = reader.ReadInt16();

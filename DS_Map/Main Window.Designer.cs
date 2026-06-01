@@ -5687,10 +5687,15 @@
             // 
             this.owXRangeUpDown.Location = new System.Drawing.Point(18, 17);
             this.owXRangeUpDown.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
+            this.owXRangeUpDown.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
             this.owXRangeUpDown.Name = "owXRangeUpDown";
             this.owXRangeUpDown.Size = new System.Drawing.Size(38, 20);
             this.owXRangeUpDown.TabIndex = 1;
@@ -5700,10 +5705,15 @@
             // 
             this.owYRangeUpDown.Location = new System.Drawing.Point(77, 17);
             this.owYRangeUpDown.Maximum = new decimal(new int[] {
-            65535,
+            32767,
             0,
             0,
             0});
+            this.owYRangeUpDown.Minimum = new decimal(new int[] {
+            32768,
+            0,
+            0,
+            -2147483648});
             this.owYRangeUpDown.Name = "owYRangeUpDown";
             this.owYRangeUpDown.Size = new System.Drawing.Size(38, 20);
             this.owYRangeUpDown.TabIndex = 2;

@@ -6255,7 +6255,7 @@ namespace DSPRE {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].xRange = (ushort)owXRangeUpDown.Value;
+            currentEvFile.overworlds[overworldsListBox.SelectedIndex].xRange = (short)owXRangeUpDown.Value;
         }
         private void owYRangeUpDown_ValueChanged(object sender, EventArgs e) {
             int selection = overworldsListBox.SelectedIndex;
@@ -6264,7 +6264,7 @@ namespace DSPRE {
                 return;
             }
 
-            currentEvFile.overworlds[overworldsListBox.SelectedIndex].yRange = (ushort)owYRangeUpDown.Value;
+            currentEvFile.overworlds[overworldsListBox.SelectedIndex].yRange = (short)owYRangeUpDown.Value;
         }
         private void owYMapUpDown_ValueChanged(object sender, EventArgs e) {
             int selection = overworldsListBox.SelectedIndex;
