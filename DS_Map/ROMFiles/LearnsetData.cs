@@ -62,6 +62,7 @@ namespace DSPRE {
 
 
         public LearnsetData(int ID) : this(new FileStream(RomInfo.gameDirs[DirNames.learnsets].unpackedDir + "\\" + ID.ToString("D4"), FileMode.Open)) { }
+        public LearnsetData(string filePath) : this(new FileStream(filePath, FileMode.Open)) { }
 
         public override byte[] ToByteArray() {
             using (MemoryStream memoryStream = new MemoryStream()) {

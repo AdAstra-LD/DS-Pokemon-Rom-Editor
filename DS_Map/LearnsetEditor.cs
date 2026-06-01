@@ -35,6 +35,7 @@ namespace DSPRE {
             this.moveNames = moveNames;
             this._parent = pokeEditor;
             InitializeComponent();
+            InitializeUtilityMenu();
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Size = parent.Size;
             this.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
@@ -71,6 +72,29 @@ namespace DSPRE {
 
             pokemonNameInputComboBox.SelectedIndex = 1;
         }
+        private void InitializeUtilityMenu() {
+            MenuStrip menuStrip = new MenuStrip {
+                Dock = DockStyle.Top
+            };
+
+            ToolStripMenuItem utilitiesMenuItem = new ToolStripMenuItem("Utilities");
+            ToolStripMenuItem generateFromTextMenuItem = new ToolStripMenuItem("Generate from Text");
+            ToolStripMenuItem readFromFileMenuItem = new ToolStripMenuItem("Read from File...");
+            ToolStripMenuItem saveToFileMenuItem = new ToolStripMenuItem("Save to File...");
+
+            generateFromTextMenuItem.Click += generateFromTextToolStripMenuItem_Click;
+            readFromFileMenuItem.Click += readFromFileToolStripMenuItem_Click;
+            saveToFileMenuItem.Click += saveToFileToolStripMenuItem_Click;
+
+            utilitiesMenuItem.DropDownItems.Add(generateFromTextMenuItem);
+            utilitiesMenuItem.DropDownItems.Add(readFromFileMenuItem);
+            utilitiesMenuItem.DropDownItems.Add(saveToFileMenuItem);
+            menuStrip.Items.Add(utilitiesMenuItem);
+
+            MainMenuStrip = menuStrip;
+            Controls.Add(menuStrip);
+            menuStrip.BringToFront();
+        }
         private void setDirty(bool status) {
             if (status) {
                 dirty = true;
@@ -98,6 +122,12 @@ namespace DSPRE {
         }
         private string ElemToString((ushort level, ushort move) elem) {
             return $"Lv. {elem.level}: {moveNames[elem.move]}";
+        }
+        private void LoadFileFromPath(string filePath) {
+            currentLoadedFile = new LearnsetData(filePath);
+            PopulateAllFromCurrentFile();
+            UpdateButtonsOnMoveSelection();
+            setDirty(false);
         }
         public void ChangeLoadedFile(int toLoad) {
             currentLoadedId = toLoad;
@@ -331,6 +361,90 @@ namespace DSPRE {
             }
 
             entryCountLabel.Text = labelText.ToString();
+        }
+
+        private void readFromFileToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (!CheckDiscardChanges()) {
+                return;
+            }
+
+            OpenFileDialog openFileDialog = new OpenFileDialog {
+                Filter = "Gen IV Pokemon Learnset data (*.bin)|*.bin",
+                Title = "Select a Pokemon Learnset data file"
+            };
+
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK) {
+                LoadFileFromPath(openFileDialog.FileName);
+            }
+        }
+
+        private void saveToFileToolStripMenuItem_Click(object sender, EventArgs e) {
+            string suggestedFilename = this.fileNames[currentLoadedId];
+            currentLoadedFile.SaveToFileExplorePath(suggestedFilename, true);
+        }
+
+        private void generateFromTextToolStripMenuItem_Click(object sender, EventArgs e) {
+            TextBoxInput inputDialog = new TextBoxInput("Input Learnset text data.", maxLen: 2500);
+            inputDialog.ShowDialog(this);
+
+            if (!inputDialog.DialogResult.Equals(DialogResult.OK) || string.IsNullOrWhiteSpace(inputDialog.userInput)) {
+                return;
+            }
+
+            Dictionary<string, ushort> moveMap = new Dictionary<string, ushort>(StringComparer.InvariantCultureIgnoreCase);
+            for (ushort i = 0; i < moveNames.Length; i++) {
+                if (!moveMap.ContainsKey(moveNames[i])) {
+                    moveMap.Add(moveNames[i], i);
+                }
+            }
+
+            UniqueList<(byte level, ushort move)> parsedEntries = new UniqueList<(byte level, ushort move)>();
+            for (int i = 0; i < inputDialog.lines.Length; i++) {
+                string line = inputDialog.lines[i];
+                if (string.IsNullOrWhiteSpace(line)) {
+                    continue;
+                }
+
+                string[] split = line.Split(new string[] { "  ", "\t" }, StringSplitOptions.RemoveEmptyEntries);
+                if (split.Length < 2) {
+                    MessageBox.Show($"Entry at line {i + 1} is not splittable.", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!byte.TryParse(split[0], out byte level)) {
+                    MessageBox.Show($"Entry at line {i + 1} is malformed. Move level is unreadable: \"{split[0]}\"", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!moveMap.TryGetValue(split[1], out ushort move)) {
+                    MessageBox.Show($"Entry at line {i + 1} is malformed. Move name couldn't be found: \"{split[1]}\"", "Parser error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                parsedEntries.Add((level, move));
+            }
+
+            DialogResult choice = MessageBox.Show(
+                "Do you want to clear the current Learnset file before importing the parsed entries?",
+                "Entries add mode",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (choice == DialogResult.Cancel) {
+                return;
+            }
+
+            if (choice == DialogResult.Yes) {
+                currentLoadedFile.list.Clear();
+            }
+
+            foreach ((byte level, ushort move) entry in parsedEntries) {
+                currentLoadedFile.list.Add(entry);
+            }
+
+            currentLoadedFile.list.Sort();
+            PopulateAllFromCurrentFile();
+            setDirty(true);
         }
     }
 }
