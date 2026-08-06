@@ -52,7 +52,7 @@ namespace DSPRE.ROMFiles {
         public static readonly string TexturedNSBMDFilter = "Textured" + NSBMDFilter;
         public static readonly string UntexturedNSBMDFilter = "Untextured" + NSBMDFilter;
 
-        public static readonly string MovepermsFilter = "Permissions File (*.per)|*.per";
+        public static readonly string MovepermsFilter = "Permissions File (*.per)|*.per|CSV File (*.csv)|*.csv";
 
         public static readonly string BuildingsFilter = "Buildings File (*.bld)|*.bld";
 
@@ -165,6 +165,26 @@ namespace DSPRE.ROMFiles {
             }
             return newData.ToArray();
         }
+
+        //TEST FUNCTION Start
+        public string CollisionsToString(){
+            //The Index of the Line that must not end in a comma
+            int finalIndex = mapSize - 1;
+            int j;
+            using (StringWriter writer = new StringWriter()){
+                for(int i = 0; i < mapSize; i++){
+                    //Write Lines That Need To End In Commas
+                    for(j = 0; j < finalIndex; j++){
+                        writer.Write($"{(types[i,j]).ToString("X2")}:{(collisions[i,j]).ToString("X2")},");
+                    }
+                    //Write The Final Line (NewLine To Create Next Row)
+                    writer.WriteLine($"{(types[i,j]).ToString("X2")}:{(collisions[i,j]).ToString("X2")}");
+                }
+            return writer.ToString();
+            }
+        }
+        
+        //TEST FUNCTION End
         public void ImportBuildings(byte[] newData) {
             buildings = new List<Building>();
             using (BinaryReader reader = new BinaryReader(new MemoryStream(newData))) {
